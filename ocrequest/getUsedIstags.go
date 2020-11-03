@@ -7,26 +7,25 @@ import (
 	"log"
 )
 
-var cluster string = "cid-apc0"
-var namespace string = "pkp-unicorn-drei"
+// var cluster string = "cid-apc0"
+// var namespace string = "pkp-unicorn-drei"
 
-type T_runningObjects struct {
-	Dc      map[string]interface{}
-	Job     map[string]interface{}
-	Cronjob map[string]interface{}
-	Pod     map[string]interface{}
+func filterDcResults(dc T_DcResults) T_usedIstagsResult {
+	results := T_usedIstagsResult{}
+	// ToDo Implementation
+	return results
 }
 
-func ocGetAllUsedIstagsOfNamespace(cluster string, token string, namespace string) T_runningObjects {
-	istagsDcJson := ocAPiCall(cluster, token, namespace, "deploymentconfigs", "")
-	istagsJobJson := ocAPiCall(cluster, token, namespace, "jobs", "")
-	istagsCronjobJson := ocAPiCall(cluster, token, namespace, "cronjobs", "")
-	istagsPodJson := ocAPiCall(cluster, token, namespace, "pods", "")
+func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_runningObjects {
+	istagsDcJson := ocAPiCall(cluster, namespace, "deploymentconfigs", "")
+	istagsJobJson := ocAPiCall(cluster, namespace, "jobs", "")
+	istagsCronjobJson := ocAPiCall(cluster, namespace, "cronjobs", "")
+	istagsPodJson := ocAPiCall(cluster, namespace, "pods", "")
 
-	var istagsDcResult map[string]interface{}
-	var istagsJobResult map[string]interface{}
-	var istagsCronjobResult map[string]interface{}
-	var istagsPodResult map[string]interface{}
+	var istagsDcResult T_DcResults
+	var istagsJobResult T_JobResults
+	var istagsCronjobResult T_CronjobResults
+	var istagsPodResult T_Results
 	result := T_runningObjects{}
 
 	var err error

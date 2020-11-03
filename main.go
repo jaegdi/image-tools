@@ -5,24 +5,23 @@ import (
 	. "fmt"
 )
 
-var familyNamespaces = ocrequest.T_famNs{
-	"pkp": []string{"ms-jenkins", "openshift", "images-pkp"},
-	"ssp": []string{"ssp-jenkins", "images-ssp"},
-	"aps": []string{"aps-jenkins", "images-aps"},
-	"fpc": []string{"fpc-jenkins", "images-fpc"},
+type completeResults struct {
+	AllIstags  ocrequest.T_result
+	UsedIstags ocrequest.T_runningObjects
 }
 
+
 func main() {
-	flags := ocrequest.EvalFlags(familyNamespaces)
+	ocrequest.EvalFlags()
 
-	result := map[string]interface{}{}
-	allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster(flags, familyNamespaces))
-	allIsTags = ocrequest.FilterAllIstags(allIsTags, flags)
+	result := completeResults{}
+	allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster())
+	filteredIsTags := ocrequest.FilterAllIstags(allIsTags)
 
-	usedIsTags := (ocrequest.GetUsedIstagsForFamilyInCluster(flags, familyNamespaces))
+	usedIsTags := (ocrequest.GetUsedIstagsForFamilyInCluster())
 
-	result["all-istags"] = allIsTags
-	result["used-istags"] = usedIsTags
+	result.AllIstags = filteredIsTags
+	result.UsedIstags = usedIsTags
 
-	Println(ocrequest.GetJsonFromMap(result, flags))
+	Println(ocrequest.GetJsonFromMap(result))
 }

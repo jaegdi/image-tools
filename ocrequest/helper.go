@@ -1,7 +1,7 @@
 package ocrequest
 
 import (
-	"github.com/imdario/mergo"
+	// "github.com/imdario/mergo"
 	"log"
 	"os"
 	"time"
@@ -14,13 +14,13 @@ func ageInDays(date string) int {
 	return int(today.Sub(t).Hours()) / 24
 }
 
-func mergeMaps(dest interface{}, source interface{}, msg string) interface{} {
-	if err := mergo.Merge(&dest, source); err != nil {
-		log.Println("ERROR: " + msg + ": failed: " + err.Error())
-		return source
-	}
-	return dest
-}
+// func mergeMaps(dest interface{}, source interface{}, msg string) interface{} {
+// 	if err := mergo.Merge(&dest, source); err != nil {
+// 		log.Println("ERROR: " + msg + ": failed: " + err.Error())
+// 		return source
+// 	}
+// 	return dest
+// }
 
 func exitWithError(errormsg string) {
 	log.Println(errormsg)

@@ -1,4 +1,4 @@
-// Package ocrequest provides priomitoives to query an oc-cluster for istags
+// Package ocrequest provides primitoives to query an oc-cluster for istags
 // calculate and filter them. And provides a json output primitive.
 package ocrequest
 
@@ -9,29 +9,33 @@ import (
 )
 
 // ocApiCall requests an openshift-cluster via API and return the answer as string.
-func ocAPiCall(cluster string, token string, namespace string, typ string, name string) string {
+func ocAPiCall(cluster string, namespace string, typ string, name string) string {
 	var url string
 	var urlpath string
+
+	// Create a Bearer string by appending string access token
+	bearer := "Bearer " + ocGetToken(cluster)
+
 	switch typ {
-	case "imagestreamtags", "deploymentconfigs":
+	case "imagestreamtags", "imagestreams", "deploymentconfigs":
 		urlpath = "/oapi/v1/namespaces/"
 	default:
 		urlpath = "/api/v1/namespaces/"
 	}
+
 	if name != "" {
-		url = "https://console." +
-			cluster + ".sf-rz.de:8443" + urlpath +
+		url = "https://console." + cluster + ".sf-rz.de:8443" + urlpath +
 			namespace + "/" + typ + "/" + name
 	} else {
-		url = "https://console." +
-			cluster + ".sf-rz.de:8443" + urlpath +
+		url = "https://console." + cluster + ".sf-rz.de:8443" + urlpath +
 			namespace + "/" + typ
 	}
-	// Create a Bearer string by appending string access token
-	bearer := "Bearer " + token
 
 	// Create a new request using http
 	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Println(err)
+	}
 
 	// add header to the req
 	req.Header.Set("Authorization", bearer)

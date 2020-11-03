@@ -10,19 +10,6 @@ import (
 	"strings"
 )
 
-type T_shaStreams map[string]map[string]map[string]interface{}
-type T_shaNames map[string]map[string]interface{}
-type T_resIstag map[string]map[string]interface{}
-
-// type T_resSha map[string]map[string]string
-type T_resIs map[string]map[string][]string
-type T_istag map[string]interface{}
-type T_sha map[string]interface{}
-type T_isShaTagnames []string
-type T_is map[string][]string
-type T_resSha map[string]map[string]map[string]interface{}
-type T_result map[string]interface{}
-
 // joinShaNames join keys of map to a comma sepearted string.
 func joinShaNames(mymap map[string]bool) []string {
 	keys := []string{}
@@ -61,12 +48,12 @@ func addNamesToShaStreams(a T_shaStreams, is string, sha string, istag T_istag) 
 	if a[is] == nil {
 		a[is] = T_resIstag{}
 	}
-	if a[is][sha] == nil {
-		a[is][sha] = T_sha{}
+	if a[is][sha] == (T_istag{}) {
+		a[is][sha] = T_istag{}
 	}
-	for k, v := range istag {
-		a[is][sha][k] = v
-	}
+	// for k, v := range istag {
+	a[is][sha] = istag
+	// }
 	return a
 }
 
@@ -101,12 +88,15 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, sh
 	return istream
 }
 
-func getIsNamesForFamily() {
-
+func getIsNamesForFamily(family string) {
+	cluster := "cid-apc0"
+	for _, ns := range FamilyNamespaces[family] {
+		ocAPiCall(cluster, ns, "imagestreams", "")
+	}
 }
 
-func OcGetAllIstagsOfNamespace(result map[string]interface{}, cluster string, token string, namespace string) T_result {
-	istagsJson := ocAPiCall(cluster, token, namespace, "imagestreamtags", "")
+func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string) T_result {
+	istagsJson := ocAPiCall(cluster, namespace, "imagestreamtags", "")
 
 	var istagsresult map[string]interface{}
 	err := json.Unmarshal([]byte(istagsJson), &istagsresult)
@@ -137,25 +127,25 @@ func OcGetAllIstagsOfNamespace(result map[string]interface{}, cluster string, to
 		shaNames = addNamesToShaNames(shaNames, sha, isNamespace+"/"+istagname)
 
 		myIstag := T_istag{
-			"imagestream": imagestreamName,
-			"tagname":     tagName,
-			"namespace":   isNamespace,
-			"link":        isLink,
-			"date":        isDate,
-			"ageInDays":   isAge,
-			"sha":         sha,
+			Imagestream: imagestreamName,
+			Tagname:     tagName,
+			Namespace:   isNamespace,
+			Link:        isLink,
+			Date:        isDate,
+			AgeInDays:   isAge,
+			Sha:         sha,
 		}
 
 		shaStreams = addNamesToShaStreams(shaStreams, imagestreamName, sha, myIstag)
 
-		mySha := map[string]map[string]interface{}{
-			istagname: T_sha{
-				"istags":      shaNames[sha],
-				"imagestream": imagestreamName,
-				"namespace":   isNamespace,
-				"link":        isLink,
-				"date":        isDate,
-				"ageInDays":   isAge,
+		mySha := map[string]T_sha{
+			istagname: {
+				Istags:      shaNames[sha],
+				Imagestream: imagestreamName,
+				Namespace:   isNamespace,
+				Link:        isLink,
+				Date:        isDate,
+				AgeInDays:   isAge,
 			},
 		}
 
@@ -169,22 +159,21 @@ func OcGetAllIstagsOfNamespace(result map[string]interface{}, cluster string, to
 		resultSha[sha] = tmp
 		// resultSha[sha] = mySha
 	}
-	tmp_result := map[string]interface{}{
-		"istag": resultIstag,
-		"sha":   resultSha,
-		"is":    resultIstream,
+	tmp_result := T_result{
+		Istag: resultIstag,
+		Sha:   resultSha,
+		Is:    resultIstream,
 	}
 	if err := mergo.Merge(&result, tmp_result); err != nil {
-		// log.Println("ERROR: " + "merge result of namespace to result" + ": failed: " + err.Error())
 		exitWithError("ERROR: " + "merge result of namespace to result" + ": failed: " + err.Error())
 	}
-	n_istags := len(result["istag"].(T_resIstag))
-	n_shas := len(result["sha"].(T_resSha))
-	n_is := len(result["is"].(T_resIs))
-	result["report"] = map[string]int{
-		"anz-names":         n_istags,
-		"anz-shas":          n_shas,
-		"anz-resultIstream": n_is,
+	n_istags := len(result.Istag)
+	n_shas := len(result.Sha)
+	n_is := len(result.Is)
+	result.Report = T_resReport{
+		AnzNames:    n_istags,
+		AnzShas:     n_shas,
+		AnzIstreams: n_is,
 	}
 	// testIfShaHasMultiIstags(shaNames, namespace)
 	return result
