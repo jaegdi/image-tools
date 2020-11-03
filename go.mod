@@ -1,8 +1,9 @@
-module example.com/admin-tools/clean-images
+module clean-istags
 
 go 1.15
 
 require (
+	github.com/alessiosavi/Requests v0.3.6
 	github.com/fatih/color v1.9.0
-	rsc.io/quote v1.5.2
+	github.com/imdario/mergo v0.3.11
 )

@@ -1,0 +1,25 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#27310D",
+        "titleBar.activeBackground": "#374512",
+        "titleBar.activeForeground": "#F8FBF0"
+    },
+    "cSpell.words": [
+        "Filt",
+        "Istag",
+        "Istream",
+        "Sha's",
+        "famns",
+        "imdario",
+        "isdate",
+        "isname",
+        "isnamespace",
+        "istagname",
+        "istagsresult",
+        "mergo",
+        "mymap",
+        "oapi",
+        "ocrequest",
+        "shas"
+    ]
+}
