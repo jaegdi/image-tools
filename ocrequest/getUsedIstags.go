@@ -10,7 +10,14 @@ import (
 var cluster string = "cid-apc0"
 var namespace string = "pkp-unicorn-drei"
 
-func ocGetAllUsedIstagsOfNamespace(cluster string, token string, namespace string) map[string]map[string]interface{} {
+type T_runningObjects struct {
+	Dc      map[string]interface{}
+	Job     map[string]interface{}
+	Cronjob map[string]interface{}
+	Pod     map[string]interface{}
+}
+
+func ocGetAllUsedIstagsOfNamespace(cluster string, token string, namespace string) T_runningObjects {
 	istagsDcJson := ocAPiCall(cluster, token, namespace, "deploymentconfigs", "")
 	istagsJobJson := ocAPiCall(cluster, token, namespace, "jobs", "")
 	istagsCronjobJson := ocAPiCall(cluster, token, namespace, "cronjobs", "")
@@ -20,7 +27,7 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, token string, namespace strin
 	var istagsJobResult map[string]interface{}
 	var istagsCronjobResult map[string]interface{}
 	var istagsPodResult map[string]interface{}
-	result := map[string]map[string]interface{}{}
+	result := T_runningObjects{}
 
 	var err error
 	err = json.Unmarshal([]byte(istagsDcJson), &istagsDcResult)
@@ -52,9 +59,9 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, token string, namespace strin
 	// if err := mergo.Merge(&result, istagsPodResult); err != nil {
 	// 	log.Println("ERROR: " + "merge mySha to resultSha" + ": failed: " + err.Error())
 	// }
-	result["dc"] = istagsDcResult
-	result["job"] = istagsJobResult
-	result["cronjob"] = istagsCronjobResult
-	result["pod"] = istagsPodResult
+	result.Dc = istagsDcResult
+	result.Job = istagsJobResult
+	result.Cronjob = istagsCronjobResult
+	result.Pod = istagsPodResult
 	return result
 }

@@ -138,7 +138,7 @@ func GetAllIstagsForFamilyInCluster(flags T_flags, familyNamespaces T_famNs) T_r
 	return result
 }
 
-func GetUsedIstagsForFamilyInCluster(flags T_flags, familyNamespaces T_famNs) map[string]map[string]interface{} {
+func GetUsedIstagsForFamilyInCluster(flags T_flags, familyNamespaces T_famNs) T_runningObjects {
 	family := flags["family"].(string)
 	cluster := flags["cluster"].(string) + "-apc0"
 	namespace := flags["filter"].(T_flagFilt)["namespace"]
@@ -148,7 +148,7 @@ func GetUsedIstagsForFamilyInCluster(flags T_flags, familyNamespaces T_famNs) ma
 	}
 	// Println(cluster, token, namespace)
 
-	var result = map[string]map[string]interface{}{}
+	var result T_runningObjects
 	if namespace == "" {
 		for _, ns := range familyNamespaces[family] {
 			r := ocGetAllUsedIstagsOfNamespace(cluster, token, ns)
