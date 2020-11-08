@@ -1,8 +1,24 @@
 package ocrequest
 
+type T_completeResults struct {
+	AllIstags  T_result
+	UsedIstags T_usedIstagsResult
+}
+
 // getExistingIstags.go
 type T_shaStreams map[string]map[string]T_istag
 type T_shaNames map[string]map[string]interface{}
+
+type T_istagBuildLabels struct {
+	CommitAuthor  string `json:"io.openshift.build.commit.author,omitempty"`
+	CommitDate    string `json:"io.openshift.build.commit.date,omitempty"`
+	CommitId      string `json:"io.openshift.build.commit.id,omitempty"`
+	CommitRef     string `json:"io.openshift.build.commit.ref,omitempty"`
+	CommitVersion string `json:"io.openshift.build.commit.version,omitempty"`
+	IsProdImage   string `json:"io.openshift.build.isProdImage,omitempty"`
+	Name          string `json:"io.openshift.build.name,omitempty"`
+	Namespace     string `json:"io.openshift.build.namespace,omitempty"`
+}
 
 // type T_istag map[string]interface{}
 type T_istag struct {
@@ -13,6 +29,7 @@ type T_istag struct {
 	Date        string
 	AgeInDays   string
 	Sha         string
+	Build       T_istagBuildLabels
 }
 
 // type T_sha map[string]interface{}
@@ -25,7 +42,7 @@ type T_sha struct {
 	AgeInDays   string
 }
 
-type T_isShaTagnames []string
+type T_isShaTagnames map[string]interface{}
 type T_is map[string]T_isShaTagnames
 
 type T_resIstag map[string]T_istag
@@ -65,10 +82,14 @@ type T_usedIstag struct {
 	Namespace string
 	Sha       string
 	Is        string
+	Cluster   string
 }
 
 // usedIstagsResult[Is][Tag]T_usedIstag
-type T_usedIstagsResult map[string]map[string]T_usedIstag
+type T_usedIstagsResult map[string]map[string][]T_usedIstag
+
+// IsNamesForFamily[family][is]true
+type T_IsNamesForFamily map[string]map[string]bool
 
 //------------------------------------------
 
@@ -89,11 +110,26 @@ type T_flagFilt struct {
 	Namespace string
 }
 type T_flags struct {
-	Cluster string
-	Token   string
-	Family  string
-	Output  T_flagOut
-	Filter  T_flagFilt
+	Cluster  string
+	Token    string
+	Family   string
+	OcClient bool
+	Output   T_flagOut
+	Filter   T_flagFilt
 }
 
 //------------------------------------------
+
+type T_Cluster struct {
+	Name  string
+	Url   string
+	Token string
+}
+
+type T_Clusters struct {
+	Cid T_Cluster
+	Int T_Cluster
+	Ppr T_Cluster
+	Vpt T_Cluster
+	Pro T_Cluster
+}

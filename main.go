@@ -5,23 +5,26 @@ import (
 	. "fmt"
 )
 
-type completeResults struct {
-	AllIstags  ocrequest.T_result
-	UsedIstags ocrequest.T_runningObjects
+func init() {
+	ocrequest.Init()
 }
-
 
 func main() {
 	ocrequest.EvalFlags()
-
-	result := completeResults{}
+	ocrequest.GetIsNamesForFamily(ocrequest.CmdParams.Family)
+	ocrequest.OcGetAllImagesOfCluster(ocrequest.CmdParams.Cluster)
+	// ocrequest.GetIsNamesForFamily(ocrequest.CmdParams.Family)
+	result := ocrequest.T_completeResults{}
 	allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster())
 	filteredIsTags := ocrequest.FilterAllIstags(allIsTags)
-
-	usedIsTags := (ocrequest.GetUsedIstagsForFamilyInCluster())
-
 	result.AllIstags = filteredIsTags
-	result.UsedIstags = usedIsTags
+
+	if ocrequest.CmdParams.Output.All || ocrequest.CmdParams.Output.Used {
+		usedIsTags := (ocrequest.GetUsedIstagsForFamilyInCluster())
+		result.UsedIstags = usedIsTags
+	}
 
 	Println(ocrequest.GetJsonFromMap(result))
+
+	// ocrequest.Test_MergeNestedMaps()
 }

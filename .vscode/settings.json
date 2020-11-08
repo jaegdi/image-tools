@@ -8,6 +8,7 @@
         "Filt",
         "Istag",
         "Istream",
+        "Istreams",
         "Sha's",
         "famns",
         "imdario",
@@ -19,7 +20,10 @@
         "mergo",
         "mymap",
         "oapi",
+        "occlient",
+        "ocimagetools",
         "ocrequest",
-        "shas"
+        "shas",
+        "unmarschal"
     ]
 }

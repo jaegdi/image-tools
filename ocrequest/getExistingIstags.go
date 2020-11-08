@@ -5,19 +5,10 @@ package ocrequest
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/imdario/mergo"
-	"log"
 	"strings"
 )
 
-// joinShaNames join keys of map to a comma sepearted string.
-func joinShaNames(mymap map[string]bool) []string {
-	keys := []string{}
-	for k := range mymap {
-		keys = append(keys, k)
-	}
-	return keys
-}
+var IsNamesForFamily T_IsNamesForFamily
 
 // joinShaStreams join keys of a map to an array.
 func joinShaStreams(mymap map[string]interface{}) []string {
@@ -57,21 +48,6 @@ func addNamesToShaStreams(a T_shaStreams, is string, sha string, istag T_istag) 
 	return a
 }
 
-// testIfShaHasMultiIstags test if a sha is tagged with more than one istag and prints them out.
-//This function is for logging purposes.
-func testIfShaHasMultiIstags(mymap T_shaNames, ns string) {
-	for k := range mymap {
-		s := "Ns " + ns + ": More than one tag on sha in "
-		if len(mymap[k]) > 1 {
-			s = s + k + " ==>\n"
-			for n := range mymap[k] {
-				s = s + "  " + n + "\n"
-			}
-			log.Println(s)
-		}
-	}
-}
-
 // appendJoinedNamesToImagestreams get as params the imageStream-map and then joinedNames of istags and
 // put them on the map under imagestreamMap.imagestream.sha .
 func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, sha string, joinedNames []string) T_resIs {
@@ -82,47 +58,87 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, sh
 		istream[imagestreamName][sha] = T_isShaTagnames{}
 	}
 	for _, v := range joinedNames {
-		istream[imagestreamName][sha] =
-			append(istream[imagestreamName][sha], v)
+		istream[imagestreamName][sha][v] = true
 	}
 	return istream
 }
 
-func getIsNamesForFamily(family string) {
-	cluster := "cid-apc0"
+func GetIsNamesForFamily(family string) {
+	cluster := "cid"
+	isResult := map[string]interface{}{}
+	result := make(T_IsNamesForFamily)
+	result[family] = make(map[string]bool)
 	for _, ns := range FamilyNamespaces[family] {
-		ocAPiCall(cluster, ns, "imagestreams", "")
+		if ns == "openshift" {
+			continue
+		}
+		isJson := ocGetCall(cluster, ns, "imagestreams", "")
+		if err := json.Unmarshal([]byte(isJson), &isResult); err != nil {
+			ErrorLogger.Println("Unmarshal imagestreams. " + err.Error())
+		}
+		for _, v := range isResult["items"].([]interface{}) {
+			val := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+			result[family][val] = true
+		}
 	}
+	IsNamesForFamily = result
+}
+
+func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
+	buildLabels := T_istagBuildLabels{}
+	// buildLabelsJSON, err := json.MarshalIndent(buildLabelsMap, "", "    ")
+	// if err != nil {
+	// 	ErrorLogger.Println("Marshal buildLabels to jSON failed in setBuildLabels", err)
+	// }
+	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
+
+	// fmt.Println(string(buildLabelsUnescJSON))
+	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
+		ErrorLogger.Println("Unmarshal unescaped String", err)
+	}
+	return buildLabels
 }
 
 func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string) T_result {
-	istagsJson := ocAPiCall(cluster, namespace, "imagestreamtags", "")
+	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
 
-	var istagsresult map[string]interface{}
-	err := json.Unmarshal([]byte(istagsJson), &istagsresult)
-	if err != nil {
-		log.Println("ERROR:", err.Error())
+	var istagsMap map[string]interface{}
+	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
+		ErrorLogger.Println("unmarshal imagestreamtags." + err.Error())
 	}
 
-	// result := make(map[string]interface{})
+	// result := make(map[string]interface{})s
 	resultIstag := make(T_resIstag)
 	resultSha := make(T_resSha)
 	resultIstream := make(T_resIs)
 
-	items := istagsresult["items"].([]interface{})
+	itemsMap := istagsMap["items"].([]interface{})
 	shaNames := make(T_shaNames)
 	shaStreams := make(T_shaStreams)
+	var metadata map[string]interface{}
+	var imageMetadata map[string]interface{}
+	var buildLabelsMap map[string]interface{}
 
-	for _, content := range items {
-		istagname := content.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+	for _, content := range itemsMap {
+		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
+		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
+		istagname := metadata["name"].(string)
+		isNamespace := metadata["namespace"].(string)
+		isLink := metadata["selfLink"].(string)
+		isDate := metadata["creationTimestamp"].(string)
+		sha := imageMetadata["name"].(string)
+		// InfoLogger.Println("image test:" + ImagesMap[sha])
+		// os.Exit(1)
+		if ImagesMap[sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
+			buildLabelsMap = ImagesMap[sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{})
+		}
 		imagestreamfields := strings.Split(istagname, `:`)
 		imagestreamName := imagestreamfields[0]
+		if !IsNamesForFamily[CmdParams.Family][imagestreamName] {
+			continue
+		}
 		tagName := imagestreamfields[1]
-		isNamespace := content.(map[string]interface{})["metadata"].(map[string]interface{})["namespace"].(string)
-		isLink := content.(map[string]interface{})["metadata"].(map[string]interface{})["selfLink"].(string)
-		isDate := content.(map[string]interface{})["metadata"].(map[string]interface{})["creationTimestamp"].(string)
 		isAge := fmt.Sprintf("%v", ageInDays(isDate))
-		sha := content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
 
 		shaNames = addNamesToShaNames(shaNames, sha, isNamespace+"/"+istagname)
 
@@ -134,6 +150,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 			Date:        isDate,
 			AgeInDays:   isAge,
 			Sha:         sha,
+			Build:       setBuildLabels(buildLabelsMap),
 		}
 
 		shaStreams = addNamesToShaStreams(shaStreams, imagestreamName, sha, myIstag)
@@ -152,11 +169,17 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		joinedNames := joinShaStreams(shaNames[sha])
 		resultIstream = appendJoinedNamesToImagestreams(resultIstream, imagestreamName, sha, joinedNames)
 		resultIstag[istagname] = myIstag
-		tmp := resultSha[sha]
-		if err := mergo.Merge(&tmp, mySha); err != nil {
-			log.Println("ERROR: " + "merge mySha to resultSha" + ": failed: " + err.Error())
+		// tmp := resultSha[sha]
+		// if err := mergo.Merge(&tmp, mySha); err != nil {
+		// 	ErrorLogger.Println("merge mySha to resultSha" + ": failed: " + err.Error())
+		// }
+		// resultSha[sha] = tmp
+		if resultSha[sha] == nil {
+			resultSha[sha] = make(map[string]T_sha)
 		}
-		resultSha[sha] = tmp
+		t := map[string]T_sha{}
+		MergoNestedMaps(&t, resultSha[sha], mySha)
+		resultSha[sha] = t
 		// resultSha[sha] = mySha
 	}
 	tmp_result := T_result{
@@ -164,9 +187,12 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		Sha:   resultSha,
 		Is:    resultIstream,
 	}
-	if err := mergo.Merge(&result, tmp_result); err != nil {
-		exitWithError("ERROR: " + "merge result of namespace to result" + ": failed: " + err.Error())
-	}
+	// if err := mergo.Merge(&result, tmp_result); err != nil {
+	// 	exitWithError("ERROR: " + "merge result of namespace to result" + ": failed: " + err.Error())
+	// }
+	t := T_result{}
+	MergoNestedMaps(&t, result, tmp_result)
+	result = t
 	n_istags := len(result.Istag)
 	n_shas := len(result.Sha)
 	n_is := len(result.Is)
@@ -176,5 +202,29 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		AnzIstreams: n_is,
 	}
 	// testIfShaHasMultiIstags(shaNames, namespace)
+	return result
+}
+
+// Generate map of all istags and return json string with the results
+func GetAllIstagsForFamilyInCluster() T_result {
+	family := CmdParams.Family
+	cluster := CmdParams.Cluster
+	namespace := CmdParams.Filter.Namespace
+
+	var result = T_result{}
+	if namespace == "" {
+		for _, ns := range FamilyNamespaces[family] {
+			r := OcGetAllIstagsOfNamespace(result, cluster, ns)
+			// if err := mergo.Merge(&result, r); err != nil {
+			// 	ErrorLogger.Println("merge mySha to resultSha" + ": failed: " + err.Error())
+			// }
+			t := T_result{}
+			MergoNestedMaps(&t, result, r)
+			result = t
+
+		}
+	} else {
+		result = OcGetAllIstagsOfNamespace(result, cluster, namespace)
+	}
 	return result
 }
