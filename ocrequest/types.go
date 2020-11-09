@@ -33,8 +33,9 @@ type T_istag struct {
 }
 
 // type T_sha map[string]interface{}
+type T_Istags_List map[string]bool
 type T_sha struct {
-	Istags      map[string]bool
+	Istags      T_Istags_List
 	Imagestream string
 	Namespace   string
 	Link        string

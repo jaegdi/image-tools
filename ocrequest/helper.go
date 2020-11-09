@@ -8,6 +8,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"log"
 	"os"
+	// "reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -85,6 +86,12 @@ func GetJsonFromMap(list interface{}) string {
 	return ""
 }
 
+// func getFieldFromStruct(v reflect.Type, field string) string {
+// 	r := reflect.ValueOf(v)
+// 	f := reflect.Indirect(r).FieldByName(field)
+// 	return string(f.String())
+// }
+
 func GetYamlFromMap(list interface{}) string {
 	d, err := yaml.Marshal(&list)
 	if err != nil {
@@ -93,20 +100,6 @@ func GetYamlFromMap(list interface{}) string {
 	return string(d)
 }
 
-// allistags:
-//   is: {}
-//   istag: {}
-//   sha: {}
-//   report:
-//     anznames: 0
-//     anzshas: 0
-//     anzistreams: 0
-// usedistags:
-//   apache-mod-auth-openidc:
-//     0.3.10:
-//     - usedinnamespace: pkp-inttest-release304
-//       sha: ""
-//       cluster: cid
 func GetCsvFromMap(list interface{}) {
 	output := [][]string{}
 	headline := []string{"DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
@@ -124,7 +117,24 @@ func GetCsvFromMap(list interface{}) {
 			}
 		}
 	}
+	// tmp := T_istag{}
 	headline = []string{"DataRange", "DataType", "istag", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+	// v := reflect.ValueOf(tmp)
+	// typeOfS := v.Type()
+	// istagHeadline := []string{}
+	// for i := 0; i < v.NumField(); i++ {
+	// 	if typeOfS.Field(i).Name != "Build" {
+	// 		istagHeadline = append(istagHeadline, typeOfS.Field(i).Name)
+	// 	}
+	// }
+	// b := reflect.ValueOf(tmp.Build)
+	// typeOfB := b.Type()
+	// buildHeadline := []string{}
+	// for i := 0; i < b.NumField(); i++ {
+	// 	buildHeadline = append(buildHeadline, typeOfB.Field(i).Name)
+	// }
+	// headline = append(headline, istagHeadline...)
+	// headline = append(headline, buildHeadline...)
 	output = append(output, headline)
 	for istagName, istagMap := range list.(T_completeResults).AllIstags.Istag {
 		line := []string{}
@@ -138,6 +148,13 @@ func GetCsvFromMap(list interface{}) {
 		line = append(line, istagMap.Date)
 		line = append(line, istagMap.AgeInDays)
 		line = append(line, istagMap.Sha)
+		// v := reflect.ValueOf(istagMap)
+		// for i := 0; i < v.NumField(); i++ {
+		// 	line = append(line, v.Field(i).String())
+		// }
+		// for _, v := range istagHeadline {
+		// 	line = append(line, getFieldFromStruct(&istagMap, v))
+		// }
 		line = append(line, istagMap.Build.CommitAuthor)
 		line = append(line, istagMap.Build.CommitDate)
 		line = append(line, istagMap.Build.CommitId)
@@ -146,6 +163,13 @@ func GetCsvFromMap(list interface{}) {
 		line = append(line, istagMap.Build.IsProdImage)
 		line = append(line, istagMap.Build.Name)
 		line = append(line, istagMap.Build.Namespace)
+		// build := reflect.ValueOf(istagMap.Build)
+		// for i := 0; i < build.NumField(); i++ {
+		// 	line = append(line, build.Field(i).String())
+		// }
+		// for _, v := range buildHeadline {
+		// 	line = append(line, getFieldFromStruct(&istagMap.Build, v))
+		// }
 		output = append(output, line)
 	}
 	headline = []string{"DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
@@ -187,7 +211,10 @@ func GetCsvFromMap(list interface{}) {
 		}
 	}
 	w := csv.NewWriter(os.Stdout)
-	for _, line := range output {
-		w.Write(line)
+	// for _, line := range output {
+	// 	w.Write(line)
+	// }
+	if err := w.WriteAll(output); err != nil {
+		ErrorLogger.Println("writing csv failed" + err.Error())
 	}
 }
