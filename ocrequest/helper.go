@@ -3,7 +3,9 @@ package ocrequest
 import (
 	// "github.com/imdario/mergo"
 	"bytes"
+	"encoding/csv"
 	"encoding/json"
+	"gopkg.in/yaml.v2"
 	"log"
 	"os"
 	"strconv"
@@ -81,4 +83,112 @@ func GetJsonFromMap(list interface{}) string {
 		// return buffer.String()
 	}
 	return ""
+}
+
+func GetYamlFromMap(list interface{}) string {
+	d, err := yaml.Marshal(&list)
+	if err != nil {
+		ErrorLogger.Println("Convert map to Yaml failed", err)
+	}
+	return string(d)
+}
+
+// allistags:
+//   is: {}
+//   istag: {}
+//   sha: {}
+//   report:
+//     anznames: 0
+//     anzshas: 0
+//     anzistreams: 0
+// usedistags:
+//   apache-mod-auth-openidc:
+//     0.3.10:
+//     - usedinnamespace: pkp-inttest-release304
+//       sha: ""
+//       cluster: cid
+func GetCsvFromMap(list interface{}) {
+	output := [][]string{}
+	headline := []string{"DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
+	output = append(output, headline)
+	for is, isMap := range list.(T_completeResults).AllIstags.Is {
+		for sha, shaMap := range isMap {
+			for istag := range shaMap {
+				line := []string{}
+				line = append(line, "allIstags")
+				line = append(line, "is")
+				line = append(line, is)
+				line = append(line, sha)
+				line = append(line, istag)
+				output = append(output, line)
+			}
+		}
+	}
+	headline = []string{"DataRange", "DataType", "istag", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+	output = append(output, headline)
+	for istagName, istagMap := range list.(T_completeResults).AllIstags.Istag {
+		line := []string{}
+		line = append(line, "allIstags")
+		line = append(line, "istag")
+		line = append(line, istagName)
+		line = append(line, istagMap.Imagestream)
+		line = append(line, istagMap.Tagname)
+		line = append(line, istagMap.Namespace)
+		line = append(line, istagMap.Link)
+		line = append(line, istagMap.Date)
+		line = append(line, istagMap.AgeInDays)
+		line = append(line, istagMap.Sha)
+		line = append(line, istagMap.Build.CommitAuthor)
+		line = append(line, istagMap.Build.CommitDate)
+		line = append(line, istagMap.Build.CommitId)
+		line = append(line, istagMap.Build.CommitRef)
+		line = append(line, istagMap.Build.CommitVersion)
+		line = append(line, istagMap.Build.IsProdImage)
+		line = append(line, istagMap.Build.Name)
+		line = append(line, istagMap.Build.Namespace)
+		output = append(output, line)
+	}
+	headline = []string{"DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+	output = append(output, headline)
+	for shaName, shaMap := range list.(T_completeResults).AllIstags.Sha {
+		for istag, istagMap := range shaMap {
+			line := []string{}
+			line = append(line, "allIstags")
+			line = append(line, "sha")
+			line = append(line, shaName)
+			line = append(line, istag)
+			line = append(line, istagMap.Imagestream)
+			line = append(line, istagMap.Namespace)
+			line = append(line, istagMap.Link)
+			line = append(line, istagMap.Date)
+			line = append(line, istagMap.AgeInDays)
+
+			for isreftag, b := range istagMap.Istags.(map[string]bool) {
+				if b {
+					isreftagline := append(line, isreftag)
+					output = append(output, isreftagline)
+				}
+			}
+		}
+	}
+	headline = []string{"DataType", "Imagestream", "Tag", "UsedInNamespace", "Image", "UsedInCluster"}
+	output = append(output, headline)
+	for is, isMap := range list.(T_completeResults).UsedIstags {
+		for istag, istagArray := range isMap { //.(map[string][]map[string]string) {
+			for _, istagMap := range istagArray {
+				line := []string{}
+				line = append(line, "usedistags")
+				line = append(line, is)
+				line = append(line, istag)
+				line = append(line, istagMap.UsedInNamespace)
+				line = append(line, istagMap.Sha)
+				line = append(line, istagMap.Cluster)
+				output = append(output, line)
+			}
+		}
+	}
+	w := csv.NewWriter(os.Stdout)
+	for _, line := range output {
+		w.Write(line)
+	}
 }

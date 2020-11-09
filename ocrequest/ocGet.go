@@ -51,11 +51,11 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		}
 		switch {
 		case typ != "" && name != "":
-			url = Clusters[cluster].Url + urlpath + typ + name
+			url = Clusters[cluster].(T_Cluster).Url + urlpath + typ + name
 		case typ != "" && name == "":
-			url = Clusters[cluster].Url + urlpath + typ
+			url = Clusters[cluster].(T_Cluster).Url + urlpath + typ
 		default:
-			url = Clusters[cluster].Url + urlpath
+			url = Clusters[cluster].(T_Cluster).Url + urlpath
 		}
 		InfoLogger.Println("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
 		// Create a new request using http

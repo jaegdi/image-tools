@@ -7,7 +7,7 @@ var FamilyNamespaces = T_famNs{
 	"fpc": []string{"fpc-jenkins", "images-fpc"},
 }
 
-var Clusters = map[string]T_Cluster{
+var Clusters = map[string]interface{}{
 	"cid": T_Cluster{
 		Name: "cid-apc0",
 		Url:  "https://console.cid-apc0.sf-rz.de:8443"},
@@ -23,6 +23,7 @@ var Clusters = map[string]T_Cluster{
 	"pro": T_Cluster{
 		Name: "pro-apc0",
 		Url:  "https://console.pro-apc0.sf-rz.de:8443"},
+	"stages": []string{"cid", "int", "ppr", "vpt", "pro"},
 }
 
 var OcClient bool

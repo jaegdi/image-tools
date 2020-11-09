@@ -12,10 +12,11 @@
         "mode": "debug",
         "program": "${workspaceFolder}",
         "args": [
-            "-cluster=cid"
-            "-family=pkp"
-            "-is"
-            "-istag"
+            "-cluster=cid",
+            "-family=pkp",
+            // "-is",
+            "-sha",
+            "-csv"
         ]
     },
         {

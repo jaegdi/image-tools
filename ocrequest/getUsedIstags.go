@@ -2,6 +2,7 @@ package ocrequest
 
 import (
 	"encoding/json"
+	"log"
 	"strings"
 )
 
@@ -53,11 +54,9 @@ func FilterDcResults(cluster string, ns string, data T_runningObjects) T_usedIst
 				tag = istagParts[len(istagParts)-1]
 			}
 			usedIstag := T_usedIstag{
-				IsTag:     istag,
-				Namespace: ns,
-				Is:        is,
-				Sha:       sha,
-				Cluster:   cluster,
+				UsedInNamespace: ns,
+				Sha:             sha,
+				Cluster:         cluster,
 			}
 			if results[is] == nil {
 				results[is] = map[string][]T_usedIstag{}
@@ -109,16 +108,15 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_usedIstag
 	return filteredUsedIsTags
 }
 
-func GetUsedIstagsForFamilyInCluster() T_usedIstagsResult {
+func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 	family := CmdParams.Family
-	cluster := CmdParams.Cluster
 	namespace := CmdParams.Filter.Namespace
-
-	// Println(cluster, token, namespace)
 
 	var result T_usedIstagsResult
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
+			InfoLogger.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
+			log.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			// if err := mergo.Merge(&result, r); err != nil {
 			// 	ErrorLogger.Println("merge mySha to resultSha" + ": failed: " + err.Error())
@@ -129,6 +127,19 @@ func GetUsedIstagsForFamilyInCluster() T_usedIstagsResult {
 		}
 	} else {
 		result = ocGetAllUsedIstagsOfNamespace(cluster, namespace)
+	}
+	return result
+}
+
+func GetUsedIstagsForFamily() T_usedIstagsResult {
+	var result T_usedIstagsResult
+	for _, cluster := range Clusters["stages"].([]string) {
+		InfoLogger.Println("Get used istags in cluster: " + cluster)
+		log.Println("Get used istags in cluster: " + cluster)
+		resultCluster := GetUsedIstagsForFamilyInCluster(cluster)
+		t := T_usedIstagsResult{}
+		MergoNestedMaps(&t, result, resultCluster)
+		result = t
 	}
 	return result
 }

@@ -7,7 +7,7 @@ type T_completeResults struct {
 
 // getExistingIstags.go
 type T_shaStreams map[string]map[string]T_istag
-type T_shaNames map[string]map[string]interface{}
+type T_shaNames map[string]map[string]bool
 
 type T_istagBuildLabels struct {
 	CommitAuthor  string `json:"io.openshift.build.commit.author,omitempty"`
@@ -34,7 +34,7 @@ type T_istag struct {
 
 // type T_sha map[string]interface{}
 type T_sha struct {
-	Istags      interface{}
+	Istags      map[string]bool
 	Imagestream string
 	Namespace   string
 	Link        string
@@ -78,11 +78,9 @@ type T_runningObjects struct {
 }
 
 type T_usedIstag struct {
-	IsTag     string
-	Namespace string
-	Sha       string
-	Is        string
-	Cluster   string
+	UsedInNamespace string
+	Sha             string
+	Cluster         string
 }
 
 // usedIstagsResult[Is][Tag]T_usedIstag
@@ -114,6 +112,9 @@ type T_flags struct {
 	Token    string
 	Family   string
 	OcClient bool
+	Json     bool
+	Yaml     bool
+	Csv      bool
 	Output   T_flagOut
 	Filter   T_flagFilt
 }

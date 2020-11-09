@@ -7,4 +7,5 @@ require (
 	github.com/fatih/color v1.9.0
 	github.com/imdario/mergo v0.3.11
 	github.com/mitchellh/mapstructure v1.3.3
+	gopkg.in/yaml.v2 v2.3.0
 )
