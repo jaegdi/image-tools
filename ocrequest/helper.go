@@ -101,13 +101,13 @@ func GetYamlFromMap(list interface{}) string {
 }
 
 func GetCsvFromMap(list interface{}) {
-	output := [][]string{}
-	headline := []string{"DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
+	output := T_csvDoc{}
+	headline := T_csvLine{"DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
 	output = append(output, headline)
 	for is, isMap := range list.(T_completeResults).AllIstags.Is {
 		for sha, shaMap := range isMap {
 			for istag := range shaMap {
-				line := []string{}
+				line := T_csvLine{}
 				line = append(line, "allIstags")
 				line = append(line, "is")
 				line = append(line, is)
@@ -118,7 +118,7 @@ func GetCsvFromMap(list interface{}) {
 		}
 	}
 	// tmp := T_istag{}
-	headline = []string{"DataRange", "DataType", "istag", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+	headline = T_csvLine{"DataRange", "DataType", "istag", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 	// v := reflect.ValueOf(tmp)
 	// typeOfS := v.Type()
 	// istagHeadline := []string{}
@@ -137,17 +137,18 @@ func GetCsvFromMap(list interface{}) {
 	// headline = append(headline, buildHeadline...)
 	output = append(output, headline)
 	for istagName, istagMap := range list.(T_completeResults).AllIstags.Istag {
-		line := []string{}
+		line := T_csvLine{}
 		line = append(line, "allIstags")
 		line = append(line, "istag")
 		line = append(line, istagName)
-		line = append(line, istagMap.Imagestream)
-		line = append(line, istagMap.Tagname)
-		line = append(line, istagMap.Namespace)
-		line = append(line, istagMap.Link)
-		line = append(line, istagMap.Date)
-		line = append(line, istagMap.AgeInDays)
-		line = append(line, istagMap.Sha)
+		line = append(line, istagMap.List()...)
+		// line = append(line, istagMap.Imagestream)
+		// line = append(line, istagMap.Tagname)
+		// line = append(line, istagMap.Namespace)
+		// line = append(line, istagMap.Link)
+		// line = append(line, istagMap.Date)
+		// line = append(line, istagMap.AgeInDays)
+		// line = append(line, istagMap.Sha)
 		// v := reflect.ValueOf(istagMap)
 		// for i := 0; i < v.NumField(); i++ {
 		// 	line = append(line, v.Field(i).String())
@@ -155,14 +156,14 @@ func GetCsvFromMap(list interface{}) {
 		// for _, v := range istagHeadline {
 		// 	line = append(line, getFieldFromStruct(&istagMap, v))
 		// }
-		line = append(line, istagMap.Build.CommitAuthor)
-		line = append(line, istagMap.Build.CommitDate)
-		line = append(line, istagMap.Build.CommitId)
-		line = append(line, istagMap.Build.CommitRef)
-		line = append(line, istagMap.Build.CommitVersion)
-		line = append(line, istagMap.Build.IsProdImage)
-		line = append(line, istagMap.Build.Name)
-		line = append(line, istagMap.Build.Namespace)
+		// line = append(line, istagMap.Build.CommitAuthor)
+		// line = append(line, istagMap.Build.CommitDate)
+		// line = append(line, istagMap.Build.CommitId)
+		// line = append(line, istagMap.Build.CommitRef)
+		// line = append(line, istagMap.Build.CommitVersion)
+		// line = append(line, istagMap.Build.IsProdImage)
+		// line = append(line, istagMap.Build.Name)
+		// line = append(line, istagMap.Build.Namespace)
 		// build := reflect.ValueOf(istagMap.Build)
 		// for i := 0; i < build.NumField(); i++ {
 		// 	line = append(line, build.Field(i).String())
@@ -172,11 +173,11 @@ func GetCsvFromMap(list interface{}) {
 		// }
 		output = append(output, line)
 	}
-	headline = []string{"DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+	headline = T_csvLine{"DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 	output = append(output, headline)
 	for shaName, shaMap := range list.(T_completeResults).AllIstags.Sha {
 		for istag, istagMap := range shaMap {
-			line := []string{}
+			line := T_csvLine{}
 			line = append(line, "allIstags")
 			line = append(line, "sha")
 			line = append(line, shaName)
@@ -194,12 +195,12 @@ func GetCsvFromMap(list interface{}) {
 			}
 		}
 	}
-	headline = []string{"DataType", "Imagestream", "Tag", "UsedInNamespace", "Image", "UsedInCluster"}
+	headline = T_csvLine{"DataType", "Imagestream", "Tag", "UsedInNamespace", "Image", "UsedInCluster"}
 	output = append(output, headline)
 	for is, isMap := range list.(T_completeResults).UsedIstags {
 		for istag, istagArray := range isMap { //.(map[string][]map[string]string) {
 			for _, istagMap := range istagArray {
-				line := []string{}
+				line := T_csvLine{}
 				line = append(line, "usedistags")
 				line = append(line, is)
 				line = append(line, istag)
@@ -214,7 +215,7 @@ func GetCsvFromMap(list interface{}) {
 	// for _, line := range output {
 	// 	w.Write(line)
 	// }
-	if err := w.WriteAll(output); err != nil {
+	if err := w.WriteAll(output.csvDoc()); err != nil {
 		ErrorLogger.Println("writing csv failed" + err.Error())
 	}
 }

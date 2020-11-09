@@ -1,5 +1,9 @@
 package ocrequest
 
+import (
+	// "log"
+)
+
 type T_completeResults struct {
 	AllIstags  T_result
 	UsedIstags T_usedIstagsResult
@@ -20,6 +24,19 @@ type T_istagBuildLabels struct {
 	Namespace     string `json:"io.openshift.build.namespace,omitempty"`
 }
 
+func (b T_istagBuildLabels) List() []string {
+	l := []string{}
+	l = append(l, b.CommitAuthor)
+	l = append(l, b.CommitDate)
+	l = append(l, b.CommitId)
+	l = append(l, b.CommitRef)
+	l = append(l, b.CommitVersion)
+	l = append(l, b.IsProdImage)
+	l = append(l, b.Name)
+	l = append(l, b.Namespace)
+	return l
+}
+
 // type T_istag map[string]interface{}
 type T_istag struct {
 	Imagestream string
@@ -30,6 +47,19 @@ type T_istag struct {
 	AgeInDays   string
 	Sha         string
 	Build       T_istagBuildLabels
+}
+
+func (c T_istag) List() []string {
+	line := []string{}
+	line = append(line, c.Imagestream)
+	line = append(line, c.Tagname)
+	line = append(line, c.Namespace)
+	line = append(line, c.Link)
+	line = append(line, c.Date)
+	line = append(line, c.AgeInDays)
+	line = append(line, c.Sha)
+	line = append(line, c.Build.List()...)
+	return line
 }
 
 // type T_sha map[string]interface{}
@@ -134,4 +164,16 @@ type T_Clusters struct {
 	Ppr T_Cluster
 	Vpt T_Cluster
 	Pro T_Cluster
+}
+
+type T_csvLine []string
+
+type T_csvDoc []T_csvLine
+
+func (c T_csvDoc) csvDoc() [][]string {
+	out := [][]string{}
+	for _, l := range c {
+		out = append(out, l)
+	}
+	return out
 }
