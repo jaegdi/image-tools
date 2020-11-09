@@ -3,6 +3,8 @@ package main
 import (
 	"clean-istags/ocrequest"
 	. "fmt"
+	// _ "github.com/rakyll/gom/http"
+	"net/http"
 	_ "net/http/pprof"
 )
 
@@ -12,8 +14,11 @@ func init() {
 
 func main() {
 	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
+		ocrequest.InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
+	// var str string
+	// Scanln(&str)
+	// ocrequest.InfoLogger.Println(str)
 	ocrequest.EvalFlags()
 	ocrequest.GetIsNamesForFamily(ocrequest.CmdParams.Family)
 	result := ocrequest.T_completeResults{}
@@ -40,6 +45,7 @@ func main() {
 	case ocrequest.CmdParams.Csv:
 		ocrequest.GetCsvFromMap(result)
 	}
-
+	// Scanln(&str)
+	// ocrequest.InfoLogger.Println(str)
 	// ocrequest.Test_MergeNestedMaps()
 }

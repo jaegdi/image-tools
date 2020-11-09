@@ -162,12 +162,11 @@ func GetCsvFromMap(list interface{}) {
 			line = append(line, istagMap.Link)
 			line = append(line, istagMap.Date)
 			line = append(line, istagMap.AgeInDays)
-
-			for isreftag, b := range istagMap.Istags.(map[string]bool) {
-				if b {
-					isreftagline := append(line, isreftag)
-					output = append(output, isreftagline)
-				}
+			for tag := range istagMap.Istags {
+				//  make a real copy of line !!!!
+				copyOfLine := append([]string{}, line...)
+				copyOfLine = append(copyOfLine, tag)
+				output = append(output, copyOfLine)
 			}
 		}
 	}

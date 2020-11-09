@@ -11,7 +11,7 @@ import (
 var IsNamesForFamily T_IsNamesForFamily
 
 // joinShaStreams join keys of a map to an array.
-func joinShaStreams(mymap map[string]interface{}) []string {
+func joinShaStreams(mymap map[string]bool) []string {
 	keys := []string{}
 	for k := range mymap {
 		keys = append(keys, k)

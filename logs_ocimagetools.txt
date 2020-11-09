@@ -5144,3 +5144,1093 @@ INFO: 2020/11/09 15:05:01 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.
 INFO: 2020/11/09 15:05:01 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
 INFO: 2020/11/09 15:05:02 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
 INFO: 2020/11/09 15:05:02 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:17:12 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:17:12 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 18:17:12 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 18:17:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 18:17:13 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:17:13 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:13 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:17:13 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:13 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 18:17:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:15 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:17:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:16 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:17:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:17:16 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:18:16 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:18:16 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 18:18:16 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 18:18:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 18:18:17 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:18:18 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:18 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:18:18 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:18 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 18:18:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:18:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:23:59 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:23:59 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 18:23:59 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 18:23:59 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:23:59 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 18:24:00 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:24:00 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:24:00 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:24:00 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:24:00 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 18:24:02 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:24:02 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:24:02 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:24:02 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:24:03 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:24:03 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:36:14 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:36:14 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 18:38:08 /home/djaeger/devel/go/ocimagetools/main.go:20: 
+INFO: 2020/11/09 18:38:08 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 18:38:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 18:38:09 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:38:09 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:09 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:38:09 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:09 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 18:38:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:11 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:38:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:11 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:38:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:38:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:46:49 /home/djaeger/devel/go/ocimagetools/main.go:48: 
+INFO: 2020/11/09 18:46:53 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:46:53 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 18:48:07 /home/djaeger/devel/go/ocimagetools/main.go:20: 
+INFO: 2020/11/09 18:48:07 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 18:48:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 18:48:08 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:48:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:08 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 18:48:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:08 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 18:48:10 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:10 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:48:10 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:10 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:48:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 18:48:11 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 18:58:58 /home/djaeger/devel/go/ocimagetools/main.go:48: 
+INFO: 2020/11/09 18:58:59 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 18:58:59 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:04:25 /home/djaeger/devel/go/ocimagetools/main.go:20: 
+INFO: 2020/11/09 19:04:25 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:04:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:04:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:04:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:04:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:04:29 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:04:29 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:16:38 /home/djaeger/devel/go/ocimagetools/main.go:48: 
+INFO: 2020/11/09 19:50:05 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:50:05 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:50:11 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:50:11 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:50:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:50:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:50:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:50:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:50:14 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:14 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:50:14 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:14 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:50:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:15 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:50:53 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:50:55 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:50:55 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:50:58 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:50:58 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:50:58 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:58 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:50:59 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:50:59 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:59 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:50:59 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:50:59 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:51:01 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:01 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:51:01 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:01 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:51:02 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:02 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:51:38 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:51:49 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:51:49 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:51:52 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:51:52 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:51:52 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:52 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:51:53 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:51:53 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:53 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:51:53 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:53 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:51:55 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:55 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:51:55 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:55 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:51:56 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:51:56 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:01 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:52:02 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:52:02 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:52:03 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:52:03 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:52:03 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:03 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:52:04 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:04 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:04 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:04 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:04 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:07 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:09 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:52:10 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:52:10 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:52:11 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:52:11 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:52:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:11 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:52:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:52:14 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:14 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:15 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:15 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:24 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:52:25 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:52:25 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:52:26 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:52:26 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:52:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:52:27 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:27 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:52:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:27 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:52:29 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:29 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:29 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:29 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:30 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:52:30 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:52:44 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:53:20 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:53:20 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:53:21 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:53:21 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:53:21 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:21 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:53:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:53:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:25 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:25 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:31 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:53:32 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:53:32 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:53:33 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:53:33 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:53:33 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:33 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:53:34 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:34 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:34 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:34 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:34 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:53:36 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:36 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:36 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:36 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:37 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:37 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:41 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:53:42 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:53:42 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:53:43 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:53:43 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:53:43 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:43 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:53:44 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:44 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:44 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:53:44 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:44 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:53:46 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:46 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:46 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:46 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:53:47 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:53:47 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:54:20 /home/djaeger/devel/go/ocimagetools/main.go:49: 
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/main.go:21: 
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:54:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:54:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:54:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:54:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:54:31 /home/djaeger/devel/go/ocimagetools/main.go:49: [C
+INFO: 2020/11/09 19:55:34 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 19:55:34 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 19:55:34 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 19:55:34 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:34 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 19:55:35 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:55:35 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:35 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 19:55:35 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:35 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 19:55:37 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:37 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:55:37 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:37 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 19:55:38 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 19:55:38 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:11:08 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:11:08 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:11:08 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:11:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:11:10 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:11:10 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:10 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:11:10 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:10 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:11:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:11:12 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:12 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:11:13 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:11:13 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:14:19 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:14:19 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:14:19 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:14:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:14:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:14:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:14:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:14:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:14:23 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:23 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:14:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:14:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:21 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:18:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:18:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:18:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:18:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:18:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:18:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:18:25 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:27:20 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:27:20 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:27:20 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:27:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:27:21 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:27:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:27:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:27:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:27:24 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:24 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:27:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:27:25 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:48:15 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:48:15 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:48:15 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:48:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:15 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:48:16 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:48:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:16 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:48:16 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:16 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:48:18 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:18 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:48:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:19 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:48:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:48:19 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:49:50 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:49:50 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:49:50 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:49:50 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:50 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:49:51 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:49:51 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:51 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:49:51 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:51 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:49:53 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:53 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:49:53 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:53 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:49:54 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:49:54 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:55:19 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:55:19 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:55:19 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:55:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:19 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:55:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:55:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:55:20 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:20 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:55:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:55:22 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:22 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:55:23 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:55:23 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:59:04 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 20:59:04 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 20:59:04 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 20:59:04 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:04 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 20:59:05 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:59:05 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:05 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 20:59:05 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:05 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 20:59:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:07 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:59:07 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:07 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 20:59:08 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 20:59:08 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:00:25 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 21:00:25 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 21:00:25 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 21:00:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:25 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 21:00:26 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:00:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:27 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:00:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:27 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 21:00:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:00:29 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:29 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:00:29 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:00:29 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:04:27 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 21:04:27 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 21:04:27 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 21:04:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 21:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 21:04:30 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:30 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:04:30 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:30 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:04:31 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:04:31 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:23:27 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:24: ------------------------------------------------------------
+INFO: 2020/11/09 21:23:27 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:25: Starting execution of clean-istags
+INFO: 2020/11/09 21:23:27 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:87: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "OcClient": false,
+   "Json": false,
+   "Yaml": false,
+   "Csv": true,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Sha": true,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Shaname": "",
+      "Namespace": ""
+   }
+}
+
+INFO: 2020/11/09 21:23:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:27 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:44: Try to login:  ocl cid-apc0
+INFO: 2020/11/09 21:23:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:23:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2020/11/09 21:23:28 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:28 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/09 21:23:30 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:30 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:23:31 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:31 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/09 21:23:31 /home/djaeger/devel/go/ocimagetools/ocrequest/oclogin.go:23: Try to get cluster token for cluster:  cid
+INFO: 2020/11/09 21:23:31 /home/djaeger/devel/go/ocimagetools/ocrequest/ocGet.go:60: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
