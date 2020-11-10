@@ -1,7 +1,7 @@
 package ocrequest
 
 import (
-	// "log"
+// "log"
 )
 
 type T_completeResults struct {
@@ -36,6 +36,18 @@ func (b T_istagBuildLabels) List() []string {
 	l = append(l, b.Namespace)
 	return l
 }
+func (b T_istagBuildLabels) Names() []string {
+	l := []string{}
+	l = append(l, "CommitAuthor")
+	l = append(l, "CommitDate")
+	l = append(l, "CommitId")
+	l = append(l, "CommitRef")
+	l = append(l, "CommitVersion")
+	l = append(l, "IsProdImage")
+	l = append(l, "Name")
+	l = append(l, "Namespace")
+	return l
+}
 
 // type T_istag map[string]interface{}
 type T_istag struct {
@@ -59,6 +71,19 @@ func (c T_istag) List() []string {
 	line = append(line, c.AgeInDays)
 	line = append(line, c.Sha)
 	line = append(line, c.Build.List()...)
+	return line
+}
+
+func (c T_istag) Names() []string {
+	line := []string{}
+	line = append(line, "Imagestream")
+	line = append(line, "Tagname")
+	line = append(line, "Namespace")
+	line = append(line, "Link")
+	line = append(line, "Date")
+	line = append(line, "AgeInDays")
+	line = append(line, "Sha")
+	line = append(line, c.Build.Names()...)
 	return line
 }
 
@@ -112,6 +137,22 @@ type T_usedIstag struct {
 	UsedInNamespace string
 	Sha             string
 	Cluster         string
+}
+
+func (c T_usedIstag) List() []string {
+	line := []string{}
+	line = append(line, c.UsedInNamespace)
+	line = append(line, c.Sha)
+	line = append(line, c.Cluster)
+	return line
+}
+
+func (c T_usedIstag) Names() []string {
+	line := []string{}
+	line = append(line, "UsedInNamespace")
+	line = append(line, "Sha")
+	line = append(line, "Cluster")
+	return line
 }
 
 // usedIstagsResult[Is][Tag]T_usedIstag
