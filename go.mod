@@ -12,6 +12,7 @@ require (
 	github.com/maruel/panicparse v1.5.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.3
 	github.com/rakyll/gom v0.0.0-20161122080731-183a9e70f477
+	github.com/stretchr/stew v0.0.0-20130812190256-80ef0842b48b
 	golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )

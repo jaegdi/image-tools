@@ -2,15 +2,15 @@ package ocrequest
 
 import (
 	"encoding/json"
-	)
+)
 
 type T_ImagesMap map[string]interface{}
 
 var ImagesMap T_ImagesMap
 
-// OcGetAllImagesOfCluster reads images from cluster and converts the items array to
-// a map sha=>item
-func OcGetAllImagesOfCluster(cluster string) {
+// InitAllImagesOfCluster reads images from cluster and converts the items array to
+// a map sha=>item and set the package var ImagesMap to the result.
+func InitAllImagesOfCluster(cluster string) {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {

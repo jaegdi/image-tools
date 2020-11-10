@@ -13,9 +13,9 @@
         "program": "${workspaceFolder}",
         "args": [
             "-cluster=cid",
-            "-family=pkp",
+            "-family=aps",
             // "-is",
-            "-istags",
+            "-used",
             "-csv"
         ]
     },

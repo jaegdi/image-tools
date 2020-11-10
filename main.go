@@ -20,14 +20,13 @@ func main() {
 	// Scanln(&str)
 	// ocrequest.InfoLogger.Println(str)
 	ocrequest.EvalFlags()
-	ocrequest.GetIsNamesForFamily(ocrequest.CmdParams.Family)
+	ocrequest.InitIsNamesForFamily(ocrequest.CmdParams.Family)
 	result := ocrequest.T_completeResults{}
 	if ocrequest.CmdParams.Output.All ||
 		ocrequest.CmdParams.Output.Is ||
 		ocrequest.CmdParams.Output.Istag ||
 		ocrequest.CmdParams.Output.Sha {
-		ocrequest.OcGetAllImagesOfCluster(ocrequest.CmdParams.Cluster)
-		// ocrequest.GetIsNamesForFamily(ocrequest.CmdParams.Family)
+		ocrequest.InitAllImagesOfCluster(ocrequest.CmdParams.Cluster)
 		allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster())
 		filteredIsTags := ocrequest.FilterAllIstags(allIsTags)
 		result.AllIstags = filteredIsTags

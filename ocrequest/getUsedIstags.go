@@ -2,10 +2,16 @@ package ocrequest
 
 import (
 	"encoding/json"
+	"github.com/stretchr/stew/slice"
 	"log"
+	"regexp"
 	"strings"
 )
 
+// GetAppNamespacesForFamily gets all namespaces of a cluster and
+// filters them with the pattern '^<family>-' to find all namespaces, which
+// names starting with the family-name followed by a dash. It returns a slice
+// list with the application namespaces for the family.
 func GetAppNamespacesForFamily(cluster string, family string) []string {
 	namespacesJson := ocGetCall(cluster, "", "namespaces", "")
 	namespacesMap := map[string]interface{}{}
@@ -14,11 +20,12 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	if err != nil {
 		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
 	}
+	var regexValidNamespace = regexp.MustCompile(`^` + family + `-..|..-` + family + `-..|..-` + family + `$`)
 	if len(namespacesMap["items"].([]interface{})) > 0 {
 		for _, v := range namespacesMap["items"].([]interface{}) {
 			if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
 				ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-				if strings.Contains(ns, "pkp-") {
+				if regexValidNamespace.MatchString(ns) {
 					namespaceList = append(namespaceList, ns)
 				}
 			}
@@ -27,49 +34,85 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	return namespaceList
 }
 
-func FilterDcResults(cluster string, ns string, data T_runningObjects) T_usedIstagsResult {
-	results := T_usedIstagsResult{}
-	// ToDo Implementation
-	dc := data.Dc["items"]
-	for _, content := range dc.([]interface{}) {
-		for _, containers := range content.(map[string]interface{})["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"].([]interface{}) {
-			image := containers.(map[string]interface{})["image"].(string)
-			imageParts := strings.Split(image, "/")
-			istag := imageParts[len(imageParts)-1]
-			var is string
-			var tag string
-			var sha string
-			istagParts := strings.Split(istag, "@")
-			if len(istagParts) < 2 {
-				istagParts = strings.Split(istag, ":")
-				sha = ""
-			} else {
-				sha = istagParts[len(istagParts)-1]
-			}
-			if len(istagParts) < 2 {
-				is = istagParts[len(istagParts)-1]
-				tag = ""
-			} else {
-				is = istagParts[len(istagParts)-2]
-				tag = istagParts[len(istagParts)-1]
-			}
-			usedIstag := T_usedIstag{
-				UsedInNamespace: ns,
-				Sha:             sha,
-				Cluster:         cluster,
-			}
-			if results[is] == nil {
-				results[is] = map[string][]T_usedIstag{}
-			}
-			if results[is][tag] == nil {
-				results[is][tag] = []T_usedIstag{}
-			}
+// getIstagFromContainer get the imag
+func getIstagFromContainer(cluster string, namespace string, containers []interface{}, results T_usedIstagsResult) T_usedIstagsResult {
+	var is string
+	var tag string
+	var sha string
+	for _, container := range containers {
+		image := container.(map[string]interface{})["image"].(string)
+		imageParts := strings.Split(image, "/")
+		istag := imageParts[len(imageParts)-1]
+		istagParts := strings.Split(istag, "@")
+		if len(istagParts) < 2 {
+			istagParts = strings.Split(istag, ":")
+			sha = ""
+		} else {
+			sha = istagParts[len(istagParts)-1]
+		}
+		if len(istagParts) < 2 {
+			is = istagParts[len(istagParts)-1]
+			tag = ""
+		} else {
+			is = istagParts[len(istagParts)-2]
+			tag = istagParts[len(istagParts)-1]
+		}
+		usedIstag := T_usedIstag{
+			UsedInNamespace: namespace,
+			Sha:             sha,
+			Cluster:         cluster,
+		}
+		if results[is] == nil {
+			results[is] = map[string][]T_usedIstag{}
+		}
+		if results[is][tag] == nil {
+			results[is][tag] = []T_usedIstag{}
+		}
+		if !slice.Contains(results[is][tag], usedIstag) {
 			results[is][tag] = append(results[is][tag], usedIstag)
 		}
 	}
 	return results
 }
 
+// FilterIstagsFromRunningObjects get the right position in the data map, where the containers are defined
+// and calls getIsTagFromContainer with this data node to get the istag of this container.
+func FilterIstagsFromRunningObjects(cluster string, namespace string, data T_runningObjects) T_usedIstagsResult {
+	results := T_usedIstagsResult{}
+	if !(data.Dc == nil || data.Dc["items"] == nil || data.Dc["items"].([]interface{}) == nil) {
+		for _, content := range data.Dc["items"].([]interface{}) {
+			containers := content.(map[string]interface{})["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"]
+			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
+		}
+	}
+	if !(data.Job == nil || data.Job["items"] == nil || data.Job["items"].([]interface{}) == nil) {
+		for _, content := range data.Job["items"].([]interface{}) {
+			containers := content.(map[string]interface{})["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"]
+			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
+		}
+	}
+	if !(data.Cronjob == nil || data.Cronjob["items"] == nil || data.Cronjob["items"].([]interface{}) == nil) {
+		for _, content := range data.Cronjob["items"].([]interface{}) {
+			jobtemplate := content.(map[string]interface{})["spec"].(map[string]interface{})["jobTemplate"].(map[string]interface{})
+			containers := jobtemplate["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"]
+			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
+		}
+	}
+	if !(data.Pod == nil || data.Pod["items"] == nil || data.Pod["items"].([]interface{}) == nil) {
+		for _, content := range data.Pod["items"].([]interface{}) {
+			containers := content.(map[string]interface{})["spec"].(map[string]interface{})["containers"]
+			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
+		}
+	}
+	return results
+}
+
+// ocGetAllUsedIstagsOfNamespace get __used__ istags from __a namespace__
+// of __one__ cluster.
+// It looks for deploymentconfigs, jobs, cronjobs and pods in all
+// namespaces, that belongs to the family,
+// registers the images of these objects and generates
+// a map with all these istags and return this map as result.
 func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_usedIstagsResult {
 	istagsDcJson := ocGetCall(cluster, namespace, "deploymentconfigs", "")
 	istagsJobJson := ocGetCall(cluster, namespace, "jobs", "")
@@ -104,10 +147,15 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_usedIstag
 	result.Job = istagsJobResult
 	result.Cronjob = istagsCronjobResult
 	result.Pod = istagsPodResult
-	filteredUsedIsTags := FilterDcResults(cluster, namespace, result)
+	filteredUsedIsTags := FilterIstagsFromRunningObjects(cluster, namespace, result)
 	return filteredUsedIsTags
 }
 
+// GetUsedIstagsForFamilyInCluster get __used__ istags from __one__ cluster.
+// It looks for deploymentconfigs, jobs, cronjobs and pods in all
+// namespaces, that belongs to the family,
+// registers the images of these objects and generates
+// a map with all these istags and return this map as result.
 func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 	family := CmdParams.Family
 	namespace := CmdParams.Filter.Namespace
@@ -131,6 +179,11 @@ func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 	return result
 }
 
+// GetUsedIstagsForFamily get __used__ istags from __all__ clusters.
+// It looks for deploymentconfigs, jobs, cronjobs and pods in all
+// namespaces, that belongs to the family,
+// registers the images of these objects and generates
+// a map with all these istags and return this map as result.
 func GetUsedIstagsForFamily() T_usedIstagsResult {
 	var result T_usedIstagsResult
 	for _, cluster := range Clusters["stages"].([]string) {

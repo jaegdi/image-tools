@@ -128,7 +128,7 @@ func GetCsvFromMap(list interface{}) {
 			line = append(line, "allIstags")
 			line = append(line, "istag")
 			line = append(line, istagName)
-			line = append(line, istagMap.List()...)
+			line = append(line, istagMap.Values()...)
 			output = append(output, line)
 		}
 	}
@@ -157,7 +157,7 @@ func GetCsvFromMap(list interface{}) {
 		}
 	}
 	if CmdParams.Output.Used {
-		headline := T_csvLine{"DataType", "Imagestream", "Tag"} //, "UsedInNamespace", "Image", "UsedInCluster"}
+		headline := T_csvLine{"DataRange", "DataType", "Imagestream", "Tag"} //, "UsedInNamespace", "Image", "UsedInCluster"}
 		headline = append(headline, T_usedIstag{}.Names()...)
 		output = append(output, headline)
 		for is, isMap := range list.(T_completeResults).UsedIstags {
@@ -165,9 +165,10 @@ func GetCsvFromMap(list interface{}) {
 				for _, istagMap := range istagArray {
 					line := T_csvLine{}
 					line = append(line, "usedistags")
+					line = append(line, "is:tag")
 					line = append(line, is)
 					line = append(line, istag)
-					line = append(line, istagMap.List()...)
+					line = append(line, istagMap.Values()...)
 					output = append(output, line)
 				}
 			}

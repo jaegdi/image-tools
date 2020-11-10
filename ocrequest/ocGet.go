@@ -43,6 +43,10 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 			urlpath = "/apis/image.openshift.io/v1/"
 		case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
 			urlpath = "/oapi/v1/namespaces/" + namespace + "/"
+		case "jobs":
+			urlpath = "/apis/batch/v1/namespaces/" + namespace + "/"
+		case "cronjobs":
+			urlpath = "/apis/batch/v1beta1/namespaces/" + namespace + "/"
 		case "namespaces":
 			urlpath = "/api/v1/namespaces"
 			typ = ""
@@ -61,7 +65,7 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		// Create a new request using http
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
-			ErrorLogger.Println(err)
+			ErrorLogger.Println("Get " + url + " failed. " + err.Error())
 		}
 		// add header to the req
 		req.Header.Set("Authorization", bearer)
@@ -71,9 +75,12 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		client := &http.Client{}
 		resp, err := client.Do(req)
 		if err != nil {
-			ErrorLogger.Println("Error on response.\n[ERROR] -" + err.Error())
+			ErrorLogger.Println("Error on sending request.\n[ERROR] -" + err.Error())
 		}
-		body, _ := ioutil.ReadAll(resp.Body)
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			ErrorLogger.Println("Error on reading response.\n[ERROR] -" + err.Error())
+		}
 		return string([]byte(body))
 	}
 }

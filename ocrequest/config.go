@@ -23,7 +23,10 @@ var Clusters = map[string]interface{}{
 	"pro": T_Cluster{
 		Name: "pro-apc0",
 		Url:  "https://console.pro-apc0.sf-rz.de:8443"},
-	"stages": []string{"cid", "int", "ppr", "vpt", "pro"},
+	"stages":     []string{"cid", "int", "ppr", "vpt", "pro"},
+	"buildstage": "cid",
+	"teststages": []string{"int", "ppr", "vpt"},
+	"prodstage":  "pro",
 }
 
 var OcClient bool
