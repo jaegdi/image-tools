@@ -37,6 +37,7 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
   -family string
       family name, eg. pkp, aps, ssp or fpc 
+
   -cluster string
       shortname of cluster, eg. cid,int, ppr or pro
 
@@ -44,12 +45,16 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
   -all
       output all imageStreams imageStreamTags and Image's
+
   -image
       output of Image's
+
   -istag
       output of imageStreamTags
+
   -is
       output of imageStreams
+
   -used
       output used imageStreams imageStreamTags and Image's from all clusters
 
@@ -57,24 +62,33 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
   -namespace string
       namespace to look for istags
+
   -isname string
       filter output of one imageStream as json, eg. -is=wvv-service
+
   -istagname string
       filter output of one imageStreamTag
+
   -shaname string
       filter output of a Image with this SHA
+
   -tagname string
       filter output all istags with this Tag
 
 ##### output format
+
   -json
       defines JSON as the output format for the reported data. This is the DEFAULT
+
   -yaml
       defines YAML as the output format for the reported data
+
   -csv
       defines CSV as the output format for the reported data
+
   -table
       defines formated ASCI TABLE as the output format for the reported data
+
   -tabgroup
       defines formated ASCII TABLE WITH GROUPED ROWS as the output format for the reported data.
 
@@ -82,6 +96,7 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
   -occlient
       use oc client instead of api call for cluster communication
+
   -token string
       token for cluster, its a alternative to login before exec
 
