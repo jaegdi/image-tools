@@ -58,7 +58,7 @@ func MergoNestedMaps(dest, m1, m2 interface{}) {
 // 	d := T{}
 // 	MergoNestedMaps(&d, map1, map2)
 // 	Println("Map: ", d)
-// 	JsonStr, err := json.MarshalIndent(d, "", "  ")
+// 	JsonStr, err := json.MarimagelIndent(d, "", "  ")
 // 	if err != nil {
 // 		Println("Json: Marshal error", err)
 // 	}

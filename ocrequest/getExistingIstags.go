@@ -19,7 +19,7 @@ func joinShaStreams(mymap map[string]bool) []string {
 	return keys
 }
 
-// // addNamesToShaNames initialize the sha-names map if it is nil and add new names to this map.
+// // addNamesToShaNames initialize the image-names map if it is nil and add new names to this map.
 // func addNamesToShaNames(a T_shaNames, key string, b string) T_shaNames {
 // 	if a == nil {
 // 		a = T_shaNames{}
@@ -31,34 +31,34 @@ func joinShaStreams(mymap map[string]bool) []string {
 // 	return a
 // }
 
-// // addNamesToShaStreams initialize the sha-streams map if it is nil and add new names to this map.
-// func addNamesToShaStreams(a T_shaStreams, is string, sha string, istag T_istag) T_shaStreams {
+// // addNamesToShaStreams initialize the image-streams map if it is nil and add new names to this map.
+// func addNamesToShaStreams(a T_shaStreams, is string, image string, istag T_istag) T_shaStreams {
 // 	if a == nil {
 // 		a = T_shaStreams{}
 // 	}
 // 	if a[is] == nil {
 // 		a[is] = T_resIstag{}
 // 	}
-// 	if a[is][sha] == (T_istag{}) {
-// 		a[is][sha] = T_istag{}
+// 	if a[is][image] == (T_istag{}) {
+// 		a[is][image] = T_istag{}
 // 	}
 // 	// for k, v := range istag {
-// 	a[is][sha] = istag
+// 	a[is][image] = istag
 // 	// }
 // 	return a
 // }
 
 // appendJoinedNamesToImagestreams get as params the imageStream-map and then joinedNames of istags and
-// put them on the map under imagestreamMap.imagestream.sha .
-func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, sha string, joinedNames []string) T_resIs {
+// put them on the map under imagestreamMap.imagestream.image .
+func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, image string, joinedNames []string) T_resIs {
 	if istream[imagestreamName] == nil {
 		istream[imagestreamName] = T_is{}
 	}
-	if istream[imagestreamName][sha] == nil {
-		istream[imagestreamName][sha] = T_isShaTagnames{}
+	if istream[imagestreamName][image] == nil {
+		istream[imagestreamName][image] = T_isShaTagnames{}
 	}
 	for _, v := range joinedNames {
-		istream[imagestreamName][sha][v] = true
+		istream[imagestreamName][image][v] = true
 	}
 	return istream
 }
@@ -118,10 +118,16 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
 		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
 		istagname := metadata["name"].(string)
+		if CmdParams.Filter.Istagname != "" && istagname != CmdParams.Filter.Istagname {
+			continue
+		}
 		isNamespace := metadata["namespace"].(string)
 		isLink := metadata["selfLink"].(string)
 		isDate := metadata["creationTimestamp"].(string)
 		sha := imageMetadata["name"].(string)
+		if CmdParams.Filter.Imagename != "" && sha != CmdParams.Filter.Imagename {
+			continue
+		}
 
 		buildLabelsMap := T_istagBuildLabels{}
 		if ImagesMap[sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
@@ -134,6 +140,12 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		}
 		tagName := imagestreamfields[1]
 		isAge := fmt.Sprintf("%v", ageInDays(isDate))
+		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname {
+			continue
+		}
+		if CmdParams.Filter.Tagname != "" && tagName != CmdParams.Filter.Tagname {
+			continue
+		}
 
 		shaNames.Add(sha, isNamespace+"/"+istagname)
 
@@ -144,7 +156,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 			Link:        isLink,
 			Date:        isDate,
 			AgeInDays:   isAge,
-			Sha:         sha,
+			Image:       sha,
 			Build:       buildLabelsMap,
 		}
 
@@ -174,7 +186,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 	}
 	tmp_result := T_result{
 		Istag: resultIstag,
-		Sha:   resultSha,
+		Image: resultSha,
 		Is:    resultIstream,
 	}
 
@@ -182,12 +194,12 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 	MergoNestedMaps(&t, result, tmp_result)
 	result = t
 	n_istags := len(result.Istag)
-	n_shas := len(result.Sha)
+	n_shas := len(result.Image)
 	n_is := len(result.Is)
 	result.Report = T_resReport{
-		AnzNames:    n_istags,
-		AnzShas:     n_shas,
-		AnzIstreams: n_is,
+		Anz_ImageStreamTags: n_istags,
+		Anz_Images:          n_shas,
+		Anz_ImageStreams:    n_is,
 	}
 	return result
 }

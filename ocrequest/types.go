@@ -13,22 +13,23 @@ type T_completeResults struct {
 	AllIstags  T_result
 	UsedIstags T_usedIstagsResult
 }
+type T_completeResultsFamilies map[string]T_completeResults
 
 // getExistingIstags.go
 type T_shaStreams map[string]map[string]T_istag
 
-func (a T_shaStreams) Add(is string, sha string, istag T_istag) {
+func (a T_shaStreams) Add(is string, image string, istag T_istag) {
 	if a == nil {
 		a = T_shaStreams{}
 	}
 	if a[is] == nil {
 		a[is] = T_resIstag{}
 	}
-	if a[is][sha] == (T_istag{}) {
-		a[is][sha] = T_istag{}
+	if a[is][image] == (T_istag{}) {
+		a[is][image] = T_istag{}
 	}
 	// for k, v := range istag {
-	a[is][sha] = istag
+	a[is][image] = istag
 }
 
 type T_Istags_List map[string]bool
@@ -92,7 +93,7 @@ type T_istag struct {
 	Link        string
 	Date        string
 	AgeInDays   string
-	Sha         string
+	Image       string
 	Build       T_istagBuildLabels
 }
 
@@ -154,15 +155,15 @@ type T_resIs map[string]T_is
 type T_resSha map[string]map[string]T_sha
 
 type T_resReport struct {
-	AnzNames    int
-	AnzShas     int
-	AnzIstreams int
+	Anz_ImageStreamTags int
+	Anz_Images          int
+	Anz_ImageStreams    int
 }
 
 type T_result struct {
 	Is     T_resIs
 	Istag  T_resIstag
-	Sha    T_resSha
+	Image  T_resSha
 	Report T_resReport
 }
 
@@ -183,7 +184,7 @@ type T_runningObjects struct {
 
 type T_usedIstag struct {
 	UsedInNamespace string
-	Sha             string
+	Image           string
 	Cluster         string
 }
 
@@ -227,6 +228,7 @@ type T_flagOut struct {
 type T_flagFilt struct {
 	Isname    string
 	Istagname string
+	Tagname   string
 	Imagename string
 	Namespace string
 }

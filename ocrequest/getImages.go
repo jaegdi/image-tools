@@ -9,7 +9,7 @@ type T_ImagesMap map[string]interface{}
 var ImagesMap T_ImagesMap
 
 // InitAllImagesOfCluster reads images from cluster and converts the items array to
-// a map sha=>item and set the package var ImagesMap to the result.
+// a map image=>item and set the package var ImagesMap to the result.
 func InitAllImagesOfCluster(cluster string) {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
@@ -21,11 +21,11 @@ func InitAllImagesOfCluster(cluster string) {
 
 	for _, content := range imagesMap["items"].([]interface{}) {
 		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
-		sha := metadata["name"].(string)
-		if result[sha] == nil {
-			result[sha] = map[string]interface{}{}
+		image := metadata["name"].(string)
+		if result[image] == nil {
+			result[image] = map[string]interface{}{}
 		}
-		result[sha] = content
+		result[image] = content
 	}
 	ImagesMap = result
 }

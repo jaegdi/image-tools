@@ -1,47 +1,48 @@
 package main
 
 import (
-	"clean-istags/ocrequest"
-	. "fmt"
+	"fmt"
+	. "report-istags/ocrequest"
 	// _ "github.com/rakyll/gom/http"
-	"net/http"
-	_ "net/http/pprof"
+	// "net/http"
+	// _ "net/http/pprof"
 )
 
 func init() {
-	ocrequest.Init()
+	Init()
 }
 
 func main() {
-	go func() {
-		ocrequest.InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
+	// go func() {
+	// 	InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
+	// }()
 	// var str string
 	// Scanln(&str)
-	// ocrequest.InfoLogger.Println(str)
-	result := ocrequest.T_completeResults{}
-	if !ocrequest.CmdParams.Output.Used {
-		ocrequest.InitAllImagesOfCluster(ocrequest.CmdParams.Cluster)
-		allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster())
-		filteredIsTags := ocrequest.FilterAllIstags(allIsTags)
+	// InfoLogger.Println(str)
+	result := T_completeResults{}
+	if !CmdParams.Output.Used {
+		InitAllImagesOfCluster(CmdParams.Cluster)
+		allIsTags := (GetAllIstagsForFamilyInCluster())
+		filteredIsTags := FilterAllIstags(allIsTags)
 		result.AllIstags = filteredIsTags
 	}
-	if ocrequest.CmdParams.Output.All || ocrequest.CmdParams.Output.Used {
-		usedIsTags := (ocrequest.GetUsedIstagsForFamily())
+	if CmdParams.Output.All || CmdParams.Output.Used {
+		usedIsTags := (GetUsedIstagsForFamily())
 		result.UsedIstags = usedIsTags
 	}
-
+	resultFamilies := T_completeResultsFamilies{}
+	resultFamilies[CmdParams.Family] = result
 	switch {
-	case ocrequest.CmdParams.Json:
-		Println(ocrequest.GetJsonFromMap(result))
-	case ocrequest.CmdParams.Yaml:
-		Println(ocrequest.GetYamlFromMap(result))
-	case ocrequest.CmdParams.Csv:
-		ocrequest.GetCsvFromMap(result)
-	case ocrequest.CmdParams.Table || ocrequest.CmdParams.TabGroup:
-		ocrequest.GetTableFromMap(result)
+	case CmdParams.Json:
+		fmt.Println(GetJsonFromMap(resultFamilies))
+	case CmdParams.Yaml:
+		fmt.Println(GetYamlFromMap(resultFamilies))
+	case CmdParams.Csv:
+		GetCsvFromMap(result, CmdParams.Family)
+	case CmdParams.Table || CmdParams.TabGroup:
+		GetTableFromMap(result, CmdParams.Family)
 	}
 	// Scanln(&str)
-	// ocrequest.InfoLogger.Println(str)
-	// ocrequest.Test_MergeNestedMaps()
+	// InfoLogger.Println(str)
+	// Test_MergeNestedMaps()
 }

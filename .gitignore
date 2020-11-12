@@ -1,3 +1,7 @@
 *.csv
 log*.txt
 clean-istags
+clusterconfig*
+.swp
+report-istags
+.vscode

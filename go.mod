@@ -1,4 +1,4 @@
-module clean-istags
+module report-istags
 
 go 1.15
 

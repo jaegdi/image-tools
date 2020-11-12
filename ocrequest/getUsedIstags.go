@@ -34,11 +34,11 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	return namespaceList
 }
 
-// getIstagFromContainer get the image url from each container and extract the imagestream and the istag or sha, whichever is defined.
+// getIstagFromContainer get the image url from each container and extract the imagestream and the istag or image, whichever is defined.
 func getIstagFromContainer(cluster string, namespace string, containers []interface{}, results T_usedIstagsResult) T_usedIstagsResult {
 	var is string
 	var tag string
-	var sha string
+	// var image string
 	for _, container := range containers {
 		image := container.(map[string]interface{})["image"].(string)
 		imageParts := strings.Split(image, "/")
@@ -46,9 +46,9 @@ func getIstagFromContainer(cluster string, namespace string, containers []interf
 		istagParts := strings.Split(istag, "@")
 		if len(istagParts) < 2 {
 			istagParts = strings.Split(istag, ":")
-			sha = ""
+			image = ""
 		} else {
-			sha = istagParts[len(istagParts)-1]
+			image = istagParts[len(istagParts)-1]
 		}
 		if len(istagParts) < 2 {
 			is = istagParts[len(istagParts)-1]
@@ -57,9 +57,21 @@ func getIstagFromContainer(cluster string, namespace string, containers []interf
 			is = istagParts[len(istagParts)-2]
 			tag = istagParts[len(istagParts)-1]
 		}
+		if CmdParams.Filter.Isname != "" && is != CmdParams.Filter.Isname {
+			continue
+		}
+		if CmdParams.Filter.Tagname != "" && tag != CmdParams.Filter.Tagname {
+			continue
+		}
+		if CmdParams.Filter.Istagname != "" && istag != CmdParams.Filter.Istagname {
+			continue
+		}
+		if CmdParams.Filter.Imagename != "" && image != CmdParams.Filter.Imagename {
+			continue
+		}
 		usedIstag := T_usedIstag{
 			UsedInNamespace: namespace,
-			Sha:             sha,
+			Image:           image,
 			Cluster:         cluster,
 		}
 		if results[is] == nil {
@@ -167,7 +179,7 @@ func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 			log.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			// if err := mergo.Merge(&result, r); err != nil {
-			// 	ErrorLogger.Println("merge mySha to resultSha" + ": failed: " + err.Error())
+			// 	ErrorLogger.Println("merge myImage to resultSha" + ": failed: " + err.Error())
 			// }
 			t := T_usedIstagsResult{}
 			MergoNestedMaps(&t, result, r)

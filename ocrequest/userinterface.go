@@ -10,23 +10,46 @@ var CmdParams T_flags
 
 func cmdUsage() {
 	usageText := `
-istag-mgmt has the following functions.
 
-  - It operates cluster and family specific. That means it works for one cluster like
-	'cid, int, ppr, vpt or pro' and for families like 'pkp, sps, fpc, aps, ...'
-	The cluster must be defined by the mandatory parametter '-cluster=[cid|int|ppr|vpt|pro]'
-	The family must be defined by the mandatory parameter '-family=[aps|fpc|pkp|ssp]
+DESCRIPTION
+
+	istag-mgmt reports image date for a application family (eg. pkp, fpc, aps, ssp)
+
+	- For existing Images it operates cluster and family specific. That means it works for one cluster like
+		'cid, int, ppr, vpt or pro' and for families like 'pkp, sps, fpc, aps, ...'
+		The cluster must be defined by the mandatory parametter '-cluster=[cid|int|ppr|vpt|pro]'
+		The family must be defined by the mandatory parameter '-family=[aps|fpc|pkp|ssp]
+		
+	- For used images it looks in all clusters and reports the istags used by any deploymentconfig, job, 
+		cronjob or pod of all namespaces that belong to the application family.
+
+	- Generate JSON reports about imagestreamtags, imagestreams and images. The content of the JSON 
+		report can be defined by the mandatory parameter '-output=[is|istag|image|used|all]'.
 	
+	- Variable output format: json, yaml, csv, table and tabgroup (table with grouped rows for identical content).
+		Output as table or tabgroup is best used when piped into less
 
-  - Generate JSON reports about imagestreamtags, imagestreams and images. The content of the JSON 
-    report can be defined by the mandatory parameter '-output=[is|istag|image|used|all]'.
+	- filter data for reports. Define parameter -isname=..., -istagname=..., tagname=... or -shaname=...
 
-  - filter data for reports
+	- delete istags based on filters like 'older than n days' and/or 'istag name like pattern' (not yet implemented)
 
-  - delete istags based on filters like 'older than n days' and/or 'istag name like pattern'
+	For this reports the data is collected from the oc cluster defined by parameter '-cluster=...' and
+	the parameter 'family=...'. For type 'used' (also included in type 'all') from all clusters.
 
-For this reports the data is collected from the oc cluster defined by parameter '-cluster=...' and
-the parameter 'family=...'.
+EXAMPLES
+
+	Report all information for family pkp in cluster cid as json(which is the default output format)
+
+		./report-istags -cluster=cid -family=pkp -all
+		
+	Report only used istags for family pkp as pretty printed table (the output is paginated to fit your screen size
+	so it is best use with less. Then you can go up or down with the page key)
+
+		./report-istags -cluster=cid -family=pkp -used -table | less
+		
+	Report istags for family aps in cluster int as yaml report
+
+		./report-istags -cluster=int -family=aps -istag -yaml
 `
 
 	fmt.Printf("Usage: %s [OPTIONS] argument ...\n", os.Args[0])
@@ -48,20 +71,21 @@ func EvalFlags() {
 	jsonPtr := flag.Bool("json", false, "defines JSON as the output format for the reported data. This is the DEFAULT")
 	yamlPtr := flag.Bool("yaml", false, "defines YAML as the output format for the reported data")
 	csvPtr := flag.Bool("csv", false, "defines CSV as the output format for the reported data")
-	tablePtr := flag.Bool("table", false, "defines formated ASCI table as the output format for the reported data")
-	tabgroupPtr := flag.Bool("tabgroup", false, "defines formated ASCII table with grouped rows as the output format for the reported data")
+	tablePtr := flag.Bool("table", false, "defines formated ASCI TABLE as the output format for the reported data")
+	tabgroupPtr := flag.Bool("tabgroup", false, "defines formated ASCII TABLE WITH GROUPED ROWS as the output format for the reported data")
 
 	// Output flags
-	isPtr := flag.Bool("is", false, "output of imageStreams as json")
-	istagPtr := flag.Bool("istag", false, "output of imageStreamTags as json")
-	shaPtr := flag.Bool("image", false, "output of Sha's as json")
-	usedPtr := flag.Bool("used", false, "output used imageStreams imageStreamTags and Sha's as json")
-	allPtr := flag.Bool("all", false, "output all imageStreams imageStreamTags and Sha's as json")
+	isPtr := flag.Bool("is", false, "output of imageStreams")
+	istagPtr := flag.Bool("istag", false, "output of imageStreamTags")
+	shaPtr := flag.Bool("image", false, "output of Image's")
+	usedPtr := flag.Bool("used", false, "output used imageStreams imageStreamTags and Image's")
+	allPtr := flag.Bool("all", false, "output all imageStreams imageStreamTags and Image's")
 
 	// Filter flags
 	isnamePtr := flag.String("isname", "", "filter output of one imageStream as json, eg. -is=wvv-service")
-	istagnamePtr := flag.String("istagname", "", "filter output of one imageStreamTag as json")
-	shanamePtr := flag.String("shaname", "", "filter output of one Sha as json")
+	istagnamePtr := flag.String("istagname", "", "filter output of one imageStreamTag")
+	tagnamePtr := flag.String("tagname", "", "filter output all istags with this Tag")
+	shanamePtr := flag.String("shaname", "", "filter output of a Image with this SHA")
 	flag.Parse()
 
 	// define map with all flags
@@ -86,7 +110,8 @@ func EvalFlags() {
 		Filter: T_flagFilt{
 			Isname:    *isnamePtr,
 			Istagname: *istagnamePtr,
-			Imagename:   *shanamePtr,
+			Tagname:   *tagnamePtr,
+			Imagename: *shanamePtr,
 			Namespace: *namespacePtr,
 		},
 	}
@@ -130,7 +155,7 @@ func FilterAllIstags(list T_result) T_result {
 			list.Istag = nil
 		}
 		if !outputflags.Image {
-			list.Sha = nil
+			list.Image = nil
 		}
 	}
 	return list
