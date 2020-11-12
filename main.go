@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	. "report-istags/ocrequest"
-	// _ "github.com/rakyll/gom/http"
+	// "log"
 	// "net/http"
 	// _ "net/http/pprof"
+	. "report-istags/ocrequest"
+	// "sync"
 )
 
 func init() {
@@ -13,12 +14,10 @@ func init() {
 }
 
 func main() {
+	// var wg sync.WaitGroup
 	// go func() {
-	// 	InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
+	// 	log.Println(http.ListenAndServe("localhost:6060", nil))
 	// }()
-	// var str string
-	// Scanln(&str)
-	// InfoLogger.Println(str)
 	result := T_completeResults{}
 	if !CmdParams.Output.Used {
 		InitAllImagesOfCluster(CmdParams.Cluster)
@@ -42,7 +41,6 @@ func main() {
 	case CmdParams.Table || CmdParams.TabGroup:
 		GetTableFromMap(result, CmdParams.Family)
 	}
-	// Scanln(&str)
-	// InfoLogger.Println(str)
-	// Test_MergeNestedMaps()
+	// wg.Add(1)
+	// wg.Wait()
 }
