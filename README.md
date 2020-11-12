@@ -44,19 +44,19 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 ##### What to report, which types
 
   -all
-      output all imageStreams imageStreamTags and Image's
+      collect and output all imageStreams imageStreamTags and Image's
 
   -image
-      output of Image's
+      collect and output of Image's
 
   -istag
-      output of imageStreamTags
+      collect and output of imageStreamTags
 
   -is
-      output of imageStreams
+      collect and output of imageStreams
 
   -used
-      output used imageStreams imageStreamTags and Image's from all clusters
+      collect and output used imageStreams imageStreamTags and Image's from all clusters
 
 ##### filter
 
