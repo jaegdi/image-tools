@@ -23,7 +23,9 @@
         "occlient",
         "ocimagetools",
         "ocrequest",
+        "rakyll",
         "shas",
+        "stretchr",
         "unmarschal"
     ]
 }

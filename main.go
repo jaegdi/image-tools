@@ -19,13 +19,8 @@ func main() {
 	// var str string
 	// Scanln(&str)
 	// ocrequest.InfoLogger.Println(str)
-	ocrequest.EvalFlags()
-	ocrequest.InitIsNamesForFamily(ocrequest.CmdParams.Family)
 	result := ocrequest.T_completeResults{}
-	if ocrequest.CmdParams.Output.All ||
-		ocrequest.CmdParams.Output.Is ||
-		ocrequest.CmdParams.Output.Istag ||
-		ocrequest.CmdParams.Output.Sha {
+	if !ocrequest.CmdParams.Output.Used {
 		ocrequest.InitAllImagesOfCluster(ocrequest.CmdParams.Cluster)
 		allIsTags := (ocrequest.GetAllIstagsForFamilyInCluster())
 		filteredIsTags := ocrequest.FilterAllIstags(allIsTags)
@@ -43,6 +38,8 @@ func main() {
 		Println(ocrequest.GetYamlFromMap(result))
 	case ocrequest.CmdParams.Csv:
 		ocrequest.GetCsvFromMap(result)
+	case ocrequest.CmdParams.Table || ocrequest.CmdParams.TabGroup:
+		ocrequest.GetTableFromMap(result)
 	}
 	// Scanln(&str)
 	// ocrequest.InfoLogger.Println(str)

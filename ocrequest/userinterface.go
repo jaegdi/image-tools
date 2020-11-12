@@ -43,13 +43,18 @@ func EvalFlags() {
 	familyPtr := flag.String("family", "", "family name, eg. pkp, aps, ssp or fpc ")
 	namespacePtr := flag.String("namespace", "", "namespace to look for istags")
 	ocClientPtr := flag.Bool("occlient", false, "use oc client instead of api call for cluster communication")
+
+	// Output format of result data
+	jsonPtr := flag.Bool("json", false, "defines JSON as the output format for the reported data. This is the DEFAULT")
 	yamlPtr := flag.Bool("yaml", false, "defines YAML as the output format for the reported data")
 	csvPtr := flag.Bool("csv", false, "defines CSV as the output format for the reported data")
+	tablePtr := flag.Bool("table", false, "defines formated ASCI table as the output format for the reported data")
+	tabgroupPtr := flag.Bool("tabgroup", false, "defines formated ASCII table with grouped rows as the output format for the reported data")
 
 	// Output flags
 	isPtr := flag.Bool("is", false, "output of imageStreams as json")
 	istagPtr := flag.Bool("istag", false, "output of imageStreamTags as json")
-	shaPtr := flag.Bool("sha", false, "output of Sha's as json")
+	shaPtr := flag.Bool("image", false, "output of Sha's as json")
 	usedPtr := flag.Bool("used", false, "output used imageStreams imageStreamTags and Sha's as json")
 	allPtr := flag.Bool("all", false, "output all imageStreams imageStreamTags and Sha's as json")
 
@@ -65,21 +70,23 @@ func EvalFlags() {
 		Token:    string(*tokenPtr),
 		Family:   string(*familyPtr),
 		OcClient: bool(*ocClientPtr),
-		Json:     !(bool(*yamlPtr) || bool(*csvPtr)),
-		Yaml:     bool(*yamlPtr) && !bool(*csvPtr),
-		Csv:      bool(*csvPtr) && !bool(*yamlPtr),
+		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*tablePtr) || bool(*tabgroupPtr)),
+		Yaml:     bool(*yamlPtr) && !bool(*jsonPtr),
+		Csv:      bool(*csvPtr) && !bool(*jsonPtr),
+		Table:    bool(*tablePtr) && !bool(*jsonPtr),
+		TabGroup: bool(*tabgroupPtr) && !bool(*jsonPtr),
 
 		Output: T_flagOut{
 			Is:    *isPtr,
 			Istag: *istagPtr,
-			Sha:   *shaPtr,
+			Image: *shaPtr,
 			Used:  *usedPtr,
 			All:   *allPtr,
 		},
 		Filter: T_flagFilt{
 			Isname:    *isnamePtr,
 			Istagname: *istagnamePtr,
-			Shaname:   *shanamePtr,
+			Imagename:   *shanamePtr,
 			Namespace: *namespacePtr,
 		},
 	}
@@ -122,7 +129,7 @@ func FilterAllIstags(list T_result) T_result {
 		if !outputflags.Istag {
 			list.Istag = nil
 		}
-		if !outputflags.Sha {
+		if !outputflags.Image {
 			list.Sha = nil
 		}
 	}

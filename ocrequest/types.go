@@ -3,6 +3,9 @@ package ocrequest
 import (
 	// "log"
 	"encoding/json"
+	// "github.com/jedib0t/go-pretty/v6/table"
+	// "log"
+	// "os"
 	"reflect"
 )
 
@@ -52,16 +55,16 @@ type T_istagBuildLabels struct {
 	Namespace     string `json:"io.openshift.build.namespace,omitempty"`
 }
 
-func (b T_istagBuildLabels) Values() []string {
-	l := []string{}
+func (b T_istagBuildLabels) Values() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(b)
 	for i := 0; i < v.NumField(); i++ {
 		l = append(l, v.Field(i).String())
 	}
 	return l
 }
-func (b T_istagBuildLabels) Names() []string {
-	l := []string{}
+func (b T_istagBuildLabels) Names() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(b)
 	typeOfS := v.Type()
 	for i := 0; i < v.NumField(); i++ {
@@ -93,14 +96,21 @@ type T_istag struct {
 	Build       T_istagBuildLabels
 }
 
-func (c T_istag) Values() []string {
-	l := []string{}
+func ToGenericArray(arr ...interface{}) []interface{} {
+	return arr
+}
+
+func (c T_istag) Values() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(c)
 	typeOfS := v.Type()
 	for i := 0; i < v.NumField(); i++ {
 		switch typeOfS.Field(i).Name {
 		case "Build":
-			l = append(l, c.Build.Values()...)
+			v := reflect.ValueOf(c.Build)
+			for i := 0; i < v.NumField(); i++ {
+				l = append(l, v.Field(i).String())
+			}
 		default:
 			l = append(l, v.Field(i).String())
 		}
@@ -108,14 +118,18 @@ func (c T_istag) Values() []string {
 	return l
 }
 
-func (c T_istag) Names() []string {
-	l := []string{}
+func (c T_istag) Names() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(c)
 	typeOfS := v.Type()
 	for i := 0; i < v.NumField(); i++ {
 		switch typeOfS.Field(i).Name {
 		case "Build":
-			l = append(l, c.Build.Names()...)
+			v := reflect.ValueOf(c.Build)
+			typeOfS := v.Type()
+			for i := 0; i < v.NumField(); i++ {
+				l = append(l, typeOfS.Field(i).Name)
+			}
 		default:
 			l = append(l, typeOfS.Field(i).Name)
 		}
@@ -173,8 +187,8 @@ type T_usedIstag struct {
 	Cluster         string
 }
 
-func (c T_usedIstag) Values() []string {
-	l := []string{}
+func (c T_usedIstag) Values() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(c)
 	for i := 0; i < v.NumField(); i++ {
 		l = append(l, v.Field(i).String())
@@ -182,8 +196,8 @@ func (c T_usedIstag) Values() []string {
 	return l
 }
 
-func (c T_usedIstag) Names() []string {
-	l := []string{}
+func (c T_usedIstag) Names() interface{} {
+	l := []interface{}{}
 	v := reflect.ValueOf(c)
 	typeOfS := v.Type()
 	for i := 0; i < v.NumField(); i++ {
@@ -206,14 +220,14 @@ type T_famNs map[string][]string
 type T_flagOut struct {
 	Is    bool
 	Istag bool
-	Sha   bool
+	Image bool
 	Used  bool
 	All   bool
 }
 type T_flagFilt struct {
 	Isname    string
 	Istagname string
-	Shaname   string
+	Imagename string
 	Namespace string
 }
 type T_flags struct {
@@ -224,6 +238,8 @@ type T_flags struct {
 	Json     bool
 	Yaml     bool
 	Csv      bool
+	Table    bool
+	TabGroup bool
 	Output   T_flagOut
 	Filter   T_flagFilt
 }
@@ -231,9 +247,17 @@ type T_flags struct {
 //------------------------------------------
 
 type T_Cluster struct {
-	Name  string
-	Url   string
-	Token string
+	Url   string `json:"Url",omitempty`
+	Name  string `json:"Name",omitempty`
+	Token string `json:"Token",omitempty`
+}
+
+type T_ClusterConfig struct {
+	Stages     []string
+	Config     map[string]T_Cluster `json:"Config".[],omitempty`
+	Buildstage string
+	Teststages []string
+	Prodstage  string
 }
 
 // type T_Clusters struct {

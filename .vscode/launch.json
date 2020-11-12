@@ -15,8 +15,8 @@
             "-cluster=cid",
             "-family=aps",
             // "-is",
-            "-used",
-            "-csv"
+            "-all",
+            "-tabgroup"
         ]
     },
         {

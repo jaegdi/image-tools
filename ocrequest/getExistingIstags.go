@@ -63,10 +63,10 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, sh
 	return istream
 }
 
-// InitIsNamesForFamily initialises the package var IsNamesForFamily with all imagestreams from
+// InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
 func InitIsNamesForFamily(family string) {
-	cluster := Clusters["buildstage"].(string)
+	cluster := Clusters.Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
 	result[family] = make(map[string]bool)
@@ -204,9 +204,6 @@ func GetAllIstagsForFamilyInCluster() T_result {
 	if namespace == "" {
 		for _, ns := range FamilyNamespaces[family] {
 			r := OcGetAllIstagsOfNamespace(result, cluster, ns)
-			// if err := mergo.Merge(&result, r); err != nil {
-			// 	ErrorLogger.Println("merge mySha to resultSha" + ": failed: " + err.Error())
-			// }
 			t := T_result{}
 			MergoNestedMaps(&t, result, r)
 			result = t

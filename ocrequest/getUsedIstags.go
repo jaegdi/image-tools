@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/stretchr/stew/slice"
 	"log"
-	"regexp"
 	"strings"
 )
 
@@ -19,14 +18,15 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	err := json.Unmarshal([]byte(namespacesJson), &namespacesMap)
 	if err != nil {
 		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
-	}
-	var regexValidNamespace = regexp.MustCompile(`^` + family + `-..|..-` + family + `-..|..-` + family + `$`)
-	if len(namespacesMap["items"].([]interface{})) > 0 {
-		for _, v := range namespacesMap["items"].([]interface{}) {
-			if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
-				ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-				if regexValidNamespace.MatchString(ns) {
-					namespaceList = append(namespaceList, ns)
+	} else {
+		// log.Println("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
+		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
+			for _, v := range namespacesMap["items"].([]interface{}) {
+				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
+					ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+					if ns != "" && regexValidNamespace.MatchString(ns) {
+						namespaceList = append(namespaceList, ns)
+					}
 				}
 			}
 		}
@@ -34,7 +34,7 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	return namespaceList
 }
 
-// getIstagFromContainer get the imag
+// getIstagFromContainer get the image url from each container and extract the imagestream and the istag or sha, whichever is defined.
 func getIstagFromContainer(cluster string, namespace string, containers []interface{}, results T_usedIstagsResult) T_usedIstagsResult {
 	var is string
 	var tag string
@@ -186,13 +186,18 @@ func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 // a map with all these istags and return this map as result.
 func GetUsedIstagsForFamily() T_usedIstagsResult {
 	var result T_usedIstagsResult
-	for _, cluster := range Clusters["stages"].([]string) {
-		InfoLogger.Println("Get used istags in cluster: " + cluster)
-		log.Println("Get used istags in cluster: " + cluster)
-		resultCluster := GetUsedIstagsForFamilyInCluster(cluster)
-		t := T_usedIstagsResult{}
-		MergoNestedMaps(&t, result, resultCluster)
-		result = t
+	if Multiproc {
+		result = goGetUsedIstagsForFamily(CmdParams.Family)
+	} else {
+		clusters := Clusters.Stages
+		for _, cluster := range clusters {
+			InfoLogger.Println("Get used istags in cluster: " + cluster)
+			log.Println("Get used istags in cluster: " + cluster)
+			resultCluster := GetUsedIstagsForFamilyInCluster(cluster)
+			t := T_usedIstagsResult{}
+			MergoNestedMaps(&t, result, resultCluster)
+			result = t
+		}
 	}
 	return result
 }
