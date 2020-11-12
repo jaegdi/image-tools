@@ -35,10 +35,10 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
 ##### define source
 
-  -family string
+  -family=string
       family name, eg. pkp, aps, ssp or fpc 
 
-  -cluster string
+  -cluster=string
       shortname of cluster, eg. cid,int, ppr or pro
 
 ##### What to report, which types
@@ -60,19 +60,19 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
 ##### filter
 
-  -namespace string
+  -namespace=string
       namespace to look for istags
 
-  -isname string
+  -isname=string
       filter output of one imageStream as json, eg. -is=wvv-service
 
-  -istagname string
+  -istagname=string
       filter output of one imageStreamTag
 
-  -shaname string
+  -shaname=string
       filter output of a Image with this SHA
 
-  -tagname string
+  -tagname=string
       filter output all istags with this Tag
 
 ##### output format
@@ -96,9 +96,6 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
   -occlient
       use oc client instead of api call for cluster communication
-
-  -token string
-      token for cluster, its a alternative to login before exec
 
 ## EXAMPLES
 
