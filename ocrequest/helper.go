@@ -315,7 +315,7 @@ func tablePrettyprint(out []table.Row) {
 	// t.SetStyle(table.StyleLight)
 	// t.Style().Options.SeparateRows = true
 	// t.SetAllowedRowLength(450)
-	t.SetPageSize(height - 3)
+	t.SetPageSize(height - 4)
 	if CmdParams.TabGroup {
 		t.SetColumnConfigs([]table.ColumnConfig{
 			{Number: 1, AutoMerge: true},
