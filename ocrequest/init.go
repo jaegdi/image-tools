@@ -1,6 +1,7 @@
 package ocrequest
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -19,6 +20,7 @@ func Init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	os.Setenv("HTTP_PROXY", "")
 	InfoLogger = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
 	WarningLogger = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
@@ -29,6 +31,9 @@ func Init() {
 	EvalFlags()
 
 	Multiproc = true
+	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.NoProxy))
+	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
+
 	regexValidNamespace = regexp.MustCompile(`^` + CmdParams.Family + `-..|..-` + CmdParams.Family + `-..|..-` + CmdParams.Family + `$`)
 
 	if len(Clusters.Config["cid"].Token) < 10 {

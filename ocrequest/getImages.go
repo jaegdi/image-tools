@@ -5,12 +5,13 @@ import (
 )
 
 type T_ImagesMap map[string]interface{}
+type T_ImagesMapAllClusters map[string]T_ImagesMap
 
-var ImagesMap T_ImagesMap
+var ImagesMap T_ImagesMapAllClusters
 
 // InitAllImagesOfCluster reads images from cluster and converts the items array to
 // a map image=>item and set the package var ImagesMap to the result.
-func InitAllImagesOfCluster(cluster string) {
+func GetAllImagesOfCluster(cluster string) T_ImagesMap {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {
@@ -19,13 +20,29 @@ func InitAllImagesOfCluster(cluster string) {
 	var metadata map[string]interface{}
 	result := T_ImagesMap{}
 
-	for _, content := range imagesMap["items"].([]interface{}) {
-		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
-		image := metadata["name"].(string)
-		if result[image] == nil {
-			result[image] = map[string]interface{}{}
+	if imagesMap["items"] != nil {
+		for _, content := range imagesMap["items"].([]interface{}) {
+			metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
+			image := metadata["name"].(string)
+			if result[image] == nil {
+				result[image] = map[string]interface{}{}
+			}
+			result[image] = content
 		}
-		result[image] = content
 	}
-	ImagesMap = result
+	return result
+}
+
+func InitAllImages() {
+	if Multiproc {
+		ImagesMap = goGetExistingImagesInAllClusters()
+	} else {
+		for _, cluster := range Clusters.Stages {
+			r := T_ImagesMapAllClusters{}
+			r[cluster] = GetAllImagesOfCluster(cluster)
+			t := T_ImagesMapAllClusters{}
+			MergoNestedMaps(&t, ImagesMap, r)
+			ImagesMap = t
+		}
+	}
 }

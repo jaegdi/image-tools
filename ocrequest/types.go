@@ -10,9 +10,11 @@ import (
 )
 
 type T_completeResults struct {
-	AllIstags  T_result
+	AllIstags  T_ResultExistingIstagsOverAllClusters
 	UsedIstags T_usedIstagsResult
 }
+
+//                                 family
 type T_completeResultsFamilies map[string]T_completeResults
 
 // getExistingIstags.go
@@ -237,6 +239,7 @@ type T_flags struct {
 	Token    string
 	Family   string
 	OcClient bool
+	NoProxy  bool
 	Json     bool
 	Yaml     bool
 	Csv      bool

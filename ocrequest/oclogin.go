@@ -34,7 +34,7 @@ func ocGetToken(cluster string) string {
 			if err != nil {
 				saveTokens(Clusters, "clusterconfig.json")
 				fmt.Println("Automatic login into the openshift cluster did not work on your machine.")
-				fmt.Println("Ask Dirk Jäger from SCP Plattform Team, how to konfigure that on your machine.")
+				fmt.Println("Ask Dirk Jäger from SCP Plattform Team, how to configure that on your machine.")
 				fmt.Println("------- as an alternative you can do the following steps to work -------")
 				fmt.Println("Fill in the tokens in the generated clusterconfig.json file and try again")
 				fmt.Println("-- HowTo:")

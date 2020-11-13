@@ -67,7 +67,7 @@ func allocateUsedIstags(clusters []string, clusterAppNamsepaces T_FamilyAppNames
 // 	// done <- true
 // }
 
-func goGetUsedIstagsForFamily(family string) T_usedIstagsResult {
+func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 
 	istagResult := T_usedIstagsResult{}
 	allClusterFamilyNamespaces := goGetAppNamespacesForFamily(family)

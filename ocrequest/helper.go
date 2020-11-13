@@ -6,8 +6,10 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"gopkg.in/yaml.v2"
+	"io"
 	"log"
 	"os"
+	"os/exec"
 	// "reflect"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"golang.org/x/crypto/ssh/terminal"
@@ -17,6 +19,7 @@ import (
 )
 
 var today time.Time = time.Now()
+var pager io.WriteCloser
 
 func ageInDays(date string) int {
 	t, _ := time.Parse(time.RFC3339, date)
@@ -107,7 +110,7 @@ func GetCsvFromMap(list interface{}, family string) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
 		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).AllIstags.Is {
+		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
 			for image, shaMap := range isMap {
 				for istag := range shaMap {
 					line := T_csvLine{}
@@ -126,7 +129,7 @@ func GetCsvFromMap(list interface{}, family string) {
 		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toArrayString(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, istagMap := range list.(T_completeResults).AllIstags.Istag {
+		for istagName, istagMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
 			line := T_csvLine{}
 			line = append(line, family)
 			line = append(line, "allIstags")
@@ -139,7 +142,7 @@ func GetCsvFromMap(list interface{}, family string) {
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
-		for shaName, shaMap := range list.(T_completeResults).AllIstags.Image {
+		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
 			for istag, istagMap := range shaMap {
 				line := T_csvLine{}
 				line = append(line, family)
@@ -192,7 +195,7 @@ func GetTableFromMap(list interface{}, family string) {
 		output := []table.Row{}
 		headline := table.Row{"Imagestream " + family, "Image", "ImagestreamTag"}
 		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).AllIstags.Is {
+		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
 			for image, shaMap := range isMap {
 				for istag := range shaMap {
 					line := table.Row{}
@@ -212,7 +215,7 @@ func GetTableFromMap(list interface{}, family string) {
 		headline := table.Row{"istag " + family} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toTableRow(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, istagMap := range list.(T_completeResults).AllIstags.Istag {
+		for istagName, istagMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
 			line := table.Row{}
 			// line = append(line, "allIstags")
 			// line = append(line, "istag")
@@ -226,7 +229,7 @@ func GetTableFromMap(list interface{}, family string) {
 		output := []table.Row{}
 		headline := table.Row{"Image " + family, "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
-		for shaName, shaMap := range list.(T_completeResults).AllIstags.Image {
+		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
 			for istag, istagMap := range shaMap {
 				line := table.Row{}
 				// line = append(line, "allIstags")
@@ -294,14 +297,25 @@ func tablePrettyprint(out []table.Row) {
 	if len(out) == 0 {
 		return
 	}
-	_, height, err := terminal.GetSize(0)
-	if err != nil {
-		log.Println("failedt o get terminal size")
-		height = 60
-	}
+	// get height of terminal
+	// _, height, err := terminal.GetSize(0)
+	// if err != nil {
+	// 	log.Println("failedt o get terminal size")
+	// 	height = 60
+	// }
+	fd := int(os.Stdout.Fd())
+	_, height, _ := terminal.GetSize(fd)
 
+	// activate pager
+	var cmd *exec.Cmd
+	cmd, pager = runPager()
+	defer func() {
+		pager.Close()
+		_ = cmd.Wait()
+	}()
+	// define table output
 	t := table.NewWriter()
-	t.SetOutputMirror(os.Stdout)
+	t.SetOutputMirror(pager)
 	t.AppendHeader(out[0])
 	t.AppendFooter(table.Row{" ", " ", " "})
 	t.AppendRows(out[1:])
@@ -325,4 +339,27 @@ func tablePrettyprint(out []table.Row) {
 		})
 	}
 	t.Render()
+}
+
+func runPager() (*exec.Cmd, io.WriteCloser) {
+	pager := os.Getenv("PAGER")
+	if pager == "" {
+		pager = "more"
+	}
+	var cmd *exec.Cmd
+	if pager == "less" {
+		cmd = exec.Command(pager, "-m", "-n", "-g", "-i", "-J", "-R", "-S", "--underline-special", "--SILENT")
+	} else {
+		cmd = exec.Command(pager)
+	}
+	out, err := cmd.StdinPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
+	}
+	return cmd, out
 }

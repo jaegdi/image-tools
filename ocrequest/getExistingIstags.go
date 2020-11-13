@@ -78,9 +78,11 @@ func InitIsNamesForFamily(family string) {
 		if err := json.Unmarshal([]byte(isJson), &isResult); err != nil {
 			ErrorLogger.Println("Unmarshal imagestreams. " + err.Error())
 		}
-		for _, v := range isResult["items"].([]interface{}) {
-			val := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-			result[family][val] = true
+		if isResult["items"] != nil {
+			for _, v := range isResult["items"].([]interface{}) {
+				val := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+				result[family][val] = true
+			}
 		}
 	}
 	IsNamesForFamily = result
@@ -102,7 +104,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
-		ErrorLogger.Println("unmarshal imagestreamtags." + err.Error())
+		ErrorLogger.Println("unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
+		return T_result{}
 	}
 	resultIstag := make(T_resIstag)
 	resultSha := make(T_resSha)
@@ -130,8 +133,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		if ImagesMap[sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
-			buildLabelsMap.Set(ImagesMap[sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
+		if ImagesMap[cluster][sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
+			buildLabelsMap.Set(ImagesMap[cluster][sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}
 		imagestreamfields := strings.Split(istagname, `:`)
 		imagestreamName := imagestreamfields[0]
@@ -207,22 +210,26 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 // GetAllIstagsForFamilyInCluster generates a map of all istags
 // selected by (family, cluster, namespace) in CmdParams
 // and return a map with the results
-func GetAllIstagsForFamilyInCluster() T_result {
+func GetAllIstagsForFamily() T_ResultExistingIstagsOverAllClusters {
 	family := CmdParams.Family
-	cluster := CmdParams.Cluster
 	namespace := CmdParams.Filter.Namespace
-
-	var result = T_result{}
-	if namespace == "" {
-		for _, ns := range FamilyNamespaces[family] {
-			r := OcGetAllIstagsOfNamespace(result, cluster, ns)
-			t := T_result{}
-			MergoNestedMaps(&t, result, r)
-			result = t
-
-		}
+	var result = T_ResultExistingIstagsOverAllClusters{}
+	if Multiproc {
+		result = goGetExistingIstagsForFamilyInAllClusters(family)
 	} else {
-		result = OcGetAllIstagsOfNamespace(result, cluster, namespace)
+		for _, cluster := range Clusters.Stages {
+			if namespace == "" {
+				for _, ns := range FamilyNamespaces[family] {
+					r := T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, ns)}
+					t := T_ResultExistingIstagsOverAllClusters{}
+					MergoNestedMaps(&t, result, r)
+					result = t
+
+				}
+			} else {
+				result = T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, namespace)}
+			}
+		}
 	}
 	return result
 }

@@ -168,8 +168,7 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_usedIstag
 // namespaces, that belongs to the family,
 // registers the images of these objects and generates
 // a map with all these istags and return this map as result.
-func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
-	family := CmdParams.Family
+func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstagsResult {
 	namespace := CmdParams.Filter.Namespace
 
 	var result T_usedIstagsResult
@@ -196,19 +195,31 @@ func GetUsedIstagsForFamilyInCluster(cluster string) T_usedIstagsResult {
 // namespaces, that belongs to the family,
 // registers the images of these objects and generates
 // a map with all these istags and return this map as result.
-func GetUsedIstagsForFamily() T_usedIstagsResult {
+func GetUsedIstagsForFamily(allTags T_ResultExistingIstagsOverAllClusters) T_usedIstagsResult {
 	var result T_usedIstagsResult
 	if Multiproc {
-		result = goGetUsedIstagsForFamily(CmdParams.Family)
+		result = goGetUsedIstagsForFamilyInAllClusters(CmdParams.Family)
 	} else {
 		clusters := Clusters.Stages
 		for _, cluster := range clusters {
 			InfoLogger.Println("Get used istags in cluster: " + cluster)
 			log.Println("Get used istags in cluster: " + cluster)
-			resultCluster := GetUsedIstagsForFamilyInCluster(cluster)
+			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
 			t := T_usedIstagsResult{}
 			MergoNestedMaps(&t, result, resultCluster)
 			result = t
+		}
+	}
+	for is, isMap := range result {
+		for tag, tagArray := range isMap {
+			istag := is + ":" + tag
+			for i, tagMap := range tagArray {
+				if tagMap.Image == "" && tagMap.Cluster != "" {
+					if allTags[tagMap.Cluster].Istag[istag].Image != "" {
+						result[is][tag][i].Image = allTags[tagMap.Cluster].Istag[istag].Image
+					}
+				}
+			}
 		}
 	}
 	return result

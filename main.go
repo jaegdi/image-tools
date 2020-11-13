@@ -19,18 +19,22 @@ func main() {
 	// 	log.Println(http.ListenAndServe("localhost:6060", nil))
 	// }()
 	result := T_completeResults{}
-	if !CmdParams.Output.Used {
-		InitAllImagesOfCluster(CmdParams.Cluster)
-		allIsTags := (GetAllIstagsForFamilyInCluster())
-		filteredIsTags := FilterAllIstags(allIsTags)
-		result.AllIstags = filteredIsTags
-	}
+	InitAllImages()
+	allIsTags := GetAllIstagsForFamily()
+	t := T_ResultExistingIstagsOverAllClusters{}
+	filteredIsTags := T_ResultExistingIstagsOverAllClusters{}
+	MergoNestedMaps(&t, filteredIsTags, allIsTags)
+	filteredIsTags = t
+	filteredIsTags = FilterAllIstags(filteredIsTags)
+	result.AllIstags = filteredIsTags
 	if CmdParams.Output.All || CmdParams.Output.Used {
-		usedIsTags := (GetUsedIstagsForFamily())
+		usedIsTags := (GetUsedIstagsForFamily(allIsTags))
 		result.UsedIstags = usedIsTags
 	}
 	resultFamilies := T_completeResultsFamilies{}
+	// for _, cluster := range Clusters.Stages {
 	resultFamilies[CmdParams.Family] = result
+	// }
 	switch {
 	case CmdParams.Json:
 		fmt.Println(GetJsonFromMap(resultFamilies))
