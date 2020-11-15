@@ -10,7 +10,7 @@ import (
 
 // ocApiCall requests an openshift-cluster via API and return the answer as string.
 func ocGetCall(cluster string, namespace string, typ string, name string) string {
-	if CmdParams.OcClient {
+	if CmdParams.Options.OcClient {
 		var cmd *exec.Cmd
 		token := ocGetToken(cluster)
 		ns := namespace != ""
@@ -28,7 +28,7 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		jsonstr, err := cmd.Output()
 		// InfoLogger.Println("JsonStr:" + string(jsonstr))
 		if err != nil {
-			ErrorLogger.Println("oc get failed: " + string(jsonstr) + "Error:" + err.Error())
+			LogError("oc get failed: " + string(jsonstr) + "Error:" + err.Error())
 			exitWithError(err.Error())
 		}
 		return string([]byte(jsonstr))
@@ -65,7 +65,7 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		// Create a new request using http
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
-			ErrorLogger.Println("Get " + url + " failed. " + err.Error())
+			LogError("Get " + url + " failed. " + err.Error())
 			return ""
 		}
 		// add header to the req
@@ -75,18 +75,18 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		// Send req using http Client
 		var defaultTransport http.RoundTripper = &http.Transport{Proxy: nil}
 		var client = &http.Client{}
-		if CmdParams.NoProxy {
+		if CmdParams.Options.NoProxy {
 			client = &http.Client{Transport: defaultTransport}
 		}
 		// client := &http.Client{}
 		resp, err := client.Do(req)
 		if err != nil {
-			ErrorLogger.Println("Error on sending request.\n[ERROR] -" + err.Error())
+			LogError("Error on sending request.\n[ERROR] -" + err.Error())
 			return ""
 		}
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			ErrorLogger.Println("Error on reading response.\n[ERROR] -" + err.Error())
+			LogError("Error on reading response.\n[ERROR] -" + err.Error())
 			return ""
 		}
 		return string([]byte(body))

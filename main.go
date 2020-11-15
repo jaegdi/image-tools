@@ -3,38 +3,57 @@ package main
 import (
 	"fmt"
 	// "log"
-	// "net/http"
-	// _ "net/http/pprof"
+	"net/http"
+	_ "net/http/pprof"
 	. "report-istags/ocrequest"
-	// "sync"
+	"sync"
 )
 
 func init() {
 	Init()
 }
 
+var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
+var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
+var chanInitAllImages = make(chan string, 1)
+
 func main() {
-	// var wg sync.WaitGroup
-	// go func() {
-	// 	log.Println(http.ListenAndServe("localhost:6060", nil))
-	// }()
+	var wg sync.WaitGroup
+	if CmdParams.Options.Profiler {
+		go func() {
+			LogMsg(http.ListenAndServe("localhost:6060", nil))
+		}()
+	}
 	result := T_completeResults{}
-	InitAllImages()
-	allIsTags := GetAllIstagsForFamily()
+	go InitAllImages(chanInitAllImages)
+	go GetUsedIstagsForFamily(chanUsedIsTags)
+
+	LogMsg("Wait for chanInitAllImages")
+	LogMsg(<-chanInitAllImages)
+
+	go GetAllIstagsForFamily(chanAllIsTags)
+
+	LogMsg("Wait for chanAllIsTags")
+	allIsTags := <-chanAllIsTags
+
+	LogMsg("Wait for chanUsedIsTags")
+	usedIsTags := <-chanUsedIsTags
+
+	go PutShaIntoUsedIstags(chanUsedIsTags, usedIsTags, allIsTags)
+
 	t := T_ResultExistingIstagsOverAllClusters{}
 	filteredIsTags := T_ResultExistingIstagsOverAllClusters{}
 	MergoNestedMaps(&t, filteredIsTags, allIsTags)
 	filteredIsTags = t
 	filteredIsTags = FilterAllIstags(filteredIsTags)
 	result.AllIstags = filteredIsTags
-	if CmdParams.Output.All || CmdParams.Output.Used {
-		usedIsTags := (GetUsedIstagsForFamily(allIsTags))
-		result.UsedIstags = usedIsTags
-	}
+
+	LogMsg("Wait for filtered chanUsedIsTags")
+	result.UsedIstags = <-chanUsedIsTags
+
 	resultFamilies := T_completeResultsFamilies{}
-	// for _, cluster := range Clusters.Stages {
 	resultFamilies[CmdParams.Family] = result
-	// }
+
 	switch {
 	case CmdParams.Json:
 		fmt.Println(GetJsonFromMap(resultFamilies))
@@ -45,6 +64,8 @@ func main() {
 	case CmdParams.Table || CmdParams.TabGroup:
 		GetTableFromMap(result, CmdParams.Family)
 	}
-	// wg.Add(1)
-	// wg.Wait()
+	if CmdParams.Options.Profiler {
+		wg.Add(1)
+		wg.Wait()
+	}
 }

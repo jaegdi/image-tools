@@ -3,7 +3,6 @@ package ocrequest
 import (
 	// "github.com/imdario/mergo"
 	"bytes"
-	"encoding/csv"
 	"encoding/json"
 	"gopkg.in/yaml.v2"
 	"io"
@@ -13,6 +12,7 @@ import (
 	// "reflect"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"golang.org/x/crypto/ssh/terminal"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -27,9 +27,23 @@ func ageInDays(date string) int {
 }
 
 func exitWithError(errormsg string) {
-	ErrorLogger.Println(errormsg)
-	log.Println(errormsg)
+	LogError(errormsg)
+	LogMsg(errormsg)
 	os.Exit(1)
+}
+
+func LogMsg(msg ...interface{}) {
+	log.Println(msg...)
+	InfoLogger.Println(msg...)
+}
+
+func LogError(msg ...interface{}) {
+	log.Println(msg...)
+	// var emsg string
+	// for _,v := range msg {
+	// 	emsg = emsg + fmt.Sprint(v)
+	// }
+	ErrorLogger.Println(msg...)
 }
 
 func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) {
@@ -73,7 +87,7 @@ func GetJsonFromMap(list interface{}) string {
 	encoder.SetIndent("", "   ")
 	if err := encoder.Encode(list); err != nil {
 		if jsonBytes, err := json.MarshalIndent(list, "", "  "); err != nil {
-			ErrorLogger.Println(err)
+			LogError(err)
 		} else {
 			s := string(jsonBytes)
 			return s
@@ -81,7 +95,7 @@ func GetJsonFromMap(list interface{}) string {
 	} else {
 		b := buffer.Bytes()
 		if b1, err := UnescapeUtf8InJsonBytes(b); err != nil {
-			ErrorLogger.Println("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
+			LogError("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
 			return string(b1)
 		} else {
 			return string(b1)
@@ -100,14 +114,14 @@ func GetJsonFromMap(list interface{}) string {
 func GetYamlFromMap(list interface{}) string {
 	d, err := yaml.Marshal(&list)
 	if err != nil {
-		ErrorLogger.Println("Convert map to Yaml failed", err)
+		LogError("Convert map to Yaml failed", err)
 	}
 	return string(d)
 }
 
 func GetCsvFromMap(list interface{}, family string) {
-	output := T_csvDoc{}
 	if CmdParams.Output.Is || CmdParams.Output.All {
+		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
 		output = append(output, headline)
 		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
@@ -124,8 +138,10 @@ func GetCsvFromMap(list interface{}, family string) {
 				}
 			}
 		}
+		output.csvDoc("imagestreams")
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
+		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toArrayString(T_istag{}.Names())...)
 		output = append(output, headline)
@@ -138,8 +154,10 @@ func GetCsvFromMap(list interface{}, family string) {
 			line = append(line, toArrayString(istagMap.Values())...)
 			output = append(output, line)
 		}
+		output.csvDoc("istags")
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
+		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
 		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
@@ -163,8 +181,10 @@ func GetCsvFromMap(list interface{}, family string) {
 				}
 			}
 		}
+		output.csvDoc("images")
 	}
 	if CmdParams.Output.Used || CmdParams.Output.All {
+		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Tag"} //, "UsedInNamespace", "Image", "UsedInCluster"}
 		headline = append(headline, toArrayString(T_usedIstag{}.Names())...)
 		output = append(output, headline)
@@ -182,12 +202,8 @@ func GetCsvFromMap(list interface{}, family string) {
 				}
 			}
 		}
+		output.csvDoc("used-istags")
 	}
-	w := csv.NewWriter(os.Stdout)
-	if err := w.WriteAll(output.csvDoc()); err != nil {
-		ErrorLogger.Println("writing csv failed" + err.Error())
-	}
-	// tablePrettyprint(output)
 }
 
 func GetTableFromMap(list interface{}, family string) {
@@ -300,7 +316,7 @@ func tablePrettyprint(out []table.Row) {
 	// get height of terminal
 	// _, height, err := terminal.GetSize(0)
 	// if err != nil {
-	// 	log.Println("failedt o get terminal size")
+	// 	LogMsg("failedt o get terminal size")
 	// 	height = 60
 	// }
 	fd := int(os.Stdout.Fd())
@@ -338,7 +354,17 @@ func tablePrettyprint(out []table.Row) {
 			// {Number: 4, AutoMerge: true},
 		})
 	}
-	t.Render()
+	if CmdParams.Html {
+		t.Style().HTML = table.HTMLOptions{
+			CSSClass:    "game-of-thrones",
+			EmptyColumn: "&nbsp;",
+			EscapeText:  true,
+			Newline:     "<br/>",
+		}
+		t.RenderHTML()
+	} else {
+		t.Render()
+	}
 }
 
 func runPager() (*exec.Cmd, io.WriteCloser) {
@@ -362,4 +388,45 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 		log.Fatal(err)
 	}
 	return cmd, out
+}
+func runBroswer() (*exec.Cmd, io.WriteCloser) {
+	pager := os.Getenv("PAGER")
+	if pager == "" {
+		pager = "more"
+	}
+	var cmd *exec.Cmd
+	if pager == "less" {
+		cmd = exec.Command(pager, "-m", "-n", "-g", "-i", "-J", "-R", "-S", "--underline-special", "--SILENT")
+	} else {
+		cmd = exec.Command(pager)
+	}
+	out, err := cmd.StdinPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
+	}
+	return cmd, out
+}
+
+func openbrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		LogError("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }

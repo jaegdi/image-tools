@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"sync"
 	// "time"
-	"log"
+	// "log"
 )
 
 type T_CLusterAppNamespaces []string
@@ -51,12 +51,12 @@ func allocateAppNamespaces(family string) {
 	jobNr := 0
 	clusters := Clusters.Stages
 	for cl := 0; cl < len(clusters); cl++ {
-		log.Println("Start JobAppNamespaces for cluster" + clusters[cl])
+		LogMsg("Start JobAppNamespaces for cluster" + clusters[cl])
 		job := JobAppNamespaces{jobNr, clusters[cl], family}
 		jobsAppNamespaces <- job
 		jobNr++
 	}
-	log.Println("close jobsAppNamespaces")
+	LogMsg("close jobsAppNamespaces")
 	close(jobsAppNamespaces)
 }
 
@@ -75,13 +75,13 @@ func goGetAppNamespacesForFamily(family string) T_FamilyAppNamespaces {
 
 	jobsAppNamespaces = make(chan JobAppNamespaces, channelsizeAppNamespaces)
 	jobResultsAppNamespaces = make(chan ResultAppNamespaces, channelsizeAppNamespaces)
-	log.Println("Allocate and start JobsAppNamespaces")
+	LogMsg("Allocate and start JobsAppNamespaces")
 	go allocateAppNamespaces(family)
 
-	log.Println("Create Worker Pool AppNamespaces")
+	LogMsg("Create Worker Pool AppNamespaces")
 	createWorkerPoolAppNamespaces(noOfWorkersAppNamespaces)
 
-	log.Println("Collect results")
+	LogMsg("Collect results")
 	for jobResult := range jobResultsAppNamespaces {
 		t := T_FamilyAppNamespaces{}
 		resmap := T_FamilyAppNamespaces{jobResult.cluster: jobResult.namespaces}

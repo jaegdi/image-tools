@@ -2,10 +2,12 @@ package ocrequest
 
 import (
 	// "log"
-	"encoding/json"
+	// "encoding/json"
 	// "github.com/jedib0t/go-pretty/v6/table"
 	// "log"
 	// "os"
+	"encoding/csv"
+	"os"
 	"reflect"
 )
 
@@ -48,14 +50,14 @@ func (a T_shaNames) Add(key string, b string) {
 }
 
 type T_istagBuildLabels struct {
-	CommitAuthor  string `json:"io.openshift.build.commit.author,omitempty"`
-	CommitDate    string `json:"io.openshift.build.commit.date,omitempty"`
-	CommitId      string `json:"io.openshift.build.commit.id,omitempty"`
-	CommitRef     string `json:"io.openshift.build.commit.ref,omitempty"`
-	CommitVersion string `json:"io.openshift.build.commit.version,omitempty"`
-	IsProdImage   string `json:"io.openshift.build.isProdImage,omitempty"`
-	Name          string `json:"io.openshift.build.name,omitempty"`
-	Namespace     string `json:"io.openshift.build.namespace,omitempty"`
+	CommitAuthor   string `json:"io.openshift.build.commit.author,omitempty"`
+	CommitDate     string `json:"io.openshift.build.commit.date,omitempty"`
+	CommitId       string `json:"io.openshift.build.commit.id,omitempty"`
+	CommitRef      string `json:"io.openshift.build.commit.ref,omitempty"`
+	CommitVersion  string `json:"io.openshift.build.commit.version,omitempty"`
+	IsProdImage    string `json:"io.openshift.build.isProdImage,omitempty"`
+	BuildName      string `json:"io.openshift.build.name,omitempty"`
+	BuildNamespace string `json:"io.openshift.build.namespace,omitempty"`
 }
 
 func (b T_istagBuildLabels) Values() interface{} {
@@ -81,10 +83,35 @@ func (b T_istagBuildLabels) GetVal(s string) string {
 	return string(f.String())
 }
 func (buildLabels *T_istagBuildLabels) Set(buildLabelsMap map[string]interface{}) {
-	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
-	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-		ErrorLogger.Println("Unmarshal unescaped String", err)
+	// buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
+	// if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
+	// 	LogError("Unmarshal unescaped String", err)
+	// }
+	if buildLabelsMap["io.openshift.build.commit.author"] != nil {
+		buildLabels.CommitAuthor = buildLabelsMap["io.openshift.build.commit.author"].(string)
 	}
+	if buildLabelsMap["io.openshift.build.commit.date"] != nil {
+		buildLabels.CommitDate = buildLabelsMap["io.openshift.build.commit.date"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.commit.id"] != nil {
+		buildLabels.CommitId = buildLabelsMap["io.openshift.build.commit.id"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.commit.ref"] != nil {
+		buildLabels.CommitRef = buildLabelsMap["io.openshift.build.commit.ref"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.commit.version"] != nil {
+		buildLabels.CommitVersion = buildLabelsMap["io.openshift.build.commit.version"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.isProdImage"] != nil {
+		buildLabels.IsProdImage = buildLabelsMap["io.openshift.build.isProdImage"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.name"] != nil {
+		buildLabels.BuildName = buildLabelsMap["io.openshift.build.name"].(string)
+	}
+	if buildLabelsMap["io.openshift.build.namespace"] != nil {
+		buildLabels.BuildNamespace = buildLabelsMap["io.openshift.build.namespace"].(string)
+	}
+
 }
 
 // type T_istag map[string]interface{}
@@ -234,32 +261,39 @@ type T_flagFilt struct {
 	Imagename string
 	Namespace string
 }
+
+type T_flagOpts struct {
+	OcClient bool
+	NoProxy  bool
+	Profiler bool
+}
 type T_flags struct {
 	Cluster  string
 	Token    string
 	Family   string
-	OcClient bool
-	NoProxy  bool
 	Json     bool
 	Yaml     bool
 	Csv      bool
+	CsvFile  string
+	Html     bool
 	Table    bool
 	TabGroup bool
 	Output   T_flagOut
 	Filter   T_flagFilt
+	Options  T_flagOpts
 }
 
 //------------------------------------------
 
 type T_Cluster struct {
-	Url   string `json:"Url",omitempty`
-	Name  string `json:"Name",omitempty`
-	Token string `json:"Token",omitempty`
+	Url   string `json:"Url,omitempty"`
+	Name  string `json:"Name,omitempty"`
+	Token string `json:"Token,omitempty"`
 }
 
 type T_ClusterConfig struct {
 	Stages     []string
-	Config     map[string]T_Cluster `json:"Config".[],omitempty`
+	Config     map[string]T_Cluster `json:"Config.[],omitempty"`
 	Buildstage string
 	Teststages []string
 	Prodstage  string
@@ -277,10 +311,26 @@ type T_csvLine []string
 
 type T_csvDoc []T_csvLine
 
-func (c T_csvDoc) csvDoc() [][]string {
+func (c T_csvDoc) csvDoc(typ string) {
 	out := [][]string{}
 	for _, l := range c {
 		out = append(out, l)
 	}
-	return out
+	if CmdParams.CsvFile == "" {
+		w := csv.NewWriter(os.Stdout)
+		if err := w.WriteAll(out); err != nil {
+			LogError("writing csv failed" + err.Error())
+		}
+	} else {
+		file := CmdParams.CsvFile + "-" + typ + ".csv"
+		csvfile, err := os.OpenFile(file, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			LogError("failed to open file", file, err)
+		}
+		LogMsg("write CSV file for", typ, "to", file)
+		w := csv.NewWriter(csvfile)
+		if err := w.WriteAll(out); err != nil {
+			LogError("writing csv failed" + err.Error())
+		}
+	}
 }

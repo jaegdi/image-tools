@@ -47,10 +47,10 @@ import (
 // t := T_usedIstagsResult{}; MergoNestedMaps(&t, result, r); result = t
 func MergoNestedMaps(dest, m1, m2 interface{}) {
 	if err := mergo.Merge(dest, m1, mergo.WithSliceDeepCopy, mergo.WithAppendSlice, mergo.WithTypeCheck); err != nil {
-		ErrorLogger.Println("merge m1 m2" + ": failed: " + err.Error())
+		LogError("merge m1 m2" + ": failed: " + err.Error())
 	}
 	if err := mergo.Merge(dest, m2, mergo.WithSliceDeepCopy, mergo.WithAppendSlice, mergo.WithTypeCheck); err != nil {
-		ErrorLogger.Println("merge m1 m2" + ": failed: " + err.Error())
+		LogError("merge m1 m2" + ": failed: " + err.Error())
 	}
 }
 

@@ -15,7 +15,7 @@ func GetAllImagesOfCluster(cluster string) T_ImagesMap {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {
-		ErrorLogger.Println("unmarschal images." + err.Error())
+		LogError("unmarschal images." + err.Error())
 	}
 	var metadata map[string]interface{}
 	result := T_ImagesMap{}
@@ -33,7 +33,7 @@ func GetAllImagesOfCluster(cluster string) T_ImagesMap {
 	return result
 }
 
-func InitAllImages() {
+func InitAllImages(c chan string) {
 	if Multiproc {
 		ImagesMap = goGetExistingImagesInAllClusters()
 	} else {
@@ -45,4 +45,5 @@ func InitAllImages() {
 			ImagesMap = t
 		}
 	}
+	c <- "InitAllImages Done!"
 }

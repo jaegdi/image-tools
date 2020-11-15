@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/alessiosavi/Requests v0.3.6
+	github.com/brendangregg/FlameGraph v0.0.0-20200729224447-a258e78f17ab // indirect
 	github.com/cjbassi/drawille-go v0.0.0-20190126131713-27dc511fe6fd // indirect
 	github.com/fatih/color v1.9.0
 	github.com/gizak/termui v2.3.0+incompatible // indirect

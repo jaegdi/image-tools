@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"sync"
 	// "time"
-	"log"
+	// "log"
 )
 
 type T_clname string
@@ -53,15 +53,15 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 func allocateExistingIstags(clusters []string, clusterFamNamespaces []string) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
-		log.Println("Start JobExistingIstags for cluster" + clusters[cl])
+		LogMsg("Start JobExistingIstags for cluster" + clusters[cl])
 		for i := 0; i < len(clusterFamNamespaces); i++ {
-			log.Println("Start job for cluster " + clusters[cl] + " in namespace " + clusterFamNamespaces[i])
+			LogMsg("Start job for cluster " + clusters[cl] + " in namespace " + clusterFamNamespaces[i])
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
 			jobsExistingIstags <- job
 			jobNr++
 		}
 	}
-	log.Println("close jobsExistingIstags")
+	LogMsg("close jobsExistingIstags")
 	close(jobsExistingIstags)
 }
 
@@ -83,13 +83,13 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 		jobsExistingIstags = make(chan JobExistingIstags, channelsizeExistingIstags)
 		jobResultsExistingIstags = make(chan ResultExistingIstags, channelsizeExistingIstags)
 
-		log.Println("Allocate and start JobsExistingIstags")
+		LogMsg("Allocate and start JobsExistingIstags")
 		go allocateExistingIstags(Clusters.Stages, FamilyNamespaces[family])
 
-		log.Println("Create Worker Pool")
+		LogMsg("Create Worker Pool")
 		createWorkerPoolForExistingIstags(noOfWorkersExistingIstags)
 
-		log.Println("Collect results")
+		LogMsg("Collect results")
 		for result := range jobResultsExistingIstags {
 			t := T_ResultExistingIstagsOverAllClusters{}
 			MergoNestedMaps(&t, istagResult, result.istags)

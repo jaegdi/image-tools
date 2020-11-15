@@ -34,11 +34,11 @@ DESCRIPTION
 	  by any deploymentconfig, job, cronjob or pod of all namespaces that 
 	  belong to the application family.
 
-  - Generate JSON reports about imagestreamtags, imagestreams and images. 
-	  The content of the JSON report can be defined by the mandatory parameter 
+  - Generate reports about imagestreamtags, imagestreams and images. 
+	  The content of the report can be defined by the mandatory parameter 
 	  '-output=[is|istag|image|used|all]'.
 	
-  - Variable output format: json, yaml, csv, table and tabgroup 
+  - Variable output format: json(default), yaml, csv, csvfile, table and tabgroup 
 	  (table with grouped rows for identical content). 
 	  Output as table or tabgroup is best used when piped into less
 
@@ -104,6 +104,8 @@ func EvalFlags() {
 	jsonPtr := flag.Bool("json", false, "defines JSON as the output format for the reported data. This is the DEFAULT")
 	yamlPtr := flag.Bool("yaml", false, "defines YAML as the output format for the reported data")
 	csvPtr := flag.Bool("csv", false, "defines CSV as the output format for the reported data")
+	csvFilePtr := flag.String("csvfile", "", "defines CSV as the output format for the reported data and write the types to seperate csv files <name>-typ.csv")
+	htmlPtr := flag.Bool("html", false, "defines HTML as the output format for the reported data")
 	tablePtr := flag.Bool("table", false, "defines formated ASCI TABLE as the output format for the reported data")
 	tabgroupPtr := flag.Bool("tabgroup", false, "defines formated ASCII TABLE WITH GROUPED ROWS as the output format for the reported data")
 
@@ -115,7 +117,8 @@ func EvalFlags() {
 
 	// Options
 	ocClientPtr := flag.Bool("occlient", false, "use oc client instead of api call for cluster communication")
-	noproxyPtr := flag.Bool("noproxy", false, "disable use of proxy for API http requests")
+	noProxyPtr := flag.Bool("noproxy", false, "disable use of proxy for API http requests")
+	profilerPtr := flag.Bool("profiler", false, "enable profiler support for debugging, http://localhost:6060/debug/pprof")
 
 	flag.Parse()
 
@@ -124,11 +127,11 @@ func EvalFlags() {
 		Cluster:  string(*clusterPtr),
 		Token:    string(*tokenPtr),
 		Family:   string(*familyPtr),
-		OcClient: bool(*ocClientPtr),
-		NoProxy:  bool(*noproxyPtr),
-		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*tablePtr) || bool(*tabgroupPtr)),
+		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr)),
 		Yaml:     bool(*yamlPtr) && !bool(*jsonPtr),
-		Csv:      bool(*csvPtr) && !bool(*jsonPtr),
+		Csv:      (bool(*csvPtr) || (string(*csvFilePtr) != "")) && !bool(*jsonPtr),
+		CsvFile:  string(*csvFilePtr),
+		Html:     bool(*htmlPtr) && !bool(*jsonPtr),
 		Table:    bool(*tablePtr) && !bool(*jsonPtr),
 		TabGroup: bool(*tabgroupPtr) && !bool(*jsonPtr),
 
@@ -145,6 +148,11 @@ func EvalFlags() {
 			Tagname:   *tagnamePtr,
 			Imagename: *shanamePtr,
 			Namespace: *namespacePtr,
+		},
+		Options: T_flagOpts{
+			OcClient: *ocClientPtr,
+			NoProxy:  *noProxyPtr,
+			Profiler: *profilerPtr,
 		},
 	}
 

@@ -3,7 +3,7 @@ package ocrequest
 import (
 	"encoding/json"
 	"github.com/stretchr/stew/slice"
-	"log"
+	// "log"
 	"strings"
 )
 
@@ -17,9 +17,9 @@ func GetAppNamespacesForFamily(cluster string, family string) []string {
 	namespaceList := []string{}
 	err := json.Unmarshal([]byte(namespacesJson), &namespacesMap)
 	if err != nil {
-		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
+		LogError("generate Map for AppNamespaces." + err.Error())
 	} else {
-		// log.Println("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
+		// LogMsg("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
 		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
 			for _, v := range namespacesMap["items"].([]interface{}) {
 				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
@@ -140,19 +140,19 @@ func ocGetAllUsedIstagsOfNamespace(cluster string, namespace string) T_usedIstag
 	var err error
 	err = json.Unmarshal([]byte(istagsDcJson), &istagsDcResult)
 	if err != nil {
-		ErrorLogger.Println("Query dc" + err.Error())
+		LogError("Query dc" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsJobJson), &istagsJobResult)
 	if err != nil {
-		ErrorLogger.Println("Query job" + err.Error())
+		LogError("Query job" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsCronjobJson), &istagsCronjobResult)
 	if err != nil {
-		ErrorLogger.Println("Query cronjob" + err.Error())
+		LogError("Query cronjob" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsPodJson), &istagsPodResult)
 	if err != nil {
-		ErrorLogger.Println("Query pod" + err.Error())
+		LogError("Query pod" + err.Error())
 	}
 
 	result.Dc = istagsDcResult
@@ -175,10 +175,10 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
 			InfoLogger.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
-			log.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
+			LogMsg("Get used istags of cluster: " + cluster + " in namespace: " + ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			// if err := mergo.Merge(&result, r); err != nil {
-			// 	ErrorLogger.Println("merge myImage to resultSha" + ": failed: " + err.Error())
+			// 	LogError("merge myImage to resultSha" + ": failed: " + err.Error())
 			// }
 			t := T_usedIstagsResult{}
 			MergoNestedMaps(&t, result, r)
@@ -190,26 +190,7 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 	return result
 }
 
-// GetUsedIstagsForFamily get __used__ istags from __all__ clusters.
-// It looks for deploymentconfigs, jobs, cronjobs and pods in all
-// namespaces, that belongs to the family,
-// registers the images of these objects and generates
-// a map with all these istags and return this map as result.
-func GetUsedIstagsForFamily(allTags T_ResultExistingIstagsOverAllClusters) T_usedIstagsResult {
-	var result T_usedIstagsResult
-	if Multiproc {
-		result = goGetUsedIstagsForFamilyInAllClusters(CmdParams.Family)
-	} else {
-		clusters := Clusters.Stages
-		for _, cluster := range clusters {
-			InfoLogger.Println("Get used istags in cluster: " + cluster)
-			log.Println("Get used istags in cluster: " + cluster)
-			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
-			t := T_usedIstagsResult{}
-			MergoNestedMaps(&t, result, resultCluster)
-			result = t
-		}
-	}
+func PutShaIntoUsedIstags(c chan T_usedIstagsResult, result T_usedIstagsResult, allTags T_ResultExistingIstagsOverAllClusters) {
 	for is, isMap := range result {
 		for tag, tagArray := range isMap {
 			istag := is + ":" + tag
@@ -222,5 +203,28 @@ func GetUsedIstagsForFamily(allTags T_ResultExistingIstagsOverAllClusters) T_use
 			}
 		}
 	}
-	return result
+	c <- result
+}
+
+// GetUsedIstagsForFamily get __used__ istags from __all__ clusters.
+// It looks for deploymentconfigs, jobs, cronjobs and pods in all
+// namespaces, that belongs to the family,
+// registers the images of these objects and generates
+// a map with all these istags and return this map as result.
+func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
+	var result T_usedIstagsResult
+	if Multiproc {
+		result = goGetUsedIstagsForFamilyInAllClusters(CmdParams.Family)
+	} else {
+		clusters := Clusters.Stages
+		for _, cluster := range clusters {
+			InfoLogger.Println("Get used istags in cluster: " + cluster)
+			LogMsg("Get used istags in cluster: " + cluster)
+			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
+			t := T_usedIstagsResult{}
+			MergoNestedMaps(&t, result, resultCluster)
+			result = t
+		}
+	}
+	c <- result
 }
