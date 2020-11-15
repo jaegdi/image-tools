@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	// "log"
-	"net/http"
-	_ "net/http/pprof"
+	// "net/http"
+	// _ "net/http/pprof"
 	. "report-istags/ocrequest"
-	"sync"
+	// "sync"
 )
 
 func init() {
@@ -18,12 +17,12 @@ var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
 var chanInitAllImages = make(chan string, 1)
 
 func main() {
-	var wg sync.WaitGroup
-	if CmdParams.Options.Profiler {
-		go func() {
-			LogMsg(http.ListenAndServe("localhost:6060", nil))
-		}()
-	}
+	// var wg sync.WaitGroup
+	// if CmdParams.Options.Profiler {
+	// 	go func() {
+	// 		LogMsg(http.ListenAndServe("localhost:6060", nil))
+	// 	}()
+	// }
 	result := T_completeResults{}
 	go InitAllImages(chanInitAllImages)
 	go GetUsedIstagsForFamily(chanUsedIsTags)
@@ -64,8 +63,8 @@ func main() {
 	case CmdParams.Table || CmdParams.TabGroup:
 		GetTableFromMap(result, CmdParams.Family)
 	}
-	if CmdParams.Options.Profiler {
-		wg.Add(1)
-		wg.Wait()
-	}
+	// if CmdParams.Options.Profiler {
+	// 	wg.Add(1)
+	// 	wg.Wait()
+	// }
 }
