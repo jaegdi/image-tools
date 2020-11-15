@@ -190,6 +190,7 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 	return result
 }
 
+// PutShaIntoUsedIstags writes sha from allTags into usedIsTags if there the sha is empty
 func PutShaIntoUsedIstags(c chan T_usedIstagsResult, result T_usedIstagsResult, allTags T_ResultExistingIstagsOverAllClusters) {
 	for is, isMap := range result {
 		for tag, tagArray := range isMap {

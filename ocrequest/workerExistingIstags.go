@@ -65,15 +65,6 @@ func allocateExistingIstags(clusters []string, clusterFamNamespaces []string) {
 	close(jobsExistingIstags)
 }
 
-// func getResult(istagResult T_usedIstagsResult) { // done chan bool,
-// 	for result := range jobResultsExistingIstags {
-// 		t := T_usedIstagsResult{}
-// 		MergoNestedMaps(&t, istagResult, result.istags)
-// 		istagResult = t
-// 	}
-// 	// done <- true
-// }
-
 func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIstagsOverAllClusters {
 
 	istagResult := T_ResultExistingIstagsOverAllClusters{}

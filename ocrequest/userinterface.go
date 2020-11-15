@@ -85,6 +85,8 @@ EXAMPLES
 }
 
 // FamilyNamespaces T_famNs
+
+// EvalFlags evaluate all command line flags and set a struct with their values
 func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags

@@ -244,7 +244,7 @@ type T_IsNamesForFamily map[string]map[string]bool
 
 //------------------------------------------
 
-// userinterface.go
+//               family  namespaces
 type T_famNs map[string][]string
 
 type T_flagOut struct {
@@ -298,14 +298,6 @@ type T_ClusterConfig struct {
 	Teststages []string
 	Prodstage  string
 }
-
-// type T_Clusters struct {
-// 	Cid T_Cluster
-// 	Int T_Cluster
-// 	Ppr T_Cluster
-// 	Vpt T_Cluster
-// 	Pro T_Cluster
-// }
 
 type T_csvLine []string
 

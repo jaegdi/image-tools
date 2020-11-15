@@ -8,6 +8,7 @@ import (
 	"os/exec"
 )
 
+// getClusterToken fetch login token from Clusters config
 func getClusterToken(cluster string) string {
 	token := ""
 	if _, ok := Clusters.Config[cluster]; ok {
@@ -16,6 +17,7 @@ func getClusterToken(cluster string) string {
 	return token
 }
 
+// setClusterToken set login token onto Cluster config
 func setClusterToken(cluster string, token string) {
 	if v, ok := Clusters.Config[cluster]; ok {
 		v.Token = token

@@ -19,35 +19,6 @@ func joinShaStreams(mymap map[string]bool) []string {
 	return keys
 }
 
-// // addNamesToShaNames initialize the image-names map if it is nil and add new names to this map.
-// func addNamesToShaNames(a T_shaNames, key string, b string) T_shaNames {
-// 	if a == nil {
-// 		a = T_shaNames{}
-// 	}
-// 	if a[key] == nil {
-// 		a[key] = T_Istags_List{}
-// 	}
-// 	a[key][b] = true
-// 	return a
-// }
-
-// // addNamesToShaStreams initialize the image-streams map if it is nil and add new names to this map.
-// func addNamesToShaStreams(a T_shaStreams, is string, image string, istag T_istag) T_shaStreams {
-// 	if a == nil {
-// 		a = T_shaStreams{}
-// 	}
-// 	if a[is] == nil {
-// 		a[is] = T_resIstag{}
-// 	}
-// 	if a[is][image] == (T_istag{}) {
-// 		a[is][image] = T_istag{}
-// 	}
-// 	// for k, v := range istag {
-// 	a[is][image] = istag
-// 	// }
-// 	return a
-// }
-
 // appendJoinedNamesToImagestreams get as params the imageStream-map and then joinedNames of istags and
 // put them on the map under imagestreamMap.imagestream.image .
 func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, image string, joinedNames []string) T_resIs {

@@ -21,31 +21,31 @@ import (
 var today time.Time = time.Now()
 var pager io.WriteCloser
 
+// ageInDays calculates the no of days between a date and current date
 func ageInDays(date string) int {
 	t, _ := time.Parse(time.RFC3339, date)
 	return int(today.Sub(t).Hours()) / 24
 }
 
+// exitWithError write msg to StdErr, and logfile and exits to program
 func exitWithError(errormsg string) {
 	LogError(errormsg)
-	LogMsg(errormsg)
 	os.Exit(1)
 }
 
+// LogMsg write msg to StdErr and logfile
 func LogMsg(msg ...interface{}) {
 	log.Println(msg...)
 	InfoLogger.Println(msg...)
 }
 
+// LogError write error msg to StdErr and logfile
 func LogError(msg ...interface{}) {
 	log.Println(msg...)
-	// var emsg string
-	// for _,v := range msg {
-	// 	emsg = emsg + fmt.Sprint(v)
-	// }
 	ErrorLogger.Println(msg...)
 }
 
+// UnescapeUtf8InJsonBytes removes escape sign from JSON byte
 func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) {
 	var patterns = [][2]string{
 		{`\\u`, `\u`},
@@ -79,7 +79,7 @@ func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) 
 	}
 }
 
-// Generate json output depending on the commadline flags
+// GetJsonFromMap generate json output depending on the commadline flags
 func GetJsonFromMap(list interface{}) string {
 	buffer := &bytes.Buffer{}
 	encoder := json.NewEncoder(buffer)
@@ -111,6 +111,7 @@ func GetJsonFromMap(list interface{}) string {
 // 	return string(f.String())
 // }
 
+// GetYamlFromMap generate YAML output from map
 func GetYamlFromMap(list interface{}) string {
 	d, err := yaml.Marshal(&list)
 	if err != nil {
@@ -119,6 +120,7 @@ func GetYamlFromMap(list interface{}) string {
 	return string(d)
 }
 
+// GetCsvFromMap generates CSV output from map
 func GetCsvFromMap(list interface{}, family string) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := T_csvDoc{}
@@ -206,6 +208,7 @@ func GetCsvFromMap(list interface{}, family string) {
 	}
 }
 
+// GetTableFromMap generate ASCII table output from map
 func GetTableFromMap(list interface{}, family string) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := []table.Row{}
@@ -289,6 +292,7 @@ func GetTableFromMap(list interface{}, family string) {
 	}
 }
 
+// toTableRow convert a slice of interface{} to table.Row
 func toTableRow(arr ...interface{}) table.Row {
 	o := table.Row{}
 	for _, v := range arr {
@@ -299,6 +303,7 @@ func toTableRow(arr ...interface{}) table.Row {
 	return o
 }
 
+// toArrayString convert a slice of interface{} to slice of string
 func toArrayString(arr ...interface{}) []string {
 	o := []string{}
 	for _, v := range arr {
@@ -309,6 +314,7 @@ func toArrayString(arr ...interface{}) []string {
 	return o
 }
 
+// tablePrettyprint print ASCII table
 func tablePrettyprint(out []table.Row) {
 	if len(out) == 0 {
 		return
@@ -367,6 +373,7 @@ func tablePrettyprint(out []table.Row) {
 	}
 }
 
+// runPager starts less or the standard pager of os and pipes output into its Stdin
 func runPager() (*exec.Cmd, io.WriteCloser) {
 	pager := os.Getenv("PAGER")
 	if pager == "" {
@@ -389,6 +396,9 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 	}
 	return cmd, out
 }
+
+// runBroswer starts Browser for html output
+// TODO
 func runBroswer() (*exec.Cmd, io.WriteCloser) {
 	pager := os.Getenv("PAGER")
 	if pager == "" {
@@ -412,6 +422,8 @@ func runBroswer() (*exec.Cmd, io.WriteCloser) {
 	return cmd, out
 }
 
+// openbrowser alternative to open browser for html
+// TODO
 func openbrowser(url string) {
 	var err error
 
