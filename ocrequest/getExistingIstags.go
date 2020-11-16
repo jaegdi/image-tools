@@ -41,7 +41,7 @@ func InitIsNamesForFamily(family string) {
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
 	result[family] = make(map[string]bool)
-	for _, ns := range FamilyNamespaces[family] {
+	for _, ns := range FamilyNamespaces[family][cluster] {
 		if ns == "openshift" {
 			continue
 		}
@@ -190,7 +190,7 @@ func GetAllIstagsForFamily(c chan T_ResultExistingIstagsOverAllClusters) {
 	} else {
 		for _, cluster := range Clusters.Stages {
 			if namespace == "" {
-				for _, ns := range FamilyNamespaces[family] {
+				for _, ns := range FamilyNamespaces[family][cluster] {
 					r := T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, ns)}
 					t := T_ResultExistingIstagsOverAllClusters{}
 					MergoNestedMaps(&t, result, r)

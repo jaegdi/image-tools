@@ -18,5 +18,6 @@ require (
 	github.com/stretchr/stew v0.0.0-20130812190256-80ef0842b48b
 	golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045 // indirect
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
+	golang.org/x/net v0.0.0-20200202094626-16171245cfb2
 	gopkg.in/yaml.v2 v2.3.0
 )

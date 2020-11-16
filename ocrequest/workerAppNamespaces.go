@@ -26,8 +26,8 @@ type ResultAppNamespaces struct {
 var jobsAppNamespaces chan JobAppNamespaces
 var jobResultsAppNamespaces chan ResultAppNamespaces
 
-var channelsizeAppNamespaces = 100
-var noOfWorkersAppNamespaces = 8
+var channelsizeAppNamespaces = 30
+var noOfWorkersAppNamespaces = 20
 
 func workerGetAppNamespaces(wg *sync.WaitGroup) {
 	for job := range jobsAppNamespaces {

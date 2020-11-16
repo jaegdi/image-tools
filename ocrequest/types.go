@@ -244,8 +244,8 @@ type T_IsNamesForFamily map[string]map[string]bool
 
 //------------------------------------------
 
-//               family  namespaces
-type T_famNs map[string][]string
+//               family     cluster  namespaces
+type T_famNs map[string]map[string][]string
 
 type T_flagOut struct {
 	Is    bool
@@ -265,6 +265,7 @@ type T_flagFilt struct {
 type T_flagOpts struct {
 	OcClient bool
 	NoProxy  bool
+	Socks5Proxy string
 	Profiler bool
 }
 type T_flags struct {

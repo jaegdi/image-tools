@@ -120,6 +120,7 @@ func EvalFlags() {
 	// Options
 	ocClientPtr := flag.Bool("occlient", false, "use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "disable use of proxy for API http requests")
+	socks5ProxyPtr := flag.String("sock5", "", "set socks5 proxy url and use it for API calls")
 	profilerPtr := flag.Bool("profiler", false, "enable profiler support for debugging, http://localhost:6060/debug/pprof")
 
 	flag.Parse()
@@ -152,9 +153,10 @@ func EvalFlags() {
 			Namespace: *namespacePtr,
 		},
 		Options: T_flagOpts{
-			OcClient: *ocClientPtr,
-			NoProxy:  *noProxyPtr,
-			Profiler: *profilerPtr,
+			OcClient:    *ocClientPtr,
+			NoProxy:     *noProxyPtr,
+			Socks5Proxy: *socks5ProxyPtr,
+			Profiler:    *profilerPtr,
 		},
 	}
 
@@ -171,7 +173,7 @@ func EvalFlags() {
 	}
 
 	foundNamespace := false
-	for _, v := range FamilyNamespaces[flags.Family] {
+	for _, v := range FamilyNamespaces[flags.Family][flags.Cluster] {
 		if flags.Filter.Namespace == v {
 			foundNamespace = true
 		}

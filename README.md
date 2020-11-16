@@ -91,6 +91,10 @@ the parameters can be specified in any order
     -yaml             defines YAML as the output format for the reported data
     
     -csv              defines CSV as the output format for the reported data
+
+    -csvfile=string   define the common filename-part for the output files in csv format.
+                      For every type of openshift objects a separate file is generated
+                      with the following names schema: '<common-filename>-<type>.csv'.
     
     -table            defines formatted ASCI TABLE as the output format for the
                       reported data
@@ -103,6 +107,8 @@ the parameters can be specified in any order
     -occlient         use oc client instead of api call for cluster communication
 
     -noproxy          disable the usage of a proxy for OpenShift API requests
+
+    -socks5=string    enable socks5 usage. E.g. -socks5=localhost:65022
 
 ## EXAMPLES
 

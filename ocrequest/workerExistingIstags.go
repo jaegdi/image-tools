@@ -27,8 +27,8 @@ type ResultExistingIstags struct {
 var jobsExistingIstags chan JobExistingIstags
 var jobResultsExistingIstags chan ResultExistingIstags
 
-var channelsizeExistingIstags = 30
-var noOfWorkersExistingIstags = 15
+var channelsizeExistingIstags = 60
+var noOfWorkersExistingIstags = 50
 
 func workerExistingIstags(wg *sync.WaitGroup) {
 	for job := range jobsExistingIstags {
@@ -50,10 +50,11 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 	close(jobResultsExistingIstags)
 }
 
-func allocateExistingIstags(clusters []string, clusterFamNamespaces []string) {
+func allocateExistingIstags(family string, clusters []string) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobExistingIstags for cluster" + clusters[cl])
+		clusterFamNamespaces := FamilyNamespaces[family][clusters[cl]]
 		for i := 0; i < len(clusterFamNamespaces); i++ {
 			LogMsg("Start job for cluster " + clusters[cl] + " in namespace " + clusterFamNamespaces[i])
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
@@ -75,7 +76,7 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 		jobResultsExistingIstags = make(chan ResultExistingIstags, channelsizeExistingIstags)
 
 		LogMsg("Allocate and start JobsExistingIstags")
-		go allocateExistingIstags(Clusters.Stages, FamilyNamespaces[family])
+		go allocateExistingIstags(family, Clusters.Stages)
 
 		LogMsg("Create Worker Pool")
 		createWorkerPoolForExistingIstags(noOfWorkersExistingIstags)
@@ -89,7 +90,7 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 
 	} else {
 		for _, cluster := range Clusters.Stages {
-			namespaces := FamilyNamespaces[family]
+			namespaces := FamilyNamespaces[family][cluster]
 			for _, namespace := range namespaces {
 				r := T_ResultExistingIstagsOverAllClusters{
 					cluster: OcGetAllIstagsOfNamespace(T_result{}, cluster, namespace)}

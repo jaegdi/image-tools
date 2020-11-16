@@ -1,10 +1,34 @@
 package ocrequest
 
 var FamilyNamespaces = T_famNs{
-	"pkp": []string{"ms-jenkins", "openshift", "images-pkp"},
-	"ssp": []string{"ssp-jenkins", "images-ssp"},
-	"aps": []string{"aps-jenkins", "images-aps"},
-	"fpc": []string{"fpc-jenkins", "images-fpc"},
+	"pkp": map[string][]string{
+		"cid": {"ms-jenkins", "openshift", "images-pkp"},
+		"int": {"images-pkp"},
+		"ppr": {"images-pkp"},
+		"vpt": {"images-pkp"},
+		"pro": {"images-pkp"},
+	},
+	"ssp": map[string][]string{
+		"cid": {"ssp-jenkins", "images-ssp"},
+		"int": {"images-ssp"},
+		"ppr": {"images-ssp"},
+		"vpt": {"images-ssp"},
+		"pro": {"images-ssp"},
+	},
+	"aps": map[string][]string{
+		"cid": {"aps-jenkins", "images-aps"},
+		"int": {"images-aps"},
+		"ppr": {"images-aps"},
+		"vpt": {"images-aps"},
+		"pro": {"images-aps"},
+	},
+	"fpc": map[string][]string{
+		"cid": {"fpc-basis-1-1-20", "fpc-basis-1-1-21"},
+		"int": {"fpc-fa1", "fpc-fa2", "fpc-int1", "fpc-int2", "fpc-loadtest"},
+		"ppr": {"fpc-ppr"},
+		"vpt": {"vptest-fpc"},
+		"pro": {"fpc"},
+	},
 }
 
 var Clusters = T_ClusterConfig{

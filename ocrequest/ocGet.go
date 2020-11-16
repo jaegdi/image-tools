@@ -3,6 +3,7 @@
 package ocrequest
 
 import (
+	"golang.org/x/net/proxy"
 	"io/ioutil"
 	"net/http"
 	"os/exec"
@@ -77,6 +78,18 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		var client = &http.Client{}
 		if CmdParams.Options.NoProxy {
 			client = &http.Client{Transport: defaultTransport}
+		}
+		if CmdParams.Options.Socks5Proxy != "" {
+			dialer, err := proxy.SOCKS5("tcp", CmdParams.Options.Socks5Proxy, nil, proxy.Direct)
+			if err != nil {
+				LogError("can't connect to the proxy:", err)
+				// os.Exit(1)
+			}
+			httpTransport := &http.Transport{}
+			client = &http.Client{Transport: httpTransport}
+			// set our socks5 as the dialer
+			httpTransport.Dial = dialer.Dial
+
 		}
 		// client := &http.Client{}
 		resp, err := client.Do(req)
