@@ -114,7 +114,10 @@ func checkCache(tmpdir string, cluster string, namespace string, typ string, nam
 	filename := tmpdir + "/" + "cache_" + cluster + "_" + namespace + "_" + typ + "_" + name + ".tmp"
 	//  dir not exist
 	if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
-		os.MkdirAll(tmpdir, 0755)
+		err := os.MkdirAll(tmpdir, 0755)
+		if err != nil {
+			LogMsg("failed to create cache dir", err)
+		}
 		return filename, false
 	}
 	info, err := os.Stat(filename)
@@ -122,17 +125,20 @@ func checkCache(tmpdir string, cluster string, namespace string, typ string, nam
 	if err != nil {
 		return filename, false
 	}
-	duration := time.Now().Sub(info.ModTime())
+	duration := time.Since(info.ModTime())
 	// file too old
 	if duration.Minutes() > float64(1.0) {
-		return filename, false
 		LogMsg("Cache Age:", duration.Minutes())
+		return filename, false
 	}
 	return filename, true
 }
 
 func writeCache(tmpdir string, filename string, content []byte) {
-	ioutil.WriteFile(filename, content, 0644)
+	err := ioutil.WriteFile(filename, content, 0644)
+	if err != nil {
+		LogMsg("Writing cache file failed", err)
+	}
 }
 
 func readCache(filename string) []byte {
