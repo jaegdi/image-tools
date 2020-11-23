@@ -28,8 +28,8 @@ func ageInDays(date string) int {
 }
 
 // exitWithError write msg to StdErr, and logfile and exits to program
-func exitWithError(errormsg string) {
-	LogError(errormsg)
+func exitWithError(errormsg ...interface{}) {
+	LogError(errormsg...)
 	os.Exit(1)
 }
 
@@ -147,14 +147,17 @@ func GetCsvFromMap(list interface{}, family string) {
 		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toArrayString(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, istagMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
-			line := T_csvLine{}
-			line = append(line, family)
-			line = append(line, "allIstags")
-			line = append(line, "istag")
-			line = append(line, istagName)
-			line = append(line, toArrayString(istagMap.Values())...)
-			output = append(output, line)
+		for istagName, nsMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
+			for _, istagMap := range nsMap {
+				// LogMsg("namespace:", ns)
+				line := T_csvLine{}
+				line = append(line, family)
+				line = append(line, "allIstags")
+				line = append(line, "istag")
+				line = append(line, istagName)
+				line = append(line, toArrayString(istagMap.Values())...)
+				output = append(output, line)
+			}
 		}
 		output.csvDoc("istags")
 	}
@@ -234,13 +237,16 @@ func GetTableFromMap(list interface{}, family string) {
 		headline := table.Row{"istag " + family} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toTableRow(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, istagMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
-			line := table.Row{}
-			// line = append(line, "allIstags")
-			// line = append(line, "istag")
-			line = append(line, istagName)
-			line = append(line, toTableRow(istagMap.Values())...)
-			output = append(output, line)
+		for istagName, nsMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
+			for _, istagMap := range nsMap {
+				// LogMsg("namespace:", ns)
+				line := table.Row{}
+				// line = append(line, "allIstags")
+				// line = append(line, "istag")
+				line = append(line, istagName)
+				line = append(line, toTableRow(istagMap.Values())...)
+				output = append(output, line)
+			}
 		}
 		tablePrettyprint(output)
 	}
@@ -357,7 +363,11 @@ func tablePrettyprint(out []table.Row) {
 			{Number: 1, AutoMerge: true},
 			{Number: 2, AutoMerge: true},
 			{Number: 3, AutoMerge: true},
-			// {Number: 4, AutoMerge: true},
+			{Number: 4, AutoMerge: true},
+			{Number: 5, AutoMerge: true},
+			{Number: 6, AutoMerge: true},
+			{Number: 7, AutoMerge: true},
+			{Number: 8, AutoMerge: true},
 		})
 	}
 	if CmdParams.Html {

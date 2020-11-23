@@ -10,6 +10,7 @@ require (
 	github.com/gizak/termui v2.3.0+incompatible // indirect
 	github.com/gizak/termui/v3 v3.1.0
 	github.com/go-openapi/strfmt v0.19.8 // indirect
+	github.com/golangspell/golangspell v0.4.0 // indirect
 	github.com/imdario/mergo v0.3.11
 	github.com/jedib0t/go-pretty/v6 v6.0.5
 	github.com/maruel/panicparse v1.5.1 // indirect

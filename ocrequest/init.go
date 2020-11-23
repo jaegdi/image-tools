@@ -16,7 +16,8 @@ var (
 )
 
 func Init() {
-	logfile, err := os.OpenFile("logs_ocimagetools.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
+
+	logfile, err := os.OpenFile("log_ocimagetools.log", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}

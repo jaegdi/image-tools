@@ -53,15 +53,6 @@ func allocateExistingImages(clusters []string) {
 	close(jobsExistingImages)
 }
 
-// func getResult(istagResult T_ImagesMap) { // done chan bool,
-// 	for result := range jobResultsExistingImages {
-// 		t := T_ImagesMap{}
-// 		MergoNestedMaps(&t, istagResult, result.images)
-// 		istagResult = t
-// 	}
-// 	// done <- true
-// }
-
 func goGetExistingImagesInAllClusters() T_ImagesMapAllClusters {
 
 	istagResult := T_ImagesMapAllClusters{}
@@ -77,9 +68,7 @@ func goGetExistingImagesInAllClusters() T_ImagesMapAllClusters {
 
 	LogMsg("Collect results for existing images")
 	for result := range jobResultsExistingImages {
-		t := T_ImagesMapAllClusters{}
-		MergoNestedMaps(&t, istagResult, result.images)
-		istagResult = t
+		MergoNestedMaps(&istagResult, result.images)
 	}
 	return istagResult
 }

@@ -163,13 +163,13 @@ func EvalFlags() {
 	InfoLogger.Println(GetJsonFromMap(flags))
 
 	if flags.Cluster == "" {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: " + flags.Cluster)
+		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: ", flags.Cluster)
 	}
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
 	if FamilyNamespaces[flags.Family] == nil {
-		exitWithError("Family " + flags.Family + " is not defined")
+		exitWithError("Family", flags.Family, "is not defined")
 	}
 
 	foundNamespace := false
@@ -179,12 +179,11 @@ func EvalFlags() {
 		}
 	}
 	if !foundNamespace && !(flags.Filter.Namespace == "") {
-		exitWithError("Namespace " + flags.Filter.Namespace +
-			" is no image namespace for family " + flags.Family)
+		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
 	}
 
 	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr) {
-		exitWithError("As least one of the output flags mus set")
+		exitWithError("As least one of the output flags must set")
 	}
 	CmdParams = flags
 }

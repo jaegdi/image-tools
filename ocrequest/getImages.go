@@ -40,9 +40,7 @@ func InitAllImages(c chan string) {
 		for _, cluster := range Clusters.Stages {
 			r := T_ImagesMapAllClusters{}
 			r[cluster] = GetAllImagesOfCluster(cluster)
-			t := T_ImagesMapAllClusters{}
-			MergoNestedMaps(&t, ImagesMap, r)
-			ImagesMap = t
+			MergoNestedMaps(&ImagesMap, r)
 		}
 	}
 	c <- "InitAllImages Done!"

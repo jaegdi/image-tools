@@ -21,7 +21,7 @@ type T_ResultExistingIstagsOverAllClusters map[string]T_result
 
 type ResultExistingIstags struct {
 	job    JobExistingIstags
-	istags T_ResultExistingIstagsOverAllClusters
+	Istags T_ResultExistingIstagsOverAllClusters
 }
 
 var jobsExistingIstags chan JobExistingIstags
@@ -83,9 +83,12 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 
 		LogMsg("Collect results")
 		for result := range jobResultsExistingIstags {
-			t := T_ResultExistingIstagsOverAllClusters{}
-			MergoNestedMaps(&t, istagResult, result.istags)
-			istagResult = t
+			r := result.Istags
+			MergoNestedMaps(&istagResult, r)
+			if result.job.cluster == "cid" {
+				LogMsg("after merge istagResult:", GetJsonFromMap(istagResult["cid"].Istag["vertragsverwaltung-service:3.17.5"]))
+				LogMsg("")
+			}
 		}
 
 	} else {
@@ -94,9 +97,7 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 			for _, namespace := range namespaces {
 				r := T_ResultExistingIstagsOverAllClusters{
 					cluster: OcGetAllIstagsOfNamespace(T_result{}, cluster, namespace)}
-				t := T_ResultExistingIstagsOverAllClusters{}
-				MergoNestedMaps(&t, istagResult, r)
-				istagResult = t
+				MergoNestedMaps(&istagResult, r)
 			}
 		}
 	}

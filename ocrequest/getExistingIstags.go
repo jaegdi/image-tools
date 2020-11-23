@@ -149,13 +149,20 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 
 		joinedNames := joinShaStreams(shaNames[sha])
 		resultIstream = appendJoinedNamesToImagestreams(resultIstream, imagestreamName, sha, joinedNames)
-		resultIstag[istagname] = myIstag
+		if resultIstag[istagname] == nil {
+			resultIstag[istagname] = map[string]T_istag{}
+		}
+		// if resultIstag[istagname][isNamespace] == T_istag{} {
+		// 	resultIstag[istagname][isNamespace] = T_istag{}
+		// }
+		resultIstag[istagname][isNamespace] = myIstag
 
 		if resultSha[sha] == nil {
 			resultSha[sha] = make(map[string]T_sha)
 		}
-		t := map[string]T_sha{}
-		MergoNestedMaps(&t, resultSha[sha], mySha)
+		// t := map[string]T_sha{}
+		t := resultSha[sha]
+		MergoNestedMaps(&t, mySha)
 		resultSha[sha] = t
 	}
 	tmp_result := T_result{
@@ -164,9 +171,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		Is:    resultIstream,
 	}
 
-	t := T_result{}
-	MergoNestedMaps(&t, result, tmp_result)
-	result = t
+	MergoNestedMaps(&result, tmp_result)
 	n_istags := len(result.Istag)
 	n_shas := len(result.Image)
 	n_is := len(result.Is)
@@ -192,9 +197,7 @@ func GetAllIstagsForFamily(c chan T_ResultExistingIstagsOverAllClusters) {
 			if namespace == "" {
 				for _, ns := range FamilyNamespaces[family][cluster] {
 					r := T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, ns)}
-					t := T_ResultExistingIstagsOverAllClusters{}
-					MergoNestedMaps(&t, result, r)
-					result = t
+					MergoNestedMaps(&result, r)
 
 				}
 			} else {

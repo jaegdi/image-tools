@@ -60,15 +60,6 @@ func allocateAppNamespaces(family string) {
 	close(jobsAppNamespaces)
 }
 
-// func getResult(istagResult T_usedIstagsResult) { // done chan bool,
-// 	for result := range jobResultsAppNamespaces {
-// 		t := T_usedIstagsResult{}
-// 		MergoNestedMaps(&t, istagResult, result.istags)
-// 		istagResult = t
-// 	}
-// 	// done <- true
-// }
-
 func goGetAppNamespacesForFamily(family string) T_FamilyAppNamespaces {
 
 	appNameSpaces := T_FamilyAppNamespaces{}
@@ -83,10 +74,8 @@ func goGetAppNamespacesForFamily(family string) T_FamilyAppNamespaces {
 
 	LogMsg("Collect results")
 	for jobResult := range jobResultsAppNamespaces {
-		t := T_FamilyAppNamespaces{}
 		resmap := T_FamilyAppNamespaces{jobResult.cluster: jobResult.namespaces}
-		MergoNestedMaps(&t, appNameSpaces, resmap)
-		appNameSpaces = t
+		MergoNestedMaps(&appNameSpaces, resmap)
 	}
 
 	return appNameSpaces

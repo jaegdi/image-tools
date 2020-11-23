@@ -20,20 +20,24 @@ type T_completeResults struct {
 type T_completeResultsFamilies map[string]T_completeResults
 
 // getExistingIstags.go
-type T_shaStreams map[string]map[string]T_istag
+//                     is        image
+type T_shaStreams map[string]map[string]T_resIstag
 
 func (a T_shaStreams) Add(is string, image string, istag T_istag) {
 	if a == nil {
 		a = T_shaStreams{}
 	}
 	if a[is] == nil {
-		a[is] = T_resIstag{}
+		a[is] = map[string]T_resIstag{}
 	}
-	if a[is][image] == (T_istag{}) {
-		a[is][image] = T_istag{}
+	if a[is][image] == nil {
+		a[is][image] = T_resIstag{}
 	}
-	// for k, v := range istag {
-	a[is][image] = istag
+	istagname := istag.Imagestream + ":" + istag.Tagname
+	if a[is][image][istagname] == nil {
+		a[is][image][istagname] = map[string]T_istag{}
+	}
+	a[is][image][istagname][istag.Namespace] = istag
 }
 
 type T_Istags_List map[string]bool
@@ -179,7 +183,8 @@ type T_sha struct {
 type T_isShaTagnames map[string]interface{}
 type T_is map[string]T_isShaTagnames
 
-type T_resIstag map[string]T_istag
+//                   istag     namespace
+type T_resIstag map[string]map[string]T_istag
 type T_resIs map[string]T_is
 type T_resSha map[string]map[string]T_sha
 
@@ -212,9 +217,9 @@ type T_runningObjects struct {
 }
 
 type T_usedIstag struct {
+	Cluster         string
 	UsedInNamespace string
 	Image           string
-	Cluster         string
 }
 
 func (c T_usedIstag) Values() interface{} {
@@ -263,10 +268,10 @@ type T_flagFilt struct {
 }
 
 type T_flagOpts struct {
-	OcClient bool
-	NoProxy  bool
+	OcClient    bool
+	NoProxy     bool
 	Socks5Proxy string
-	Profiler bool
+	Profiler    bool
 }
 type T_flags struct {
 	Cluster  string

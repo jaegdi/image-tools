@@ -2,7 +2,9 @@ package ocrequest
 
 import (
 	"encoding/json"
+
 	"github.com/stretchr/stew/slice"
+
 	// "log"
 	"strings"
 )
@@ -177,12 +179,7 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 			InfoLogger.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
 			LogMsg("Get used istags of cluster: " + cluster + " in namespace: " + ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
-			// if err := mergo.Merge(&result, r); err != nil {
-			// 	LogError("merge myImage to resultSha" + ": failed: " + err.Error())
-			// }
-			t := T_usedIstagsResult{}
-			MergoNestedMaps(&t, result, r)
-			result = t
+			MergoNestedMaps(&result, r)
 		}
 	} else {
 		result = ocGetAllUsedIstagsOfNamespace(cluster, namespace)
@@ -197,8 +194,8 @@ func PutShaIntoUsedIstags(c chan T_usedIstagsResult, result T_usedIstagsResult, 
 			istag := is + ":" + tag
 			for i, tagMap := range tagArray {
 				if tagMap.Image == "" && tagMap.Cluster != "" {
-					if allTags[tagMap.Cluster].Istag[istag].Image != "" {
-						result[is][tag][i].Image = allTags[tagMap.Cluster].Istag[istag].Image
+					if allTags[tagMap.Cluster].Istag[istag][tagMap.UsedInNamespace].Image != "" {
+						result[is][tag][i].Image = allTags[tagMap.Cluster].Istag[istag][tagMap.UsedInNamespace].Image
 					}
 				}
 			}
@@ -222,9 +219,7 @@ func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 			InfoLogger.Println("Get used istags in cluster: " + cluster)
 			LogMsg("Get used istags in cluster: " + cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
-			t := T_usedIstagsResult{}
-			MergoNestedMaps(&t, result, resultCluster)
-			result = t
+			MergoNestedMaps(&result, resultCluster)
 		}
 	}
 	c <- result

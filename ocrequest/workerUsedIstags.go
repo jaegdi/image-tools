@@ -58,15 +58,6 @@ func allocateUsedIstags(clusters []string, clusterAppNamsepaces T_FamilyAppNames
 	close(jobsUsedIstags)
 }
 
-// func getResult(istagResult T_usedIstagsResult) { // done chan bool,
-// 	for result := range jobResultsUsedIstags {
-// 		t := T_usedIstagsResult{}
-// 		MergoNestedMaps(&t, istagResult, result.istags)
-// 		istagResult = t
-// 	}
-// 	// done <- true
-// }
-
 func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 
 	istagResult := T_usedIstagsResult{}
@@ -85,9 +76,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 
 		LogMsg("Collect results")
 		for result := range jobResultsUsedIstags {
-			t := T_usedIstagsResult{}
-			MergoNestedMaps(&t, istagResult, result.istags)
-			istagResult = t
+			MergoNestedMaps(&istagResult, result.istags)
 		}
 
 	} else {
@@ -95,9 +84,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 			namespaces := GetAppNamespacesForFamily(cluster, family)
 			for _, namespace := range namespaces {
 				r := ocGetAllUsedIstagsOfNamespace(cluster, namespace)
-				t := T_usedIstagsResult{}
-				MergoNestedMaps(&t, istagResult, r)
-				istagResult = t
+				MergoNestedMaps(&istagResult, r)
 			}
 		}
 	}

@@ -15,6 +15,7 @@ func init() {
 var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
 var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
 var chanInitAllImages = make(chan string, 1)
+var LogfileName string
 
 func main() {
 	// var wg sync.WaitGroup
@@ -40,10 +41,8 @@ func main() {
 
 	go PutShaIntoUsedIstags(chanUsedIsTags, usedIsTags, allIsTags)
 
-	t := T_ResultExistingIstagsOverAllClusters{}
 	filteredIsTags := T_ResultExistingIstagsOverAllClusters{}
-	MergoNestedMaps(&t, filteredIsTags, allIsTags)
-	filteredIsTags = t
+	MergoNestedMaps(&filteredIsTags, allIsTags)
 	filteredIsTags = FilterAllIstags(filteredIsTags)
 	result.AllIstags = filteredIsTags
 

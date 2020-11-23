@@ -1,0 +1,424 @@
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:29: ------------------------------------------------------------
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:30: Starting execution of clean-istags
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/userinterface.go:163: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "Json": false,
+   "Yaml": false,
+   "Csv": false,
+   "CsvFile": "",
+   "Html": false,
+   "Table": true,
+   "TabGroup": false,
+   "Output": {
+      "Is": false,
+      "Istag": true,
+      "Image": false,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Tagname": "",
+      "Imagename": "",
+      "Namespace": ""
+   },
+   "Options": {
+      "OcClient": false,
+      "NoProxy": false,
+      "Socks5Proxy": "",
+      "Profiler": false
+   }
+}
+
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:35: disable proxy: false
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/init.go:36: Multithreading: true
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_ms-jenkins_imagestreams_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_imagestreams_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Wait for chanInitAllImages
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Allocate and start JobsAppNamespaces
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Create Worker Pool AppNamespaces
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Allocate and start JobsExistingImages
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Create Worker Pool for Existing Images
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobAppNamespaces for clustercid
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobAppNamespaces for clusterint
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobAppNamespaces for clusterppr
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobAppNamespaces for clusterpro
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: close jobsAppNamespaces
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid__namespaces_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int__namespaces_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr__namespaces_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro__namespaces_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingImages for clustercid
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingImages for clusterint
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingImages for clusterppr
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingImages for clusterpro
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: close jobsExistingImages
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid__images_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr__images_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro__images_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int__images_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Collect results
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Allocate and start JobsUsedIstags
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Create Worker Pool
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobUsedIstags for clustercid
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace images-pkp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace jenkins-pkp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-dashboard
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-inttest-develop
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-inttest-release304
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-jaegdi
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-kafka-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-kafka-operator
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-kafka-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-kafka-pkps
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-migration
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-rabeba
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-rainbow-drei
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-rainbow-eins
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-rainbow-zwei
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-route-test
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-unicorn
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-unicorn-drei
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace pkp-unicorn-zwei
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobUsedIstags for clusterint
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace images-pkp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-dashboard
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-demo1-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-demo1-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-demo1-pkps
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-fb-pks1
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-fb-pm1
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-int-upg1-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-int-upg1-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-int-upg1-pkps
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-kafka-operator
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-my-ns
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa3-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa3-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa3-pkps
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa4-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa4-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-fa4-pkps
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-mig1-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-mig1-crmpk
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-qs-mig1-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace pkp-rabeba
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobUsedIstags for clusterppr
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace images-pkp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace pkp-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace pkp-jaegdi
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace pkp-kafka-operator
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace pkp-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobUsedIstags for clusterpro
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace images-pkp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace pkp-kafka-operator
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace pro-pkp-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace pro-pkp-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace vpt-pkp-auth
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace vpt-pkp-pkpd
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: close jobsUsedIstags
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_images-pkp_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_images-pkp_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_images-pkp_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_images-pkp_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-migration_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_images-pkp_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_images-pkp_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_images-pkp_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_images-pkp_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_images-pkp_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_images-pkp_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_images-pkp_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_images-pkp_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-migration_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-migration_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-migration_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_deploymentconfigs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_jobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_cronjobs_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_pods_.tmp
+INFO: 2020/11/23 09:51:06 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Collect results
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Collect results for existing images
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: InitAllImages Done!
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Wait for chanAllIsTags
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Allocate and start JobsExistingIstags
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Create Worker Pool
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingIstags for clustercid
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace ms-jenkins
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace openshift
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster cid in namespace images-pkp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingIstags for clusterint
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster int in namespace images-pkp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingIstags for clusterppr
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster ppr in namespace images-pkp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start JobExistingIstags for clusterpro
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Start job for cluster pro in namespace images-pkp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: close jobsExistingIstags
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_ms-jenkins_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_openshift_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_cid_images-pkp_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_ppr_images-pkp_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_int_images-pkp_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Use Cache for: /tmp/tmp-report-istags/cache_pro_images-pkp_imagestreamtags_.tmp
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Collect results
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: after merge istagResult: null
+
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: 
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: after merge istagResult: {
+   "ms-jenkins": {
+      "Imagestream": "vertragsverwaltung-service",
+      "Tagname": "3.17.5",
+      "Namespace": "ms-jenkins",
+      "Link": "/oapi/v1/namespaces/ms-jenkins/imagestreamtags/vertragsverwaltung-service:3.17.5",
+      "Date": "2020-08-20T11:06:41Z",
+      "AgeInDays": "94",
+      "Image": "sha256:7b025d3eba39e6d8f0675260c1b252c40e56e561f18cdc7023c5462529d893a5",
+      "Build": {
+         "io.openshift.build.commit.author": "Yannick Guth <yannick.guth@schufa.de>",
+         "io.openshift.build.commit.date": "Thu, 20 Aug 2020 12:22:50 +0200",
+         "io.openshift.build.commit.id": "f0169905d239c3a56a27838a9830476dd332c282",
+         "io.openshift.build.commit.ref": "PR-357",
+         "io.openshift.build.commit.version": "3.17.5",
+         "io.openshift.build.isProdImage": "false",
+         "io.openshift.build.name": "vertragsverwaltung-pr-357-1",
+         "io.openshift.build.namespace": "ms-jenkins"
+      }
+   }
+}
+
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: 
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: after merge istagResult: {
+   "ms-jenkins": {
+      "Imagestream": "vertragsverwaltung-service",
+      "Tagname": "3.17.5",
+      "Namespace": "ms-jenkins",
+      "Link": "/oapi/v1/namespaces/ms-jenkins/imagestreamtags/vertragsverwaltung-service:3.17.5",
+      "Date": "2020-08-20T11:06:41Z",
+      "AgeInDays": "94",
+      "Image": "sha256:7b025d3eba39e6d8f0675260c1b252c40e56e561f18cdc7023c5462529d893a5",
+      "Build": {
+         "io.openshift.build.commit.author": "Yannick Guth <yannick.guth@schufa.de>",
+         "io.openshift.build.commit.date": "Thu, 20 Aug 2020 12:22:50 +0200",
+         "io.openshift.build.commit.id": "f0169905d239c3a56a27838a9830476dd332c282",
+         "io.openshift.build.commit.ref": "PR-357",
+         "io.openshift.build.commit.version": "3.17.5",
+         "io.openshift.build.isProdImage": "false",
+         "io.openshift.build.name": "vertragsverwaltung-pr-357-1",
+         "io.openshift.build.namespace": "ms-jenkins"
+      }
+   },
+   "openshift": {
+      "Imagestream": "vertragsverwaltung-service",
+      "Tagname": "3.17.5",
+      "Namespace": "openshift",
+      "Link": "/oapi/v1/namespaces/openshift/imagestreamtags/vertragsverwaltung-service:3.17.5",
+      "Date": "2020-08-20T11:06:45Z",
+      "AgeInDays": "94",
+      "Image": "sha256:7b025d3eba39e6d8f0675260c1b252c40e56e561f18cdc7023c5462529d893a5",
+      "Build": {
+         "io.openshift.build.commit.author": "Yannick Guth <yannick.guth@schufa.de>",
+         "io.openshift.build.commit.date": "Thu, 20 Aug 2020 12:22:50 +0200",
+         "io.openshift.build.commit.id": "f0169905d239c3a56a27838a9830476dd332c282",
+         "io.openshift.build.commit.ref": "PR-357",
+         "io.openshift.build.commit.version": "3.17.5",
+         "io.openshift.build.isProdImage": "false",
+         "io.openshift.build.name": "vertragsverwaltung-pr-357-1",
+         "io.openshift.build.namespace": "ms-jenkins"
+      }
+   }
+}
+
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: 
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Wait for chanUsedIsTags
+INFO: 2020/11/23 09:51:07 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:39: Wait for filtered chanUsedIsTags
