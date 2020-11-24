@@ -121,15 +121,49 @@ the parameters can be specified in any order
 
 ## EXAMPLES
 
-Report all information for family pkp in cluster cid as json(which is the default output format)
+Report all information for family pkp in cluster cid as json
+(which is the default output format)
 
     ./report-istags -cluster=cid -family=pkp -all
+	
+or as table
 
-Report only used istags for family pkp as pretty printed table.
-(the output is paginated to fit your screen size, use it piped to less. Then you can go up or down with the page key)
+        ./report-istags -cluster=cid -family=pkp -all -table
+	
+or csv in different files for each type of information
 
-    ./report-istags -cluster=cid -family=pkp -used -table | less
+    ./report-istags -cluster=cid -family=pkp -all -csvfile=prefix
 
-Report istags for family aps in cluster int as yaml report
+writes the output to different files 'prefix-type' in current directory
+		
+Report only __used__ istags for family pkp as pretty printed table 
+(the output is paginated to fit your screen size and piped to 
+    the pager define in the environment variable $PAGER/%PAGER%. 
+If $PAGER is not set, it try to use 'more')
 
-    ./report-istags -cluster=int -family=aps -istag -yaml
+        ./report-istags -cluster=cid -family=pkp -used -table
+
+or json
+
+        ./report-istags -cluster=cid -family=pkp -used
+
+or yaml
+
+    ./report-istags -cluster=cid -family=pkp -used -yaml
+
+or csv
+
+    ./report-istags -cluster=cid -family=pkp -used -csv
+		
+Report istags with tag=latest for family pkp in cluster cid as yaml report
+
+    ./report-istags -cluster=cid -family=aps -istag -yaml -tagname=latest
+
+Report ImageStreams for family aps in cluster int as yaml report
+
+    ./report-istags -cluster=int -family=aps -is -yaml
+
+Report ImageStreams with name=webcode-service for family pkp in cluster cid as table report
+
+    ./report-istags -cluster=cid -family=pkp -is -isname=webcode-service -table
+

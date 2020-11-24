@@ -1,2 +1,377 @@
-INFO: 2020/11/24 18:05:45 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: ------------------------------------------------------------
-INFO: 2020/11/24 18:05:45 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Starting execution of clean-istags
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: ------------------------------------------------------------
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Starting execution of clean-istags
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "aps",
+   "Json": false,
+   "Yaml": true,
+   "Csv": false,
+   "CsvFile": "",
+   "Html": false,
+   "Table": false,
+   "TabGroup": false,
+   "Output": {
+      "Is": false,
+      "Istag": true,
+      "Image": false,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "",
+      "Istagname": "",
+      "Tagname": "latest",
+      "Imagename": "",
+      "Namespace": ""
+   },
+   "Options": {
+      "OcClient": false,
+      "NoProxy": false,
+      "Socks5Proxy": "",
+      "Profiler": false
+   }
+}
+
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: disable proxy: false
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Multithreading: true
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5370462152166666
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_imagestreams_.tmp
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:17 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5388096417166666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-aps_imagestreams_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/imagestreams to get:  imagestreams  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Wait for chanInitAllImages
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Allocate and start JobsExistingImages
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Create Worker Pool for Existing Images
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingImages for clustercid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Allocate and start JobsAppNamespaces
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Create Worker Pool AppNamespaces
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobAppNamespaces for clustercid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5088434017666668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid__images_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobAppNamespaces for clusterint
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobAppNamespaces for clusterppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5380630830333333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid__namespaces_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobAppNamespaces for clusterpro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: close jobsAppNamespaces
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingImages for clusterint
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5231555052166668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int__images_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53761458455
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro__namespaces_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5372809661666667
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingImages for clusterppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int__namespaces_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingImages for clusterpro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: close jobsExistingImages
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5282752395666668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro__images_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5374476249
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr__namespaces_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.4870956485
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr__images_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Collect results
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Allocate and start JobsUsedIstags
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Create Worker Pool
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobUsedIstags for clustercid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-cicd
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-dev1
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-dev2
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-jenkins
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5381499026666665
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5381998729333333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5382168654
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-ws-nechka
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-ws-seelsv
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-cicd_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-cicd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev1_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5382090074833332
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev2_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5381740795833334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-ws-tiscjo
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5382487136333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-dev1/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-nechka_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-ws-nechka/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-dev2/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-jenkins/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobUsedIstags for clusterint
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster int in namespace aps-xs2a-int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster int in namespace images-aps
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobUsedIstags for clusterppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster ppr in namespace aps-xs2a-ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster ppr in namespace images-aps
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobUsedIstags for clusterpro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster pro in namespace images-aps
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster pro in namespace pro-aps-xs2a
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster pro in namespace vpt-aps-xs2a
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: close jobsUsedIstags
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-seelsv_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-ws-seelsv/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5382228547499999
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-tiscjo_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-ws-tiscjo/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5383638898333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_aps-xs2a-int_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-xs2a-int/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5383989524333335
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-aps_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53791929425
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_aps-xs2a-ppr_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-xs2a-ppr/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5379215425833332
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-aps_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5384397958666667
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-aps_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5384647497166668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-aps-xs2a_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/pro-aps-xs2a/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5384534530833334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-aps-xs2a_deploymentconfigs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/vpt-aps-xs2a/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53786623945
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-cicd_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-cicd/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5380873565
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-nechka_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-ws-nechka/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53813574015
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-tiscjo_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5379470414166667
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-aps_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-aps/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-ws-tiscjo/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386870505
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-aps_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-aps/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5383256429666665
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev1_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-dev1/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53836848315
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-seelsv_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-ws-seelsv/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53837079425
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_aps-xs2a-int_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-xs2a-int/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5383747680666666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev2_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-dev2/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386335091666665
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-aps-xs2a_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pro-aps-xs2a/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5383752750166666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-jenkins/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5385988353666666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-aps-xs2a_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386479492333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-aps_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-aps/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/vpt-aps-xs2a/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53810623575
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-nechka_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-ws-nechka/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5378290473333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-cicd_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-cicd/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5381276235999999
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-tiscjo_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-ws-tiscjo/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5385682417333333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-aps_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-aps/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5385515815000002
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-aps_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-aps/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53825628045
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-jenkins/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5378763132166666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-cicd_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5381916166333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-nechka_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5382320248166668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-tiscjo_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5375093261666666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-aps_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-aps/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5385022482166666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-aps_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5375290521166667
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_aps-xs2a-ppr_jobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/aps-xs2a-ppr/jobs to get:  jobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5389279475166666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-aps-xs2a_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pro-aps-xs2a/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386170271833333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev1_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-dev1/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386554449499998
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-seelsv_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-ws-seelsv/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386341571333333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_aps-xs2a-int_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5386626284333333
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-xs2a-int/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5390268183666667
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-aps-xs2a_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/vpt-aps-xs2a/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-aps_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5388168787333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53772728595
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-aps_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5390027636
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5388817319333334
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5387493078499999
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev2_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev1_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-ws-seelsv_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-dev2/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5389934872
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_aps-xs2a-int_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5391862251666666
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-aps-xs2a_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5394277813166668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-aps-xs2a_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5392882806666668
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-dev2_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5387416059666665
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_aps-xs2a-ppr_cronjobs_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/aps-xs2a-ppr/cronjobs to get:  cronjobs  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.53897370705
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_aps-xs2a-ppr_pods_.tmp
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2020/11/24 18:21:18 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Collect results
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Collect results for existing images
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: InitAllImages Done!
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Wait for chanAllIsTags
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Allocate and start JobsExistingIstags
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingIstags for clustercid
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace aps-jenkins
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster cid in namespace images-aps
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingIstags for clusterint
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster int in namespace images-aps
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingIstags for clusterppr
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster ppr in namespace images-aps
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start JobExistingIstags for clusterpro
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Start job for cluster pro in namespace images-aps
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: close jobsExistingIstags
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Create Worker Pool
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5404380056333333
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_aps-jenkins_imagestreamtags_.tmp
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/aps-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5408921967333333
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-aps_imagestreamtags_.tmp
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: cid
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5408134437166665
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-aps_imagestreamtags_.tmp
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: int
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.54081955405
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Cache Age: 1.5407015241833333
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-aps_imagestreamtags_.tmp
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: pro
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-aps_imagestreamtags_.tmp
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Try to get cluster token for cluster: ppr
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-aps/imagestreamtags to get:  imagestreamtags  .
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Collect results
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Wait for chanUsedIsTags
+INFO: 2020/11/24 18:21:21 /home/djaeger/devel/go/ocimagetools/ocrequest/helper.go:42: Wait for filtered chanUsedIsTags

@@ -6,3 +6,7 @@ clusterconfig*
 report-istags
 .vscode
 deploy_to_artifactory.sh
+log_ocimagetools.log
+report-istags.exe
+__debug_bin
+collectIstags
