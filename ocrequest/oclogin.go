@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+
 	// "log"
 	"os/exec"
 )
@@ -26,7 +27,7 @@ func setClusterToken(cluster string, token string) {
 }
 
 func ocGetToken(cluster string) string {
-	InfoLogger.Println("Try to get cluster token for cluster: ", cluster)
+	LogMsg("Try to get cluster token for cluster:", cluster)
 	token := getClusterToken(cluster)
 	if token != "" {
 		return token
@@ -57,7 +58,7 @@ func ocGetToken(cluster string) string {
 
 func ocLogin(cluster string) (string, error) {
 	app := "ocl"
-	InfoLogger.Println("Try to login: ", app, Clusters.Config[cluster].Name)
+	LogMsg("Try to login: ", app, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		LogError("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))

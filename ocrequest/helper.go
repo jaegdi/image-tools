@@ -4,18 +4,21 @@ import (
 	// "github.com/imdario/mergo"
 	"bytes"
 	"encoding/json"
-	"gopkg.in/yaml.v2"
 	"io"
 	"log"
 	"os"
 	"os/exec"
+
+	"gopkg.in/yaml.v2"
+
 	// "reflect"
-	"github.com/jedib0t/go-pretty/v6/table"
-	"golang.org/x/crypto/ssh/terminal"
 	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jedib0t/go-pretty/v6/table"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 var today time.Time = time.Now()

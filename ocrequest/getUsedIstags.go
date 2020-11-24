@@ -44,6 +44,7 @@ func getIstagFromContainer(cluster string, namespace string, containers []interf
 	for _, container := range containers {
 		image := container.(map[string]interface{})["image"].(string)
 		imageParts := strings.Split(image, "/")
+		fromNamespace := imageParts[len(imageParts)-2]
 		istag := imageParts[len(imageParts)-1]
 		istagParts := strings.Split(istag, "@")
 		if len(istagParts) < 2 {
@@ -73,6 +74,7 @@ func getIstagFromContainer(cluster string, namespace string, containers []interf
 		}
 		usedIstag := T_usedIstag{
 			UsedInNamespace: namespace,
+			FromNamespace:   fromNamespace,
 			Image:           image,
 			Cluster:         cluster,
 		}
@@ -176,8 +178,7 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 	var result T_usedIstagsResult
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
-			InfoLogger.Println("Get used istags of cluster: " + cluster + " in namespace: " + ns)
-			LogMsg("Get used istags of cluster: " + cluster + " in namespace: " + ns)
+			LogMsg("Get used istags of cluster: ", cluster, "in namespace:", ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			MergoNestedMaps(&result, r)
 		}
@@ -188,20 +189,24 @@ func GetUsedIstagsForFamilyInCluster(family string, cluster string) T_usedIstags
 }
 
 // PutShaIntoUsedIstags writes sha from allTags into usedIsTags if there the sha is empty
-func PutShaIntoUsedIstags(c chan T_usedIstagsResult, result T_usedIstagsResult, allTags T_ResultExistingIstagsOverAllClusters) {
-	for is, isMap := range result {
+func PutShaIntoUsedIstags(c chan T_completeResults, results T_completeResults) {
+	for is, isMap := range results.UsedIstags {
+		isMap := isMap
 		for tag, tagArray := range isMap {
+			tagArray := tagArray
 			istag := is + ":" + tag
 			for i, tagMap := range tagArray {
+				tagMap := tagMap
 				if tagMap.Image == "" && tagMap.Cluster != "" {
-					if allTags[tagMap.Cluster].Istag[istag][tagMap.UsedInNamespace].Image != "" {
-						result[is][tag][i].Image = allTags[tagMap.Cluster].Istag[istag][tagMap.UsedInNamespace].Image
+					if results.AllIstags[tagMap.Cluster].Istag[istag][tagMap.FromNamespace].Image != "" {
+						results.UsedIstags[is][tag][i].Image = results.AllIstags[tagMap.Cluster].Istag[istag][tagMap.FromNamespace].Image
+						results.UsedIstags[is][tag][i].AgeInDays = results.AllIstags[tagMap.Cluster].Istag[istag][tagMap.FromNamespace].AgeInDays
 					}
 				}
 			}
 		}
 	}
-	c <- result
+	c <- results
 }
 
 // GetUsedIstagsForFamily get __used__ istags from __all__ clusters.
@@ -216,8 +221,7 @@ func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 	} else {
 		clusters := Clusters.Stages
 		for _, cluster := range clusters {
-			InfoLogger.Println("Get used istags in cluster: " + cluster)
-			LogMsg("Get used istags in cluster: " + cluster)
+			LogMsg("Get used istags in cluster:", cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
 			MergoNestedMaps(&result, resultCluster)
 		}

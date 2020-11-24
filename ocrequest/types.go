@@ -219,6 +219,8 @@ type T_runningObjects struct {
 type T_usedIstag struct {
 	Cluster         string
 	UsedInNamespace string
+	FromNamespace   string
+	AgeInDays       string
 	Image           string
 }
 

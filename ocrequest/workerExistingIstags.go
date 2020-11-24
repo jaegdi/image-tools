@@ -85,10 +85,6 @@ func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIs
 		for result := range jobResultsExistingIstags {
 			r := result.Istags
 			MergoNestedMaps(&istagResult, r)
-			if result.job.cluster == "cid" {
-				LogMsg("after merge istagResult:", GetJsonFromMap(istagResult["cid"].Istag["vertragsverwaltung-service:3.17.5"]))
-				LogMsg("")
-			}
 		}
 
 	} else {

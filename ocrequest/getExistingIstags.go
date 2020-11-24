@@ -92,14 +92,14 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
 		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
 		istagname := metadata["name"].(string)
-		if CmdParams.Filter.Istagname != "" && istagname != CmdParams.Filter.Istagname {
-			continue
-		}
 		isNamespace := metadata["namespace"].(string)
 		isLink := metadata["selfLink"].(string)
 		isDate := metadata["creationTimestamp"].(string)
 		sha := imageMetadata["name"].(string)
 		if CmdParams.Filter.Imagename != "" && sha != CmdParams.Filter.Imagename {
+			continue
+		}
+		if CmdParams.Filter.Istagname != "" && istagname != CmdParams.Filter.Istagname {
 			continue
 		}
 

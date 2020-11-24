@@ -1,5 +1,14 @@
 # report-istags
 
+## Installation
+
+Download it from
+
+- [report-istags for linux](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istags/report-istags)
+- [report-istags.exe for windows](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istags/report-istags.exe)
+
+and store it somewhere in your PATH.
+
 ## DESCRIPTION
 
 istag-mgmt reports image date for a application family (eg. pkp, fpc, aps, ssp)

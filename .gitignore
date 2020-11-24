@@ -5,3 +5,4 @@ clusterconfig*
 .swp
 report-istags
 .vscode
+deploy_to_artifactory.sh

@@ -26,14 +26,14 @@ func Init() {
 	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 
-	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("Starting execution of clean-istags")
+	LogMsg("------------------------------------------------------------")
+	LogMsg("Starting execution of clean-istags")
 
 	EvalFlags()
 
 	Multiproc = true
-	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
-	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
+	LogMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
+	LogMsg("Multithreading: " + fmt.Sprint(Multiproc))
 
 	regexValidNamespace = regexp.MustCompile(`^` + CmdParams.Family + `-..|..-` + CmdParams.Family + `-..|..-` + CmdParams.Family + `$`)
 

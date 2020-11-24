@@ -53,10 +53,15 @@ DESCRIPTION
 	  (not yet implemented)
 
 	For this reports the data is collected from the openshift cluster defined by 
-	parameter '-cluster=...' and the 
-	parameter 'family=...'. #
+	the mandatory parameters 
+	     '-cluster=...' and the 
+	     'family=...'
 	For type '-used' (also included in type '-all') the data is collected
 	from all clusters.
+
+	For more speed a cache is build from the first run in  /tmp/tmp-report-istags/* 
+	and used if not older than 5 minutes. If the cache is older or deleted, the
+	data is fresh collected from the clusters.
 
 EXAMPLES
 
@@ -64,18 +69,46 @@ EXAMPLES
 	(which is the default output format)
 
 		./report-istags -cluster=cid -family=pkp -all
+	
+		or as table
+		./report-istags -cluster=cid -family=pkp -all -table
+	
+		or csv in different files for each type of information
+		./report-istags -cluster=cid -family=pkp -all -csvfile=prefix
+		writes the output to different files 'prefix-type' in current directory
 		
-	Report only used istags for family pkp as pretty printed table 
+	Report only __used__ istags for family pkp as pretty printed table 
 	(the output is paginated to fit your screen size and piped to 
 		the pager define in the environment variable $PAGER/%PAGER%. 
 		If $PAGER is not set, it try to use 'more')
 
 		./report-istags -cluster=cid -family=pkp -used -table
+		or json
+		./report-istags -cluster=cid -family=pkp -used
+		or yaml
+		./report-istags -cluster=cid -family=pkp -used -yaml
+		or csv
+		./report-istags -cluster=cid -family=pkp -used -csv
 		
 	Report istags for family aps in cluster int as yaml report
 
 		./report-istags -cluster=int -family=aps -istag -yaml
 
+	Report ImageStreams for family aps in cluster int as yaml report
+
+		./report-istags -cluster=int -family=aps -is -yaml
+
+	Report Images for family aps in cluster int as yaml report
+
+		./report-istags -cluster=int -family=aps -image -yaml
+
+CONNECTION
+
+	If there are problems with the connection to the clusters,
+	there is the option to disable the use of proxy with the
+	parameter '-noproxy'.
+	Or if a socks5 proxy can be the solution, then give the
+	parameter '-socks5=ip:port'.
 -----------------------------------------------------------------------------------------------------
 `
 
@@ -120,7 +153,7 @@ func EvalFlags() {
 	// Options
 	ocClientPtr := flag.Bool("occlient", false, "use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "disable use of proxy for API http requests")
-	socks5ProxyPtr := flag.String("sock5", "", "set socks5 proxy url and use it for API calls")
+	socks5ProxyPtr := flag.String("socks5", "", "set socks5 proxy url and use it for API calls")
 	profilerPtr := flag.Bool("profiler", false, "enable profiler support for debugging, http://localhost:6060/debug/pprof")
 
 	flag.Parse()
@@ -160,7 +193,7 @@ func EvalFlags() {
 		},
 	}
 
-	InfoLogger.Println(GetJsonFromMap(flags))
+	LogMsg(GetJsonFromMap(flags))
 
 	if flags.Cluster == "" {
 		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: ", flags.Cluster)
@@ -188,22 +221,24 @@ func EvalFlags() {
 	CmdParams = flags
 }
 
-func FilterAllIstags(list T_ResultExistingIstagsOverAllClusters) T_ResultExistingIstagsOverAllClusters {
+func FilterAllIstags(result *T_completeResults) {
 	outputflags := CmdParams.Output
 	if !outputflags.All {
 		for _, cluster := range Clusters.Stages {
-			x := list[cluster]
+			x := result.AllIstags[cluster]
 			if !outputflags.Is {
-				x.Is = nil
+				x.Is = T_resIs{}
 			}
 			if !outputflags.Istag {
-				x.Istag = nil
+				x.Istag = T_resIstag{}
 			}
 			if !outputflags.Image {
-				x.Image = nil
+				x.Image = T_resSha{}
 			}
-			list[cluster] = x
+			result.AllIstags[cluster] = x
+		}
+		if !outputflags.Used {
+			result.UsedIstags = T_usedIstagsResult{}
 		}
 	}
-	return list
 }

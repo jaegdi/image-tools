@@ -14,6 +14,7 @@ func init() {
 
 var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
 var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
+var chanCompleteResults = make(chan T_completeResults, 1)
 var chanInitAllImages = make(chan string, 1)
 var LogfileName string
 
@@ -34,20 +35,22 @@ func main() {
 	go GetAllIstagsForFamily(chanAllIsTags)
 
 	LogMsg("Wait for chanAllIsTags")
-	allIsTags := <-chanAllIsTags
+	result.AllIstags = <-chanAllIsTags
 
 	LogMsg("Wait for chanUsedIsTags")
-	usedIsTags := <-chanUsedIsTags
+	result.UsedIstags = <-chanUsedIsTags
 
-	go PutShaIntoUsedIstags(chanUsedIsTags, usedIsTags, allIsTags)
+	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	filteredIsTags := T_ResultExistingIstagsOverAllClusters{}
-	MergoNestedMaps(&filteredIsTags, allIsTags)
-	filteredIsTags = FilterAllIstags(filteredIsTags)
-	result.AllIstags = filteredIsTags
+	// filteredIsTags := T_ResultExistingIstagsOverAllClusters{}
+	// MergoNestedMaps(&filteredIsTags, allIsTags)
+	// result.AllIstags = filteredIsTags
 
 	LogMsg("Wait for filtered chanUsedIsTags")
-	result.UsedIstags = <-chanUsedIsTags
+	result = <-chanCompleteResults
+
+	// Filter results for output
+	FilterAllIstags(&result)
 
 	resultFamilies := T_completeResultsFamilies{}
 	resultFamilies[CmdParams.Family] = result
