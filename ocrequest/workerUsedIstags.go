@@ -76,15 +76,38 @@ func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 
 		LogMsg("Collect results")
 		for result := range jobResultsUsedIstags {
-			MergoNestedMaps(&istagResult, result.istags)
+			for is := range result.istags {
+				for tag := range result.istags[is] {
+					a := []T_usedIstag{}
+					if istagResult[is] == nil {
+						istagResult[is] = map[string][]T_usedIstag{}
+					}
+					if istagResult[is][tag] == nil {
+						istagResult[is][tag] = []T_usedIstag{}
+					}
+					if istagResult[is][tag] != nil {
+						a = istagResult[is][tag]
+					}
+					for i := range result.istags[is][tag] {
+						a = append(a, result.istags[is][tag][i])
+					}
+					istagResult[is][tag] = a
+				}
+
+			}
+			// TODO: Mergen funktioniert nicht richtig, merged immer nur zwei namespaces
+			// r := result.istags
+			// MergoNestedMaps(&istagResult, r)
 		}
 
 	} else {
 		for _, cluster := range Clusters.Stages {
 			namespaces := GetAppNamespacesForFamily(cluster, family)
 			for _, namespace := range namespaces {
-				r := ocGetAllUsedIstagsOfNamespace(cluster, namespace)
-				MergoNestedMaps(&istagResult, r)
+				if namespace == CmdParams.Filter.Namespace {
+					r := ocGetAllUsedIstagsOfNamespace(cluster, namespace)
+					MergoNestedMaps(&istagResult, r)
+				}
 			}
 		}
 	}

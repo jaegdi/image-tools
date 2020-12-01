@@ -83,13 +83,13 @@ func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) 
 }
 
 // GetJsonFromMap generate json output depending on the commadline flags
-func GetJsonFromMap(list interface{}) string {
+func GetJsonFromMap(dict interface{}) string {
 	buffer := &bytes.Buffer{}
 	encoder := json.NewEncoder(buffer)
 	encoder.SetEscapeHTML(false)
 	encoder.SetIndent("", "   ")
-	if err := encoder.Encode(list); err != nil {
-		if jsonBytes, err := json.MarshalIndent(list, "", "  "); err != nil {
+	if err := encoder.Encode(dict); err != nil {
+		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
 			LogError(err)
 		} else {
 			s := string(jsonBytes)

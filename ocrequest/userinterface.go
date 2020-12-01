@@ -195,11 +195,11 @@ func EvalFlags() {
 
 	LogMsg(GetJsonFromMap(flags))
 
-	if flags.Cluster == "" {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: ", flags.Cluster)
-	}
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")
+	}
+	if !flags.Output.Used && (flags.Cluster == "") {
+		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: ", flags.Cluster)
 	}
 	if FamilyNamespaces[flags.Family] == nil {
 		exitWithError("Family", flags.Family, "is not defined")

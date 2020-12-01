@@ -35,7 +35,11 @@ func Init() {
 	LogMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
 	LogMsg("Multithreading: " + fmt.Sprint(Multiproc))
 
-	regexValidNamespace = regexp.MustCompile(`^` + CmdParams.Family + `-..|..-` + CmdParams.Family + `-..|..-` + CmdParams.Family + `$`)
+	regexValidNamespace = regexp.MustCompile(
+		`^` + CmdParams.Family + `$` + `|` +
+			`^` + CmdParams.Family + `-.*` + `|` +
+			`.*?-` + CmdParams.Family + `-.*` + `|` +
+			`.*?-` + CmdParams.Family + `$`)
 
 	if len(Clusters.Config["cid"].Token) < 10 {
 		if err := readTokens("clusterconfig.json"); err != nil {
