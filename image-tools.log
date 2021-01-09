@@ -1,0 +1,1060 @@
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: {
+   "Cluster": "cid",
+   "Token": "",
+   "Family": "pkp",
+   "Json": false,
+   "Yaml": false,
+   "Csv": false,
+   "CsvFile": "",
+   "Delete": true,
+   "Html": false,
+   "Table": false,
+   "TabGroup": false,
+   "Output": {
+      "Is": false,
+      "Istag": false,
+      "Image": false,
+      "Used": false,
+      "All": false
+   },
+   "Filter": {
+      "Isname": "hybris",
+      "Istagname": "",
+      "Tagname": "",
+      "Imagename": "",
+      "Namespace": ""
+   },
+   "DeleteOpts": {
+      "Pattern": "",
+      "MinAge": 45,
+      "NonBuild": false,
+      "Snapshots": false,
+      "PruneImages": false,
+      "Confirm": false
+   },
+   "Options": {
+      "OcClient": false,
+      "NoProxy": false,
+      "Socks5Proxy": "",
+      "Profiler": false,
+      "NoLog": false,
+      "Debug": false
+   }
+}
+
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: ------------------------------------------------------------
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Starting execution of image-tools
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: disable proxy: false
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Multithreading: true
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6363975168333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_ms-jenkins_imagestreams_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreams to get:  imagestreams  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63848447426665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_imagestreams_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreams to get:  imagestreams  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Wait for chanInitAllImages
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Allocate and start JobsAppNamespaces
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Create Worker Pool AppNamespaces
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Allocate and start JobsExistingImages
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobAppNamespaces for clustercid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6384733667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid__namespaces_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Create Worker Pool for Existing Images
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingImages for clustercid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingImages for clusterint
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingImages for clusterppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingImages for clusterpro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: close jobsExistingImages
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobAppNamespaces for clusterint
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobAppNamespaces for clusterppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobAppNamespaces for clusterpro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: close jobsAppNamespaces
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63747740278336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int__namespaces_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63707915698336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr__namespaces_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6377022522167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro__namespaces_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces to get:  namespaces  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6209346723333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int__images_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6302350340333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro__images_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.5929849242833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr__images_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.62575130411665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid__images_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/image.openshift.io/v1/images to get:  images  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Collect results
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Allocate and start JobsUsedIstags
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Create Worker Pool
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobUsedIstags for clustercid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace images-pkp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace jenkins-pkp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-dashboard
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-inttest-develop
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-inttest-release304
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-jaegdi
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-kafka-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-kafka-operator
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-kafka-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-kafka-pkps
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-migration
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-rabeba
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-rainbow-drei
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-rainbow-eins
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-rainbow-zwei
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-route-test
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-unicorn
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-unicorn-drei
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace pkp-unicorn-zwei
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobUsedIstags for clusterint
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace images-pkp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-dashboard
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-demo1-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-demo1-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-demo1-pkps
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-fb-pks1
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-fb-pm1
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-int-upg1-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-int-upg1-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-int-upg1-pkps
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-kafka-operator
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-my-ns
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa3-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa3-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa3-pkps
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa4-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa4-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-fa4-pkps
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-mig1-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-mig1-crmpk
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-qs-mig1-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace pkp-rabeba
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobUsedIstags for clusterppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace images-pkp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace pkp-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace pkp-jaegdi
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace pkp-kafka-operator
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace pkp-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobUsedIstags for clusterpro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace images-pkp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace pkp-kafka-operator
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace pro-pkp-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace pro-pkp-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace vpt-pkp-auth
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace vpt-pkp-pkpd
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: close jobsUsedIstags
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63841210128334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6379804775167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/jenkins-pkp/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63798363476667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-dashboard/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6372386346333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-inttest-develop/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63612492041665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-inttest-release304/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6379966599333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-jaegdi/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63753083868335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63799832055
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-operator/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6364155105333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63678267066666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-pkps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6365332194333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-migration_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-migration/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6379503786667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-rabeba/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63666770161666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-rainbow-drei/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6385181991
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-rainbow-eins/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6358520176167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-rainbow-zwei/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63578584975
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-route-test/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63581973315
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-unicorn/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63570355953334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-unicorn-drei/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6355707918167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-unicorn-zwei/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63887130235
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-pkp_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6367924860833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6366257217333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-demo1-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63615956396666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-demo1-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-dashboard/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63777661178335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63801327615
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/vpt-pkp-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63554525735
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa4-pkps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-demo1-pkps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63591005305
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-fb-pks1/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63552681258335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-fb-pm1/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6373938764167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-int-upg1-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63552739973335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-int-upg1-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63617755543333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-int-upg1-pkps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63762764681667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-operator/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63617773696666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-my-ns/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63762782545
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa3-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63536124903334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa3-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6354446785
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa3-pkps/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63596169506667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa4-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63551178041666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-fa4-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63847919703335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-jaegdi/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63564534281664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-mig1-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63594543308335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-mig1-crmpk/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63537884868333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-qs-mig1-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376456009
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-rabeba/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63847902636667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-pkp_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63879577753335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63882961183333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-operator/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63879599878334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-kafka-operator/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63456275161667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/pkp-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63894619425
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-pkp_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6384631101
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/pro-pkp-pkpd/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.638446365
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/pro-pkp-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63847985853334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_deploymentconfigs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/vpt-pkp-auth/deploymentconfigs to get:  deploymentconfigs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63566585035
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-pkp/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63610762975
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-pkp_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-pkp/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63737687968336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-dashboard/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6368180556833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/jenkins-pkp/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63499123606664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-jaegdi/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6359983816167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-dashboard/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63708224255
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-operator/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6362462007833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6371084757333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-jaegdi/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63635518781666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-pkp_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-pkp/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63619732151665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-operator/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63648746158333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-demo1-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63899312358336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pro-pkp-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63899889031666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-operator/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6391616968833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/vpt-pkp-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6396756862
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-pkp_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/images-pkp/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63802658365
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-rainbow-eins/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63650329846666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-pkp/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6362486411
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-pkp_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-pkp/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63781655431666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-inttest-develop/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6389870754833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/vpt-pkp-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6393900398
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-pkp_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63900891841666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-operator/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63903218493334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pro-pkp-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63900685593336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/vpt-pkp-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63941328075
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pro-pkp-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-pkp/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6366795198333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-rainbow-zwei/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63827838466665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/vpt-pkp-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63688814426666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63927458816664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-pkp_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63921738448335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pro-pkp-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63840408913336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pkp-kafka-operator_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6384579137667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63844966028336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63729227355
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_vpt-pkp-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63988891611666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_pro-pkp-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6374899187
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-pkps/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376826062
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-int-upg1-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63725031891664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-dashboard/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63727531533334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-my-ns/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63812657828333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-operator/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63729474141667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-mig1-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63824750198336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa3-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6381668955
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-demo1-pkps/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63727086793335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa4-pkps/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63809495771665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-rabeba/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63839794116666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6375374154333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6374350819167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa4-auth/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63764721023335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-int-upg1-pkps/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376475412
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-mig1-crmpk/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63762774273334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa3-pkps/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/jenkins-pkp/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6375118300833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa3-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6375964531
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-pkp_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-mig1-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6383321018
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-unicorn-zwei/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6383197616833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-inttest-release304/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6383980257
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63837498925
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-kafka-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63784913026666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-rainbow-zwei/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63715550116666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-int-upg1-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6371844166333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-fb-pm1/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376780815
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-demo1-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63785000068333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-demo1-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6372010164667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-fb-pks1/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63926101693335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-rabeba/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63929895663335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-dashboard/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6386603119
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-route-test/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63872591656667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-unicorn/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6380864359833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-qs-fa4-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6393816707333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-jaegdi/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63939061166667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-operator/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6394002881833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-rainbow-drei/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6394180585833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-rainbow-eins/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6389542986
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6394347132
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-inttest-develop/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.637537484
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa4-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63736293655
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-dashboard_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6375517613167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-my-ns/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6385335465667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-int-upg1-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63857192346666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-demo1-pkps/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6385777122333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa3-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6386133036
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-operator/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63923912205
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-develop_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63963536745
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-migration_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-migration/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376755438667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-mig1-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6377213813167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63689282151665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63680334711665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-my-ns_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376103809667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6377975504
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkps_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63770654251664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-kafka-operator_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6364043313
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63956651953333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-rainbow-drei/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6396221603667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_jenkins-pkp_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63908462585
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6382350805
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-zwei_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63907075928336
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-inttest-release304/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63908775685
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63980466093335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-dashboard_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6396901828
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-rabeba/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6391262399667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-route-test/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6390948463
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-unicorn/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63962850225
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-jaegdi_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63966342298335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-operator_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63966393341667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-eins_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63790088666667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa4-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6388360446667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-rabeba/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63806973848335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa4-pkps/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6378723575
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-int-upg1-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63807304985
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-mig1-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63787328765
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa3-pkps/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63805683836665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-int-upg1-pkps/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63805704355
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-mig1-crmpk/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63790807135
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-qs-fa3-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63805858431664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6378765446833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-fb-pm1/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6378780303833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-demo1-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63787940413334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-fb-pks1/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63966410083333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_jobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-unicorn-drei/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6390981926833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-unicorn-zwei/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.639919091
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-migration_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-migration/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63959099115
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rainbow-drei_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63996278866665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-pkps/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63761010468335
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-auth_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63757673795
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pks1_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63921242505
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6401627458667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-rabeba_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63956314695
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-inttest-release304_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63938038055
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-route-test_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63762750281666
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-demo1-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63746140508334
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-fb-pm1_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6372950276
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376620632
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-crmpk_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63729567366664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkps_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6376459076667
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa3-pkps_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63766280526664
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-mig1-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63766310825
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-int-upg1-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6377306233333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-qs-fa4-pkps_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6390018717
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63958664806665
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-jaegdi/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6397743478
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-pkp_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/images-pkp/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6400343286833
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-unicorn-drei/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64080604015
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-migration_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6397379618
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-zwei_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63860597175
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_pkp-rabeba_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6396389875333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-kafka-pkps_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.63959282643333
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_pkp-unicorn-drei_pods_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6405617330167
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_cronjobs_.tmp
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:46 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-kafka-operator/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64561521798333
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-kafka-operator_pods_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64592480361665
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_cronjobs_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-auth/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6469871784
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-pkp_pods_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64716668055
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_jobs_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1/namespaces/pkp-pkpd/jobs to get:  jobs  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6455783779
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-jaegdi_pods_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64828763496666
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-auth_pods_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64877903953334
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_cronjobs_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/apis/batch/v1beta1/namespaces/pkp-pkpd/cronjobs to get:  cronjobs  .
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64641524495
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_pkp-pkpd_pods_.tmp
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:47 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/api/v1/namespaces/pods to get:  pods  .
+INFO: 2021/01/09 18:41:48 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Collect results
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Collect results for existing images
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: InitAllImages Done!
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Wait for chanAllIsTags
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Allocate and start JobsExistingIstags
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Create Worker Pool
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingIstags for clustercid
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace ms-jenkins
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace openshift
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster cid in namespace images-pkp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingIstags for clusterint
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster int in namespace images-pkp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingIstags for clusterppr
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster ppr in namespace images-pkp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start JobExistingIstags for clusterpro
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Start job for cluster pro in namespace images-pkp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: close jobsExistingIstags
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6422886661333
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_openshift_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/openshift/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6432055111333
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_ms-jenkins_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/ms-jenkins/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.6433988588
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_pro_images-pkp_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: pro
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  pro with:  https://console.pro-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64393950301667
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_cid_images-pkp_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: cid
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  cid with:  https://console.cid-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64205637378336
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_int_images-pkp_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: int
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  int with:  https://console.int-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Cache Age: 300.64100655071667
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Request Openshift for: /tmp/tmp-report-istags/cache_ppr_images-pkp_imagestreamtags_.tmp
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Try to get cluster token for cluster: ppr
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: call API to cluster:  ppr with:  https://console.ppr-apc0.sf-rz.de:8443/oapi/v1/namespaces/images-pkp/imagestreamtags to get:  imagestreamtags  .
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:44: Collect results
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Wait for chanUsedIsTags
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: Wait for filtered chanUsedIsTags
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: main:: filter pattern: ''
+ filter Isname: 'hybris'
+ filter Tagname: ''
+ filter Istagname: ''
+ filter Namespace: ''
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: FilterIstagsToDelete:: key: openshift/hybris:pkp-3.1.0-build-14 value: oc -n openshift delete istag hybris:pkp-3.1.0-build-14    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 52
+
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: logUsedIstags:: #### Istag: hybris:1.5.9 is used.
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: logUsedIstags::    # --> Cluster: int UsedInNamespace: pkp-fb-pm1 FromNamespace: images-pkp Image: sha256:13339f4a2b71a02ff2d4e4460f9a21f92003c20ace16abe0f1d0355849b77f47 AgeInDays: 52
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: FilterIstagsToDelete:: key: openshift/hybris:1.5.3.1 value: oc -n openshift delete istag hybris:1.5.3.1    # filter_Isname:_hybris --> sha256:146a7637282a5899975a2712bb0faa9b1f9ec03ae0940f1311b843fe8cb3b158 ,  Commit.Ref:  ,  Age: 130
+
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: FilterIstagsToDelete:: key: openshift/hybris:pkp-3.1.0-build-13 value: oc -n openshift delete istag hybris:pkp-3.1.0-build-13    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 61
+
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: FilterIstagsToDelete:: key: openshift/hybris:1.5.7 value: oc -n openshift delete istag hybris:1.5.7    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 80
+
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: printShellCmds:: printShellCmds map[openshift/hybris:1.5.3.1:oc -n openshift delete istag hybris:1.5.3.1    # filter_Isname:_hybris --> sha256:146a7637282a5899975a2712bb0faa9b1f9ec03ae0940f1311b843fe8cb3b158 ,  Commit.Ref:  ,  Age: 130
+ openshift/hybris:1.5.7:oc -n openshift delete istag hybris:1.5.7    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 80
+ openshift/hybris:pkp-3.1.0-build-13:oc -n openshift delete istag hybris:pkp-3.1.0-build-13    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 61
+ openshift/hybris:pkp-3.1.0-build-14:oc -n openshift delete istag hybris:pkp-3.1.0-build-14    # filter_Isname:_hybris --> sha256:4cd29846d16ffb593b97ae1e3194b13dc608757b5c0596a1284dd7c47961aecf ,  Commit.Ref:  ,  Age: 52
+]
+INFO: 2021/01/09 18:41:49 /home/jaegdi/devel/go/image-tools/ocrequest/helper.go:52: run in dry run mode

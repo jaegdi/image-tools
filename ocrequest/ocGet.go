@@ -13,22 +13,22 @@ import (
 )
 
 // ocClientCall requests an openshift-cluster via oc clioent and return the answer as string.
-func ocClientCall(cluster string, namespace string, typ string, name string) []byte {
+func ocClientCall(cluster T_clName, namespace T_nsName, typ string, name string) []byte {
 	var cmd *exec.Cmd
 	token := ocGetToken(cluster)
 	ns := namespace != ""
 	na := name != ""
 	switch {
 	case ns && na:
-		cmd = exec.Command("oc", "--token", token, "-n", namespace, "get", typ, name, "-o", "json")
+		cmd = exec.Command("oc", "--token", token, "-n", namespace.str(), "get", typ, name, "-o", "json")
 	case ns && !na:
-		cmd = exec.Command("oc", "--token", token, "-n", namespace, "get", typ, "-o", "json")
+		cmd = exec.Command("oc", "--token", token, "-n", namespace.str(), "get", typ, "-o", "json")
 	case !ns && na:
 		cmd = exec.Command("oc", "--token", token, "get", typ, name, "-o", "json")
 	default:
 		cmd = exec.Command("oc", "--token", token, "get", typ, "-o", "json")
 	}
-	LogMsg(cmd)
+	LogDebug(cmd)
 	jsonstr, err := cmd.Output()
 	if err != nil {
 		exitWithError("oc get failed:", string(jsonstr), "Error:", err)
@@ -37,7 +37,7 @@ func ocClientCall(cluster string, namespace string, typ string, name string) []b
 }
 
 // ocApiCall requests an openshift-cluster via API and return the answer as string.
-func ocApiCall(cluster string, namespace string, typ string, name string) []byte {
+func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []byte {
 	var url string
 	var urlpath string
 	// Create a Bearer string by appending string access token
@@ -47,11 +47,11 @@ func ocApiCall(cluster string, namespace string, typ string, name string) []byte
 	case "images":
 		urlpath = "/apis/image.openshift.io/v1/"
 	case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
-		urlpath = "/oapi/v1/namespaces/" + namespace + "/"
+		urlpath = "/oapi/v1/namespaces/" + namespace.str() + "/"
 	case "jobs":
-		urlpath = "/apis/batch/v1/namespaces/" + namespace + "/"
+		urlpath = "/apis/batch/v1/namespaces/" + namespace.str() + "/"
 	case "cronjobs":
-		urlpath = "/apis/batch/v1beta1/namespaces/" + namespace + "/"
+		urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str() + "/"
 	case "namespaces":
 		urlpath = "/api/v1/namespaces"
 		typ = ""
@@ -66,7 +66,7 @@ func ocApiCall(cluster string, namespace string, typ string, name string) []byte
 	default:
 		url = Clusters.Config[cluster].Url + urlpath
 	}
-	LogMsg("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
+	LogDebug("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
 	// Create a new request using http
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -110,13 +110,13 @@ func ocApiCall(cluster string, namespace string, typ string, name string) []byte
 	return []byte(body)
 }
 
-func checkCache(tmpdir string, cluster string, namespace string, typ string, name string) (string, bool) {
-	filename := tmpdir + "/" + "cache_" + cluster + "_" + namespace + "_" + typ + "_" + name + ".tmp"
+func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string, name string) (string, bool) {
+	filename := tmpdir + "/" + "cache_" + string(cluster) + "_" + string(namespace) + "_" + typ + "_" + name + ".tmp"
 	//  dir not exist
 	if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
 		err := os.MkdirAll(tmpdir, 0755)
 		if err != nil {
-			LogMsg("failed to create cache dir", err)
+			LogDebug("failed to create cache dir", err)
 		}
 		return filename, false
 	}
@@ -128,7 +128,7 @@ func checkCache(tmpdir string, cluster string, namespace string, typ string, nam
 	duration := time.Since(info.ModTime())
 	// file too old
 	if duration.Minutes() > float64(1.0) {
-		LogMsg("Cache Age:", duration.Minutes())
+		LogDebug("Cache Age:", duration.Minutes())
 		return filename, false
 	}
 	return filename, true
@@ -137,7 +137,7 @@ func checkCache(tmpdir string, cluster string, namespace string, typ string, nam
 func writeCache(tmpdir string, filename string, content []byte) {
 	err := ioutil.WriteFile(filename, content, 0644)
 	if err != nil {
-		LogMsg("Writing cache file failed", err)
+		LogDebug("Writing cache file failed", err)
 	}
 }
 
@@ -147,12 +147,12 @@ func readCache(filename string) []byte {
 }
 
 // ocGetCall requests an openshift-cluster via API or oc-client and return the answer as string.
-func ocGetCall(cluster string, namespace string, typ string, name string) string {
+func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) string {
 	tmpdir := "/tmp/tmp-report-istags"
 	var content []byte
 	filename, cacheOk := checkCache(tmpdir, cluster, namespace, typ, name)
 	if !cacheOk {
-		LogMsg("Request Openshift for:", filename)
+		LogDebug("Request Openshift for:", filename)
 		if CmdParams.Options.OcClient {
 			content = ocClientCall(cluster, namespace, typ, name)
 		} else {
@@ -160,7 +160,7 @@ func ocGetCall(cluster string, namespace string, typ string, name string) string
 		}
 		writeCache(tmpdir, filename, content)
 	} else {
-		LogMsg("Use Cache for:", filename)
+		LogDebug("Use Cache for:", filename)
 		content = readCache(filename)
 	}
 	return string(content)

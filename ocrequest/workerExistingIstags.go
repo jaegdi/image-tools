@@ -7,17 +7,14 @@ import (
 	// "log"
 )
 
-type T_clname string
-type T_nsname string
-
 type JobExistingIstags struct {
 	id        int
-	cluster   string
-	namespace string
+	cluster   T_clName
+	namespace T_nsName
 }
 
 //                                             cluster
-type T_ResultExistingIstagsOverAllClusters map[string]T_result
+type T_ResultExistingIstagsOverAllClusters map[T_clName]T_result
 
 type ResultExistingIstags struct {
 	job    JobExistingIstags
@@ -50,13 +47,13 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 	close(jobResultsExistingIstags)
 }
 
-func allocateExistingIstags(family string, clusters []string) {
+func allocateExistingIstags(family T_family, clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobExistingIstags for cluster" + clusters[cl])
 		clusterFamNamespaces := FamilyNamespaces[family][clusters[cl]]
 		for i := 0; i < len(clusterFamNamespaces); i++ {
-			LogMsg("Start job for cluster " + clusters[cl] + " in namespace " + clusterFamNamespaces[i])
+			LogMsg("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
 			jobsExistingIstags <- job
 			jobNr++
@@ -66,7 +63,7 @@ func allocateExistingIstags(family string, clusters []string) {
 	close(jobsExistingIstags)
 }
 
-func goGetExistingIstagsForFamilyInAllClusters(family string) T_ResultExistingIstagsOverAllClusters {
+func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExistingIstagsOverAllClusters {
 
 	istagResult := T_ResultExistingIstagsOverAllClusters{}
 

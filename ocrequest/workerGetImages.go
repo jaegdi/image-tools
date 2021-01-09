@@ -9,7 +9,7 @@ import (
 
 type JobExistingImages struct {
 	id      int
-	cluster string
+	cluster T_clName
 }
 
 type ResultExistingImages struct {
@@ -41,7 +41,7 @@ func createWorkerPoolExistingImages(noOfWorkersExistingImages int) {
 	close(jobResultsExistingImages)
 }
 
-func allocateExistingImages(clusters []string) {
+func allocateExistingImages(clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobExistingImages for cluster" + clusters[cl])

@@ -1,28 +1,28 @@
 package ocrequest
 
 var FamilyNamespaces = T_famNs{
-	"pkp": map[string][]string{
+	"pkp": map[T_clName][]T_nsName{
 		"cid": {"ms-jenkins", "openshift", "images-pkp"},
 		"int": {"images-pkp"},
 		"ppr": {"images-pkp"},
 		"vpt": {"images-pkp"},
 		"pro": {"images-pkp"},
 	},
-	"ssp": map[string][]string{
+	"ssp": map[T_clName][]T_nsName{
 		"cid": {"ssp-jenkins", "images-ssp"},
 		"int": {"images-ssp"},
 		"ppr": {"images-ssp"},
 		"vpt": {"images-ssp"},
 		"pro": {"images-ssp"},
 	},
-	"aps": map[string][]string{
+	"aps": map[T_clName][]T_nsName{
 		"cid": {"aps-jenkins", "images-aps"},
 		"int": {"images-aps"},
 		"ppr": {"images-aps"},
 		"vpt": {"images-aps"},
 		"pro": {"images-aps"},
 	},
-	"fpc": map[string][]string{
+	"fpc": map[T_clName][]T_nsName{
 		"cid": {"fpc-basis-1-1-20", "fpc-basis-1-1-21"},
 		"int": {"fpc-fa1", "fpc-fa2", "fpc-int1", "fpc-int2", "fpc-loadtest"},
 		"ppr": {"fpc-ppr"},
@@ -32,7 +32,7 @@ var FamilyNamespaces = T_famNs{
 }
 
 var Clusters = T_ClusterConfig{
-	Config: map[string]T_Cluster{
+	Config: map[T_clName]T_Cluster{
 		"cid": {
 			Name:  "cid-apc0",
 			Url:   "https://console.cid-apc0.sf-rz.de:8443",
@@ -54,10 +54,12 @@ var Clusters = T_ClusterConfig{
 			Url:   "https://console.pro-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi16N3NrdyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI3ZWY0YjE4OC0zNDM2LTExZTktOTIzZC0wMDUwNTY4MjA2Y2UiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.PX5Ghkmc4CgsvQgXuuIBBS95W0tE0YsRuCbymp4eVUBo4l1woEkKcds7yghx9PwcLHNMWWVki1DUUw-TbsWJY5MrnNwWCGwxTixeh3HSv3RBNAOkGUX4JPt6Bs0jEL_sELccLq9df6pZTQyDjidoSFnT4rid7R-7NyoRjlm0PhZRXEKxlGDt2eZNT0OJGl7btWqh1I_R7MTeuvya-KGSaMtNOlgpvLeyfH2UAvSY6INCu9ca88CBNWScpvZ_X6uxF75bLVGb1UJurPMbrG0isWge6kVnCaCpX_bSmlr8nyo7N6L1feGEgZZpwquTugbwfte8fLvbBgWCB9d8pt-ZhA"},
 	},
-	Stages:     []string{"cid", "int", "ppr", "pro"},
+	Stages:     []T_clName{"cid", "int", "ppr", "pro"},
 	Buildstage: "cid",
-	Teststages: []string{"int", "ppr", "vpt"},
+	Teststages: []T_clName{"int", "ppr", "vpt"},
 	Prodstage:  "pro",
 }
 
 var OcClient bool
+
+var LogFileName = "image-tools.log"

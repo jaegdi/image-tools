@@ -17,7 +17,7 @@ var (
 
 func Init() {
 
-	logfile, err := os.OpenFile("log_ocimagetools.log", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
+	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,20 +26,20 @@ func Init() {
 	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
 
-	LogMsg("------------------------------------------------------------")
-	LogMsg("Starting execution of clean-istags")
-
 	EvalFlags()
+
+	LogMsg("------------------------------------------------------------")
+	LogMsg("Starting execution of image-tools")
 
 	Multiproc = true
 	LogMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
 	LogMsg("Multithreading: " + fmt.Sprint(Multiproc))
 
 	regexValidNamespace = regexp.MustCompile(
-		`^` + CmdParams.Family + `$` + `|` +
-			`^` + CmdParams.Family + `-.*` + `|` +
-			`.*?-` + CmdParams.Family + `-.*` + `|` +
-			`.*?-` + CmdParams.Family + `$`)
+		`^` + string(CmdParams.Family) + `$` + `|` +
+			`^` + string(CmdParams.Family) + `-.*` + `|` +
+			`.*?-` + string(CmdParams.Family) + `-.*` + `|` +
+			`.*?-` + string(CmdParams.Family) + `$`)
 
 	if len(Clusters.Config["cid"].Token) < 10 {
 		if err := readTokens("clusterconfig.json"); err != nil {

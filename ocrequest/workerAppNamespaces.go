@@ -7,19 +7,19 @@ import (
 	// "log"
 )
 
-type T_CLusterAppNamespaces []string
-type T_FamilyAppNamespaces map[string]T_CLusterAppNamespaces
+type T_CLusterAppNamespaces []T_nsName
+type T_FamilyAppNamespaces map[T_clName]T_CLusterAppNamespaces
 
 type JobAppNamespaces struct {
 	id      int
-	cluster string
-	family  string
+	cluster T_clName
+	family  T_family
 }
 
 type ResultAppNamespaces struct {
 	job JobAppNamespaces
 	// family     string
-	cluster    string
+	cluster    T_clName
 	namespaces T_CLusterAppNamespaces
 }
 
@@ -47,7 +47,7 @@ func createWorkerPoolAppNamespaces(noOfWorkersAppNamespaces int) {
 	close(jobResultsAppNamespaces)
 }
 
-func allocateAppNamespaces(family string) {
+func allocateAppNamespaces(family T_family) {
 	jobNr := 0
 	clusters := Clusters.Stages
 	for cl := 0; cl < len(clusters); cl++ {
@@ -60,7 +60,7 @@ func allocateAppNamespaces(family string) {
 	close(jobsAppNamespaces)
 }
 
-func goGetAppNamespacesForFamily(family string) T_FamilyAppNamespaces {
+func goGetAppNamespacesForFamily(family T_family) T_FamilyAppNamespaces {
 
 	appNameSpaces := T_FamilyAppNamespaces{}
 

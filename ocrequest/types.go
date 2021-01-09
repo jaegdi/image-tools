@@ -7,8 +7,10 @@ import (
 	// "log"
 	// "os"
 	"encoding/csv"
+	"fmt"
 	"os"
 	"reflect"
+	"strings"
 )
 
 type T_completeResults struct {
@@ -16,41 +18,80 @@ type T_completeResults struct {
 	UsedIstags T_usedIstagsResult
 }
 
+type T_family string
+
 //                                 family
-type T_completeResultsFamilies map[string]T_completeResults
+type T_completeResultsFamilies map[T_family]T_completeResults
+
+type T_isName string
+
+func (c T_isName) str() string {
+	return string(c)
+}
+
+type T_tagName string
+
+func (c T_tagName) str() string {
+	return string(c)
+}
+
+type T_istagName string
+
+func (c T_istagName) str() string {
+	return string(c)
+}
+func (istag T_istagName) split() (T_isName, T_tagName) {
+	istagParts := strings.Split(istag.str(), ":")
+	var is T_isName
+	var tag T_tagName
+	if len(istagParts) < 2 {
+		is = T_isName(istagParts[0])
+		tag = T_tagName("")
+	} else {
+		is = T_isName(istagParts[0])
+		tag = T_tagName(istagParts[1])
+	}
+	return is, tag
+}
+
+type T_shaName string
+
+func (c T_shaName) str() string {
+	return string(c)
+}
 
 // getExistingIstags.go
 //                     is        image
-type T_shaStreams map[string]map[string]T_resIstag
+type T_shaStreams map[T_isName]map[T_shaName]T_resIstag
 
-func (a T_shaStreams) Add(is string, image string, istag T_istag) {
+func (a T_shaStreams) Add(is T_isName, image T_shaName, istag T_istag) {
 	if a == nil {
 		a = T_shaStreams{}
 	}
 	if a[is] == nil {
-		a[is] = map[string]T_resIstag{}
+		a[is] = map[T_shaName]T_resIstag{}
 	}
 	if a[is][image] == nil {
 		a[is][image] = T_resIstag{}
 	}
-	istagname := istag.Imagestream + ":" + istag.Tagname
+	istagname := T_istagName(istag.Imagestream.str() + ":" + istag.Tagname.str())
 	if a[is][image][istagname] == nil {
-		a[is][image][istagname] = map[string]T_istag{}
+		a[is][image][istagname] = map[T_nsName]T_istag{}
 	}
 	a[is][image][istagname][istag.Namespace] = istag
 }
 
-type T_Istags_List map[string]bool
-type T_shaNames map[string]T_Istags_List
+type T_Istags_List map[T_istagName]bool
+type T_shaNames map[T_shaName]T_Istags_List
 
-func (a T_shaNames) Add(key string, b string) {
+func (a T_shaNames) Add(sha T_shaName, istag T_istagName) {
 	if a == nil {
 		a = T_shaNames{}
 	}
-	if a[key] == nil {
-		a[key] = T_Istags_List{}
+	if a[sha] == nil {
+		a[sha] = T_Istags_List{}
 	}
-	a[key][b] = true
+	a[sha][istag] = true
 }
 
 type T_istagBuildLabels struct {
@@ -120,13 +161,13 @@ func (buildLabels *T_istagBuildLabels) Set(buildLabelsMap map[string]interface{}
 
 // type T_istag map[string]interface{}
 type T_istag struct {
-	Imagestream string
-	Tagname     string
-	Namespace   string
+	Imagestream T_isName
+	Tagname     T_tagName
+	Namespace   T_nsName
 	Link        string
 	Date        string
-	AgeInDays   string
-	Image       string
+	AgeInDays   int
+	Image       T_shaName
 	Build       T_istagBuildLabels
 }
 
@@ -145,6 +186,9 @@ func (c T_istag) Values() interface{} {
 			for i := 0; i < v.NumField(); i++ {
 				l = append(l, v.Field(i).String())
 			}
+		case "AgeInDays":
+			s := fmt.Sprintf("%5d", int(v.Field(i).Int()))
+			l = append(l, s)
 		default:
 			l = append(l, v.Field(i).String())
 		}
@@ -173,20 +217,20 @@ func (c T_istag) Names() interface{} {
 
 type T_sha struct {
 	Istags      T_Istags_List
-	Imagestream string
-	Namespace   string
+	Imagestream T_isName
+	Namespace   T_nsName
 	Link        string
 	Date        string
-	AgeInDays   string
+	AgeInDays   int
 }
 
-type T_isShaTagnames map[string]interface{}
-type T_is map[string]T_isShaTagnames
+type T_isShaTagnames map[T_istagName]interface{}
+type T_is map[T_shaName]T_isShaTagnames
 
 //                   istag     namespace
-type T_resIstag map[string]map[string]T_istag
-type T_resIs map[string]T_is
-type T_resSha map[string]map[string]T_sha
+type T_resIstag map[T_istagName]map[T_nsName]T_istag
+type T_resIs map[T_isName]T_is
+type T_resSha map[T_shaName]map[T_istagName]T_sha
 
 type T_resReport struct {
 	Anz_ImageStreamTags int
@@ -217,18 +261,25 @@ type T_runningObjects struct {
 }
 
 type T_usedIstag struct {
-	Cluster         string
-	UsedInNamespace string
-	FromNamespace   string
-	AgeInDays       string
-	Image           string
+	Cluster         T_clName
+	UsedInNamespace T_nsName
+	FromNamespace   T_nsName
+	AgeInDays       int
+	Image           T_shaName
 }
 
 func (c T_usedIstag) Values() interface{} {
 	l := []interface{}{}
 	v := reflect.ValueOf(c)
+	typeOfS := v.Type()
 	for i := 0; i < v.NumField(); i++ {
-		l = append(l, v.Field(i).String())
+		switch typeOfS.Field(i).Name {
+		case "AgeInDays":
+			s := fmt.Sprintf("%5d", int(v.Field(i).Int()))
+			l = append(l, s)
+		default:
+			l = append(l, v.Field(i).String())
+		}
 	}
 	return l
 }
@@ -244,15 +295,27 @@ func (c T_usedIstag) Names() interface{} {
 }
 
 // usedIstagsResult[Is][Tag]T_usedIstag
-type T_usedIstagsResult map[string]map[string][]T_usedIstag
+type T_usedIstagsResult map[T_isName]map[T_tagName][]T_usedIstag
 
 // IsNamesForFamily[family][is]true
-type T_IsNamesForFamily map[string]map[string]bool
+type T_IsNamesForFamily map[T_family]map[T_isName]bool
 
 //------------------------------------------
 
+type T_clName string
+
+func (c T_clName) str() string {
+	return string(c)
+}
+
+type T_nsName string
+
+func (c T_nsName) str() string {
+	return string(c)
+}
+
 //               family     cluster  namespaces
-type T_famNs map[string]map[string][]string
+type T_famNs map[T_family]map[T_clName][]T_nsName
 
 type T_flagOut struct {
 	Is    bool
@@ -262,11 +325,20 @@ type T_flagOut struct {
 	All   bool
 }
 type T_flagFilt struct {
-	Isname    string
-	Istagname string
-	Tagname   string
-	Imagename string
-	Namespace string
+	Isname    T_isName
+	Istagname T_istagName
+	Tagname   T_tagName
+	Imagename T_shaName
+	Namespace T_nsName
+}
+
+type T_flagDeleteOpts struct {
+	Pattern     string
+	MinAge      int
+	NonBuild    bool
+	Snapshots   bool
+	PruneImages bool
+	Confirm     bool
 }
 
 type T_flagOpts struct {
@@ -274,21 +346,25 @@ type T_flagOpts struct {
 	NoProxy     bool
 	Socks5Proxy string
 	Profiler    bool
+	NoLog       bool
+	Debug       bool
 }
 type T_flags struct {
-	Cluster  string
-	Token    string
-	Family   string
-	Json     bool
-	Yaml     bool
-	Csv      bool
-	CsvFile  string
-	Html     bool
-	Table    bool
-	TabGroup bool
-	Output   T_flagOut
-	Filter   T_flagFilt
-	Options  T_flagOpts
+	Cluster    T_clName
+	Token      string
+	Family     T_family
+	Json       bool
+	Yaml       bool
+	Csv        bool
+	CsvFile    string
+	Delete     bool
+	Html       bool
+	Table      bool
+	TabGroup   bool
+	Output     T_flagOut
+	Filter     T_flagFilt
+	DeleteOpts T_flagDeleteOpts
+	Options    T_flagOpts
 }
 
 //------------------------------------------
@@ -300,11 +376,11 @@ type T_Cluster struct {
 }
 
 type T_ClusterConfig struct {
-	Stages     []string
-	Config     map[string]T_Cluster `json:"Config.[],omitempty"`
-	Buildstage string
-	Teststages []string
-	Prodstage  string
+	Stages     []T_clName
+	Config     map[T_clName]T_Cluster `json:"Config.[],omitempty"`
+	Buildstage T_clName
+	Teststages []T_clName
+	Prodstage  T_clName
 }
 
 type T_csvLine []string
@@ -327,7 +403,7 @@ func (c T_csvDoc) csvDoc(typ string) {
 		if err != nil {
 			LogError("failed to open file", file, err)
 		}
-		LogMsg("write CSV file for", typ, "to", file)
+		LogDebug("write CSV file for", typ, "to", file)
 		w := csv.NewWriter(csvfile)
 		if err := w.WriteAll(out); err != nil {
 			LogError("writing csv failed" + err.Error())

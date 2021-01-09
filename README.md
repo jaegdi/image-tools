@@ -11,7 +11,9 @@ and store it somewhere in your PATH.
 
 ## DESCRIPTION
 
-istag-mgmt reports image date for a application family (eg. pkp, fpc, aps, ssp)
+image-tools  reports image or istag details for a application family (eg. pkp, fpc, aps, ssp)
+             or
+             generate a bash script as output to delete istags
 
 - For __existing Is, IsTags and Images__ it operates cluster and family specific. 
     That means it works for __one cluster__ like
@@ -48,6 +50,7 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
 
 ## Usage
 
+    execute image-tolos with parameter -h to get help and examples
 ### Command
 
     ./report-istags -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)] 

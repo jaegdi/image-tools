@@ -1,4 +1,4 @@
-module report-istags
+module image-tools
 
 go 1.15
 
