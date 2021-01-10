@@ -49,27 +49,7 @@ For this reports the data is collected from the oc cluster defined by parameter 
 the parameter 'family=...'. For type 'used' (also included in type 'all') from all clusters.
 
 
-- __generate delete script for istags__. Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
-    and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
-
-        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
-
-    To use the script output to really delete the istags, you can use the following line:
-
-        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
-
-    To only generate a script to delete old snapshot istags:
-
-        image-tools -family=pkp -cluster=cid -delete -snapshot
-
-    To delete all not used images of family 'aps' in cluster cid
-
-        image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
-
-    To delete all hybris istags of family pkp older than 45 days
-
-        image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
-
+- __generate delete script for istags__. 
 
 ## Usage
 
@@ -193,3 +173,23 @@ Report ImageStreams with name=webcode-service for family pkp in cluster cid as t
 
     ./report-istags -cluster=cid -family=pkp -is -isname=webcode-service -table
 
+Delete: Generate a shell script as output to delete old istags(60 days, the default) for family pkp in cluster cid
+    and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
+
+Delete: To use the script output to really delete the istags, you can use the following line (you must be an openshift admin):
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
+
+Delete: To only generate a script to delete old snapshot istags:
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot
+
+Delete: To delete all not used images of family 'aps' in cluster cid
+
+        image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
+
+Delete: To delete all hybris istags of family pkp older than 45 days
+
+        image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
