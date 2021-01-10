@@ -1,12 +1,10 @@
 *.csv
 log*.txt
 image-tools
+image-tools.exe
 clusterconfig*
 .swp
-report-istags
 .vscode
 deploy_to_artifactory.sh
-log_ocimagetools.log
-report-istags.exe
+*.log
 __debug_bin
-collectIstags
