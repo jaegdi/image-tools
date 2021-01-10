@@ -48,6 +48,7 @@ image-tools  reports image or istag details for a application family (eg. pkp, f
 For this reports the data is collected from the oc cluster defined by parameter '-cluster=...' and
 the parameter 'family=...'. For type 'used' (also included in type 'all') from all clusters.
 
+
 - __generate delete script for istags__. Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
     and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
 
