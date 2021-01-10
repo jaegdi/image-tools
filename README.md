@@ -1,13 +1,13 @@
-# report-istags
+# image-tools 
 
 ## Installation
 
 Download it from
 
-- [report-istags for linux](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istags/report-istags)
-- [report-istags.exe for windows](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istags/report-istags.exe)
+- [image-tools  for linux](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/image-tools/image-tools))
+- [image-tools .exe for windows](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/image-tools.exe/image-tools.exe))
 
-and store it somewhere in your PATH.
+and store it somewhere in your PATH. It is a statically linked go program and no installation is neccessary.
 
 ## DESCRIPTION
 
@@ -64,7 +64,7 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
     execute image-tools with parameter -h to get help and examples
 ### Command
 
-    ./report-istags -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)] 
+    ./image-tools  -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)] 
 
 the parameters can be specified in any order
 
@@ -142,15 +142,15 @@ the parameters can be specified in any order
 Report all information for family pkp in cluster cid as json
 (which is the default output format)
 
-    ./report-istags -cluster=cid -family=pkp -all
+    ./image-tools  -cluster=cid -family=pkp -all
 	
 or as table
 
-        ./report-istags -cluster=cid -family=pkp -all -table
+        ./image-tools  -cluster=cid -family=pkp -all -table
 	
 or csv in different files for each type of information
 
-    ./report-istags -cluster=cid -family=pkp -all -csvfile=prefix
+    ./image-tools  -cluster=cid -family=pkp -all -csvfile=prefix
 
 writes the output to different files 'prefix-type' in current directory
 		
@@ -159,31 +159,31 @@ Report only __used__ istags for family pkp as pretty printed table
     the pager define in the environment variable $PAGER/%PAGER%. 
 If $PAGER is not set, it try to use 'more')
 
-        ./report-istags -cluster=cid -family=pkp -used -table
+        ./image-tools  -cluster=cid -family=pkp -used -table
 
 or json
 
-        ./report-istags -cluster=cid -family=pkp -used
+        ./image-tools  -cluster=cid -family=pkp -used
 
 or yaml
 
-    ./report-istags -cluster=cid -family=pkp -used -yaml
+    ./image-tools  -cluster=cid -family=pkp -used -yaml
 
 or csv
 
-    ./report-istags -cluster=cid -family=pkp -used -csv
+    ./image-tools  -cluster=cid -family=pkp -used -csv
 		
 Report istags with tag=latest for family pkp in cluster cid as yaml report
 
-    ./report-istags -cluster=cid -family=aps -istag -yaml -tagname=latest
+    ./image-tools  -cluster=cid -family=aps -istag -yaml -tagname=latest
 
 Report ImageStreams for family aps in cluster int as yaml report
 
-    ./report-istags -cluster=int -family=aps -is -yaml
+    ./image-tools  -cluster=int -family=aps -is -yaml
 
 Report ImageStreams with name=webcode-service for family pkp in cluster cid as table report
 
-    ./report-istags -cluster=cid -family=pkp -is -isname=webcode-service -table
+    ./image-tools  -cluster=cid -family=pkp -is -isname=webcode-service -table
 
 Delete: Generate a shell script as output to delete old istags(60 days, the default) for family pkp in cluster cid
     and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
