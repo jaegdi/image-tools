@@ -96,6 +96,8 @@ the parameters can be specified in any order
 
     -delete           activate the delete mode. The same data as for reports is collected from the clusters, but
                       it is used to generate a script as output for istag deleting instead a report.
+
+    -delpattern=regexp-string    optional, can be combined with the following filter parameters
 ##### Filter (usable for reports and delete mode)
 
     -namespace=string namespace to look for istags
