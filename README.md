@@ -94,7 +94,9 @@ the parameters can be specified in any order
 
 #### Options
 
-##### Filter
+    -delete           activate the delete mode. The same data as for reports is collected from the clusters, but
+                      it is used to generate a script as output for istag deleting instead a report.
+##### Filter (usable for reports and delete mode)
 
     -namespace=string namespace to look for istags
     
@@ -106,7 +108,7 @@ the parameters can be specified in any order
     
     -tagname=string   filter output all istags with this Tag
 
-##### Output Format
+##### Output Format (for reports)
 
     -json             defines JSON as the output format for the reported data.
                       This is the DEFAULT
