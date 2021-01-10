@@ -11,6 +11,7 @@ var (
 	WarningLogger       *log.Logger
 	InfoLogger          *log.Logger
 	ErrorLogger         *log.Logger
+	DebugLogger         *log.Logger
 	Multiproc           bool
 	regexValidNamespace *regexp.Regexp
 )
@@ -25,6 +26,7 @@ func Init() {
 	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
 	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
 	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
+	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Llongfile)
 
 	EvalFlags()
 

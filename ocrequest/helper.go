@@ -38,18 +38,17 @@ func exitWithError(errormsg ...interface{}) {
 
 // LogMsg write msg to StdErr and logfile
 func LogMsg(msg ...interface{}) {
-	if !CmdParams.Options.NoLog {
-		log.Println(msg...)
-	}
 	InfoLogger.Println(msg...)
 }
 
 // LogDebug write msg to StdErr and logfile
 func LogDebug(msg ...interface{}) {
-	if CmdParams.Options.Debug {
+	if !CmdParams.Options.NoLog {
 		log.Println(msg...)
 	}
-	InfoLogger.Println(msg...)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println(msg...)
+	}
 }
 
 // LogError write error msg to StdErr and logfile
