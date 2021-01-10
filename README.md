@@ -49,7 +49,7 @@ For this reports the data is collected from the oc cluster defined by parameter 
 the parameter 'family=...'. For type 'used' (also included in type 'all') from all clusters.
 
 
-- __generate delete script for istags__.  Define parameter -delete to switch in delete mode (generate a script as output for deleting istags)
+- __generate delete script for istags__.  Define parameter __-delete__ to switch in delete mode (generate a script as output for deleting istags)
   - further define the details with the additional parameters:
     - -snapshot
     - -nonbuild (pkp specific)
