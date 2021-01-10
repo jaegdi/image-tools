@@ -10,7 +10,7 @@ import (
 )
 
 // getClusterToken fetch login token from Clusters config
-func getClusterToken(cluster string) string {
+func getClusterToken(cluster T_clName) string {
 	token := ""
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
@@ -19,15 +19,15 @@ func getClusterToken(cluster string) string {
 }
 
 // setClusterToken set login token onto Cluster config
-func setClusterToken(cluster string, token string) {
+func setClusterToken(cluster T_clName, token string) {
 	if v, ok := Clusters.Config[cluster]; ok {
 		v.Token = token
 		Clusters.Config[cluster] = v
 	}
 }
 
-func ocGetToken(cluster string) string {
-	LogMsg("Try to get cluster token for cluster:", cluster)
+func ocGetToken(cluster T_clName) string {
+	LogDebug("Try to get cluster token for cluster:", cluster)
 	token := getClusterToken(cluster)
 	if token != "" {
 		return token
@@ -56,9 +56,9 @@ func ocGetToken(cluster string) string {
 	}
 }
 
-func ocLogin(cluster string) (string, error) {
+func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	LogMsg("Try to login: ", app, Clusters.Config[cluster].Name)
+	LogDebug("Try to login: ", app, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		LogError("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
@@ -78,11 +78,11 @@ func ocLogin(cluster string) (string, error) {
 func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	js, err := json.MarshalIndent(clusterconfig, "", "    ")
 	if err != nil {
-		LogMsg("failed to serialize clusterconfig to json", err)
+		LogError("failed to serialize clusterconfig to json", err)
 	} else {
 		err := ioutil.WriteFile(filename, js, 0600)
 		if err != nil {
-			LogMsg("failed to save serialized clusterconfig as json to file", err)
+			LogError("failed to save serialized clusterconfig as json to file", err)
 		}
 	}
 }
@@ -90,14 +90,14 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 func readTokens(filename string) error {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
-		LogMsg("failed to load configfile "+filename, err)
+		LogError("failed to load configfile "+filename, err)
 		return err
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
-			LogMsg("error unmarshal clusterconfig", err)
+			LogError("error unmarshal clusterconfig", err)
 		}
 		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
-		// LogMsg(string(js))
+		// LogDebug(string(js))
 		return err
 	}
 }

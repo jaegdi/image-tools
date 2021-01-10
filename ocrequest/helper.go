@@ -38,13 +38,24 @@ func exitWithError(errormsg ...interface{}) {
 
 // LogMsg write msg to StdErr and logfile
 func LogMsg(msg ...interface{}) {
-	log.Println(msg...)
 	InfoLogger.Println(msg...)
+}
+
+// LogDebug write msg to StdErr and logfile
+func LogDebug(msg ...interface{}) {
+	if !CmdParams.Options.NoLog {
+		log.Println(msg...)
+	}
+	if CmdParams.Options.Debug {
+		DebugLogger.Println(msg...)
+	}
 }
 
 // LogError write error msg to StdErr and logfile
 func LogError(msg ...interface{}) {
-	log.Println(msg...)
+	if !CmdParams.Options.NoLog {
+		log.Println(msg...)
+	}
 	ErrorLogger.Println(msg...)
 }
 
@@ -124,7 +135,7 @@ func GetYamlFromMap(list interface{}) string {
 }
 
 // GetCsvFromMap generates CSV output from map
-func GetCsvFromMap(list interface{}, family string) {
+func GetCsvFromMap(list interface{}, family T_family) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
@@ -133,12 +144,12 @@ func GetCsvFromMap(list interface{}, family string) {
 			for image, shaMap := range isMap {
 				for istag := range shaMap {
 					line := T_csvLine{}
-					line = append(line, family)
+					line = append(line, string(family))
 					line = append(line, "allIstags")
 					line = append(line, "is")
-					line = append(line, is)
-					line = append(line, image)
-					line = append(line, istag)
+					line = append(line, is.str())
+					line = append(line, image.str())
+					line = append(line, istag.str())
 					output = append(output, line)
 				}
 			}
@@ -154,10 +165,10 @@ func GetCsvFromMap(list interface{}, family string) {
 			for _, istagMap := range nsMap {
 				// LogMsg("namespace:", ns)
 				line := T_csvLine{}
-				line = append(line, family)
+				line = append(line, string(family))
 				line = append(line, "allIstags")
 				line = append(line, "istag")
-				line = append(line, istagName)
+				line = append(line, istagName.str())
 				line = append(line, toArrayString(istagMap.Values())...)
 				output = append(output, line)
 			}
@@ -171,20 +182,20 @@ func GetCsvFromMap(list interface{}, family string) {
 		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
 			for istag, istagMap := range shaMap {
 				line := T_csvLine{}
-				line = append(line, family)
+				line = append(line, string(family))
 				line = append(line, "allIstags")
 				line = append(line, "image")
-				line = append(line, shaName)
-				line = append(line, istag)
-				line = append(line, istagMap.Imagestream)
-				line = append(line, istagMap.Namespace)
+				line = append(line, shaName.str())
+				line = append(line, istag.str())
+				line = append(line, istagMap.Imagestream.str())
+				line = append(line, istagMap.Namespace.str())
 				line = append(line, istagMap.Link)
 				line = append(line, istagMap.Date)
-				line = append(line, istagMap.AgeInDays)
+				line = append(line, strconv.Itoa(istagMap.AgeInDays))
 				for tag := range istagMap.Istags {
 					//  make a real copy of line !!!!
 					copyOfLine := append([]string{}, line...)
-					copyOfLine = append(copyOfLine, tag)
+					copyOfLine = append(copyOfLine, tag.str())
 					output = append(output, copyOfLine)
 				}
 			}
@@ -200,11 +211,11 @@ func GetCsvFromMap(list interface{}, family string) {
 			for istag, istagArray := range isMap { //.(map[string][]map[string]string) {
 				for _, istagMap := range istagArray {
 					line := T_csvLine{}
-					line = append(line, family)
+					line = append(line, string(family))
 					line = append(line, "usedistags")
 					line = append(line, "is:tag")
-					line = append(line, is)
-					line = append(line, istag)
+					line = append(line, is.str())
+					line = append(line, istag.str())
 					line = append(line, toArrayString(istagMap.Values())...)
 					output = append(output, line)
 				}
@@ -215,10 +226,10 @@ func GetCsvFromMap(list interface{}, family string) {
 }
 
 // GetTableFromMap generate ASCII table output from map
-func GetTableFromMap(list interface{}, family string) {
+func GetTableFromMap(list interface{}, family T_family) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Imagestream " + family, "Image", "ImagestreamTag"}
+		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag"}
 		output = append(output, headline)
 		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
 			for image, shaMap := range isMap {
@@ -237,7 +248,7 @@ func GetTableFromMap(list interface{}, family string) {
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"istag " + family} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline := table.Row{"istag " + string(family)} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, toTableRow(T_istag{}.Names())...)
 		output = append(output, headline)
 		for istagName, nsMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
@@ -255,7 +266,7 @@ func GetTableFromMap(list interface{}, family string) {
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Image " + family, "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
 		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
 			for istag, istagMap := range shaMap {
@@ -268,7 +279,7 @@ func GetTableFromMap(list interface{}, family string) {
 				line = append(line, istagMap.Namespace)
 				line = append(line, istagMap.Link)
 				line = append(line, istagMap.Date)
-				line = append(line, istagMap.AgeInDays)
+				line = append(line, strconv.Itoa(istagMap.AgeInDays))
 				for tag := range istagMap.Istags {
 					//  make a real copy of line !!!!
 					copyOfLine := append([]interface{}{}, line...)
@@ -281,7 +292,7 @@ func GetTableFromMap(list interface{}, family string) {
 	}
 	if CmdParams.Output.Used || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Imagestream (used for " + family + ")", "Tag (used)"} //, "UsedInNamespace", "Image", "UsedInCluster"}
+		headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"} //, "UsedInNamespace", "Image", "UsedInCluster"}
 		headline = append(headline, toTableRow(T_usedIstag{}.Names())...)
 		output = append(output, headline)
 		for is, isMap := range list.(T_completeResults).UsedIstags {

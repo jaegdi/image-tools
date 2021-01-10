@@ -4,15 +4,14 @@ package ocrequest
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 )
 
 var IsNamesForFamily T_IsNamesForFamily
 
 // joinShaStreams join keys of a map to an array.
-func joinShaStreams(mymap map[string]bool) []string {
-	keys := []string{}
+func joinShaStreams(mymap T_Istags_List) []T_istagName {
+	keys := []T_istagName{}
 	for k := range mymap {
 		keys = append(keys, k)
 	}
@@ -21,7 +20,7 @@ func joinShaStreams(mymap map[string]bool) []string {
 
 // appendJoinedNamesToImagestreams get as params the imageStream-map and then joinedNames of istags and
 // put them on the map under imagestreamMap.imagestream.image .
-func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, image string, joinedNames []string) T_resIs {
+func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName T_isName, image T_shaName, joinedNames []T_istagName) T_resIs {
 	if istream[imagestreamName] == nil {
 		istream[imagestreamName] = T_is{}
 	}
@@ -36,11 +35,11 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName string, im
 
 // InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
-func InitIsNamesForFamily(family string) {
+func InitIsNamesForFamily(family T_family) {
 	cluster := Clusters.Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
-	result[family] = make(map[string]bool)
+	result[family] = make(map[T_isName]bool)
 	for _, ns := range FamilyNamespaces[family][cluster] {
 		if ns == "openshift" {
 			continue
@@ -51,7 +50,7 @@ func InitIsNamesForFamily(family string) {
 		}
 		if isResult["items"] != nil {
 			for _, v := range isResult["items"].([]interface{}) {
-				val := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+				val := T_isName(v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string))
 				result[family][val] = true
 			}
 		}
@@ -71,7 +70,7 @@ func InitIsNamesForFamily(family string) {
 // OcGetAllIstagsOfNamespace generates a map of all istags
 // selected by (cluster, namespace) and append it to result map
 // and return the result map
-func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string) T_result {
+func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_nsName) T_result {
 	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
@@ -91,11 +90,11 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 	for _, content := range itemsMap {
 		metadata = content.(map[string]interface{})["metadata"].(map[string]interface{})
 		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
-		istagname := metadata["name"].(string)
-		isNamespace := metadata["namespace"].(string)
+		istagname := T_istagName(metadata["name"].(string))
+		isNamespace := T_nsName(metadata["namespace"].(string))
 		isLink := metadata["selfLink"].(string)
 		isDate := metadata["creationTimestamp"].(string)
-		sha := imageMetadata["name"].(string)
+		sha := T_shaName(imageMetadata["name"].(string))
 		if CmdParams.Filter.Imagename != "" && sha != CmdParams.Filter.Imagename {
 			continue
 		}
@@ -104,16 +103,16 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		if ImagesMap[cluster][sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
-			buildLabelsMap.Set(ImagesMap[cluster][sha].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
+		if ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
+			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}
-		imagestreamfields := strings.Split(istagname, `:`)
-		imagestreamName := imagestreamfields[0]
+		imagestreamfields := strings.Split(istagname.str(), `:`)
+		imagestreamName := T_isName(imagestreamfields[0])
 		if !IsNamesForFamily[CmdParams.Family][imagestreamName] {
 			continue
 		}
-		tagName := imagestreamfields[1]
-		isAge := fmt.Sprintf("%v", ageInDays(isDate))
+		tagName := T_tagName(imagestreamfields[1])
+		isAge := ageInDays(isDate)
 		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname {
 			continue
 		}
@@ -121,7 +120,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 			continue
 		}
 
-		shaNames.Add(sha, isNamespace+"/"+istagname)
+		shaNames.Add(sha, T_istagName(isNamespace.str()+"/"+istagname.str()))
 
 		myIstag := T_istag{
 			Imagestream: imagestreamName,
@@ -136,7 +135,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 
 		shaStreams.Add(imagestreamName, sha, myIstag)
 
-		mySha := map[string]T_sha{
+		mySha := map[T_istagName]T_sha{
 			istagname: {
 				Istags:      shaNames[sha],
 				Imagestream: imagestreamName,
@@ -150,7 +149,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		joinedNames := joinShaStreams(shaNames[sha])
 		resultIstream = appendJoinedNamesToImagestreams(resultIstream, imagestreamName, sha, joinedNames)
 		if resultIstag[istagname] == nil {
-			resultIstag[istagname] = map[string]T_istag{}
+			resultIstag[istagname] = map[T_nsName]T_istag{}
 		}
 		// if resultIstag[istagname][isNamespace] == T_istag{} {
 		// 	resultIstag[istagname][isNamespace] = T_istag{}
@@ -158,7 +157,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster string, namespace string
 		resultIstag[istagname][isNamespace] = myIstag
 
 		if resultSha[sha] == nil {
-			resultSha[sha] = make(map[string]T_sha)
+			resultSha[sha] = make(map[T_istagName]T_sha)
 		}
 		// t := map[string]T_sha{}
 		t := resultSha[sha]

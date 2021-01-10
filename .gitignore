@@ -1,6 +1,6 @@
 *.csv
 log*.txt
-clean-istags
+image-tools
 clusterconfig*
 .swp
 report-istags

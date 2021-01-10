@@ -5,13 +5,13 @@ import (
 )
 
 type T_ImagesMap map[string]interface{}
-type T_ImagesMapAllClusters map[string]T_ImagesMap
+type T_ImagesMapAllClusters map[T_clName]T_ImagesMap
 
 var ImagesMap T_ImagesMapAllClusters
 
 // InitAllImagesOfCluster reads images from cluster and converts the items array to
 // a map image=>item and set the package var ImagesMap to the result.
-func GetAllImagesOfCluster(cluster string) T_ImagesMap {
+func GetAllImagesOfCluster(cluster T_clName) T_ImagesMap {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {

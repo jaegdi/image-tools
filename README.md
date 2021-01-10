@@ -11,7 +11,9 @@ and store it somewhere in your PATH.
 
 ## DESCRIPTION
 
-istag-mgmt reports image date for a application family (eg. pkp, fpc, aps, ssp)
+image-tools  reports image or istag details for a application family (eg. pkp, fpc, aps, ssp)
+             or
+             generate a bash script as output to delete istags
 
 - For __existing Is, IsTags and Images__ it operates cluster and family specific. 
     That means it works for __one cluster__ like
@@ -46,8 +48,32 @@ istag-mgmt reports image date for a application family (eg. pkp, fpc, aps, ssp)
 For this reports the data is collected from the oc cluster defined by parameter '-cluster=...' and
 the parameter 'family=...'. For type 'used' (also included in type 'all') from all clusters.
 
+
+- __generate delete script for istags__. Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
+    and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
+
+    To use the script output to really delete the istags, you can use the following line:
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
+
+    To only generate a script to delete old snapshot istags:
+
+        image-tools -family=pkp -cluster=cid -delete -snapshot
+
+    To delete all not used images of family 'aps' in cluster cid
+
+        image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
+
+    To delete all hybris istags of family pkp older than 45 days
+
+        image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
+
+
 ## Usage
 
+    execute image-tools with parameter -h to get help and examples
 ### Command
 
     ./report-istags -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)] 

@@ -9,8 +9,8 @@ import (
 
 type JobUsedIstags struct {
 	id        int
-	cluster   string
-	namespace string
+	cluster   T_clName
+	namespace T_nsName
 }
 
 type ResultUsedIstags struct {
@@ -42,13 +42,13 @@ func createWorkerPool(noOfWorkersUsedIstags int) {
 	close(jobResultsUsedIstags)
 }
 
-func allocateUsedIstags(clusters []string, clusterAppNamsepaces T_FamilyAppNamespaces) {
+func allocateUsedIstags(clusters []T_clName, clusterAppNamsepaces T_FamilyAppNamespaces) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobUsedIstags for cluster" + clusters[cl])
 		namespaces := clusterAppNamsepaces[clusters[cl]]
 		for i := 0; i < len(namespaces); i++ {
-			LogMsg("Start job for cluster " + clusters[cl] + " in namespace " + namespaces[i])
+			LogMsg("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(namespaces[i]))
 			job := JobUsedIstags{jobNr, clusters[cl], namespaces[i]}
 			jobsUsedIstags <- job
 			jobNr++
@@ -58,7 +58,7 @@ func allocateUsedIstags(clusters []string, clusterAppNamsepaces T_FamilyAppNames
 	close(jobsUsedIstags)
 }
 
-func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
+func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 
 	istagResult := T_usedIstagsResult{}
 	allClusterFamilyNamespaces := goGetAppNamespacesForFamily(family)
@@ -80,7 +80,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family string) T_usedIstagsResult {
 				for tag := range result.istags[is] {
 					a := []T_usedIstag{}
 					if istagResult[is] == nil {
-						istagResult[is] = map[string][]T_usedIstag{}
+						istagResult[is] = map[T_tagName][]T_usedIstag{}
 					}
 					if istagResult[is][tag] == nil {
 						istagResult[is][tag] = []T_usedIstag{}
