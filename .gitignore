@@ -1,10 +1,11 @@
 *.csv
 log*.txt
 image-tools
-image-tools.exe
+*.exe
 clusterconfig*
 .swp
 .vscode
 deploy_to_artifactory.sh
 *.log
 __debug_bin
+image-tools.log

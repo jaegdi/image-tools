@@ -22,6 +22,20 @@ var FamilyNamespaces = T_famNs{
 		"vpt": {"images-aps"},
 		"pro": {"images-aps"},
 	},
+	"vps": map[T_clName][]T_nsName{
+		"cid": {"zpe-jenkins", "images-vps"},
+		"int": {"images-vps"},
+		"ppr": {"images-vps"},
+		"vpt": {"images-vps"},
+		"pro": {"images-vps"},
+	},
+	"dca": map[T_clName][]T_nsName{
+		"cid": {"images-dca"},
+		"int": {"images-dca"},
+		"ppr": {"images-dca"},
+		"vpt": {"images-dca"},
+		"pro": {"images-dca"},
+	},
 	"fpc": map[T_clName][]T_nsName{
 		"cid": {"fpc-basis-1-1-20", "fpc-basis-1-1-21"},
 		"int": {"fpc-fa1", "fpc-fa2", "fpc-int1", "fpc-int2", "fpc-loadtest"},
