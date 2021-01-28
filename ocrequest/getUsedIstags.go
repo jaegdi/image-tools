@@ -44,7 +44,14 @@ func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []in
 	for _, container := range containers {
 		image := T_shaName(container.(map[string]interface{})["image"].(string))
 		imageParts := strings.Split(image.str(), "/")
-		fromNamespace := T_nsName(imageParts[len(imageParts)-2])
+		var fromNamespace T_nsName
+		if len(imageParts) < 2 {
+			// it seems, that the image comes from sattelite
+			imageParts = strings.Split(image.str(), "_")
+			fromNamespace = T_nsName("Sattelite_" + T_nsName(imageParts[len(imageParts)-2]))
+		} else {
+			fromNamespace = T_nsName(imageParts[len(imageParts)-2])
+		}
 		istag := T_istagName(imageParts[len(imageParts)-1])
 		istagParts := strings.Split(istag.str(), "@")
 		if len(istagParts) < 2 {
