@@ -65,6 +65,9 @@ func main() {
 	LogDebug("Wait for filtered chanUsedIsTags")
 	result = <-chanCompleteResults
 
+	if CmdParams.Output.UnUsed {
+		FilterUnusedIstags(&result)
+	}
 	// Filter results for output
 	FilterAllIstags(&result)
 

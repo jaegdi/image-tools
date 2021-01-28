@@ -14,8 +14,9 @@ import (
 )
 
 type T_completeResults struct {
-	AllIstags  T_ResultExistingIstagsOverAllClusters
-	UsedIstags T_usedIstagsResult
+	AllIstags    T_ResultExistingIstagsOverAllClusters
+	UsedIstags   T_usedIstagsResult
+	UnUsedIstags T_result
 }
 
 type T_family string
@@ -318,11 +319,12 @@ func (c T_nsName) str() string {
 type T_famNs map[T_family]map[T_clName][]T_nsName
 
 type T_flagOut struct {
-	Is    bool
-	Istag bool
-	Image bool
-	Used  bool
-	All   bool
+	Is     bool
+	Istag  bool
+	Image  bool
+	Used   bool
+	UnUsed bool
+	All    bool
 }
 type T_flagFilt struct {
 	Isname    T_isName

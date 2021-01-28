@@ -47,7 +47,7 @@ DESCRIPTION
 
   - Generate reports about imagestreamtags, imagestreams and images. 
 		The content of the report can be defined by the mandatory parameter 
-		'-output=[is|istag|image|used|all]'. 
+		'-output=[is|istag|image|used|unused|all]'. 
   
   - For used images it looks in all clusters and reports the istags used 
 	  by any deploymentconfig, job, cronjob or pod of all namespaces that 
@@ -196,6 +196,7 @@ func EvalFlags() {
 	istagPtr := flag.Bool("istag", false, "Report: collect and report data of of existing imageStreamTags in the cluster")
 	shaPtr := flag.Bool("image", false, "Report: collect and report data of existing Image's in the cluster")
 	usedPtr := flag.Bool("used", false, "Report: collect and report data of used imageStreamTags from all clusters")
+	unusedPtr := flag.Bool("unused", false, "Report: collect and report data of unused imageStreamTags from specified cluster")
 	allPtr := flag.Bool("all", false, "Report: collect and report data all imageStreams, imageStreamTags, Image's and used imageStreamTags")
 
 	// Output format of result data
@@ -247,11 +248,12 @@ func EvalFlags() {
 		TabGroup: bool(*tabgroupPtr) && !bool(*jsonPtr),
 
 		Output: T_flagOut{
-			Is:    *isPtr,
-			Istag: *istagPtr,
-			Image: *shaPtr,
-			Used:  *usedPtr,
-			All:   *allPtr,
+			Is:     *isPtr,
+			Istag:  *istagPtr,
+			Image:  *shaPtr,
+			Used:   *usedPtr,
+			UnUsed: *unusedPtr,
+			All:    *allPtr,
 		},
 		Filter: T_flagFilt{
 			Isname:    T_isName(string(*isnamePtr)),
@@ -301,7 +303,7 @@ func EvalFlags() {
 		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
 	}
 
-	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *deletePtr) {
+	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
 		exitWithError("As least one of the output flags must set")
 	}
 }
@@ -328,4 +330,12 @@ func FilterAllIstags(result *T_completeResults) {
 			result.UsedIstags = T_usedIstagsResult{}
 		}
 	}
+}
+
+func FilterUnusedIstags(result *T_completeResults) {
+	istags := result.AllIstags[CmdParams.Cluster].Istag
+	for x := range istags {
+		LogMsg(x)
+	}
+
 }
