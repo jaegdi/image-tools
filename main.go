@@ -75,13 +75,13 @@ func main() {
 	resultFamilies[CmdParams.Family] = result
 	if !CmdParams.Delete {
 		switch {
-		case (CmdParams.Json && !CmdParams.Delete):
+		case CmdParams.Json:
 			fmt.Println(GetJsonFromMap(resultFamilies))
-		case (CmdParams.Yaml && !CmdParams.Delete):
+		case CmdParams.Yaml:
 			fmt.Println(GetYamlFromMap(resultFamilies))
-		case (CmdParams.Csv && !CmdParams.Delete):
+		case CmdParams.Csv:
 			GetCsvFromMap(result, CmdParams.Family)
-		case ((CmdParams.Table || CmdParams.TabGroup) && !CmdParams.Delete):
+		case (CmdParams.Table || CmdParams.TabGroup):
 			GetTableFromMap(result, CmdParams.Family)
 		}
 	} else {
