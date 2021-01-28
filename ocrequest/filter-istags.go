@@ -105,3 +105,27 @@ func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_famil
 	}
 	printShellCmds(result)
 }
+
+func FilterAllIstags(result *T_completeResults) {
+	outputflags := CmdParams.Output
+	if !outputflags.All {
+		for _, cluster := range Clusters.Stages {
+			x := result.AllIstags[cluster]
+			if !CmdParams.Delete {
+				if !outputflags.Is {
+					x.Is = T_resIs{}
+				}
+				if !outputflags.Istag {
+					x.Istag = T_resIstag{}
+				}
+				if !outputflags.Image {
+					x.Image = T_resSha{}
+				}
+				result.AllIstags[cluster] = x
+			}
+		}
+		if !outputflags.Used && !CmdParams.Delete {
+			result.UsedIstags = T_usedIstagsResult{}
+		}
+	}
+}
