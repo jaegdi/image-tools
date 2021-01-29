@@ -33,6 +33,7 @@ func GetAllImagesOfCluster(cluster T_clName) T_ImagesMap {
 	return result
 }
 
+// InitAllImages switches between multithreading and sequencial execution depending on the variable Multiproc
 func InitAllImages(c chan string) {
 	if Multiproc {
 		ImagesMap = goGetExistingImagesInAllClusters()

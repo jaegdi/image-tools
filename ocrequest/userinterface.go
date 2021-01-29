@@ -8,6 +8,7 @@ import (
 
 var CmdParams T_flags
 
+// cmdUsage print the man page
 func cmdUsage() {
 	usageText := `
 

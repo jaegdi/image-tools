@@ -110,6 +110,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	return []byte(body)
 }
 
+// checkCache checks if the cache file exists and is not older than 1 minute
 func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string, name string) (string, bool) {
 	filename := tmpdir + "/" + "cache_" + string(cluster) + "_" + string(namespace) + "_" + typ + "_" + name + ".tmp"
 	//  dir not exist
@@ -134,6 +135,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 	return filename, true
 }
 
+// writeCache writes the connntent to the cache file
 func writeCache(tmpdir string, filename string, content []byte) {
 	err := ioutil.WriteFile(filename, content, 0644)
 	if err != nil {
@@ -141,6 +143,7 @@ func writeCache(tmpdir string, filename string, content []byte) {
 	}
 }
 
+// readCache read from the cache file
 func readCache(filename string) []byte {
 	content, _ := ioutil.ReadFile(filename)
 	return content

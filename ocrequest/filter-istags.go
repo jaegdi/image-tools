@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
 	return ((CmdParams.Filter.Isname == "" || (CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname)) &&
 		(CmdParams.Filter.Tagname == "" || (CmdParams.Filter.Tagname != "" && tag == CmdParams.Filter.Tagname)) &&
@@ -14,6 +15,7 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 		(CmdParams.Filter.Namespace == "" || (CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace)))
 }
 
+// logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
 	LogDebug("logUsedIstags::", "#### Istag:", istag, "is used.")
 	for _, istagdetails := range usedIstags {
@@ -26,18 +28,24 @@ func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T
 	}
 }
 
-func printShellCmds(result map[string]string) {
-	keys := make([]string, 0, len(result))
-	LogDebug("printShellCmds::", "printShellCmds", result)
-	for key := range result {
+// printShellCmds prints a map of shell commands sorted by the map key
+func printShellCmds(commands map[string]string) {
+	keys := make([]string, 0, len(commands))
+	LogDebug("printShellCmds::", "printShellCmds", commands)
+	for key := range commands {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	for _, key := range keys {
-		fmt.Print(result[key])
+		fmt.Print(commands[key])
 	}
 }
 
+// FilterIstagsToDelete generate shell commands to delete istags, when they fit the conditions
+// The conditions are:
+// - the tag must fit the tagPatetern
+// - the must be older or equal then the given minAge
+// - the istag must not be used in any of the clusters by any of: dc, pod, job, cronjob or deamonset
 func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, cluster T_clName, tagPattern string, minAge int, cause string) {
 	result := map[string]string{}
 	tagPatternRegexp := regexp.MustCompile(tagPattern)
@@ -68,6 +76,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 	printShellCmds(result)
 }
 
+// FilterNonbuildIstagsToDelete filters out all istags, when there is no build-tag on the same inage
 func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_family, cluster T_clName, minAge int) {
 	result := map[string]string{}
 	buildPatternRegexp := regexp.MustCompile("^.*?:.*?[A-Za-z]")
@@ -106,6 +115,7 @@ func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_famil
 	printShellCmds(result)
 }
 
+// FilterAllIstags remove all parts from the complete result, they are not specified for output in the CmdParams.Output flags
 func FilterAllIstags(result *T_completeResults) {
 	outputflags := CmdParams.Output
 	if !outputflags.All {
@@ -130,6 +140,7 @@ func FilterAllIstags(result *T_completeResults) {
 	}
 }
 
+// FilterUnusedIstags find all istags, that are exists in the defined cluster but not used in the defined cluster
 func FilterUnusedIstags(result *T_completeResults) {
 	istags := result.AllIstags[CmdParams.Cluster].Istag
 	used := result.UsedIstags

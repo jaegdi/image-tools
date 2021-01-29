@@ -337,12 +337,14 @@ type T_IsNamesForFamily map[T_family]map[T_isName]bool
 
 type T_clName string
 
+// str convert T_clName to string
 func (c T_clName) str() string {
 	return string(c)
 }
 
 type T_nsName string
 
+// str convert T_nsName to string
 func (c T_nsName) str() string {
 	return string(c)
 }
@@ -421,6 +423,7 @@ type T_csvLine []string
 
 type T_csvDoc []T_csvLine
 
+// csvDoc converts a T_csvDoc to csv and print it out or if CmdParams.CsvFile is defined it writes the csv to this file
 func (c T_csvDoc) csvDoc(typ string) {
 	out := [][]string{}
 	for _, l := range c {

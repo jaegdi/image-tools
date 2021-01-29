@@ -26,6 +26,7 @@ func setClusterToken(cluster T_clName, token string) {
 	}
 }
 
+// ocGetToken tries to get the oc token from config, if it is not defined in config, it requests it from command line parameter
 func ocGetToken(cluster T_clName) string {
 	LogDebug("Try to get cluster token for cluster:", cluster)
 	token := getClusterToken(cluster)
@@ -56,6 +57,7 @@ func ocGetToken(cluster T_clName) string {
 	}
 }
 
+// ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
 	LogDebug("Try to login: ", app, Clusters.Config[cluster].Name)
@@ -75,6 +77,7 @@ func ocLogin(cluster T_clName) (string, error) {
 	}
 }
 
+// saveTokens save the login token in the config file
 func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	js, err := json.MarshalIndent(clusterconfig, "", "    ")
 	if err != nil {
@@ -87,6 +90,7 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	}
 }
 
+// readTokens reads the token from the config file
 func readTokens(filename string) error {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {

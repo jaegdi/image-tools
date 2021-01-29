@@ -16,6 +16,7 @@ var (
 	regexValidNamespace *regexp.Regexp
 )
 
+// Init is the intialization routine
 func Init() {
 
 	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
