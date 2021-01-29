@@ -16,7 +16,7 @@ import (
 type T_completeResults struct {
 	AllIstags    T_ResultExistingIstagsOverAllClusters
 	UsedIstags   T_usedIstagsResult
-	UnUsedIstags T_result
+	UnUsedIstags T_unUsedIstagsResult
 }
 
 type T_family string
@@ -295,8 +295,40 @@ func (c T_usedIstag) Names() interface{} {
 	return l
 }
 
+type T_unUsedIstag struct {
+	Cluster T_clName
+}
+
+func (c T_unUsedIstag) Values() interface{} {
+	l := []interface{}{}
+	v := reflect.ValueOf(c)
+	typeOfS := v.Type()
+	for i := 0; i < v.NumField(); i++ {
+		switch typeOfS.Field(i).Name {
+		case "AgeInDays":
+			s := fmt.Sprintf("%5d", int(v.Field(i).Int()))
+			l = append(l, s)
+		default:
+			l = append(l, v.Field(i).String())
+		}
+	}
+	return l
+}
+
+func (c T_unUsedIstag) Names() interface{} {
+	l := []interface{}{}
+	v := reflect.ValueOf(c)
+	typeOfS := v.Type()
+	for i := 0; i < v.NumField(); i++ {
+		l = append(l, typeOfS.Field(i).Name)
+	}
+	return l
+}
+
 // usedIstagsResult[Is][Tag]T_usedIstag
 type T_usedIstagsResult map[T_isName]map[T_tagName][]T_usedIstag
+
+type T_unUsedIstagsResult map[T_istagName]T_unUsedIstag
 
 // IsNamesForFamily[family][is]true
 type T_IsNamesForFamily map[T_family]map[T_isName]bool

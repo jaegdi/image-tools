@@ -132,8 +132,15 @@ func FilterAllIstags(result *T_completeResults) {
 
 func FilterUnusedIstags(result *T_completeResults) {
 	istags := result.AllIstags[CmdParams.Cluster].Istag
+	used := result.UsedIstags
+	result.UnUsedIstags = T_unUsedIstagsResult{}
 	for x := range istags {
-		fmt.Println(x)
+		_, _, is, tag, _ := GetIsAndTag(x.str())
+		if used[is][tag] == nil {
+			// fmt.Println("unused", x)
+			u := T_unUsedIstag{}
+			u.Cluster = CmdParams.Cluster
+			result.UnUsedIstags[x] = u
+		}
 	}
-
 }

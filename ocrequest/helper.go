@@ -223,6 +223,19 @@ func GetCsvFromMap(list interface{}, family T_family) {
 		}
 		output.csvDoc("used-istags")
 	}
+	if CmdParams.Output.UnUsed || CmdParams.Output.All {
+		output := T_csvDoc{}
+		headline := T_csvLine{"unusedImagestreamtag"}
+		headline = append(headline, toArrayString(T_unUsedIstag{}.Names())...)
+		output = append(output, headline)
+		for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
+			line := T_csvLine{}
+			line = append(line, istag.str())
+			line = append(line, toArrayString(istagMap.Values())...)
+			output = append(output, line)
+		}
+		output.csvDoc("unused-istags")
+	}
 }
 
 // GetTableFromMap generate ASCII table output from map
@@ -292,7 +305,7 @@ func GetTableFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Used || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"} //, "UsedInNamespace", "Image", "UsedInCluster"}
+		headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"}
 		headline = append(headline, toTableRow(T_usedIstag{}.Names())...)
 		output = append(output, headline)
 		for is, isMap := range list.(T_completeResults).UsedIstags {
@@ -307,6 +320,19 @@ func GetTableFromMap(list interface{}, family T_family) {
 					output = append(output, line)
 				}
 			}
+		}
+		tablePrettyprint(output)
+	}
+	if CmdParams.Output.UnUsed || CmdParams.Output.All {
+		output := []table.Row{}
+		headline := table.Row{"unused Imagestreamtag"}
+		headline = append(headline, toTableRow(T_unUsedIstag{}.Names())...)
+		output = append(output, headline)
+		for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
+			line := table.Row{}
+			line = append(line, istag)
+			line = append(line, toTableRow(istagMap.Values())...)
+			output = append(output, line)
 		}
 		tablePrettyprint(output)
 	}

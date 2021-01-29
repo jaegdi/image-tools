@@ -36,37 +36,75 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_family) []T_nsName {
 	return namespaceList
 }
 
-// getIstagFromContainer get the image url from each container and extract the imagestream and the istag or image, whichever is defined.
-func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []interface{}, results T_usedIstagsResult) T_usedIstagsResult {
+func GetIsAndTag(imagestr string) (T_shaName, T_istagName, T_isName, T_tagName, T_nsName) {
 	var is T_isName
 	var tag T_tagName
+	var image T_shaName
+	imageParts := strings.Split(imagestr, "/")
+	var fromNamespace T_nsName
+	// fmt.Println("image:", imagestr)
+	if len(imageParts) < 2 {
+		// it seems, that the image comes from sattelite
+		imageParts = strings.Split(imagestr, "_")
+		if len(imageParts) < 2 {
+			fromNamespace = ""
+		} else {
+			fromNamespace = T_nsName("Sattelite_" + T_nsName(imageParts[len(imageParts)-2]))
+		}
+	} else {
+		fromNamespace = T_nsName(imageParts[len(imageParts)-2])
+	}
+	istag := T_istagName(imageParts[len(imageParts)-1])
+	istagParts := strings.Split(istag.str(), "@")
+	if len(istagParts) < 2 {
+		istagParts = strings.Split(istag.str(), ":")
+		image = ""
+	} else {
+		image = T_shaName(istagParts[len(istagParts)-1])
+	}
+	if len(istagParts) < 2 {
+		is = T_isName(istagParts[len(istagParts)-1])
+		tag = T_tagName("")
+	} else {
+		is = T_isName(istagParts[len(istagParts)-2])
+		tag = T_tagName(istagParts[len(istagParts)-1])
+	}
+	return image, istag, is, tag, fromNamespace
+}
+
+// getIstagFromContainer get the image url from each container and extract the imagestream and the istag or image, whichever is defined.
+func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []interface{}, results T_usedIstagsResult) T_usedIstagsResult {
+	// var is T_isName
+	// var tag T_tagName
 	// var image string
 	for _, container := range containers {
 		image := T_shaName(container.(map[string]interface{})["image"].(string))
-		imageParts := strings.Split(image.str(), "/")
-		var fromNamespace T_nsName
-		if len(imageParts) < 2 {
-			// it seems, that the image comes from sattelite
-			imageParts = strings.Split(image.str(), "_")
-			fromNamespace = T_nsName("Sattelite_" + T_nsName(imageParts[len(imageParts)-2]))
-		} else {
-			fromNamespace = T_nsName(imageParts[len(imageParts)-2])
-		}
-		istag := T_istagName(imageParts[len(imageParts)-1])
-		istagParts := strings.Split(istag.str(), "@")
-		if len(istagParts) < 2 {
-			istagParts = strings.Split(istag.str(), ":")
-			image = ""
-		} else {
-			image = T_shaName(istagParts[len(istagParts)-1])
-		}
-		if len(istagParts) < 2 {
-			is = T_isName(istagParts[len(istagParts)-1])
-			tag = T_tagName("")
-		} else {
-			is = T_isName(istagParts[len(istagParts)-2])
-			tag = T_tagName(istagParts[len(istagParts)-1])
-		}
+		// imageParts := strings.Split(image.str(), "/")
+		// var fromNamespace T_nsName
+		// if len(imageParts) < 2 {
+		// 	// it seems, that the image comes from sattelite
+		// 	imageParts = strings.Split(image.str(), "_")
+		// 	fromNamespace = T_nsName("Sattelite_" + T_nsName(imageParts[len(imageParts)-2]))
+		// } else {
+		// 	fromNamespace = T_nsName(imageParts[len(imageParts)-2])
+		// }
+		// istag := T_istagName(imageParts[len(imageParts)-1])
+		// istagParts := strings.Split(istag.str(), "@")
+		// if len(istagParts) < 2 {
+		// 	istagParts = strings.Split(istag.str(), ":")
+		// 	image = ""
+		// } else {
+		// 	image = T_shaName(istagParts[len(istagParts)-1])
+		// }
+		// if len(istagParts) < 2 {
+		// 	is = T_isName(istagParts[len(istagParts)-1])
+		// 	tag = T_tagName("")
+		// } else {
+		// 	is = T_isName(istagParts[len(istagParts)-2])
+		// 	tag = T_tagName(istagParts[len(istagParts)-1])
+		// }
+		image, istag, is, tag, fromNamespace := GetIsAndTag(string(image))
+		// fmt.Println(image, istag, is, tag, fromNamespace)
 		if CmdParams.Filter.Isname != "" && is != CmdParams.Filter.Isname {
 			continue
 		}
