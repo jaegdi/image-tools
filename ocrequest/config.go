@@ -1,6 +1,6 @@
 package ocrequest
 
-var FamilyNamespaces = T_famNs{
+var FamilyNamespaces3 = T_famNs{
 	"pkp": map[T_clName][]T_nsName{
 		"cid": {"ms-jenkins", "openshift", "images-pkp"},
 		"int": {"images-pkp"},
@@ -43,14 +43,32 @@ var FamilyNamespaces = T_famNs{
 		"vpt": {"vptest-fpc"},
 		"pro": {"fpc", "vptest-fpc"},
 	},
+	"base": map[T_clName][]T_nsName{
+		"cid":  {"scpas-jenkins"},
+		"int":  {},
+		"ppr":  {},
+		"vpt":  {},
+		"pro":  {},
+		"cid4": {"scpas-jenkins"},
+	},
 }
 
-var Clusters = T_ClusterConfig{
+var FamilyNamespaces4 = T_famNs{
+	"base": map[T_clName][]T_nsName{
+		"cid": {"scpas-jenkins"},
+	},
+}
+
+var Clusters3 = T_ClusterConfig{
 	Config: map[T_clName]T_Cluster{
 		"cid": {
 			Name:  "cid-apc0",
 			Url:   "https://console.cid-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi16cTZ3ZyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJlMTJiNjI0Zi1kOTAwLTExZTgtODI5NS0wMDUwNTY5MDM3ZmIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.soU7K1s7wMSW63VLMrxMUMo2jZIOp8pbf11biz7RFmylpHdvPx72yETs2cBevncxfhcmJXOnWtiSBtaxpHsQwbsMLwy5vNR1Aoajy7uR-_TktWFhfQu6ak-fuoHOPZml5dL8WZJCR_wvkov40k1kNeBSRjH0aXd_YUECk8jOmn9kxHWmHjcTuhoF8_mH9UCU7fGWPMa0ahUrllZlttqf1ZQcmk4oLi4X2JGIHN6pG9hQV0nOqutmkxdbshiH4od-aKljh5sX1pcql5NK9FliwFYKYPfRB8QRh5SBftu_VxGbqfRdrjdxbKgZzoZk002o5S-PYegagxZZAqzu9wti2Q"},
+		"cid4": {
+			Name:  "cid-scp0",
+			Url:   "https://api.cid-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtfdXhBWnJqZW1MUU9BdXVLTXkzY3dKQmt4ejFCcERhLUsyRVJ0OGl0SjAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi00ZzQ2biIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4OGJlYjZiNy01YTFmLTRlMjAtODE0YS1lNmMzNTllMzEyMTAiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.nyeBuoUJdftgU3V8KkBj4k7-e_OyiDTiNmIRYiNym4JVTxdMit_BqPgmpWofCz9u84voyuLvaxW3dXqA7AGy23QRQ56MUPVC9ZN8eKxE_QCmZh52T3DIzi2y5d12Gyn-AKV5W6pUBOv54kolg_ZP1s1aQ7xuwt9W9Tf8_VCX4zCejzH7Q-qGpqj5qZ_DlmKEtDh0whbjtWS7DJrNs3fWiWuv7fQ9DhZvxnKiIqcKM8GsHFm26ub3Bv5wMldBJvcByCsJZIvgt9ldQUGSyQ6M9YhCBL_RjMm__htssgrY044iM9qq95aMBUAD2CGwF-o2YVDycO4HHER3pIJlDDoPXA"},
 		"int": {
 			Name:  "int-apc0",
 			Url:   "https://console.int-apc0.sf-rz.de:8443",
@@ -68,11 +86,28 @@ var Clusters = T_ClusterConfig{
 			Url:   "https://console.pro-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi16N3NrdyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI3ZWY0YjE4OC0zNDM2LTExZTktOTIzZC0wMDUwNTY4MjA2Y2UiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.PX5Ghkmc4CgsvQgXuuIBBS95W0tE0YsRuCbymp4eVUBo4l1woEkKcds7yghx9PwcLHNMWWVki1DUUw-TbsWJY5MrnNwWCGwxTixeh3HSv3RBNAOkGUX4JPt6Bs0jEL_sELccLq9df6pZTQyDjidoSFnT4rid7R-7NyoRjlm0PhZRXEKxlGDt2eZNT0OJGl7btWqh1I_R7MTeuvya-KGSaMtNOlgpvLeyfH2UAvSY6INCu9ca88CBNWScpvZ_X6uxF75bLVGb1UJurPMbrG0isWge6kVnCaCpX_bSmlr8nyo7N6L1feGEgZZpwquTugbwfte8fLvbBgWCB9d8pt-ZhA"},
 	},
-	Stages:     []T_clName{"cid", "int", "ppr", "pro"},
+	Stages:     []T_clName{"cid", "int", "ppr", "pro", "cid4"},
 	Buildstage: "cid",
 	Teststages: []T_clName{"int", "ppr", "vpt"},
 	Prodstage:  "pro",
 }
+
+var Clusters4 = T_ClusterConfig{
+	Config: map[T_clName]T_Cluster{
+		"cid": {
+			Name:  "cid-scp0",
+			Url:   "https://api.cid-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtfdXhBWnJqZW1MUU9BdXVLTXkzY3dKQmt4ejFCcERhLUsyRVJ0OGl0SjAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi00ZzQ2biIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4OGJlYjZiNy01YTFmLTRlMjAtODE0YS1lNmMzNTllMzEyMTAiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.nyeBuoUJdftgU3V8KkBj4k7-e_OyiDTiNmIRYiNym4JVTxdMit_BqPgmpWofCz9u84voyuLvaxW3dXqA7AGy23QRQ56MUPVC9ZN8eKxE_QCmZh52T3DIzi2y5d12Gyn-AKV5W6pUBOv54kolg_ZP1s1aQ7xuwt9W9Tf8_VCX4zCejzH7Q-qGpqj5qZ_DlmKEtDh0whbjtWS7DJrNs3fWiWuv7fQ9DhZvxnKiIqcKM8GsHFm26ub3Bv5wMldBJvcByCsJZIvgt9ldQUGSyQ6M9YhCBL_RjMm__htssgrY044iM9qq95aMBUAD2CGwF-o2YVDycO4HHER3pIJlDDoPXA"},
+	},
+	Stages:     []T_clName{"cid"},
+	Buildstage: "cid",
+	Teststages: []T_clName{},
+	Prodstage:  "",
+}
+
+var FamilyNamespaces = FamilyNamespaces3
+
+var Clusters = Clusters3
 
 var OcClient bool
 

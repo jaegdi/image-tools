@@ -352,6 +352,18 @@ func (c T_nsName) str() string {
 //               family     cluster  namespaces
 type T_famNs map[T_family]map[T_clName][]T_nsName
 
+func (c T_famNs) familyList() []string {
+	families := []string{}
+	for fam := range c {
+		families = append(families, string(fam))
+	}
+	return families
+}
+
+func (c T_famNs) familyListStr() string {
+	return strings.Join(c.familyList(), `, `)
+}
+
 type T_flagOut struct {
 	Is     bool
 	Istag  bool
@@ -417,6 +429,19 @@ type T_ClusterConfig struct {
 	Buildstage T_clName
 	Teststages []T_clName
 	Prodstage  T_clName
+}
+
+func (c T_ClusterConfig) clusterList() []string {
+	clusters := []string{}
+	for _, fam := range c.Stages {
+		clusters = append(clusters, string(fam))
+	}
+	return clusters
+}
+
+func (c T_ClusterConfig) clusterListStr() string {
+	return strings.Join(c.clusterList(), `, `)
+
 }
 
 type T_csvLine []string

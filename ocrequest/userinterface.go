@@ -14,57 +14,57 @@ func cmdUsage() {
 
 DESCRIPTION
 
-  image-tools 
-        - generate reports about images, imagestream(is), imagestreamtags(istag) 
+  image-tools
+        - generate reports about images, imagestream(is), imagestreamtags(istag)
 		  with information like AgeInDays, Date, Namespace, Buildtags,..
           for a application family (eg. pkp, fpc, aps, ssp)
         or
         - generate shellscript output to delete istags when parameter -delete is set.
           The -delete parameter disables the report output, instead the delete script is generated as output
-	
+
 	image-tools only read information around images from the clusters and generate output. It never change or
-	delete something in the clusters. Eg. for delete istags it only generates a script output, which than can 
+	delete something in the clusters. Eg. for delete istags it only generates a script output, which than can
 	be executed by a cluster admin to really delete the istags.
 
 	image-tools always write a log to 'image-tools.log' in the current directory.
 	Additional it writes the log messages also to STDERR. To disable the log output to STDERR use parameter -nolog
 	The report or delete-script output is written to STDOUT.
 
-  - For reporting existing Images and delete istags it operates cluster and family specific. 
+  - For reporting existing Images and delete istags it operates cluster and family specific.
     For reporting used images it works over all clusters but family specific.
     It never works across different families.
 
-  	For existing images, istags or imagestreams(is) that means it works for one cluster like 
-        'cid, int, ppr, vpt or pro' 
+  	For existing images, istags or imagestreams(is) that means it works for one cluster like
+        'cid, int, ppr, vpt or pro'
 
-	and for one families like 
+	and for one families like
 		'pkp, sps, fpc, aps, ...'
 
-	The cluster must be defined by the mandatory parameter 
+	The cluster must be defined by the mandatory parameter
 		'-cluster=[cid|int|ppr|vpt|pro]'
 
-	The family must be defined by the mandatory parameter 
+	The family must be defined by the mandatory parameter
 		'-family=[aps|fpc|pkp|ssp]
 
-  - Generate reports about imagestreamtags, imagestreams and images. 
-		The content of the report can be defined by the mandatory parameter 
-		'-output=[is|istag|image|used|unused|all]'. 
-  
-  - For used images it looks in all clusters and reports the istags used 
-	  by any deploymentconfig, job, cronjob or pod of all namespaces that 
+  - Generate reports about imagestreamtags, imagestreams and images.
+		The content of the report can be defined by the mandatory parameter
+		'-output=[is|istag|image|used|unused|all]'.
+
+  - For used images it looks in all clusters and reports the istags used
+	  by any deploymentconfig, job, cronjob or pod of all namespaces that
 	  belong to the application family.
 
-  - Variable output format: json(default), yaml, csv, csvfile, table and tabgroup 
-	  (table with grouped rows for identical content). 
+  - Variable output format: json(default), yaml, csv, csvfile, table and tabgroup
+	  (table with grouped rows for identical content).
 	  Output as table or tabgroup is automatically piped into less (or what is defined as PAGER)
 
-  - filter data for reports. 
-  	By specifying one of the parameters 
+  - filter data for reports.
+  	By specifying one of the parameters
   		-isname=..., -istagname=..., tagname=... or -shaname=...
   	the report is filtered.
 
   - delete istags based on filters
-	  The idea is to delete istags by filterpatterns like 
+	  The idea is to delete istags by filterpatterns like
 	  'older than n days' and/or 'istag name like pattern'
 	  The image tool didn't delete the istags directly instead
 	  it generate a shell-script that can be executed by a cluster admin
@@ -84,14 +84,14 @@ DESCRIPTION
 	  can also be used to filter istags to delete them.
 	  See examples in the EXAMPLES section
 
-	For this reports the data is collected from the openshift cluster defined by 
-	the mandatory parameters 
-	     '-cluster=...' and the 
+	For this reports the data is collected from the openshift cluster defined by
+	the mandatory parameters
+	     '-cluster=...' and the
 	     'family=...'
 	For type '-used' (also included in type '-all') the data is collected
 	from all clusters.
 
-	For more speed a cache is build from the first run in  /tmp/tmp-report-istags/* 
+	For more speed a cache is build from the first run in  /tmp/tmp-report-istags/*
 	and used if not older than 5 minutes. If the cache is older or deleted, the
 	data is fresh collected from the clusters.
 
@@ -108,17 +108,17 @@ EXAMPLES
 	(which is the default output format)
 
 		image-tools -cluster=cid -family=pkp -all
-	
+
 		or as table
 		image-tools -cluster=cid -family=pkp -all -table
-	
+
 		or csv in different files for each type of information
 		image-tools -cluster=cid -family=pkp -all -csvfile=prefix
 		writes the output to different files 'prefix-type' in current directory
-		
-	Report only __used__ istags for family pkp as pretty printed table 
-	(the output is paginated to fit your screen size and piped to 
-		the pager define in the environment variable $PAGER/%PAGER%. 
+
+	Report only __used__ istags for family pkp as pretty printed table
+	(the output is paginated to fit your screen size and piped to
+		the pager define in the environment variable $PAGER/%PAGER%.
 		If $PAGER is not set, it try to use 'more')
 
 		image-tools -cluster=cid -family=pkp -used -table
@@ -128,7 +128,7 @@ EXAMPLES
 		image-tools -cluster=cid -family=pkp -used -yaml
 		or csv
 		image-tools -cluster=cid -family=pkp -used -csv
-		
+
 	Report istags for family aps in cluster int as yaml report
 
 		image-tools -cluster=int -family=aps -istag -yaml
@@ -151,17 +151,17 @@ EXAMPLES
 	To use the script output to really delete the istags, you can use the following line:
 
 		image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
-		
+
 	To only generate a script to delete old snapshot istags:
-	
+
 		image-tools -family=pkp -cluster=cid -delete -snapshot
 
 	To delete all not used images of family 'aps' in cluster cid
-	
+
 	    image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
 
 	To delete all hybris istags of family pkp older than 45 days
-	
+
 		image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
 
 CONNECTION
@@ -170,7 +170,7 @@ CONNECTION
 	there is the option to disable the use of proxy with the
 	parameter '-noproxy'.
 
-	Or if a socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish 
+	Or if a socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
 	a socks tunnel over the sprungserver and give the
 	parameter '-socks5=ip:port' to the image-tools program.
 -----------------------------------------------------------------------------------------------------
@@ -187,8 +187,8 @@ CONNECTION
 func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags
-	familyPtr := flag.String("family", "", "Mandatory: family name, eg. pkp, aps, ssp or fpc ")
-	clusterPtr := flag.String("cluster", "", "Mandatory: shortname of cluster, eg. cid,int, ppr or pro")
+	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
+	clusterPtr := flag.String("cluster", "", "Mandatory: shortname of cluster, eg.: "+Clusters.clusterListStr())
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 

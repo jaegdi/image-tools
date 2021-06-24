@@ -72,6 +72,7 @@ func InitIsNamesForFamily(family T_family) {
 // and return the result map
 func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_nsName) T_result {
 	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
+	LogMsg("istagJson:", istagsJson)
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
 		LogError("unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
@@ -81,7 +82,10 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	resultSha := make(T_resSha)
 	resultIstream := make(T_resIs)
 
-	itemsMap := istagsMap["items"].([]interface{})
+	var itemsMap []interface{}
+	if istagsMap["items"] != nil {
+		itemsMap = istagsMap["items"].([]interface{})
+	}
 	shaNames := make(T_shaNames)
 	shaStreams := make(T_shaStreams)
 	var metadata map[string]interface{}

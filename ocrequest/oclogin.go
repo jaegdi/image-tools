@@ -42,7 +42,7 @@ func ocGetToken(cluster T_clName) string {
 				fmt.Println("------- as an alternative you can do the following steps to work -------")
 				fmt.Println("Fill in the tokens in the generated clusterconfig.json file and try again")
 				fmt.Println("-- HowTo:")
-				fmt.Println("-- To get your login tokens, exec 'oc login -u <your ldap user> https://console.cid-apc0.sf-rz.de:8443'")
+				fmt.Println("-- To get your login tokens, exec 'oc login -u <your ldap user> https://console.<cluster-name>.sf-rz.de:8443'")
 				fmt.Println("-- Then execute 'oc whoami -t' and put the token in the clusterconfig.json file.")
 				fmt.Println("-- Repeat this for all clusters(int, ppr, pro) and put the pro token also to vpt.")
 				fmt.Println("Then try again to exec this application.")
