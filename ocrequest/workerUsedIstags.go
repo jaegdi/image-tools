@@ -69,7 +69,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 		jobResultsUsedIstags = make(chan ResultUsedIstags, channelsizeUsedIstags)
 
 		LogMsg("Allocate and start JobsUsedIstags")
-		go allocateUsedIstags(Clusters.Stages, allClusterFamilyNamespaces)
+		go allocateUsedIstags(FamilyNamespaces[family].Stages, allClusterFamilyNamespaces)
 
 		LogMsg("Create Worker Pool")
 		createWorkerPool(noOfWorkersUsedIstags)
@@ -101,7 +101,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 		}
 
 	} else {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[family].Stages {
 			namespaces := GetAppNamespacesForFamily(cluster, family)
 			for _, namespace := range namespaces {
 				if namespace == CmdParams.Filter.Namespace {

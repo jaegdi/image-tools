@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 var CmdParams T_flags
@@ -188,7 +189,7 @@ func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: shortname of cluster, eg.: "+Clusters.clusterListStr())
+	clusterPtr := flag.String("cluster", "", "Mandatory: shortname of cluster, eg.: "+FamilyNamespaces[T_family(*familyPtr)].clusterListStr())
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -225,6 +226,7 @@ func EvalFlags() {
 	deleteConfirmPtr := flag.Bool("confirm", false, "Delete: confirm delete, if not set, it run in dry run mode")
 
 	// Options
+	insecurePtr := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
 	ocClientPtr := flag.Bool("occlient", false, "TechOpt: use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "TechOpt: disable use of proxy for API http requests")
 	socks5ProxyPtr := flag.String("socks5", "", "TechOpt: set socks5 proxy url and use it for API calls")
@@ -272,6 +274,7 @@ func EvalFlags() {
 			Confirm:     *deleteConfirmPtr,
 		},
 		Options: T_flagOpts{
+			InsecureSSL: *insecurePtr,
 			OcClient:    *ocClientPtr,
 			NoProxy:     *noProxyPtr,
 			Socks5Proxy: *socks5ProxyPtr,
@@ -288,14 +291,23 @@ func EvalFlags() {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
 	if !flags.Output.Used && (flags.Cluster == "") {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid'. Is now: ", flags.Cluster)
+		exitWithError("a shortname for cluster must given like: '-cluster=cid-apc0'. Is now: ", flags.Cluster)
 	}
-	if FamilyNamespaces[flags.Family] == nil {
+	_, clusterDefined := Clusters.Config[flags.Cluster]
+	if !clusterDefined && !flags.Output.Used {
+		clusterlist := []string{}
+		for clname := range Clusters.Config {
+			clusterlist = append(clusterlist, string(clname))
+		}
+		clusters := strings.Join(clusterlist, ",")
+		exitWithError("The clustername given as -cluster= is not defined: Given: ", flags.Cluster, " valid names: ", clusters)
+	}
+	if FamilyNamespaces[flags.Family].ClusterNamespaces == nil {
 		exitWithError("Family", flags.Family, "is not defined")
 	}
 
 	foundNamespace := false
-	for _, v := range FamilyNamespaces[flags.Family][flags.Cluster] {
+	for _, v := range FamilyNamespaces[flags.Family].ClusterNamespaces[flags.Cluster] {
 		if flags.Filter.Namespace == v {
 			foundNamespace = true
 		}

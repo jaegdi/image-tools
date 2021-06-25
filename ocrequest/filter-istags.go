@@ -119,7 +119,7 @@ func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_famil
 func FilterAllIstags(result *T_completeResults) {
 	outputflags := CmdParams.Output
 	if !outputflags.All {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 			x := result.AllIstags[cluster]
 			if !CmdParams.Delete {
 				if !outputflags.Is {

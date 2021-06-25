@@ -349,8 +349,17 @@ func (c T_nsName) str() string {
 	return string(c)
 }
 
-//               family     cluster  namespaces
-type T_famNs map[T_family]map[T_clName][]T_nsName
+type T_familyKeys struct {
+	ClusterNamespaces map[T_clName][]T_nsName
+	Stages            []T_clName
+	Config            map[T_clName]T_Cluster `json:"Config.[],omitempty"`
+	Buildstage        T_clName
+	Teststages        []T_clName
+	Prodstage         T_clName
+}
+
+//               family   cl-ns          cluster   namespaces
+type T_famNs map[T_family]T_familyKeys
 
 func (c T_famNs) familyList() []string {
 	families := []string{}
@@ -390,6 +399,7 @@ type T_flagDeleteOpts struct {
 }
 
 type T_flagOpts struct {
+	InsecureSSL bool
 	OcClient    bool
 	NoProxy     bool
 	Socks5Proxy string
@@ -424,14 +434,10 @@ type T_Cluster struct {
 }
 
 type T_ClusterConfig struct {
-	Stages     []T_clName
-	Config     map[T_clName]T_Cluster `json:"Config.[],omitempty"`
-	Buildstage T_clName
-	Teststages []T_clName
-	Prodstage  T_clName
+	Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
 }
 
-func (c T_ClusterConfig) clusterList() []string {
+func (c T_familyKeys) clusterList() []string {
 	clusters := []string{}
 	for _, fam := range c.Stages {
 		clusters = append(clusters, string(fam))
@@ -439,7 +445,7 @@ func (c T_ClusterConfig) clusterList() []string {
 	return clusters
 }
 
-func (c T_ClusterConfig) clusterListStr() string {
+func (c T_familyKeys) clusterListStr() string {
 	return strings.Join(c.clusterList(), `, `)
 
 }

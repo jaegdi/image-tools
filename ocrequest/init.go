@@ -47,7 +47,7 @@ func Init() {
 	if len(Clusters.Config["cid"].Token) < 10 {
 		if err := readTokens("clusterconfig.json"); err != nil {
 			LogMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
-			for _, cluster := range Clusters.Stages {
+			for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 				ocGetToken(cluster)
 			}
 			saveTokens(Clusters, "clusterconfig.json")

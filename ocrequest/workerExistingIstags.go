@@ -51,7 +51,7 @@ func allocateExistingIstags(family T_family, clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobExistingIstags for cluster" + clusters[cl])
-		clusterFamNamespaces := FamilyNamespaces[family][clusters[cl]]
+		clusterFamNamespaces := FamilyNamespaces[family].ClusterNamespaces[clusters[cl]]
 		for i := 0; i < len(clusterFamNamespaces); i++ {
 			LogMsg("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
@@ -73,7 +73,7 @@ func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExisting
 		jobResultsExistingIstags = make(chan ResultExistingIstags, channelsizeExistingIstags)
 
 		LogMsg("Allocate and start JobsExistingIstags")
-		go allocateExistingIstags(family, Clusters.Stages)
+		go allocateExistingIstags(family, FamilyNamespaces[family].Stages)
 
 		LogMsg("Create Worker Pool")
 		createWorkerPoolForExistingIstags(noOfWorkersExistingIstags)
@@ -85,8 +85,8 @@ func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExisting
 		}
 
 	} else {
-		for _, cluster := range Clusters.Stages {
-			namespaces := FamilyNamespaces[family][cluster]
+		for _, cluster := range FamilyNamespaces[family].Stages {
+			namespaces := FamilyNamespaces[family].ClusterNamespaces[cluster]
 			for _, namespace := range namespaces {
 				r := T_ResultExistingIstagsOverAllClusters{
 					cluster: OcGetAllIstagsOfNamespace(T_result{}, cluster, namespace)}

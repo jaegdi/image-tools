@@ -38,7 +38,7 @@ func InitAllImages(c chan string) {
 	if Multiproc {
 		ImagesMap = goGetExistingImagesInAllClusters()
 	} else {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 			r := T_ImagesMapAllClusters{}
 			r[cluster] = GetAllImagesOfCluster(cluster)
 			MergoNestedMaps(&ImagesMap, r)

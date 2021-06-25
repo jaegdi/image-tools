@@ -36,11 +36,11 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName T_isName, 
 // InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
 func InitIsNamesForFamily(family T_family) {
-	cluster := Clusters.Buildstage
+	cluster := FamilyNamespaces[CmdParams.Family].Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
 	result[family] = make(map[T_isName]bool)
-	for _, ns := range FamilyNamespaces[family][cluster] {
+	for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
 		if ns == "openshift" {
 			continue
 		}
@@ -196,9 +196,9 @@ func GetAllIstagsForFamily(c chan T_ResultExistingIstagsOverAllClusters) {
 	if Multiproc {
 		result = goGetExistingIstagsForFamilyInAllClusters(family)
 	} else {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 			if namespace == "" {
-				for _, ns := range FamilyNamespaces[family][cluster] {
+				for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
 					r := T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, ns)}
 					MergoNestedMaps(&result, r)
 

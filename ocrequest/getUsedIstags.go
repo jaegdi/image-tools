@@ -236,7 +236,7 @@ func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 	if Multiproc {
 		result = goGetUsedIstagsForFamilyInAllClusters(CmdParams.Family)
 	} else {
-		clusters := Clusters.Stages
+		clusters := FamilyNamespaces[CmdParams.Family].Stages
 		for _, cluster := range clusters {
 			LogMsg("Get used istags in cluster:", cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
