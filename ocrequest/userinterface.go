@@ -312,7 +312,7 @@ func EvalFlags() {
 			foundNamespace = true
 		}
 	}
-	if !foundNamespace && !(flags.Filter.Namespace == "") {
+	if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
 		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
 	}
 

@@ -18,6 +18,10 @@ var Clusters = T_ClusterConfig{
 			Name:  "ppr-apc0",
 			Url:   "https://console.ppr-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1qMnJ4eCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjMDdkM2ZkNi0wNDRlLTExZTktYmJiYi0wMDUwNTZhMTkwNjQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.OHHuZp-90WOBCaXjwTCCbvxW87lSsaBaH7q59JSDLM5oSWmca_aUbA3J_2nB6ruOOrvEbbQayb-UMcGGXhiVUv27Cg9TVb9Gl3AZym1gk6DUhma2wB3IwI98RKhX3XMr2J7pfte00p1Za8jBcVx_vdYaxebDQImpyUOFaEC3MT4ueirRXLTNSOQLnMARTVpr5r3s0Z0W3g8MGre7MDMNOO4BcGyEC1X8O8XzObuekzSErjJ6zugQMjIYw7_YkPULYNTJLrGsd136TFfFNGEtXow2RuLynIU8_1Zatvs64zNRirgvplGwxg4f15cHp7yUFJ_q3krkUegRji5tZdOBJw"},
+		"ppr-scp0": {
+			Name:  "ppr-scp0",
+			Url:   "https://api.ppr-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6Il96OTVXZGVqbVJwRnBQT3ZlQVBGTE81cnZBYU03eHZXbEY3ZklYclltMU0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJvcGVuc2hpZnQtaW1hZ2UtcmVnaXN0cnkiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoicHJ1bmVyLXRva2VuLXhmejY4Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InBydW5lciIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjEyZDg5YWUyLWU1NWItNGIxZS04ZTY1LTA5ZjhlMDk4NGNlMCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVuc2hpZnQtaW1hZ2UtcmVnaXN0cnk6cHJ1bmVyIn0.gQjvuKYDKuqKrdPhRAx-j4gsipaLBs2M43It-9B9qJ27kjNVF7IeDSAzGcsc41yPMtostPqNt84CX2wTyQ94Afzw9lQgFlVmAWsAjAUlcLJTztFnXOkOkQ7wcNqrc-Dt8aYMYkXkk6kt6mHU-NcvrxESjlKXC0ALzLMMYeNZfTZ81B6k8UWE3DTcUGJ4XYdCvrBE-_My6QA7uleY2WoB_WzqNW6cdsiJgHLhf79V-LZDTjGSmmCvPF-EHoZ6nAmmaPyfxWShPQl857fo5GI81Rxk-YLQspyDll7HjBsOS2cNUjc9afs0K9hxoLdFbnSXBmTGEe653PVTcQ1nM2pRNA"},
 		"vpt-apc0": {
 			Name:  "pro-apc0",
 			Url:   "https://console.pro-apc0.sf-rz.de:8443",
@@ -109,6 +113,45 @@ var FamilyNamespaces = T_famNs{
 		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
 		Prodstage:  "pro-apc0",
 	},
+	"fpc_scp0": {
+		ClusterNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {},
+			"ppr-scp0": {"fpc-ppr"},
+			"vpt-scp0": {},
+			"pro-scp0": {},
+		},
+		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstage: "cid-scp0",
+		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstage:  "pro-scp0",
+	},
+	"hub": {
+		ClusterNamespaces: map[T_clName][]T_nsName{
+			"cid-apc0": {"images-hub", "hub-dev1", "hub-dev2"},
+			"int-apc0": {},
+			"ppr-apc0": {},
+			"vpt-apc0": {},
+			"pro-apc0": {},
+		},
+		Stages:     []T_clName{"cid-apc0", "int-apc0"},
+		Buildstage: "cid-apc0",
+		Teststages: []T_clName{"int-apc0"},
+		Prodstage:  "pro-apc0",
+	},
+	"hub-scp0": {
+		ClusterNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"images-hub", "hub-dev1", "hub-dev2"},
+			"ppr-scp0": {},
+			"vpt-scp0": {},
+			"pro-scp0": {},
+		},
+		// Stages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Stages:     []T_clName{"cid-scp0"},
+		Buildstage: "cid-scp0",
+		// Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Teststages: []T_clName{"cid-scp0"},
+		Prodstage:  "pro-scp0",
+	},
 	"base": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
 			"cid-apc0": {"scpas-jenkins"},
@@ -122,6 +165,18 @@ var FamilyNamespaces = T_famNs{
 		Buildstage: "cid-apc0",
 		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
 		Prodstage:  "pro-apc0",
+	},
+	"base_scp0": {
+		ClusterNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"scpas-jenkins", "scp-baseimages"},
+			"ppr-scp0": {},
+			"vpt-scp0": {},
+			"pro-scp0": {},
+		},
+		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstage: "cid-scp0",
+		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstage:  "pro-scp0",
 	},
 }
 

@@ -62,7 +62,7 @@ func main() {
 
 	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	LogDebug("Wait for filtered chanUsedIsTags")
+	LogDebug("Wait for filtered chanCompleteResults")
 	result = <-chanCompleteResults
 
 	if CmdParams.Output.UnUsed {
