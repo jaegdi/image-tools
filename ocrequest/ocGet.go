@@ -15,6 +15,7 @@ import (
 	"golang.org/x/net/proxy"
 )
 
+// Schufa Root CA
 var (
 	certs = `-----BEGIN CERTIFICATE-----
 MIIHNjCCBR6gAwIBAgIJAN58FKMMGU5JMA0GCSqGSIb3DQEBCwUAMIHCMQswCQYD
@@ -112,22 +113,24 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	case "images":
 		urlpath = "/apis/image.openshift.io/v1/"
 	case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
-		urlpath = "/oapi/v1/namespaces/" + namespace.str() + "/"
+		urlpath = "/oapi/v1/namespaces/" + namespace.str()
 	case "jobs":
-		urlpath = "/apis/batch/v1/namespaces/" + namespace.str() + "/"
+		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
 	case "cronjobs":
-		urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str() + "/"
+		urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
+	case "builds", "buildconfigs":
+		urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
 	case "namespaces":
 		urlpath = "/api/v1/namespaces"
 		typ = ""
 	default:
-		urlpath = "/api/v1/namespaces/"
+		urlpath = "/api/v1/namespaces"
 	}
 	switch {
 	case typ != "" && name != "":
-		url = Clusters.Config[cluster].Url + urlpath + typ + name
+		url = Clusters.Config[cluster].Url + urlpath + "/" + typ + "/" + name
 	case typ != "" && name == "":
-		url = Clusters.Config[cluster].Url + urlpath + typ
+		url = Clusters.Config[cluster].Url + urlpath + "/" + typ
 	default:
 		url = Clusters.Config[cluster].Url + urlpath
 	}

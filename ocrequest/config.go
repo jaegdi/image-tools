@@ -1,15 +1,28 @@
 package ocrequest
 
+//  The token is from sa image-pruner of namespace cluster-tasks
 var Clusters = T_ClusterConfig{
 	Config: map[T_clName]T_Cluster{
+		"cid-scp0": {
+			Name:  "cid-scp0",
+			Url:   "https://api.cid-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IkNTSzNlS2dnNDZhUFRadWlBN0Z6RHZ0QUN1MUhKdC1FUDk1cVB0dmRsU0kifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi12enFzMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI1YzMzNGMzMS01MWQyLTRlNDEtYjM3ZC05NzRmNWZiMWFlZjEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.bTY39499xJlZfB15_33Y5TDDIY6PxWzUnIzV9V-BzbbV3eIAGsWeFrezJtla7OQHkH6jIXShkX6un4h28fVbIcwnjvzs75WHg4XRypuj2ejPaD-Oe02A74nmCS0OPyC6fTDjs6eBnCjLTN-hVM9eAVYmQ42QO66uea1zXV9qW67nCKbm3Fha6JuPelkgPyTz5tPb0QJdJWmscNSA3WcTf5p323L82R_7rk1rMUtgYvcGQiX3wzw5d1srnAm-2IBLbXmP4X6cda6OBrSXwVQDQXgyE9hUA5WRM5n72W0asefdfv0LaOdnRh4R4umaINg5NbUFQ3AqiXo8p47g8gOpug"},
+		"ppr-scp0": {
+			Name:  "ppr-scp0",
+			Url:   "https://api.ppr-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IlNlNTQxeUdFVTcwNHFhVDd3UWEtOWdoSU02X1AzWElMZkhOWmU5Z2dRRjAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1ydG5obiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2N2FjZGI4NC1lMmZmLTQzMjgtOGFlMC1hNjdjZTgzOWYxYTkiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.SzlBaJwPqgvbfSPh80La8d2wcJatPu-Y0Q0wUjhYowS_fcGMtmwBVgvLM9zjZ89CWiS-Z--h9srWANyOb_TK5YwBokOM0Jr9hLgnPWgdH6AaD-mM0iQH05khV-w7zEwb_t226zTGln_YwL8-Dkr8jsO1uWNmx6kb2aW7ZhGuGXJz6ONuGFmMV8Dk78O3jTOVXbpE_rFMcvA29WWVeWk2Z0croNxI02h0FsRVZ8Um13WJs5R1kzf5iwlX2aSyRGqOOaSitkHIWowbG2HIlyWt-Nf_Q6Ws4X6Ua0r94xqqiQ6dyGmQVj6hb6-E5jxl4w-jyoxPGLCYRz8k3UyGyGqZ4dPyiWfRifEjPbo1gsDpfmMF8nYeRAFFHgL42oIsG0H3JQ3Gsdz2pRaMRwHtT_6pYlMyfVauDXnpD0Wr7_nPv1icZy2sttOBzygXwPwz6iwidglAM6CQEcuLNnmRev0sCM8KWGSFKGqff_qNdoLjSUfW2CqFfA_Wr4_EUSqGXyOuPQc0DCzjgMgKW8Eeiqu32-C_a4fmrnaYd_8ZaPwyp7DDshVNB3sBasAmr7RmcIb2Fg0hj0yjOi2ucoXZuUsEUm93DxQf_4bsMkwK4EGKWvKamqwye-pGu-dVGfWBeqcHZNFg7tpdjyGlpUIY0_lJJtNwiR3hFCNQI5oSURjzsd8"},
+		"vpt-scp0": {
+			Name:  "vpt-scp0",
+			Url:   "https://api.vpt-scp0.sf-rz.de:6443",
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6Ikl5eG9kREQtQlVIQTBMcjRDYm5pWnZ1bXlXTWExdjkxaEVyVEx1N20wMkUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1sOWNxYiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIwMTA2MTg0Ny0yNTA0LTRkNzMtYmE1ZC02NGMzZDczMjFhYjciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.eZNfnreIVd4f_6sF6yPLh1EIoGQzCLOjcLgYEjZHOvzmX1pi6DizzgFKMF_ca_gHxZ3pit8-v8nYnJwcwC-pcU5sDOo17e0v3MCshP7_A2LtOLL8vt_OkODL6USMx1zaST_6N7gDC0M3Xkc5FlyN8K9Vsrk-76xycbw0XqK7LTNqvcVHsijJCgQJaAwq8asrbnBMJRN-c9CI4Eot7bAYX1oKEB2H5LdzgkDU3pfzpHcjNs3R7YYARd5w1O-DgqkCillRxplVFx2_K92h1xX2bQdGwDyFDelaJisLvZYiaQeLXKoPalE1sJ4fnUl_eV8tXyQGgax9QDvm2OOVd46w7AbgYRiu5Um9U_ZQgTb3bSmXy1Gpusci0oll_EMQ0lR0qyU4DtAE78MxvSa3MdjrtnR-ZJDOs93NX-Og8DJhthml8edpKgP-Aiq2j1s-7Imttx_zeoMW6vTgdl1lL-LN7ypj5aTAVWUtuOF9fNE6VSf8LA0uhfi0EVk3dWoJ5dCSbkPXybn6t9nYbLu_Bpgsm-C21_sljh_gOH6XnyJcqgbkuswW-qDOHA3kXplufghQutnrW7jQO3zVyw-DQoJmApO6YsnfwewQB8UU4P7H_z87ubQaa_WxLO0pDbPuwudDolPpR2XZglKMvp_lK6K3tRyZl6ytUfc_LpLiQBReptw"},
+		"pro-scp0": {
+			Name:  "pro-scp0",
+			Url:   "https://api.pro-scp0.sf-rz.de:6443",
+			Token: ""},
 		"cid-apc0": {
 			Name:  "cid-apc0",
 			Url:   "https://console.cid-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi16cTZ3ZyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJlMTJiNjI0Zi1kOTAwLTExZTgtODI5NS0wMDUwNTY5MDM3ZmIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.soU7K1s7wMSW63VLMrxMUMo2jZIOp8pbf11biz7RFmylpHdvPx72yETs2cBevncxfhcmJXOnWtiSBtaxpHsQwbsMLwy5vNR1Aoajy7uR-_TktWFhfQu6ak-fuoHOPZml5dL8WZJCR_wvkov40k1kNeBSRjH0aXd_YUECk8jOmn9kxHWmHjcTuhoF8_mH9UCU7fGWPMa0ahUrllZlttqf1ZQcmk4oLi4X2JGIHN6pG9hQV0nOqutmkxdbshiH4od-aKljh5sX1pcql5NK9FliwFYKYPfRB8QRh5SBftu_VxGbqfRdrjdxbKgZzoZk002o5S-PYegagxZZAqzu9wti2Q"},
-		"cid-scp0": {
-			Name:  "cid-scp0",
-			Url:   "https://api.cid-scp0.sf-rz.de:6443",
-			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtfdXhBWnJqZW1MUU9BdXVLTXkzY3dKQmt4ejFCcERhLUsyRVJ0OGl0SjAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi00ZzQ2biIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4OGJlYjZiNy01YTFmLTRlMjAtODE0YS1lNmMzNTllMzEyMTAiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.nyeBuoUJdftgU3V8KkBj4k7-e_OyiDTiNmIRYiNym4JVTxdMit_BqPgmpWofCz9u84voyuLvaxW3dXqA7AGy23QRQ56MUPVC9ZN8eKxE_QCmZh52T3DIzi2y5d12Gyn-AKV5W6pUBOv54kolg_ZP1s1aQ7xuwt9W9Tf8_VCX4zCejzH7Q-qGpqj5qZ_DlmKEtDh0whbjtWS7DJrNs3fWiWuv7fQ9DhZvxnKiIqcKM8GsHFm26ub3Bv5wMldBJvcByCsJZIvgt9ldQUGSyQ6M9YhCBL_RjMm__htssgrY044iM9qq95aMBUAD2CGwF-o2YVDycO4HHER3pIJlDDoPXA"},
 		"int-apc0": {
 			Name:  "int-apc0",
 			Url:   "https://console.int-apc0.sf-rz.de:8443",
@@ -18,14 +31,10 @@ var Clusters = T_ClusterConfig{
 			Name:  "ppr-apc0",
 			Url:   "https://console.ppr-apc0.sf-rz.de:8443",
 			Token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1qMnJ4eCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjMDdkM2ZkNi0wNDRlLTExZTktYmJiYi0wMDUwNTZhMTkwNjQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.OHHuZp-90WOBCaXjwTCCbvxW87lSsaBaH7q59JSDLM5oSWmca_aUbA3J_2nB6ruOOrvEbbQayb-UMcGGXhiVUv27Cg9TVb9Gl3AZym1gk6DUhma2wB3IwI98RKhX3XMr2J7pfte00p1Za8jBcVx_vdYaxebDQImpyUOFaEC3MT4ueirRXLTNSOQLnMARTVpr5r3s0Z0W3g8MGre7MDMNOO4BcGyEC1X8O8XzObuekzSErjJ6zugQMjIYw7_YkPULYNTJLrGsd136TFfFNGEtXow2RuLynIU8_1Zatvs64zNRirgvplGwxg4f15cHp7yUFJ_q3krkUegRji5tZdOBJw"},
-		"ppr-scp0": {
-			Name:  "ppr-scp0",
-			Url:   "https://api.ppr-scp0.sf-rz.de:6443",
-			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6Il96OTVXZGVqbVJwRnBQT3ZlQVBGTE81cnZBYU03eHZXbEY3ZklYclltMU0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJvcGVuc2hpZnQtaW1hZ2UtcmVnaXN0cnkiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoicHJ1bmVyLXRva2VuLXhmejY4Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InBydW5lciIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjEyZDg5YWUyLWU1NWItNGIxZS04ZTY1LTA5ZjhlMDk4NGNlMCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVuc2hpZnQtaW1hZ2UtcmVnaXN0cnk6cHJ1bmVyIn0.gQjvuKYDKuqKrdPhRAx-j4gsipaLBs2M43It-9B9qJ27kjNVF7IeDSAzGcsc41yPMtostPqNt84CX2wTyQ94Afzw9lQgFlVmAWsAjAUlcLJTztFnXOkOkQ7wcNqrc-Dt8aYMYkXkk6kt6mHU-NcvrxESjlKXC0ALzLMMYeNZfTZ81B6k8UWE3DTcUGJ4XYdCvrBE-_My6QA7uleY2WoB_WzqNW6cdsiJgHLhf79V-LZDTjGSmmCvPF-EHoZ6nAmmaPyfxWShPQl857fo5GI81Rxk-YLQspyDll7HjBsOS2cNUjc9afs0K9hxoLdFbnSXBmTGEe653PVTcQ1nM2pRNA"},
 		"vpt-apc0": {
 			Name:  "pro-apc0",
 			Url:   "https://console.pro-apc0.sf-rz.de:8443",
-			Token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1qMnJ4eCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjMDdkM2ZkNi0wNDRlLTExZTktYmJiYi0wMDUwNTZhMTkwNjQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.OHHuZp-90WOBCaXjwTCCbvxW87lSsaBaH7q59JSDLM5oSWmca_aUbA3J_2nB6ruOOrvEbbQayb-UMcGGXhiVUv27Cg9TVb9Gl3AZym1gk6DUhma2wB3IwI98RKhX3XMr2J7pfte00p1Za8jBcVx_vdYaxebDQImpyUOFaEC3MT4ueirRXLTNSOQLnMARTVpr5r3s0Z0W3g8MGre7MDMNOO4BcGyEC1X8O8XzObuekzSErjJ6zugQMjIYw7_YkPULYNTJLrGsd136TFfFNGEtXow2RuLynIU8_1Zatvs64zNRirgvplGwxg4f15cHp7yUFJ_q3krkUegRji5tZdOBJw"},
+			Token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi16N3NrdyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI3ZWY0YjE4OC0zNDM2LTExZTktOTIzZC0wMDUwNTY4MjA2Y2UiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.PX5Ghkmc4CgsvQgXuuIBBS95W0tE0YsRuCbymp4eVUBo4l1woEkKcds7yghx9PwcLHNMWWVki1DUUw-TbsWJY5MrnNwWCGwxTixeh3HSv3RBNAOkGUX4JPt6Bs0jEL_sELccLq9df6pZTQyDjidoSFnT4rid7R-7NyoRjlm0PhZRXEKxlGDt2eZNT0OJGl7btWqh1I_R7MTeuvya-KGSaMtNOlgpvLeyfH2UAvSY6INCu9ca88CBNWScpvZ_X6uxF75bLVGb1UJurPMbrG0isWge6kVnCaCpX_bSmlr8nyo7N6L1feGEgZZpwquTugbwfte8fLvbBgWCB9d8pt-ZhA"},
 		"pro-apc0": {
 			Name:  "pro-apc0",
 			Url:   "https://console.pro-apc0.sf-rz.de:8443",
@@ -76,7 +85,7 @@ var FamilyNamespaces = T_famNs{
 	},
 	"vps": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
-			"cid-apc0": {"zpe-jenkins", "images-vps"},
+			"cid-apc0": {"zpe-jenkins", "images-vps", "images-dfn"},
 			"int-apc0": {"images-vps"},
 			"ppr-apc0": {"images-vps"},
 			"vpt-apc0": {"images-vps"},
@@ -113,7 +122,7 @@ var FamilyNamespaces = T_famNs{
 		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
 		Prodstage:  "pro-apc0",
 	},
-	"fpc_scp0": {
+	"fpc-scp0": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
 			"cid-scp0": {},
 			"ppr-scp0": {"fpc-ppr"},
@@ -146,19 +155,18 @@ var FamilyNamespaces = T_famNs{
 			"pro-scp0": {},
 		},
 		// Stages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
-		Stages:     []T_clName{"cid-scp0"},
+		Stages:     []T_clName{"cid-apc0", "cid-scp0"},
 		Buildstage: "cid-scp0",
-		// Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Teststages: []T_clName{"cid-scp0"},
+		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
 		Prodstage:  "pro-scp0",
 	},
 	"base": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
-			"cid-apc0": {"scpas-jenkins"},
-			"int-apc0": {},
-			"ppr-apc0": {},
-			"vpt-apc0": {},
-			"pro-apc0": {},
+			"cid-apc0": {"scpas-jenkins", "scptools-jenkins", "scp-operations"},
+			"int-apc0": {"scp-operations"},
+			"ppr-apc0": {"scp-operations"},
+			"vpt-apc0": {"scp-operations"},
+			"pro-apc0": {"scp-operations"},
 			"cid-scp0": {"scpas-jenkins"},
 		},
 		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0", "cid-scp0"},
@@ -166,17 +174,17 @@ var FamilyNamespaces = T_famNs{
 		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
 		Prodstage:  "pro-apc0",
 	},
-	"base_scp0": {
+	"base-scp0": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
 			"cid-scp0": {"scpas-jenkins", "scp-baseimages"},
 			"ppr-scp0": {},
 			"vpt-scp0": {},
-			"pro-scp0": {},
+			// "pro-scp0": {},
 		},
-		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
 		Buildstage: "cid-scp0",
 		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstage:  "pro-scp0",
+		Prodstage:  "vpt-scp0",
 	},
 }
 
