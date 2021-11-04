@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 
 	// "log"
 	"os/exec"
@@ -15,6 +16,8 @@ func getClusterToken(cluster T_clName) string {
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
 	}
+	fmt.Println(token)
+	os.Exit(1)
 	return token
 }
 
