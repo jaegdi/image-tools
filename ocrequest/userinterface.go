@@ -43,7 +43,7 @@ DESCRIPTION
 		'pkp, sps, fpc, aps, ...'
 
 	The cluster must be defined by the mandatory parameter
-		'-cluster=[cid|int|ppr|vpt|pro]'
+		'-cluster=[cid-apc0|int-apc0|ppr-apc0|vpt-apc0|pro-apc0|dev-scp0|cid-scp0|ppr-scp0|vpt-scp0|pro-scp0]'
 
 	The family must be defined by the mandatory parameter
 		'-family=[aps|fpc|pkp|ssp]
@@ -109,13 +109,13 @@ EXAMPLES
 	Report all information for family pkp in cluster cid as json
 	(which is the default output format)
 
-		image-tools -cluster=cid -family=pkp -all
+		image-tools -cluster=cid-apc0 -family=pkp -all
 
 		or as table
-		image-tools -cluster=cid -family=pkp -all -table
+		image-tools -cluster=cid-apc0 -family=pkp -all -table
 
 		or csv in different files for each type of information
-		image-tools -cluster=cid -family=pkp -all -csvfile=prefix
+		image-tools -cluster=cid-apc0 -family=pkp -all -csvfile=prefix
 		writes the output to different files 'prefix-type' in current directory
 
 	Report only __used__ istags for family pkp as pretty printed table
@@ -123,48 +123,48 @@ EXAMPLES
 		the pager define in the environment variable $PAGER/%PAGER%.
 		If $PAGER is not set, it try to use 'more')
 
-		image-tools -cluster=cid -family=pkp -used -table
+		image-tools -cluster=cid-apc0 -family=pkp -used -table
 		or json
-		image-tools -cluster=cid -family=pkp -used
+		image-tools -cluster=cid-apc0 -family=pkp -used
 		or yaml
-		image-tools -cluster=cid -family=pkp -used -yaml
+		image-tools -cluster=cid-apc0 -family=pkp -used -yaml
 		or csv
-		image-tools -cluster=cid -family=pkp -used -csv
+		image-tools -cluster=cid-apc0 -family=pkp -used -csv
 
 	Report istags for family aps in cluster int as yaml report
 
-		image-tools -cluster=int -family=aps -istag -yaml
+		image-tools -cluster=int-apc0 -family=aps -istag -yaml
 
 	Report ImageStreams for family aps in cluster int as yaml report
 
-		image-tools -cluster=int -family=aps -is -yaml
+		image-tools -cluster=int-apc0 -family=aps -is -yaml
 
 	Report Images for family aps in cluster int as yaml report
 
-		image-tools -cluster=int -family=aps -image -yaml
+		image-tools -cluster=int-apc0 -family=aps -image -yaml
 
   DELETE
 
 	Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
     and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
 
-		image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
+		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
 
 	To use the script output to really delete the istags, you can use the following line:
 
-		image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
+		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
 
 	To only generate a script to delete old snapshot istags:
 
-		image-tools -family=pkp -cluster=cid -delete -snapshot
+		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot
 
 	To delete all not used images of family 'aps' in cluster cid
 
-	    image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
+	    image-tools -family=aps -cluster=cid-apc0 -delete  -minage=0 -delpattern='.'
 
 	To delete all hybris istags of family pkp older than 45 days
 
-		image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
+		image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -minage=45
 
 CONNECTION
 
