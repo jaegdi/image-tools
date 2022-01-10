@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -236,6 +237,23 @@ func EvalFlags() {
 
 	flag.Parse()
 
+	var is_r *regexp.Regexp
+	var istag_r *regexp.Regexp
+	var tag_r *regexp.Regexp
+	var ns_r *regexp.Regexp
+	if string(*isnamePtr) != "" {
+		is_r = regexp.MustCompile(string(*isnamePtr))
+	}
+	if string(*istagnamePtr) != "" {
+		istag_r = regexp.MustCompile(string(*istagnamePtr))
+	}
+	if string(*tagnamePtr) != "" {
+		tag_r = regexp.MustCompile(string(*tagnamePtr))
+	}
+	if string(*namespacePtr) != "" {
+		ns_r = regexp.MustCompile(string(*namespacePtr))
+	}
+
 	// define map with all flags
 	flags := T_flags{
 		Cluster:  T_clName(*clusterPtr),
@@ -264,6 +282,12 @@ func EvalFlags() {
 			Tagname:   T_tagName(string(*tagnamePtr)),
 			Imagename: T_shaName(string(*shanamePtr)),
 			Namespace: T_nsName(string(*namespacePtr)),
+		},
+		FilterReg: T_flagFiltRegexp{
+			Isname:    is_r,
+			Istagname: istag_r,
+			Tagname:   tag_r,
+			Namespace: ns_r,
 		},
 		DeleteOpts: T_flagDeleteOpts{
 			Pattern:     *deletePatternPtr,

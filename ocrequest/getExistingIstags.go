@@ -81,6 +81,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	resultIstag := make(T_resIstag)
 	resultSha := make(T_resSha)
 	resultIstream := make(T_resIs)
+	var isLink string
 
 	var itemsMap []interface{}
 	if istagsMap["items"] != nil {
@@ -96,18 +97,23 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
 		istagname := T_istagName(metadata["name"].(string))
 		isNamespace := T_nsName(metadata["namespace"].(string))
-		isLink := metadata["selfLink"].(string)
+		if metadata["selfLink"] != nil {
+			isLink = metadata["selfLink"].(string)
+		} else {
+			isLink = ""
+		}
 		isDate := metadata["creationTimestamp"].(string)
 		sha := T_shaName(imageMetadata["name"].(string))
 		if CmdParams.Filter.Imagename != "" && sha != CmdParams.Filter.Imagename {
 			continue
 		}
-		if CmdParams.Filter.Istagname != "" && istagname != CmdParams.Filter.Istagname {
+		if CmdParams.Filter.Istagname != "" && istagname != CmdParams.Filter.Istagname && !CmdParams.FilterReg.Istagname.MatchString(string(istagname)) {
 			continue
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		if ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
+		LogMsg("ImagesMap: ", ImagesMap)
+		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
 			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}
 		imagestreamfields := strings.Split(istagname.str(), `:`)
@@ -117,10 +123,10 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 		tagName := T_tagName(imagestreamfields[1])
 		isAge := ageInDays(isDate)
-		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname {
+		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname && !CmdParams.FilterReg.Isname.MatchString(string(imagestreamName)) {
 			continue
 		}
-		if CmdParams.Filter.Tagname != "" && tagName != CmdParams.Filter.Tagname {
+		if CmdParams.Filter.Tagname != "" && tagName != CmdParams.Filter.Tagname && !CmdParams.FilterReg.Tagname.MatchString(string(tagName)) {
 			continue
 		}
 

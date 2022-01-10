@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 
 	"golang.org/x/net/proxy"
@@ -109,27 +110,49 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	// Create a Bearer string by appending string access token
 	bearer := "Bearer " + ocGetToken(cluster)
 	calltyp := typ
-	switch typ {
-	case "images":
-		urlpath = "/apis/image.openshift.io/v1/"
-	case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
-		urlpath = "/oapi/v1/namespaces/" + namespace.str()
-	case "jobs":
-		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
-	case "cronjobs":
-		urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
-	case "builds", "buildconfigs":
-		urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
-	case "namespaces":
-		urlpath = "/api/v1/namespaces"
-		typ = ""
-	default:
-		urlpath = "/api/v1/namespaces"
+	if strings.Contains(cluster.str(), "scp0") { // check if cluster is openshift4
+		switch typ {
+		case "images":
+			urlpath = "/apis/image.openshift.io/v1"
+		case "imagestreamtags", "imagestreams":
+			urlpath = "/apis/image.openshift.io/v1/namespaces/" + namespace.str()
+		case "deploymentconfigs", "namespace":
+			urlpath = "/oapi/v1/namespaces/" + namespace.str()
+		case "jobs":
+			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
+		case "cronjobs":
+			urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
+		case "builds", "buildconfigs":
+			urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
+		case "namespaces":
+			urlpath = "/api/v1/namespaces"
+			typ = ""
+		default:
+			urlpath = "/api/v1/namespaces"
+		}
+	} else { //  else cluster is openshift3
+		switch typ {
+		case "images":
+			urlpath = "/apis/image.openshift.io/v1/"
+		case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
+			urlpath = "/oapi/v1/namespaces/" + namespace.str()
+		case "jobs":
+			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
+		case "cronjobs":
+			urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
+		case "builds", "buildconfigs":
+			urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
+		case "namespaces":
+			urlpath = "/api/v1/namespaces"
+			typ = ""
+		default:
+			urlpath = "/api/v1/namespaces"
+		}
 	}
 	switch {
 	case typ != "" && name != "":
 		url = Clusters.Config[cluster].Url + urlpath + "/" + typ + "/" + name
-	case typ != "" && name == "":
+	case typ != "":
 		url = Clusters.Config[cluster].Url + urlpath + "/" + typ
 	default:
 		url = Clusters.Config[cluster].Url + urlpath

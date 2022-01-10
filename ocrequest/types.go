@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -18,6 +19,8 @@ type T_completeResults struct {
 	UsedIstags   T_usedIstagsResult
 	UnUsedIstags T_unUsedIstagsResult
 }
+
+type T_allImages map[string]interface{}
 
 type T_family string
 
@@ -389,6 +392,13 @@ type T_flagFilt struct {
 	Namespace T_nsName
 }
 
+type T_flagFiltRegexp struct {
+	Isname    *regexp.Regexp
+	Istagname *regexp.Regexp
+	Tagname   *regexp.Regexp
+	Namespace *regexp.Regexp
+}
+
 type T_flagDeleteOpts struct {
 	Pattern     string
 	MinAge      int
@@ -421,6 +431,7 @@ type T_flags struct {
 	TabGroup   bool
 	Output     T_flagOut
 	Filter     T_flagFilt
+	FilterReg  T_flagFiltRegexp
 	DeleteOpts T_flagDeleteOpts
 	Options    T_flagOpts
 }

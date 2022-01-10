@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"
 
 	// "log"
 	"os/exec"
@@ -16,8 +15,8 @@ func getClusterToken(cluster T_clName) string {
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
 	}
-	fmt.Println(token)
-	os.Exit(1)
+	// fmt.Println(token)
+	// os.Exit(1)
 	return token
 }
 
@@ -102,6 +101,8 @@ func readTokens(filename string) error {
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
 			LogError("error unmarshal clusterconfig", err)
+		} else {
+			LogMsg("Token read from", filename)
 		}
 		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
 		// LogDebug(string(js))

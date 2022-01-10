@@ -9,10 +9,18 @@ import (
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
-	return ((CmdParams.Filter.Isname == "" || (CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname)) &&
-		(CmdParams.Filter.Tagname == "" || (CmdParams.Filter.Tagname != "" && tag == CmdParams.Filter.Tagname)) &&
-		(CmdParams.Filter.Istagname == "" || (CmdParams.Filter.Istagname != "" && istag == CmdParams.Filter.Istagname)) &&
-		(CmdParams.Filter.Namespace == "" || (CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace)))
+	return ((CmdParams.Filter.Isname == "" ||
+		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
+		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
+		(CmdParams.Filter.Tagname == "" ||
+			(CmdParams.Filter.Tagname != "" && tag == CmdParams.Filter.Tagname) ||
+			(CmdParams.Filter.Tagname != "" && CmdParams.FilterReg.Tagname.MatchString(string(tag)))) &&
+		(CmdParams.Filter.Istagname == "" ||
+			(CmdParams.Filter.Istagname != "" && istag == CmdParams.Filter.Istagname) ||
+			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))) &&
+		(CmdParams.Filter.Namespace == "" ||
+			(CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace) ||
+			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))))
 }
 
 // logUsedIstags logs the details of usedIstags to the logfile

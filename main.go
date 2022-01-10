@@ -15,7 +15,7 @@ func init() {
 var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
 var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
 var chanCompleteResults = make(chan T_completeResults, 1)
-var chanInitAllImages = make(chan string, 1)
+var chanInitAllImages = make(chan T_ImagesMapAllClusters, 1)
 var LogfileName string
 
 func getCause() string {
@@ -50,7 +50,8 @@ func main() {
 	go GetUsedIstagsForFamily(chanUsedIsTags)
 
 	LogDebug("Wait for chanInitAllImages")
-	LogDebug(<-chanInitAllImages)
+	AllImages := <-chanInitAllImages
+	LogDebug("Image clusters:", len(AllImages))
 
 	go GetAllIstagsForFamily(chanAllIsTags)
 
