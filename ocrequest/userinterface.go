@@ -99,8 +99,11 @@ DESCRIPTION
 
 INSTALLATION
 
-	image-tols is a statically linked go programm and has no runtime dependencies. No installation is
-	neccessary. Copy the binaryt into a directory, which is in the search path is enough.
+	image-tools is a statically linked go programm and has no runtime dependencies. No installation is
+	neccessary. Copy the binary from artifactory
+		- linux:  https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istag_and_image_management/image-tools-linux/image-tools
+		- windows:  https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istag_and_image_management/image-tools-windows/image-tools.exe
+	into a directory, which is in the search path is enough.
 
 EXAMPLES
 
@@ -160,11 +163,19 @@ EXAMPLES
 
 	To delete all not used images of family 'aps' in cluster cid
 
-	    image-tools -family=aps -cluster=cid-apc0 -delete  -minage=0 -delpattern='.'
+		image-tools -family=aps -cluster=cid-apc0 -delete  -minage=0 -delpattern='.'
 
 	To delete all hybris istags of family pkp older than 45 days
 
 		image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -minage=45
+
+  HINT
+
+	After deleting the istags, the images must removed from the registry by executing a command similar to this example:
+
+		oc login .....
+		registry_url="$(oc -n default get route|grep docker-registry|awk '{print $2}')"
+		oc adm prune images --registry-url=$registry_url --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 
 CONNECTION
 

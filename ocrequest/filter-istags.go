@@ -9,6 +9,7 @@ import (
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
+	LogDebug("filtering:", is, tag, istag, namespace)
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
@@ -20,7 +21,7 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))) &&
 		(CmdParams.Filter.Namespace == "" ||
 			(CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace) ||
-			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))))
+			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Istagname.MatchString(string(namespace)))))
 }
 
 // logUsedIstags logs the details of usedIstags to the logfile
@@ -84,7 +85,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 	printShellCmds(result)
 }
 
-// FilterNonbuildIstagsToDelete filters out all istags, when there is no build-tag on the same inage
+// FilterNonbuildIstagsToDelete filters out all istags, when there is no build-tag on the same image
 func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_family, cluster T_clName, minAge int) {
 	result := map[string]string{}
 	buildPatternRegexp := regexp.MustCompile("^.*?:.*?[A-Za-z]")
