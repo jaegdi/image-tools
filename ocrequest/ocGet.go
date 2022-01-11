@@ -116,8 +116,12 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 			urlpath = "/apis/image.openshift.io/v1"
 		case "imagestreamtags", "imagestreams":
 			urlpath = "/apis/image.openshift.io/v1/namespaces/" + namespace.str()
-		case "deploymentconfigs", "namespace":
-			urlpath = "/oapi/v1/namespaces/" + namespace.str()
+		case "namespace":
+			urlpath = "/api/v1/namespaces/" + namespace.str()
+		case "deploymentconfigs":
+			urlpath = "/apis/apps.openshift.io/v1/namespaces/" + namespace.str()
+		case "deployments":
+			urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
 		case "jobs":
 			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
 		case "cronjobs":
@@ -136,6 +140,8 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 			urlpath = "/apis/image.openshift.io/v1/"
 		case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
 			urlpath = "/oapi/v1/namespaces/" + namespace.str()
+		case "deployments":
+			urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
 		case "jobs":
 			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
 		case "cronjobs":
