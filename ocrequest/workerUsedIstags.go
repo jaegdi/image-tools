@@ -32,7 +32,7 @@ func workerUsedIstags(wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-func createWorkerPool(noOfWorkersUsedIstags int) {
+func createWorkerPoolUsedIstags(noOfWorkersUsedIstags int) {
 	var wg sync.WaitGroup
 	for i := 0; i < noOfWorkersUsedIstags; i++ {
 		wg.Add(1)
@@ -71,10 +71,10 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 		LogMsg("Allocate and start JobsUsedIstags")
 		go allocateUsedIstags(FamilyNamespaces[family].Stages, allClusterFamilyNamespaces)
 
-		LogMsg("Create Worker Pool")
-		createWorkerPool(noOfWorkersUsedIstags)
+		LogMsg("Create Worker Pool for Used IsTags")
+		createWorkerPoolUsedIstags(noOfWorkersUsedIstags)
 
-		LogMsg("Collect results")
+		LogMsg("Collect results for Used IsTags")
 		for result := range jobResultsUsedIstags {
 			for is := range result.istags {
 				for tag := range result.istags[is] {

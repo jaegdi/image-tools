@@ -149,13 +149,16 @@ EXAMPLES
   DELETE
 
 	Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
-    and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
+    and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service
+	and zahlungsstoerung-service
 
-		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
+		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot \
+					-nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
 
 	To use the script output to really delete the istags, you can use the following line:
 
-		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
+		image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild \
+		            -delpattern='(header|footer|zahlungsstoerung)-service'      | xargs -n 1 -I{} bash -c "{}"
 
 	To only generate a script to delete old snapshot istags:
 
@@ -171,9 +174,17 @@ EXAMPLES
 
   HINT
 
-	After deleting the istags, the images must removed from the registry by executing a command similar to this example:
+	To directly delete the istags, that reportet by 'image-tools -delete ...', make shure, you are
+	logged in into the correct cluster, because the output is executed with oc client and work on the
+	currently logged in cluster. And append the following to the end of the image-tools - command:
 
-		oc login .....
+
+		| xargs -n 1 -I{} bash -c "{}"
+
+	After deleting the istags, the images must removed from the registry by executing a command similar
+	to this example:
+
+		oc login ..... to the cluster
 		registry_url="$(oc -n default get route|grep docker-registry|awk '{print $2}')"
 		oc adm prune images --registry-url=$registry_url --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 
@@ -201,7 +212,7 @@ func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: shortname of cluster, eg.: "+FamilyNamespaces[T_family(*familyPtr)].clusterListStr())
+	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_family("base")].clusterListStr()+" or more than one: cid-apc0,cid-scp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -217,7 +228,8 @@ func EvalFlags() {
 	jsonPtr := flag.Bool("json", false, "Report: defines JSON as the output format for the reported data. This is the DEFAULT")
 	yamlPtr := flag.Bool("yaml", false, "Report: defines YAML as the output format for the reported data")
 	csvPtr := flag.Bool("csv", false, "Report: defines CSV as the output format for the reported data")
-	csvFilePtr := flag.String("csvfile", "", "Report: defines CSV as the output format for the reported data and write the types to seperate csv files <name>-typ.csv")
+	csvFilePtr := flag.String("csvfile", "", "Report: defines CSV as the output format for the reported data and\n"+
+		"write the types to seperate csv files <name>-typ.csv")
 	htmlPtr := flag.Bool("html", false, "Report: defines HTML as the output format for the reported data")
 	tablePtr := flag.Bool("table", false, "Report: defines formated ASCI TABLE as the output format for the reported data")
 	tabgroupPtr := flag.Bool("tabgroup", false, "Report: defines formated ASCII TABLE WITH GROUPED ROWS as the output format for the reported data")
@@ -232,8 +244,10 @@ func EvalFlags() {
 	// Delete flags
 	deletePatternPtr := flag.String("delpattern", "", "Delete: filter for delete script all istags with this pattern")
 	deleteMinAgePtr := flag.Int("minage", 60, "Delete: filter for delete script all istags, they are older or equal than minage")
-	deleteNonBuildPtr := flag.Bool("nonbuild", false, "Delete: filter for delete script all istags with pure version number, where the referenced image has no build-tag and istag is minimum as old as minage")
-	deleteSnapshotsPtr := flag.Bool("snapshot", false, "Delete: filter for delete script all istags, where the tag has SNAPSHOT or PR in the tagname and istag is minimum as old as minage")
+	deleteNonBuildPtr := flag.Bool("nonbuild", false, "Delete: filter for delete script all istags with pure version number,\n"+
+		"where the referenced image has no build-tag and istag is minimum as old as minage")
+	deleteSnapshotsPtr := flag.Bool("snapshot", false, "Delete: filter for delete script all istags,\n"+
+		"where the tag has SNAPSHOT or PR in the tagname and istag is minimum as old as minage")
 	pruneImagesPtr := flag.Bool("prune", false, "Delete: prune images withpout istags")
 	deleteConfirmPtr := flag.Bool("confirm", false, "Delete: confirm delete, if not set, it run in dry run mode")
 
@@ -241,8 +255,12 @@ func EvalFlags() {
 	insecurePtr := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
 	ocClientPtr := flag.Bool("occlient", false, "TechOpt: use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "TechOpt: disable use of proxy for API http requests")
-	socks5ProxyPtr := flag.String("socks5", "", "TechOpt: set socks5 proxy url and use it for API calls")
-	profilerPtr := flag.Bool("profiler", false, "TechOpt: enable profiler support for debugging, http://localhost:6060/debug/pprof")
+
+	socks5proxy := os.Getenv("SOCKS4PROXY")
+	socks5ProxyPtr := flag.String("socks5", socks5proxy, "TechOpt: set socks5 proxy url and use it for API calls. eg. -socks5=127.0.0.1:65022 .  If env var SOCKS5PROXY is defined, it uses this as default, ohterwise empty string")
+	profilerPtr := flag.Bool("profiler", false,
+		"TechOpt: enable profiler support for debugging, http://localhost:6060/debug/pprof\n"+
+			" or: ~/go/bin/pprof -http localhost:8080 http://localhost:6060/debug/pprof/goroutine")
 	noLogPtr := flag.Bool("nolog", false, "TechOpt: disable log output to screen. Logs to logfile is not disabled")
 	debugPtr := flag.Bool("debug", false, "TechOpt: enable additional debug log output to screen")
 
@@ -267,7 +285,7 @@ func EvalFlags() {
 
 	// define map with all flags
 	flags := T_flags{
-		Cluster:  T_clName(*clusterPtr),
+		Cluster:  T_clName(*clusterPtr).list(),
 		Token:    string(*tokenPtr),
 		Family:   T_family(*familyPtr),
 		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr)),
@@ -325,30 +343,34 @@ func EvalFlags() {
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
-	if !flags.Output.Used && (flags.Cluster == "") {
+	if !flags.Output.Used && (len(flags.Cluster) == 0) {
 		exitWithError("a shortname for cluster must given like: '-cluster=cid-apc0'. Is now: ", flags.Cluster)
 	}
-	_, clusterDefined := Clusters.Config[flags.Cluster]
-	if !clusterDefined && !flags.Output.Used {
-		clusterlist := []string{}
-		for clname := range Clusters.Config {
-			clusterlist = append(clusterlist, string(clname))
+	for _, cluster := range flags.Cluster {
+		_, clusterDefined := Clusters.Config[cluster]
+		if !clusterDefined && !flags.Output.Used {
+			clusterlist := []string{}
+			for clname := range Clusters.Config {
+				clusterlist = append(clusterlist, string(clname))
+			}
+			clusters := strings.Join(clusterlist, ",")
+			exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
 		}
-		clusters := strings.Join(clusterlist, ",")
-		exitWithError("The clustername given as -cluster= is not defined: Given: ", flags.Cluster, " valid names: ", clusters)
 	}
 	if FamilyNamespaces[flags.Family].ClusterNamespaces == nil {
 		exitWithError("Family", flags.Family, "is not defined")
 	}
 
-	foundNamespace := false
-	for _, v := range FamilyNamespaces[flags.Family].ClusterNamespaces[flags.Cluster] {
-		if flags.Filter.Namespace == v {
-			foundNamespace = true
+	for _, cluster := range flags.Cluster {
+		foundNamespace := false
+		for _, v := range FamilyNamespaces[flags.Family].ClusterNamespaces[cluster] {
+			if flags.Filter.Namespace == v {
+				foundNamespace = true
+			}
 		}
-	}
-	if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
-		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
+		if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
+			exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
+		}
 	}
 
 	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {

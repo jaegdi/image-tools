@@ -18,7 +18,7 @@ var (
 
 // Init is the intialization routine
 func Init() {
-
+	err := os.Remove(LogFileName)
 	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatal(err)
@@ -44,16 +44,18 @@ func Init() {
 			`.*?-` + string(CmdParams.Family) + `-.*` + `|` +
 			`.*?-` + string(CmdParams.Family) + `$`)
 
-	if len(Clusters.Config["cid"].Token) < 10 {
-		LogMsg("Try to read clusterconfig.json")
-		if err := readTokens("clusterconfig.json"); err != nil {
-			LogMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
-			for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-				ocGetToken(cluster)
+	for _, cluster := range CmdParams.Cluster {
+		if len(Clusters.Config[cluster].Token) < 10 {
+			LogMsg("Try to read clusterconfig.json")
+			if err := readTokens("clusterconfig.json"); err != nil {
+				LogMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
+				for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
+					ocGetToken(cluster)
+				}
+				saveTokens(Clusters, "clusterconfig.json")
+			} else {
+				LogMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 			}
-			saveTokens(Clusters, "clusterconfig.json")
-		} else {
-			LogMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 		}
 	}
 	InitIsNamesForFamily(CmdParams.Family)

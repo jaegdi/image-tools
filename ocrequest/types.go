@@ -339,6 +339,27 @@ type T_IsNamesForFamily map[T_family]map[T_isName]bool
 //------------------------------------------
 
 type T_clName string
+type T_clNames []T_clName
+
+func (c T_clName) list() T_clNames {
+	clusters := strings.Split(string(c), ",")
+	clusterlist := T_clNames{}
+	for _, cl := range clusters {
+		x := T_clName(cl)
+		clusterlist = append(clusterlist, x)
+	}
+	print(clusterlist)
+	return clusterlist
+}
+
+func (clusters T_clNames) contains(c T_clName) bool {
+	for _, v := range clusters {
+		if v == c {
+			return true
+		}
+	}
+	return false
+}
 
 // str convert T_clName to string
 func (c T_clName) str() string {
@@ -418,7 +439,7 @@ type T_flagOpts struct {
 	Debug       bool
 }
 type T_flags struct {
-	Cluster    T_clName
+	Cluster    T_clNames
 	Token      string
 	Family     T_family
 	Json       bool

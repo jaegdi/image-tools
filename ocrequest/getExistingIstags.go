@@ -75,7 +75,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	LogMsg("istagJson:", istagsJson)
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
-		LogError("unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
+		// logfix
+		LogError("Error: unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
 		return T_result{}
 	}
 	resultIstag := make(T_resIstag)
@@ -112,7 +113,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		LogMsg("ImagesMap: ", ImagesMap)
+		LogDebug("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
 		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
 			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}

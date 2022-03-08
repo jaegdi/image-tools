@@ -77,13 +77,13 @@ func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []in
 	for _, container := range containers {
 		image := T_shaName(container.(map[string]interface{})["image"].(string))
 		image, istag, is, tag, fromNamespace := GetIsAndTag(string(image))
-		if CmdParams.Filter.Isname != "" && is != CmdParams.Filter.Isname {
+		if CmdParams.Filter.Isname != "" && is != CmdParams.Filter.Isname && !CmdParams.FilterReg.Isname.MatchString(string(is)) {
 			continue
 		}
-		if CmdParams.Filter.Tagname != "" && tag != CmdParams.Filter.Tagname {
+		if CmdParams.Filter.Tagname != "" && tag != CmdParams.Filter.Tagname && !CmdParams.FilterReg.Tagname.MatchString(string(tag)) {
 			continue
 		}
-		if CmdParams.Filter.Istagname != "" && istag != CmdParams.Filter.Istagname {
+		if CmdParams.Filter.Istagname != "" && istag != CmdParams.Filter.Istagname && !CmdParams.FilterReg.Istagname.MatchString(string(istag)) {
 			continue
 		}
 		if CmdParams.Filter.Imagename != "" && image != CmdParams.Filter.Imagename {

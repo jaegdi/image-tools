@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	// "net/http"
-	// _ "net/http/pprof"
+
 	. "image-tools/ocrequest"
+	// "net/http"
+	_ "net/http/pprof"
 	// "sync"
 )
 
@@ -101,7 +102,8 @@ func main() {
 			CmdParams.Filter.Istagname != "" ||
 			CmdParams.Filter.Namespace != "" {
 			LogDebug(
-				"main::",
+				"\n--main--::\n",
+				"filter minAge: '"+fmt.Sprint(CmdParams.DeleteOpts.MinAge)+"'\n",
 				"filter pattern: '"+CmdParams.DeleteOpts.Pattern+"'\n",
 				"filter Isname: '"+CmdParams.Filter.Isname+"'\n",
 				"filter Tagname: '"+CmdParams.Filter.Tagname+"'\n",
@@ -127,9 +129,9 @@ func main() {
 		} else {
 			LogDebug("run in dry run mode")
 		}
-		// if CmdParams.Options.Profiler {
-		// 	wg.Add(1)
-		// 	wg.Wait()
-		// }
 	}
+	// if CmdParams.Options.Profiler {
+	// 	wg.Add(1)
+	// 	wg.Wait()
+	// }
 }

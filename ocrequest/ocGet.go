@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -98,7 +97,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 
 	// Append our cert to the system pool
 	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
-		log.Println("No certs appended, using system certs only")
+		LogError("No certs appended, using system certs only")
 	}
 
 	// Trust the augmented cert pool in our client
