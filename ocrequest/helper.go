@@ -1,9 +1,9 @@
 package ocrequest
 
 import (
-	// "github.com/imdario/mergo"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -43,11 +43,14 @@ func LogMsg(msg ...interface{}) {
 
 // LogDebug write msg to StdErr and logfile
 func LogDebug(msg ...interface{}) {
-	if !CmdParams.Options.NoLog {
-		log.Println(msg...)
-	}
+	// if !CmdParams.Options.NoLog {
+	// 	log.Println(msg...)
+	// }
 	if CmdParams.Options.Debug {
 		DebugLogger.Println(msg...)
+	}
+	if CmdParams.Options.Verify {
+		fmt.Println(msg...)
 	}
 }
 
@@ -138,19 +141,22 @@ func GetYamlFromMap(list interface{}) string {
 func GetCsvFromMap(list interface{}, family T_family) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag"}
+		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag", "Cluster"}
 		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
-			for image, shaMap := range isMap {
-				for istag := range shaMap {
-					line := T_csvLine{}
-					line = append(line, string(family))
-					line = append(line, "allIstags")
-					line = append(line, "is")
-					line = append(line, is.str())
-					line = append(line, image.str())
-					line = append(line, istag.str())
-					output = append(output, line)
+		for _, cluster := range CmdParams.Cluster {
+			for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
+				for image, shaMap := range isMap {
+					for istag := range shaMap {
+						line := T_csvLine{}
+						line = append(line, string(family))
+						line = append(line, "allIstags")
+						line = append(line, "is")
+						line = append(line, is.str())
+						line = append(line, image.str())
+						line = append(line, istag.str())
+						line = append(line, cluster.str())
+						output = append(output, line)
+					}
 				}
 			}
 		}
@@ -158,45 +164,52 @@ func GetCsvFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
 		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline = append(headline, "Cluster")
 		headline = append(headline, toArrayString(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, nsMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
-			for _, istagMap := range nsMap {
-				// LogMsg("namespace:", ns)
-				line := T_csvLine{}
-				line = append(line, string(family))
-				line = append(line, "allIstags")
-				line = append(line, "istag")
-				line = append(line, istagName.str())
-				line = append(line, toArrayString(istagMap.Values())...)
-				output = append(output, line)
+		for _, cluster := range CmdParams.Cluster {
+			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
+				for _, istagMap := range nsMap {
+					// LogMsg("namespace:", ns)
+					line := T_csvLine{}
+					line = append(line, string(family))
+					line = append(line, "allIstags")
+					line = append(line, "istag")
+					line = append(line, istagName.str())
+					line = append(line, cluster.str())
+					line = append(line, toArrayString(istagMap.Values())...)
+					output = append(output, line)
+				}
 			}
 		}
 		output.csvDoc("istags")
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
-		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
-			for istag, istagMap := range shaMap {
-				line := T_csvLine{}
-				line = append(line, string(family))
-				line = append(line, "allIstags")
-				line = append(line, "image")
-				line = append(line, shaName.str())
-				line = append(line, istag.str())
-				line = append(line, istagMap.Imagestream.str())
-				line = append(line, istagMap.Namespace.str())
-				line = append(line, istagMap.Link)
-				line = append(line, istagMap.Date)
-				line = append(line, strconv.Itoa(istagMap.AgeInDays))
-				for tag := range istagMap.Istags {
-					//  make a real copy of line !!!!
-					copyOfLine := append([]string{}, line...)
-					copyOfLine = append(copyOfLine, tag.str())
-					output = append(output, copyOfLine)
+		for _, cluster := range CmdParams.Cluster {
+			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
+				for istag, istagMap := range shaMap {
+					line := T_csvLine{}
+					line = append(line, string(family))
+					line = append(line, "allIstags")
+					line = append(line, "image")
+					line = append(line, shaName.str())
+					line = append(line, istag.str())
+					line = append(line, istagMap.Imagestream.str())
+					line = append(line, cluster.str())
+					line = append(line, istagMap.Namespace.str())
+					line = append(line, istagMap.Link)
+					line = append(line, istagMap.Date)
+					line = append(line, strconv.Itoa(istagMap.AgeInDays))
+					for tag := range istagMap.Istags {
+						//  make a real copy of line !!!!
+						copyOfLine := append([]string{}, line...)
+						copyOfLine = append(copyOfLine, tag.str())
+						output = append(output, copyOfLine)
+					}
 				}
 			}
 		}
@@ -242,18 +255,21 @@ func GetCsvFromMap(list interface{}, family T_family) {
 func GetTableFromMap(list interface{}, family T_family) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag"}
+		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}
 		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Is {
-			for image, shaMap := range isMap {
-				for istag := range shaMap {
-					line := table.Row{}
-					// line = append(line, "allIstags")
-					// line = append(line, "is")
-					line = append(line, is)
-					line = append(line, image)
-					line = append(line, istag)
-					output = append(output, line)
+		for _, cluster := range CmdParams.Cluster {
+			for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
+				for image, shaMap := range isMap {
+					for istag := range shaMap {
+						line := table.Row{}
+						// line = append(line, "allIstags")
+						// line = append(line, "is")
+						line = append(line, is)
+						line = append(line, image)
+						line = append(line, istag)
+						line = append(line, cluster)
+						output = append(output, line)
+					}
 				}
 			}
 		}
@@ -261,43 +277,50 @@ func GetTableFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"istag " + string(family)} //, "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline = append(headline, "Cluster")
 		headline = append(headline, toTableRow(T_istag{}.Names())...)
 		output = append(output, headline)
-		for istagName, nsMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Istag {
-			for _, istagMap := range nsMap {
-				// LogMsg("namespace:", ns)
-				line := table.Row{}
-				// line = append(line, "allIstags")
-				// line = append(line, "istag")
-				line = append(line, istagName)
-				line = append(line, toTableRow(istagMap.Values())...)
-				output = append(output, line)
+		for _, cluster := range CmdParams.Cluster {
+			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
+				for _, istagMap := range nsMap {
+					// LogMsg("namespace:", ns)
+					line := table.Row{}
+					// line = append(line, "allIstags")
+					// line = append(line, "istag")
+					line = append(line, istagName)
+					line = append(line, cluster)
+					line = append(line, toTableRow(istagMap.Values())...)
+					output = append(output, line)
+				}
 			}
 		}
 		tablePrettyprint(output)
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
-		for shaName, shaMap := range list.(T_completeResults).AllIstags[CmdParams.Cluster].Image {
-			for istag, istagMap := range shaMap {
-				line := table.Row{}
-				// line = append(line, "allIstags")
-				// line = append(line, "image")
-				line = append(line, shaName)
-				line = append(line, istag)
-				line = append(line, istagMap.Imagestream)
-				line = append(line, istagMap.Namespace)
-				line = append(line, istagMap.Link)
-				line = append(line, istagMap.Date)
-				line = append(line, strconv.Itoa(istagMap.AgeInDays))
-				for tag := range istagMap.Istags {
-					//  make a real copy of line !!!!
-					copyOfLine := append([]interface{}{}, line...)
-					copyOfLine = append(copyOfLine, tag)
-					output = append(output, copyOfLine)
+		for _, cluster := range CmdParams.Cluster {
+			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
+				for istag, istagMap := range shaMap {
+					line := table.Row{}
+					// line = append(line, "allIstags")
+					// line = append(line, "image")
+					line = append(line, shaName)
+					line = append(line, istag)
+					line = append(line, istagMap.Imagestream)
+					line = append(line, cluster)
+					line = append(line, istagMap.Namespace)
+					line = append(line, istagMap.Link)
+					line = append(line, istagMap.Date)
+					line = append(line, strconv.Itoa(istagMap.AgeInDays))
+					for tag := range istagMap.Istags {
+						//  make a real copy of line !!!!
+						copyOfLine := append([]interface{}{}, line...)
+						copyOfLine = append(copyOfLine, tag)
+						output = append(output, copyOfLine)
+					}
 				}
 			}
 		}
@@ -437,37 +460,12 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 	}
 	out, err := cmd.StdinPipe()
 	if err != nil {
-		log.Fatal(err)
+		LogError("ExecError", err)
 	}
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Start(); err != nil {
-		log.Fatal(err)
-	}
-	return cmd, out
-}
-
-// runBroswer starts Browser for html output
-// TODO
-func runBroswer() (*exec.Cmd, io.WriteCloser) {
-	pager := os.Getenv("PAGER")
-	if pager == "" {
-		pager = "more"
-	}
-	var cmd *exec.Cmd
-	if pager == "less" {
-		cmd = exec.Command(pager, "-m", "-n", "-g", "-i", "-J", "-R", "-S", "--underline-special", "--SILENT")
-	} else {
-		cmd = exec.Command(pager)
-	}
-	out, err := cmd.StdinPipe()
-	if err != nil {
-		log.Fatal(err)
-	}
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Start(); err != nil {
-		log.Fatal(err)
+		LogError("ExecError", err)
 	}
 	return cmd, out
 }
@@ -488,7 +486,7 @@ func openbrowser(url string) {
 		LogError("unsupported platform")
 	}
 	if err != nil {
-		log.Fatal(err)
+		LogError("ExecError", err)
 	}
 
 }

@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 
 	// "log"
 	"os/exec"
@@ -15,6 +17,8 @@ func getClusterToken(cluster T_clName) string {
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
 	}
+	// fmt.Println(token)
+	// os.Exit(1)
 	return token
 }
 
@@ -33,7 +37,7 @@ func ocGetToken(cluster T_clName) string {
 	if token != "" {
 		return token
 	} else {
-		if cluster != CmdParams.Cluster || (cluster == CmdParams.Cluster && CmdParams.Token == "") {
+		if !CmdParams.Cluster.contains(cluster) || CmdParams.Cluster.contains(cluster) && CmdParams.Token == "" {
 			t, err := ocLogin(cluster)
 			if err != nil {
 				saveTokens(Clusters, "clusterconfig.json")
@@ -79,11 +83,17 @@ func ocLogin(cluster T_clName) (string, error) {
 
 // saveTokens save the login token in the config file
 func saveTokens(clusterconfig T_ClusterConfig, filename string) {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+	filePath := exPath + "/" + filename
 	js, err := json.MarshalIndent(clusterconfig, "", "    ")
 	if err != nil {
 		LogError("failed to serialize clusterconfig to json", err)
 	} else {
-		err := ioutil.WriteFile(filename, js, 0600)
+		err := ioutil.WriteFile(filePath, js, 0600)
 		if err != nil {
 			LogError("failed to save serialized clusterconfig as json to file", err)
 		}
@@ -92,13 +102,21 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 
 // readTokens reads the token from the config file
 func readTokens(filename string) error {
-	file, err := ioutil.ReadFile(filename)
+	ex, err := os.Executable()
 	if err != nil {
-		LogError("failed to load configfile "+filename, err)
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+	filePath := exPath + "/" + filename
+	file, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		LogError("failed to load configfile "+filePath, err)
 		return err
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
 			LogError("error unmarshal clusterconfig", err)
+		} else {
+			LogMsg("Token read from", filePath)
 		}
 		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
 		// LogDebug(string(js))

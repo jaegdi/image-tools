@@ -49,7 +49,7 @@ func createWorkerPoolAppNamespaces(noOfWorkersAppNamespaces int) {
 
 func allocateAppNamespaces(family T_family) {
 	jobNr := 0
-	clusters := Clusters.Stages
+	clusters := FamilyNamespaces[family].Stages
 	for cl := 0; cl < len(clusters); cl++ {
 		LogMsg("Start JobAppNamespaces for cluster" + clusters[cl])
 		job := JobAppNamespaces{jobNr, clusters[cl], family}

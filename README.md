@@ -1,4 +1,4 @@
-# image-tools 
+# image-tools
 
 ## Installation
 
@@ -15,7 +15,7 @@ image-tools  reports image or istag details for a application family (eg. pkp, f
              or
              generate a bash script as output to delete istags
 
-- For __existing Is, IsTags and Images__ it operates cluster and family specific. 
+- For __existing Is, IsTags and Images__ it operates cluster and family specific.
     That means it works for __one cluster__ like
     'cid, int, ppr, vpt or pro' and for __one family__ like 'pkp, sps, fpc, aps, ...'
     The cluster must be defined by the mandatory parametter '-cluster=[cid|int|ppr|vpt|pro]'
@@ -30,14 +30,14 @@ image-tools  reports image or istag details for a application family (eg. pkp, f
 
     of __all namespaces that belong to the application family__.
 
-- __Generate reports__ about imagestreamtags, imagestreams and images or all together. The content, what 
-    should be collected from the cluster for the content of the report can be defined by __one or more__ of 
+- __Generate reports__ about imagestreamtags, imagestreams and images or all together. The content, what
+    should be collected from the cluster for the content of the report can be defined by __one or more__ of
     the mandatory parameter '-is', '-istag', '-image', '-used' or '-all'.
 
-- __Variable report output format__. The output format of the report can be chosen ba on of:   
-  - -json, 
-  - -yaml, 
-  - -csv, 
+- __Variable report output format__. The output format of the report can be chosen ba on of:
+  - -json,
+  - -yaml,
+  - -csv,
   - -table or - tabgroup (table with grouped rows for identical content).
     Output as table or tabgroup is best used when piped into less and is am
 
@@ -64,7 +64,7 @@ the parameter 'family=...'. For type 'used' (also included in type 'all') from a
     execute image-tools with parameter -h to get help and examples
 ### Command
 
-    ./image-tools  -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)] 
+    ./image-tools  -family=... -cluster=... -all|-image|-is|-istag|-used [output format (default json)] [filter (default none)]
 
 the parameters can be specified in any order
 
@@ -73,14 +73,16 @@ the parameters can be specified in any order
 ##### Define source, both parameters are mandatory
 
     -family=string    family name, eg. pkp, aps, ssp or fpc
-    
-    -cluster=string   shortname of cluster, eg. cid,int, ppr or pro
+
+    -cluster=string   shortname of cluster, eg.
+      cid-apc0, int-apc0, ppr-apc0 or pro-apc0
+      cid-scp0, ppr-scp0, vpt-scp0, pro-scp0
 
 ##### Type of objects to collect and report. One of them is mandatory
 
-    -all              collect and output all 
+    -all              collect and output all
                       _imageStreams_, _imageStreamTags_, _image's__
-                      of the given cluster and the 
+                      of the given cluster and the
                       _used-istags_ from all clusters.
 
     -image            collect and output of Image's
@@ -89,7 +91,7 @@ the parameters can be specified in any order
 
     -is               collect and output of imageStreams
 
-    -used             collect and output used imageStreams imageStreamTags 
+    -used             collect and output used imageStreams imageStreamTags
                       and Image's from all clusters
 
 #### Options
@@ -101,32 +103,32 @@ the parameters can be specified in any order
 ##### Filter (usable for reports and delete mode)
 
     -namespace=string namespace to look for istags
-    
+
     -isname=string    filter output of one imageStream as json, eg. -is=wvv-service
-    
+
     -istagname=string filter output of one imageStreamTag
-    
+
     -shaname=string   filter output of a Image with this SHA
-    
+
     -tagname=string   filter output all istags with this Tag
 
 ##### Output Format (for reports)
 
     -json             defines JSON as the output format for the reported data.
                       This is the DEFAULT
-    
+
     -yaml             defines YAML as the output format for the reported data
-    
+
     -csv              defines CSV as the output format for the reported data
 
     -csvfile=string   define the common filename-part for the output files in csv format.
                       For every type of openshift objects a separate file is generated
                       with the following names schema: '<common-filename>-<type>.csv'.
-    
+
     -table            defines formatted ASCI TABLE as the output format for the
                       reported data
-    
-    -tabgroup         defines formatted ASCII TABLE WITH GROUPED ROWS as the 
+
+    -tabgroup         defines formatted ASCII TABLE WITH GROUPED ROWS as the
                       output format for the reported data.
 
 ##### Other Options
@@ -143,20 +145,20 @@ Report all information for family pkp in cluster cid as json
 (which is the default output format)
 
     ./image-tools  -cluster=cid -family=pkp -all
-	
+
 or as table
 
         ./image-tools  -cluster=cid -family=pkp -all -table
-	
+
 or csv in different files for each type of information
 
     ./image-tools  -cluster=cid -family=pkp -all -csvfile=prefix
 
 writes the output to different files 'prefix-type' in current directory
-		
-Report only __used__ istags for family pkp as pretty printed table 
-(the output is paginated to fit your screen size and piped to 
-    the pager define in the environment variable $PAGER/%PAGER%. 
+
+Report only __used__ istags for family pkp as pretty printed table
+(the output is paginated to fit your screen size and piped to
+    the pager define in the environment variable $PAGER/%PAGER%.
 If $PAGER is not set, it try to use 'more')
 
         ./image-tools  -cluster=cid -family=pkp -used -table
@@ -172,7 +174,7 @@ or yaml
 or csv
 
     ./image-tools  -cluster=cid -family=pkp -used -csv
-		
+
 Report istags with tag=latest for family pkp in cluster cid as yaml report
 
     ./image-tools  -cluster=cid -family=aps -istag -yaml -tagname=latest

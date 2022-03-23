@@ -61,7 +61,7 @@ func goGetExistingImagesInAllClusters() T_ImagesMapAllClusters {
 	jobResultsExistingImages = make(chan ResultExistingImages, channelsizeExistingImages)
 
 	LogMsg("Allocate and start JobsExistingImages")
-	go allocateExistingImages(Clusters.Stages)
+	go allocateExistingImages(FamilyNamespaces[CmdParams.Family].Stages)
 
 	LogMsg("Create Worker Pool for Existing Images")
 	createWorkerPoolExistingImages(noOfWorkersExistingImages)

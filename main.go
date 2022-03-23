@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	// "net/http"
-	// _ "net/http/pprof"
+
 	. "image-tools/ocrequest"
+	// "net/http"
+	_ "net/http/pprof"
 	// "sync"
 )
 
@@ -15,7 +16,7 @@ func init() {
 var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
 var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
 var chanCompleteResults = make(chan T_completeResults, 1)
-var chanInitAllImages = make(chan string, 1)
+var chanInitAllImages = make(chan T_ImagesMapAllClusters, 1)
 var LogfileName string
 
 func getCause() string {
@@ -50,7 +51,8 @@ func main() {
 	go GetUsedIstagsForFamily(chanUsedIsTags)
 
 	LogDebug("Wait for chanInitAllImages")
-	LogDebug(<-chanInitAllImages)
+	AllImages := <-chanInitAllImages
+	LogDebug("Image clusters:", len(AllImages))
 
 	go GetAllIstagsForFamily(chanAllIsTags)
 
@@ -62,7 +64,7 @@ func main() {
 
 	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	LogDebug("Wait for filtered chanUsedIsTags")
+	LogDebug("Wait for filtered chanCompleteResults")
 	result = <-chanCompleteResults
 
 	if CmdParams.Output.UnUsed {
@@ -100,7 +102,8 @@ func main() {
 			CmdParams.Filter.Istagname != "" ||
 			CmdParams.Filter.Namespace != "" {
 			LogDebug(
-				"main::",
+				"\n--main--::\n",
+				"filter minAge: '"+fmt.Sprint(CmdParams.DeleteOpts.MinAge)+"'\n",
 				"filter pattern: '"+CmdParams.DeleteOpts.Pattern+"'\n",
 				"filter Isname: '"+CmdParams.Filter.Isname+"'\n",
 				"filter Tagname: '"+CmdParams.Filter.Tagname+"'\n",
@@ -126,9 +129,9 @@ func main() {
 		} else {
 			LogDebug("run in dry run mode")
 		}
-		// if CmdParams.Options.Profiler {
-		// 	wg.Add(1)
-		// 	wg.Wait()
-		// }
 	}
+	// if CmdParams.Options.Profiler {
+	// 	wg.Add(1)
+	// 	wg.Wait()
+	// }
 }

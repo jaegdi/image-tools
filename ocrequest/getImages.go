@@ -34,15 +34,20 @@ func GetAllImagesOfCluster(cluster T_clName) T_ImagesMap {
 }
 
 // InitAllImages switches between multithreading and sequencial execution depending on the variable Multiproc
-func InitAllImages(c chan string) {
+// func InitAllImages(c chan T_ImagesMapAllClusters) {
+func InitAllImages(c chan T_ImagesMapAllClusters) {
 	if Multiproc {
 		ImagesMap = goGetExistingImagesInAllClusters()
 	} else {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 			r := T_ImagesMapAllClusters{}
 			r[cluster] = GetAllImagesOfCluster(cluster)
 			MergoNestedMaps(&ImagesMap, r)
 		}
 	}
-	c <- "InitAllImages Done!"
+	for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
+		LogMsg("Number of Images found in", cluster, ":", len(ImagesMap[cluster]))
+	}
+	c <- ImagesMap
+	// c <- "InitAllImages Done!"
 }

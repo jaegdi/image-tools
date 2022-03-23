@@ -32,7 +32,7 @@ func workerUsedIstags(wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-func createWorkerPool(noOfWorkersUsedIstags int) {
+func createWorkerPoolUsedIstags(noOfWorkersUsedIstags int) {
 	var wg sync.WaitGroup
 	for i := 0; i < noOfWorkersUsedIstags; i++ {
 		wg.Add(1)
@@ -69,12 +69,12 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 		jobResultsUsedIstags = make(chan ResultUsedIstags, channelsizeUsedIstags)
 
 		LogMsg("Allocate and start JobsUsedIstags")
-		go allocateUsedIstags(Clusters.Stages, allClusterFamilyNamespaces)
+		go allocateUsedIstags(FamilyNamespaces[family].Stages, allClusterFamilyNamespaces)
 
-		LogMsg("Create Worker Pool")
-		createWorkerPool(noOfWorkersUsedIstags)
+		LogMsg("Create Worker Pool for Used IsTags")
+		createWorkerPoolUsedIstags(noOfWorkersUsedIstags)
 
-		LogMsg("Collect results")
+		LogMsg("Collect results for Used IsTags")
 		for result := range jobResultsUsedIstags {
 			for is := range result.istags {
 				for tag := range result.istags[is] {
@@ -101,7 +101,7 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
 		}
 
 	} else {
-		for _, cluster := range Clusters.Stages {
+		for _, cluster := range FamilyNamespaces[family].Stages {
 			namespaces := GetAppNamespacesForFamily(cluster, family)
 			for _, namespace := range namespaces {
 				if namespace == CmdParams.Filter.Namespace {

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -18,6 +19,8 @@ type T_completeResults struct {
 	UsedIstags   T_usedIstagsResult
 	UnUsedIstags T_unUsedIstagsResult
 }
+
+type T_allImages map[string]interface{}
 
 type T_family string
 
@@ -336,6 +339,27 @@ type T_IsNamesForFamily map[T_family]map[T_isName]bool
 //------------------------------------------
 
 type T_clName string
+type T_clNames []T_clName
+
+func (c T_clName) list() T_clNames {
+	clusters := strings.Split(string(c), ",")
+	clusterlist := T_clNames{}
+	for _, cl := range clusters {
+		x := T_clName(cl)
+		clusterlist = append(clusterlist, x)
+	}
+	print(clusterlist)
+	return clusterlist
+}
+
+func (clusters T_clNames) contains(c T_clName) bool {
+	for _, v := range clusters {
+		if v == c {
+			return true
+		}
+	}
+	return false
+}
 
 // str convert T_clName to string
 func (c T_clName) str() string {
@@ -349,8 +373,17 @@ func (c T_nsName) str() string {
 	return string(c)
 }
 
-//               family     cluster  namespaces
-type T_famNs map[T_family]map[T_clName][]T_nsName
+type T_familyKeys struct {
+	ClusterNamespaces map[T_clName][]T_nsName
+	Stages            []T_clName
+	Config            map[T_clName]T_Cluster `json:"Config.[],omitempty"`
+	Buildstage        T_clName
+	Teststages        []T_clName
+	Prodstage         T_clName
+}
+
+//               family   cl-ns          cluster   namespaces
+type T_famNs map[T_family]T_familyKeys
 
 func (c T_famNs) familyList() []string {
 	families := []string{}
@@ -380,6 +413,13 @@ type T_flagFilt struct {
 	Namespace T_nsName
 }
 
+type T_flagFiltRegexp struct {
+	Isname    *regexp.Regexp
+	Istagname *regexp.Regexp
+	Tagname   *regexp.Regexp
+	Namespace *regexp.Regexp
+}
+
 type T_flagDeleteOpts struct {
 	Pattern     string
 	MinAge      int
@@ -390,15 +430,17 @@ type T_flagDeleteOpts struct {
 }
 
 type T_flagOpts struct {
+	InsecureSSL bool
 	OcClient    bool
 	NoProxy     bool
 	Socks5Proxy string
 	Profiler    bool
 	NoLog       bool
 	Debug       bool
+	Verify      bool
 }
 type T_flags struct {
-	Cluster    T_clName
+	Cluster    T_clNames
 	Token      string
 	Family     T_family
 	Json       bool
@@ -411,6 +453,7 @@ type T_flags struct {
 	TabGroup   bool
 	Output     T_flagOut
 	Filter     T_flagFilt
+	FilterReg  T_flagFiltRegexp
 	DeleteOpts T_flagDeleteOpts
 	Options    T_flagOpts
 }
@@ -424,14 +467,10 @@ type T_Cluster struct {
 }
 
 type T_ClusterConfig struct {
-	Stages     []T_clName
-	Config     map[T_clName]T_Cluster `json:"Config.[],omitempty"`
-	Buildstage T_clName
-	Teststages []T_clName
-	Prodstage  T_clName
+	Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
 }
 
-func (c T_ClusterConfig) clusterList() []string {
+func (c T_familyKeys) clusterList() []string {
 	clusters := []string{}
 	for _, fam := range c.Stages {
 		clusters = append(clusters, string(fam))
@@ -439,7 +478,7 @@ func (c T_ClusterConfig) clusterList() []string {
 	return clusters
 }
 
-func (c T_ClusterConfig) clusterListStr() string {
+func (c T_familyKeys) clusterListStr() string {
 	return strings.Join(c.clusterList(), `, `)
 
 }

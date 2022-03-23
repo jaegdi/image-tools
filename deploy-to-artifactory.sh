@@ -1,8 +1,15 @@
 #!/bin/bash
-echo "Build linux and windows binary of image-tools"
+set -e
+
+echo "Build linux binary of image-tools"
 go build
+
+echo "Build windows binary of image-tools"
 GOOS=windows GOARCH=amd64 go build
 
 echo "Push to artifactory"
-curl -ujaegdi:AP5guU7a8TN9S6zAtrRadGyMBUt -T image-tools     "https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/image-tools"
-curl -ujaegdi:AP5guU7a8TN9S6zAtrRadGyMBUt -T image-tools.exe "https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/image-tools.exe"
+artifactory-upload.sh  image-tools       scpas-bin-dev-local   istag_and_image_management/image-tools-linux
+artifactory-upload.sh  image-tools.exe   scpas-bin-dev-local   istag_and_image_management/image-tools-windows
+
+echo "Copy it to share folder PEWI4124://Daten"
+cp image-tools image-tools.exe  /gast-drive-d/Daten/
