@@ -437,6 +437,7 @@ type T_flagOpts struct {
 	Profiler    bool
 	NoLog       bool
 	Debug       bool
+	Verify      bool
 }
 type T_flags struct {
 	Cluster    T_clNames

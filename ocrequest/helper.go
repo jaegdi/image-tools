@@ -3,6 +3,7 @@ package ocrequest
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -47,6 +48,9 @@ func LogDebug(msg ...interface{}) {
 	// }
 	if CmdParams.Options.Debug {
 		DebugLogger.Println(msg...)
+	}
+	if CmdParams.Options.Verify {
+		fmt.Println(msg...)
 	}
 }
 
