@@ -36,22 +36,24 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName T_isName, 
 // InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
 func InitIsNamesForFamily(family T_family) {
-	cluster := FamilyNamespaces[CmdParams.Family].Buildstage
+	// cluster := FamilyNamespaces[CmdParams.Family].Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
 	result[family] = make(map[T_isName]bool)
-	for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
-		if ns == "openshift" {
-			continue
-		}
-		isJson := ocGetCall(cluster, ns, "imagestreams", "")
-		if err := json.Unmarshal([]byte(isJson), &isResult); err != nil {
-			LogError("Unmarshal imagestreams. " + err.Error())
-		}
-		if isResult["items"] != nil {
-			for _, v := range isResult["items"].([]interface{}) {
-				val := T_isName(v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string))
-				result[family][val] = true
+	for _, cluster := range FamilyNamespaces[CmdParams.Family].Buildstages {
+		for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
+			if ns == "openshift" {
+				continue
+			}
+			isJson := ocGetCall(cluster, ns, "imagestreams", "")
+			if err := json.Unmarshal([]byte(isJson), &isResult); err != nil {
+				LogError("Unmarshal imagestreams. " + err.Error())
+			}
+			if isResult["items"] != nil {
+				for _, v := range isResult["items"].([]interface{}) {
+					val := T_isName(v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string))
+					result[family][val] = true
+				}
 			}
 		}
 	}
@@ -82,7 +84,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	resultIstag := make(T_resIstag)
 	resultSha := make(T_resSha)
 	resultIstream := make(T_resIs)
-	var isLink string
+	// var isLink string
 
 	var itemsMap []interface{}
 	if istagsMap["items"] != nil {
@@ -98,11 +100,11 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		imageMetadata = content.(map[string]interface{})["image"].(map[string]interface{})["metadata"].(map[string]interface{})
 		istagname := T_istagName(metadata["name"].(string))
 		isNamespace := T_nsName(metadata["namespace"].(string))
-		if metadata["selfLink"] != nil {
-			isLink = metadata["selfLink"].(string)
-		} else {
-			isLink = ""
-		}
+		// if metadata["selfLink"] != nil {
+		// 	isLink = metadata["selfLink"].(string)
+		// } else {
+		// 	isLink = ""
+		// }
 		isDate := metadata["creationTimestamp"].(string)
 		sha := T_shaName(imageMetadata["name"].(string))
 		if CmdParams.Filter.Imagename != "" && sha != CmdParams.Filter.Imagename {
@@ -137,11 +139,11 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 			Imagestream: imagestreamName,
 			Tagname:     tagName,
 			Namespace:   isNamespace,
-			Link:        isLink,
-			Date:        isDate,
-			AgeInDays:   isAge,
-			Image:       sha,
-			Build:       buildLabelsMap,
+			// Link:        isLink,
+			Date:      isDate,
+			AgeInDays: isAge,
+			Image:     sha,
+			Build:     buildLabelsMap,
 		}
 
 		shaStreams.Add(imagestreamName, sha, myIstag)
@@ -151,9 +153,9 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 				Istags:      shaNames[sha],
 				Imagestream: imagestreamName,
 				Namespace:   isNamespace,
-				Link:        isLink,
-				Date:        isDate,
-				AgeInDays:   isAge,
+				// Link:        isLink,
+				Date:      isDate,
+				AgeInDays: isAge,
 			},
 		}
 

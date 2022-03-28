@@ -164,7 +164,8 @@ func GetCsvFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
 		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		// headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, "Cluster")
 		headline = append(headline, toArrayString(T_istag{}.Names())...)
 		output = append(output, headline)
@@ -187,7 +188,8 @@ func GetCsvFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		// headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
 		for _, cluster := range CmdParams.Cluster {
 			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
@@ -201,7 +203,7 @@ func GetCsvFromMap(list interface{}, family T_family) {
 					line = append(line, istagMap.Imagestream.str())
 					line = append(line, cluster.str())
 					line = append(line, istagMap.Namespace.str())
-					line = append(line, istagMap.Link)
+					// line = append(line, istagMap.Link)
 					line = append(line, istagMap.Date)
 					line = append(line, strconv.Itoa(istagMap.AgeInDays))
 					for tag := range istagMap.Istags {
@@ -277,7 +279,8 @@ func GetTableFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		// headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
+		headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
 		headline = append(headline, "Cluster")
 		headline = append(headline, toTableRow(T_istag{}.Names())...)
 		output = append(output, headline)
@@ -299,7 +302,8 @@ func GetTableFromMap(list interface{}, family T_family) {
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
 		output := []table.Row{}
-		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		// headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
+		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
 		output = append(output, headline)
 		for _, cluster := range CmdParams.Cluster {
 			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
@@ -312,7 +316,7 @@ func GetTableFromMap(list interface{}, family T_family) {
 					line = append(line, istagMap.Imagestream)
 					line = append(line, cluster)
 					line = append(line, istagMap.Namespace)
-					line = append(line, istagMap.Link)
+					// line = append(line, istagMap.Link)
 					line = append(line, istagMap.Date)
 					line = append(line, strconv.Itoa(istagMap.AgeInDays))
 					for tag := range istagMap.Istags {

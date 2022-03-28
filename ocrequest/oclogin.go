@@ -114,7 +114,7 @@ func readTokens(filename string) error {
 		return err
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
-			LogError("error unmarshal clusterconfig", err)
+			LogError("error unmarshal clusterconfig from", filePath, err)
 		} else {
 			LogMsg("Token read from", filePath)
 		}

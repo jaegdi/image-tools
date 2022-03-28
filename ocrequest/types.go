@@ -168,11 +168,11 @@ type T_istag struct {
 	Imagestream T_isName
 	Tagname     T_tagName
 	Namespace   T_nsName
-	Link        string
-	Date        string
-	AgeInDays   int
-	Image       T_shaName
-	Build       T_istagBuildLabels
+	// Link        string
+	Date      string
+	AgeInDays int
+	Image     T_shaName
+	Build     T_istagBuildLabels
 }
 
 func ToGenericArray(arr ...interface{}) []interface{} {
@@ -223,9 +223,9 @@ type T_sha struct {
 	Istags      T_Istags_List
 	Imagestream T_isName
 	Namespace   T_nsName
-	Link        string
-	Date        string
-	AgeInDays   int
+	// Link        string
+	Date      string
+	AgeInDays int
 }
 
 type T_isShaTagnames map[T_istagName]interface{}
@@ -377,7 +377,7 @@ type T_familyKeys struct {
 	ClusterNamespaces map[T_clName][]T_nsName
 	Stages            []T_clName
 	Config            map[T_clName]T_Cluster `json:"Config.[],omitempty"`
-	Buildstage        T_clName
+	Buildstages       []T_clName
 	Teststages        []T_clName
 	Prodstage         T_clName
 }
@@ -467,7 +467,8 @@ type T_Cluster struct {
 }
 
 type T_ClusterConfig struct {
-	Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
+	// Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
+	Config map[T_clName]T_Cluster `json:"Config,omitempty"`
 }
 
 func (c T_familyKeys) clusterList() []string {

@@ -52,10 +52,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-pkp"},
 			"pro-apc0": {"images-pkp"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"ssp": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -65,10 +65,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-ssp"},
 			"pro-apc0": {"images-ssp"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"aps": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -78,10 +78,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-aps"},
 			"pro-apc0": {"images-aps"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"vps": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -91,10 +91,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-vps"},
 			"pro-apc0": {"images-vps"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"dca": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -104,10 +104,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-dca"},
 			"pro-apc0": {"images-dca"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"fpc": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -117,10 +117,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"vptest-fpc"},
 			"pro-apc0": {"fpc", "vptest-fpc"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"fpc-scp0": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -129,10 +129,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-scp0": {},
 			// "pro-scp0": {},
 		},
-		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Buildstage: "cid-scp0",
-		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstage:  "ppr-scp0",
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstage:   "ppr-scp0",
 	},
 	"hub": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -142,10 +142,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-apc0": {"images-hub", "vpt-hub-mvp"},
 			"pro-apc0": {"images-hub", "pro-hub"},
 		},
-		Stages:     []T_clName{"cid-apc0", "ppr-apc0", "vpt-apc0", "pro-apc0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "ppr-apc0", "vpt-apc0", "pro-apc0"},
+		Buildstages: []T_clName{"cid-apc0"},
+		Teststages:  []T_clName{"vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"hub-scp0": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -156,9 +156,9 @@ var FamilyNamespaces = T_famNs{
 		},
 		Stages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
 		// Stages:     []T_clName{"cid-apc0", "cid-scp0"},
-		Buildstage: "cid-scp0",
-		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstage:  "pro-scp0",
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstage:   "pro-scp0",
 	},
 	"base": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -171,11 +171,15 @@ var FamilyNamespaces = T_famNs{
 			"ppr-scp0": {"scp-operations"},
 			"vpt-scp0": {"scp-operations"},
 			"pro-scp0": {"scp-operations"},
+			// "cid-scp0": {"scp-operations", "scp-images", "scp-baseimages"},
+			// "ppr-scp0": {"scp-operations", "scp-images"},
+			// "vpt-scp0": {"scp-operations", "scp-images"},
+			// "pro-scp0": {"scp-operations", "scp-images"},
 		},
-		Stages:     []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0", "cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Buildstage: "cid-apc0",
-		Teststages: []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
-		Prodstage:  "pro-apc0",
+		Stages:      []T_clName{"cid-apc0", "int-apc0", "ppr-apc0", "pro-apc0", "cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Buildstages: []T_clName{"cid-apc0", "cid-scp0"},
+		Teststages:  []T_clName{"int-apc0", "ppr-apc0", "vpt-apc0"},
+		Prodstage:   "pro-apc0",
 	},
 	"base-scp0": {
 		ClusterNamespaces: map[T_clName][]T_nsName{
@@ -184,10 +188,10 @@ var FamilyNamespaces = T_famNs{
 			"vpt-scp0": {"scp-operations"},
 			"pro-scp0": {"scp-operations"},
 		},
-		Stages:     []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Buildstage: "cid-scp0",
-		Teststages: []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstage:  "vpt-scp0",
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstage:   "vpt-scp0",
 	},
 }
 
