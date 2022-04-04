@@ -41,7 +41,7 @@ func InitIsNamesForFamily(family T_family) {
 	result := make(T_IsNamesForFamily)
 	result[family] = make(map[T_isName]bool)
 	for _, cluster := range FamilyNamespaces[CmdParams.Family].Buildstages {
-		for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
+		for _, ns := range FamilyNamespaces[family].ImageNamespaces[cluster] {
 			if ns == "openshift" {
 				continue
 			}
@@ -74,7 +74,7 @@ func InitIsNamesForFamily(family T_family) {
 // and return the result map
 func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_nsName) T_result {
 	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
-	LogMsg("istagJson:", istagsJson)
+	InfoLogger.Println("istagJson:", istagsJson)
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
 		// logfix
@@ -207,7 +207,7 @@ func GetAllIstagsForFamily(c chan T_ResultExistingIstagsOverAllClusters) {
 	} else {
 		for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 			if namespace == "" {
-				for _, ns := range FamilyNamespaces[family].ClusterNamespaces[cluster] {
+				for _, ns := range FamilyNamespaces[family].ImageNamespaces[cluster] {
 					r := T_ResultExistingIstagsOverAllClusters{cluster: OcGetAllIstagsOfNamespace(result[cluster], cluster, ns)}
 					MergoNestedMaps(&result, r)
 

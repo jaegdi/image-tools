@@ -16,6 +16,11 @@ func getClusterToken(cluster T_clName) string {
 	token := ""
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
+		if token != "" {
+			DebugLogger.Print("Got token for cluster ", cluster, " from Clusters.Token")
+		} else {
+			ErrorLogger.Print("Failed to get token for cluster ", cluster, " from Clusters.Token")
+		}
 	}
 	// fmt.Println(token)
 	// os.Exit(1)
@@ -116,7 +121,7 @@ func readTokens(filename string) error {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
 			LogError("error unmarshal clusterconfig from", filePath, err)
 		} else {
-			LogMsg("Token read from", filePath)
+			InfoLogger.Println("Token read from", filePath)
 		}
 		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
 		// LogDebug(string(js))

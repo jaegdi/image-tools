@@ -346,7 +346,7 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
-	LogMsg(GetJsonFromMap(flags))
+	InfoLogger.Println(GetJsonFromMap(flags))
 
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")
@@ -365,13 +365,13 @@ func EvalFlags() {
 			exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
 		}
 	}
-	if FamilyNamespaces[flags.Family].ClusterNamespaces == nil {
+	if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
 		exitWithError("Family", flags.Family, "is not defined")
 	}
 
 	for _, cluster := range flags.Cluster {
 		foundNamespace := false
-		for _, v := range FamilyNamespaces[flags.Family].ClusterNamespaces[cluster] {
+		for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
 			if flags.Filter.Namespace == v {
 				foundNamespace = true
 			}

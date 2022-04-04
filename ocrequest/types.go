@@ -24,6 +24,10 @@ type T_allImages map[string]interface{}
 
 type T_family string
 
+func (c T_family) str() string {
+	return string(c)
+}
+
 //                                 family
 type T_completeResultsFamilies map[T_family]T_completeResults
 
@@ -44,6 +48,7 @@ type T_istagName string
 func (c T_istagName) str() string {
 	return string(c)
 }
+
 func (istag T_istagName) split() (T_isName, T_tagName) {
 	istagParts := strings.Split(istag.str(), ":")
 	var is T_isName
@@ -339,6 +344,12 @@ type T_IsNamesForFamily map[T_family]map[T_isName]bool
 //------------------------------------------
 
 type T_clName string
+
+// str convert T_clName to string
+func (c T_clName) str() string {
+	return string(c)
+}
+
 type T_clNames []T_clName
 
 func (c T_clName) list() T_clNames {
@@ -361,11 +372,6 @@ func (clusters T_clNames) contains(c T_clName) bool {
 	return false
 }
 
-// str convert T_clName to string
-func (c T_clName) str() string {
-	return string(c)
-}
-
 type T_nsName string
 
 // str convert T_nsName to string
@@ -374,12 +380,24 @@ func (c T_nsName) str() string {
 }
 
 type T_familyKeys struct {
-	ClusterNamespaces map[T_clName][]T_nsName
-	Stages            []T_clName
-	Config            map[T_clName]T_Cluster `json:"Config.[],omitempty"`
-	Buildstages       []T_clName
-	Teststages        []T_clName
-	Prodstage         T_clName
+	ImageNamespaces map[T_clName][]T_nsName
+	Stages          []T_clName
+	Config          map[T_clName]T_Cluster `json:"config.[],omitempty"`
+	Buildstages     []T_clName
+	Teststages      []T_clName
+	Prodstages      []T_clName
+}
+
+func (c T_familyKeys) clusterList() []string {
+	clusters := []string{}
+	for _, fam := range c.Stages {
+		clusters = append(clusters, string(fam))
+	}
+	return clusters
+}
+
+func (c T_familyKeys) clusterListStr() string {
+	return strings.Join(c.clusterList(), `, `)
 }
 
 //               family   cl-ns          cluster   namespaces
@@ -396,6 +414,8 @@ func (c T_famNs) familyList() []string {
 func (c T_famNs) familyListStr() string {
 	return strings.Join(c.familyList(), `, `)
 }
+
+//------------------------------------------
 
 type T_flagOut struct {
 	Is     bool
@@ -461,28 +481,18 @@ type T_flags struct {
 //------------------------------------------
 
 type T_Cluster struct {
-	Url   string `json:"Url,omitempty"`
-	Name  string `json:"Name,omitempty"`
-	Token string `json:"Token,omitempty"`
+	Url           string `json:"url,omitempty"`
+	Name          string `json:"name,omitempty"`
+	Token         string `json:"token,omitempty"`
+	ConfigToolUrl string `json:"configtoolurl,omitempty"`
 }
 
 type T_ClusterConfig struct {
 	// Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
-	Config map[T_clName]T_Cluster `json:"Config,omitempty"`
+	Config map[T_clName]T_Cluster `json:"config,omitempty"`
 }
 
-func (c T_familyKeys) clusterList() []string {
-	clusters := []string{}
-	for _, fam := range c.Stages {
-		clusters = append(clusters, string(fam))
-	}
-	return clusters
-}
-
-func (c T_familyKeys) clusterListStr() string {
-	return strings.Join(c.clusterList(), `, `)
-
-}
+//------------------------------------------
 
 type T_csvLine []string
 
@@ -512,3 +522,67 @@ func (c T_csvDoc) csvDoc(typ string) {
 		}
 	}
 }
+
+//------------------------------------------
+
+type T_cft_cluster struct {
+	Name         T_clName `json:"name"`
+	Stage        string   `json:"stage"`
+	Console_Url  string   `json:"console_url,omitempty"`
+	Consoleurl   string   `json:"console-url,omitempty"`
+	Registry     string   `json:"registry"`
+	Registry_Url string   `json:"registry_url"`
+	Sccs         []string `json:"sccs,omitempty"`
+}
+type T_cft_clusters []T_cft_cluster
+
+type T_cft_family struct {
+	Name              string   `json:"name",omitempty`
+	Description       string   `json:"description",omitempty`
+	Applications      []string `json:"applications",omitempty`
+	Repository_Layout string   `json:"repository_layout",omitempty`
+}
+type T_cft_families []T_cft_family
+
+type T_cft_environment struct {
+	Name         string   `json:"name"`
+	Cluster      T_clName `json:"cluster"`
+	Pre_Cluster  T_clName `json:"pre_cluster,omitempty"`
+	Description  string   `json:"description,omitempty"`
+	Family       T_family `json:"family"`
+	Pipeline     string   `json:"pipeline,omitempty"`
+	Pre_Pipeline string   `json:"pre_pipeline,omitempty"`
+}
+type T_cft_environments []T_cft_environment
+
+type T_cft_roles struct {
+	Admin []string `json:"admin,omitempty"`
+	View  []string `json:"view,omitempty"`
+}
+
+type T_cft_labels struct {
+	It_Services_Id           *string `json:"it_services_id,omitempty"`
+	Router                   *string `json:"router,omitempty"`
+	Allow_Friend_Environment *string `json:"allow_friend_environment,omitempty"`
+	Access_Uniserv           *bool   `json:"access_uniserv,omitempty"`
+	Argoproj                 *string `json:"argoproj,omitempty"`
+}
+
+type T_cft_namespace struct {
+	Name           T_nsName      `json:"name"`
+	Environment    string        `json:"environment,omitempty"`
+	Applications   []string      `json:"applications,omitempty"`
+	Roles          T_cft_roles   `json:"roles,omitempty"`
+	Sa_scc_nonroot string        `json:"sa_scc_nonroot,omitempty"`
+	Feature_kafka  *bool         `json:"feature_kafka,omitempty"`
+	Labels         *T_cft_labels `json:"labels,omitempty"`
+}
+type T_cft_namespaces []T_cft_namespace
+
+type T_cft_pipeline struct {
+	Name        string   `json:"name"`
+	Deployer_Ns T_nsName `json:"deployer_ns,omitempty"`
+	Deployer_Sa string   `json:"deployer_sa,omitempty"`
+	Image_Ns    T_nsName `json:"image_ns,omitempty"`
+}
+type T_cft_pipelines []T_cft_pipeline

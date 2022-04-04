@@ -43,7 +43,7 @@ func main() {
 	// var wg sync.WaitGroup
 	// if CmdParams.Options.Profiler {
 	// 	go func() {
-	// 		LogMsg(http.ListenAndServe("localhost:6060", nil))
+	// 		InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
 	// 	}()
 	// }
 	result := T_completeResults{}

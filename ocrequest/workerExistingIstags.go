@@ -50,16 +50,16 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 func allocateExistingIstags(family T_family, clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
-		LogMsg("Start JobExistingIstags for cluster" + clusters[cl])
-		clusterFamNamespaces := FamilyNamespaces[family].ClusterNamespaces[clusters[cl]]
+		InfoLogger.Println("Start JobExistingIstags for cluster" + clusters[cl])
+		clusterFamNamespaces := FamilyNamespaces[family].ImageNamespaces[clusters[cl]]
 		for i := 0; i < len(clusterFamNamespaces); i++ {
-			LogMsg("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
+			InfoLogger.Println("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
 			jobsExistingIstags <- job
 			jobNr++
 		}
 	}
-	LogMsg("close jobsExistingIstags")
+	InfoLogger.Println("close jobsExistingIstags")
 	close(jobsExistingIstags)
 }
 
@@ -72,13 +72,13 @@ func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExisting
 		jobsExistingIstags = make(chan JobExistingIstags, channelsizeExistingIstags)
 		jobResultsExistingIstags = make(chan ResultExistingIstags, channelsizeExistingIstags)
 
-		LogMsg("Allocate and start JobsExistingIstags")
+		InfoLogger.Println("Allocate and start JobsExistingIstags")
 		go allocateExistingIstags(family, FamilyNamespaces[family].Stages)
 
-		LogMsg("Create Worker Pool")
+		InfoLogger.Println("Create Worker Pool")
 		createWorkerPoolForExistingIstags(noOfWorkersExistingIstags)
 
-		LogMsg("Collect results")
+		InfoLogger.Println("Collect results")
 		for result := range jobResultsExistingIstags {
 			r := result.Istags
 			MergoNestedMaps(&istagResult, r)
@@ -86,7 +86,7 @@ func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExisting
 
 	} else {
 		for _, cluster := range FamilyNamespaces[family].Stages {
-			namespaces := FamilyNamespaces[family].ClusterNamespaces[cluster]
+			namespaces := FamilyNamespaces[family].ImageNamespaces[cluster]
 			for _, namespace := range namespaces {
 				r := T_ResultExistingIstagsOverAllClusters{
 					cluster: OcGetAllIstagsOfNamespace(T_result{}, cluster, namespace)}

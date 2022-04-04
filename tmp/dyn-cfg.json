@@ -1,0 +1,321 @@
+{
+    "aps": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "aps-jenkins"
+              
+           ],
+           "int-apc0": [
+              "images-aps"
+           ],
+           "ppr-apc0": [
+              "images-aps"
+           ],
+           "pro-apc0": [
+              "images-aps"
+           ],
+           "vpt-apc0": [
+              "images-aps"
+           ]
+        },
+        "Stages": [
+           "cid-apc0",
+           "int-apc0",
+           "ppr-apc0",
+           "vpt-apc0",
+           "pro-apc0"
+        ],
+        "Buildstages": [
+           "cid-apc0"
+        ],
+        "Teststages": [
+           "int-apc0",
+           "ppr-apc0",
+           "vpt-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "dca": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "images-dca"
+           ],
+           "cid-scp0": [
+              "dca-images",
+              "images-dca"
+           ],
+           "dev-scp0": [
+              "dca-images"
+           ],
+           "ppr-apc0": [
+              "images-dca"
+           ],
+           "pro-apc0": [
+              "images-dca"
+           ]
+        },
+        "Stages": [
+           "pro-apc0",
+           "cid-apc0",
+           "dev-scp0",
+           "cid-scp0",
+           "ppr-apc0"
+        ],
+        "Buildstages": [],
+        "Teststages": [
+           "dev-scp0",
+           "ppr-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "fraud": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "images-fraud"
+           ],
+           "cid-scp0": [
+              "images-fraud"
+           ],
+           "int-apc0": [
+              "images-fraud"
+           ],
+           "ppr-apc0": [
+              "images-fraud"
+           ],
+           "ppr-scp0": [
+              "images-fraud"
+           ],
+           "pro-apc0": [
+              "images-fraud"
+           ]
+        },
+        "Stages": [
+           "int-apc0",
+           "cid-apc0",
+           "ppr-apc0",
+           "pro-apc0",
+           "ppr-scp0",
+           "cid-scp0"
+        ],
+        "Buildstages": [],
+        "Teststages": [
+           "int-apc0",
+           "ppr-apc0",
+           "ppr-scp0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "hub": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "images-hub"
+           ],
+           "ppr-apc0": [
+              "images-hub"
+           ],
+           "pro-apc0": [
+              "images-hub"
+           ],
+           "vpt-apc0": [
+              "images-hub"
+           ]
+        },
+        "Stages": [
+           "cid-apc0",
+           "ppr-apc0",
+           "vpt-apc0",
+           "pro-apc0"
+        ],
+        "Buildstages": [],
+        "Teststages": [
+           "ppr-apc0",
+           "vpt-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "pkp": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "ms-jenkins"
+           ],
+           "int-apc0": [
+              "images-pkp"
+           ],
+           "ppr-apc0": [
+              "images-pkp"
+           ],
+           "pro-apc0": [
+              "images-pkp"
+           ],
+           "vpt-apc0": [
+              "images-pkp"
+           ]
+        },
+        "Stages": [
+           "cid-apc0",
+           "ppr-apc0",
+           "vpt-apc0",
+           "pro-apc0",
+           "int-apc0"
+        ],
+        "Buildstages": [
+           "cid-apc0"
+        ],
+        "Teststages": [
+           "int-apc0",
+           "ppr-apc0",
+           "vpt-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "scp": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "images-scp",
+              "scptools-jenkins",
+              "scpas-jenkins"
+           ],
+           "cid-scp0": [
+              "scp-images",
+              "scp-baseimages"
+           ],
+           "dev-scp0": [
+              "images-scp"
+           ],
+           "int-apc0": [
+              "images-scp"
+           ],
+           "ppr-apc0": [
+              "images-scp"
+           ],
+           "ppr-scp0": [
+              "scp-images"
+           ],
+           "pro-apc0": [
+              "images-scp"
+           ],
+           "pro-scp0": [
+              "scp-images"
+           ],
+           "vpt-scp0": [
+              "scp-images"
+           ]
+        },
+        "Stages": [
+           "dev-scp0",
+           "cid-apc0",
+           "ppr-apc0",
+           "pro-apc0",
+           "cid-scp0",
+           "int-apc0",
+           "ppr-scp0",
+           "vpt-scp0",
+           "pro-scp0"
+        ],
+        "Buildstages": [
+           "cid-apc0",
+           "cid-scp0"
+        ],
+        "Teststages": [
+           "dev-scp0",
+           "int-apc0",
+           "ppr-apc0",
+           "ppr-scp0",
+           "vpt-scp0"
+        ],
+        "Prodstages": [
+           "pro-apc0",
+           "pro-scp0"
+        ]
+     },
+     "ssp": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "ssp-jenkins"
+           ],
+           "int-apc0": [
+              "images-ssp"
+           ],
+           "ppr-apc0": [
+              "images-ssp"
+           ],
+           "pro-apc0": [
+              "images-ssp"
+           ],
+           "vpt-apc0": [
+              "images-ssp"
+           ]
+        },
+        "Stages": [
+           "ppr-apc0",
+           "vpt-apc0",
+           "pro-apc0",
+           "cid-apc0",
+           "int-apc0"
+        ],
+        "Buildstages": [
+           "cid-apc0"
+        ],
+        "Teststages": [
+           "int-apc0",
+           "ppr-apc0",
+           "vpt-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+     },
+     "vps": {
+        "ImageNamespaces": {
+           "cid-apc0": [
+              "images-vps",
+              "zpe-jenkins",
+              "images-dfn"
+           ],
+           "cid-scp0": [
+              "images-dfn"
+           ],
+           "int-apc0": [
+              "images-vps"
+           ],
+           "ppr-apc0": [
+              "images-vps"
+           ],
+           "pro-apc0": [
+              "images-vps"
+           ],
+           "vpt-apc0": [
+              "images-vps"
+           ]
+        },
+        "Stages": [
+           "int-apc0",
+           "cid-apc0",
+           "cid-scp0",
+           "ppr-apc0",
+           "pro-apc0",
+           "vpt-apc0"
+        ],
+        "Buildstages": [
+           "cid-apc0",
+           "cid-scp0"
+        ],
+        "Teststages": [
+           "ppr-apc0",
+           "vpt-apc0"
+        ],
+        "Prodstages": [
+           "pro-apc0"
+        ]
+    }
+}

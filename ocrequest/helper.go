@@ -36,11 +36,6 @@ func exitWithError(errormsg ...interface{}) {
 	os.Exit(1)
 }
 
-// LogMsg write msg to StdErr and logfile
-func LogMsg(msg ...interface{}) {
-	InfoLogger.Println(msg...)
-}
-
 // LogDebug write msg to StdErr and logfile
 func LogDebug(msg ...interface{}) {
 	// if !CmdParams.Options.NoLog {
@@ -104,7 +99,7 @@ func GetJsonFromMap(dict interface{}) string {
 	encoder.SetIndent("", "   ")
 	if err := encoder.Encode(dict); err != nil {
 		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
-			LogError(err)
+			ErrorLogger.Println("\n  dict:\n  ", dict, "\n  err:\n  ", err)
 		} else {
 			s := string(jsonBytes)
 			return s
@@ -112,14 +107,32 @@ func GetJsonFromMap(dict interface{}) string {
 	} else {
 		b := buffer.Bytes()
 		if b1, err := UnescapeUtf8InJsonBytes(b); err != nil {
-			LogError("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
+			ErrorLogger.Println("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
 			return string(b1)
 		} else {
 			return string(b1)
 		}
-		// return buffer.String()
 	}
 	return ""
+}
+
+// Read a multidoc yaml file and generate data in out as []interface{}
+func UnmarshalMultidocYaml(in []byte, out *([]interface{})) error {
+	r := bytes.NewReader(in)
+	decoder := yaml.NewDecoder(r)
+	for {
+		var data map[string]interface{}
+
+		if err := decoder.Decode(&data); err != nil {
+			// Break when there are no more documents to decode
+			if err != io.EOF {
+				return err
+			}
+			break
+		}
+		*out = append(*out, data)
+	}
+	return nil
 }
 
 // func getFieldFromStruct(v reflect.Type, field string) string {
@@ -172,7 +185,7 @@ func GetCsvFromMap(list interface{}, family T_family) {
 		for _, cluster := range CmdParams.Cluster {
 			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
 				for _, istagMap := range nsMap {
-					// LogMsg("namespace:", ns)
+					// InfoLogger.Println("namespace:", ns)
 					line := T_csvLine{}
 					line = append(line, string(family))
 					line = append(line, "allIstags")
@@ -287,7 +300,7 @@ func GetTableFromMap(list interface{}, family T_family) {
 		for _, cluster := range CmdParams.Cluster {
 			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
 				for _, istagMap := range nsMap {
-					// LogMsg("namespace:", ns)
+					// InfoLogger.Println("namespace:", ns)
 					line := table.Row{}
 					// line = append(line, "allIstags")
 					// line = append(line, "istag")
@@ -395,7 +408,7 @@ func tablePrettyprint(out []table.Row) {
 	// get height of terminal
 	// _, height, err := terminal.GetSize(0)
 	// if err != nil {
-	// 	LogMsg("failedt o get terminal size")
+	// 	InfoLogger.Println("failedt o get terminal size")
 	// 	height = 60
 	// }
 	fd := int(os.Stdout.Fd())

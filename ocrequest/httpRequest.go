@@ -1,14 +1,33 @@
 package ocrequest
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"io/ioutil"
 	"net/http"
 
 	"golang.org/x/net/proxy"
 )
 
-func GetClusters(configtoolUrl string) interface{} {
-	url := configtoolUrl + "/clusters?validate=true"
+func getHttpAnswer(url string) []byte {
+	// Get the SystemCertPool, continue with an empty pool on error
+	rootCAs, _ := x509.SystemCertPool()
+	if rootCAs == nil {
+		rootCAs = x509.NewCertPool()
+	}
+
+	// Append our cert to the system pool
+	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
+		LogError("No certs appended, using system certs only")
+	}
+
+	// Trust the augmented cert pool in our client
+	config := &tls.Config{
+		InsecureSkipVerify: CmdParams.Options.InsecureSSL,
+		RootCAs:            rootCAs,
+	}
+
+	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		LogError("Get " + url + " failed. " + err.Error())
@@ -17,10 +36,10 @@ func GetClusters(configtoolUrl string) interface{} {
 	// add header to the req
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
-
 	// Send req using http Client
-	var noproxyTransport http.RoundTripper = &http.Transport{Proxy: nil}
-	var client = &http.Client{}
+	var noproxyTransport http.RoundTripper = &http.Transport{Proxy: nil, TLSClientConfig: config}
+	var defaultTransport = &http.Transport{TLSClientConfig: config}
+	var client = &http.Client{Transport: defaultTransport}
 	// NO_PROXY handling
 	if CmdParams.Options.NoProxy {
 		client = &http.Client{Transport: noproxyTransport}
@@ -31,12 +50,13 @@ func GetClusters(configtoolUrl string) interface{} {
 		if err != nil {
 			exitWithError("can't connect to the proxy:", err)
 		}
-		httpTransport := &http.Transport{}
-		client = &http.Client{}
+		httpTransport := &http.Transport{TLSClientConfig: config}
+		client = &http.Client{Transport: httpTransport}
 		// set our socks5 as the dialer
 		httpTransport.Dial = dialer.Dial
-	}
 
+	}
+	// client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		LogError("Error on sending request.\n[ERROR] -" + err.Error())

@@ -21,7 +21,7 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_family) []T_nsName {
 	if err != nil {
 		LogError("generate Map for AppNamespaces." + err.Error())
 	} else {
-		// LogMsg("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
+		// InfoLogger.Println("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
 		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
 			for _, v := range namespacesMap["items"].([]interface{}) {
 				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
@@ -195,7 +195,7 @@ func GetUsedIstagsForFamilyInCluster(family T_family, cluster T_clName) T_usedIs
 	var result T_usedIstagsResult
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
-			LogMsg("Get used istags of cluster: ", cluster, "in namespace:", ns)
+			InfoLogger.Println("Get used istags of cluster: ", cluster, "in namespace:", ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			MergoNestedMaps(&result, r)
 		}
@@ -238,7 +238,7 @@ func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 	} else {
 		clusters := FamilyNamespaces[CmdParams.Family].Stages
 		for _, cluster := range clusters {
-			LogMsg("Get used istags in cluster:", cluster)
+			InfoLogger.Println("Get used istags in cluster:", cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
 			MergoNestedMaps(&result, resultCluster)
 		}

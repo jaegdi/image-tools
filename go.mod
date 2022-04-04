@@ -7,6 +7,7 @@ require (
 	github.com/ianlancetaylor/demangle v0.0.0-20211126204342-3ad08eb09c01 // indirect
 	github.com/imdario/mergo v0.3.11
 	github.com/jedib0t/go-pretty/v6 v6.0.5
+	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/stretchr/stew v0.0.0-20130812190256-80ef0842b48b
 	github.com/stretchr/testify v1.6.1 // indirect
