@@ -47,7 +47,7 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 	close(jobResultsExistingIstags)
 }
 
-func allocateExistingIstags(family T_family, clusters []T_clName) {
+func allocateExistingIstags(family T_familyName, clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
 		InfoLogger.Println("Start JobExistingIstags for cluster" + clusters[cl])
@@ -63,7 +63,7 @@ func allocateExistingIstags(family T_family, clusters []T_clName) {
 	close(jobsExistingIstags)
 }
 
-func goGetExistingIstagsForFamilyInAllClusters(family T_family) T_ResultExistingIstagsOverAllClusters {
+func goGetExistingIstagsForFamilyInAllClusters(family T_familyName) T_ResultExistingIstagsOverAllClusters {
 
 	istagResult := T_ResultExistingIstagsOverAllClusters{}
 

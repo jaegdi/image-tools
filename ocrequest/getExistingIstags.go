@@ -35,7 +35,7 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName T_isName, 
 
 // InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
-func InitIsNamesForFamily(family T_family) {
+func InitIsNamesForFamily(family T_familyName) {
 	// cluster := FamilyNamespaces[CmdParams.Family].Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)

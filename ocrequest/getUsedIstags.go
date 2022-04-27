@@ -13,7 +13,7 @@ import (
 // filters them with the pattern '^<family>-' to find all namespaces, which
 // names starting with the family-name followed by a dash. It returns a slice
 // list with the application namespaces for the family.
-func GetAppNamespacesForFamily(cluster T_clName, family T_family) []T_nsName {
+func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName {
 	namespacesJson := ocGetCall(cluster, "", "namespaces", "")
 	namespacesMap := map[string]interface{}{}
 	namespaceList := []T_nsName{}
@@ -189,7 +189,7 @@ func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedI
 // namespaces, that belongs to the family,
 // registers the images of these objects and generates
 // a map with all these istags and return this map as result.
-func GetUsedIstagsForFamilyInCluster(family T_family, cluster T_clName) T_usedIstagsResult {
+func GetUsedIstagsForFamilyInCluster(family T_familyName, cluster T_clName) T_usedIstagsResult {
 	namespace := CmdParams.Filter.Namespace
 
 	var result T_usedIstagsResult

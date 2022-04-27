@@ -151,7 +151,7 @@ func GetYamlFromMap(list interface{}) string {
 }
 
 // GetCsvFromMap generates CSV output from map
-func GetCsvFromMap(list interface{}, family T_family) {
+func GetCsvFromMap(list interface{}, family T_familyName) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag", "Cluster"}
@@ -267,7 +267,7 @@ func GetCsvFromMap(list interface{}, family T_family) {
 }
 
 // GetTableFromMap generate ASCII table output from map
-func GetTableFromMap(list interface{}, family T_family) {
+func GetTableFromMap(list interface{}, family T_familyName) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := []table.Row{}
 		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}

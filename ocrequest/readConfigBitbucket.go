@@ -107,16 +107,17 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 	families T_cft_families,
 	environments T_cft_environments,
 	namespaces T_cft_namespaces,
-	pipelines T_cft_pipelines) T_famNs {
+	pipelines T_cft_pipelines) T_famNsList {
 	// func body
-	fnc := T_famNs{}
+	fnc := T_famNsList{}
 	for _, fam := range families {
-		family := T_family(fam.Name)
+		family := T_familyName(fam.Name)
 		fnc[family] = T_familyKeys{}
 		famMap := T_familyKeys{}
 		famMap.ImageNamespaces = map[T_clName][]T_nsName{}
 		famMap.Buildstages = []T_clName{}
 		famMap.Teststages = []T_clName{}
+		famMap.Apps = map[T_appName]T_appKeys{}
 		for _, environment := range environments {
 			if environment.Family == family {
 				if famMap.ImageNamespaces[environment.Cluster] == nil {
@@ -130,16 +131,6 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 						if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns) {
 							famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns)
 						}
-						//  dev pipelines
-						// if strings.Contains(environment.Cluster.str(), "cid-") && pipeline.Name == string(family)+"-dev-pipeline" {
-						// 	if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns) {
-						// 		famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns)
-						// 	}
-						// 	if !slice.Contains(famMap.Buildstages, environment.Cluster) {
-						// 		famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
-						// 	}
-						// }
-						// for _, app := range fam.Applications {
 						if strings.Contains(environment.Pipeline, "-dev-pipeline") {
 							if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns) {
 								famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns)
@@ -148,15 +139,6 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 								famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
 							}
 						}
-						// if pipeline.Name == string(family)+"-"+app+"-pipeline" {
-						// 	if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns) {
-						// 		famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns)
-						// 	}
-						// 	if !slice.Contains(famMap.Buildstages, environment.Cluster) {
-						// 		famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
-						// 	}
-						// }
-						// }
 					}
 					if pipeline.Name == environment.Pre_Pipeline {
 						if !slice.Contains(famMap.ImageNamespaces[environment.Pre_Cluster], pipeline.Image_Ns) {
@@ -172,6 +154,22 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 				if strings.Contains(environment.Cluster.str(), "pro-") {
 					if !slice.Contains(famMap.Prodstages, environment.Cluster) {
 						famMap.Prodstages = append(famMap.Prodstages, environment.Cluster)
+					}
+				}
+				// Collect applications info
+				for _, app := range fam.Applications {
+					appname := T_appName(app)
+					appnslist := T_appNsList{}
+					appkeys := T_appKeys{}
+					if famMap.Apps[appname] == nil {
+						famMap.Apps[appname] = T_appKeys{}
+					}
+					for _, namespace := range namespaces {
+						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
+							appns := T_appNamespaces{}
+							if 
+							famMap.Apps[appname]
+						}
 					}
 				}
 			}

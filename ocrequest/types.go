@@ -22,14 +22,20 @@ type T_completeResults struct {
 
 type T_allImages map[string]interface{}
 
-type T_family string
+type T_familyName string
 
-func (c T_family) str() string {
+func (c T_familyName) str() string {
+	return string(c)
+}
+
+type T_appName string
+
+func (c T_appName) str() string {
 	return string(c)
 }
 
 //                                 family
-type T_completeResultsFamilies map[T_family]T_completeResults
+type T_completeResultsFamilies map[T_familyName]T_completeResults
 
 type T_isName string
 
@@ -339,7 +345,7 @@ type T_usedIstagsResult map[T_isName]map[T_tagName][]T_usedIstag
 type T_unUsedIstagsResult map[T_istagName]T_unUsedIstag
 
 // IsNamesForFamily[family][is]true
-type T_IsNamesForFamily map[T_family]map[T_isName]bool
+type T_IsNamesForFamily map[T_familyName]map[T_isName]bool
 
 //------------------------------------------
 
@@ -372,13 +378,6 @@ func (clusters T_clNames) contains(c T_clName) bool {
 	return false
 }
 
-type T_nsName string
-
-// str convert T_nsName to string
-func (c T_nsName) str() string {
-	return string(c)
-}
-
 type T_familyKeys struct {
 	ImageNamespaces map[T_clName][]T_nsName
 	Stages          []T_clName
@@ -386,14 +385,68 @@ type T_familyKeys struct {
 	Buildstages     []T_clName
 	Teststages      []T_clName
 	Prodstages      []T_clName
+	Apps            map[T_appName]T_appKeys
 }
 
 func (c T_familyKeys) clusterList() []string {
 	clusters := []string{}
-	for _, fam := range c.Stages {
-		clusters = append(clusters, string(fam))
+	for _, cluster := range c.Stages {
+		clusters = append(clusters, cluster.str())
 	}
 	return clusters
+}
+
+type T_nsName string
+
+// str convert T_nsName to string
+func (c T_nsName) str() string {
+	return string(c)
+}
+
+type T_namespace map[T_clName][]T_nsName
+
+type T_appNamespaces struct {
+	Buildnamespaces T_namespace
+	Appnamespaces   T_namespace
+}
+
+type T_appNsList map[T_appName]T_appNamespaces
+
+func (c T_appNsList) appList() []string {
+	apps := []string{}
+	for app := range c {
+		apps = append(apps, app.str())
+	}
+	return apps
+}
+
+func (c T_appNsList) appListStr() string {
+	return strings.Join(c.appList(), `, `)
+}
+
+type T_appKeys struct {
+	Namespaces  T_appNsList
+	Config      map[T_clName]T_Cluster `json:"config.[],omitempty"`
+	Stages      []T_clName
+	Buildstages []T_clName
+	Teststages  []T_clName
+	Prodstages  []T_clName
+}
+
+func (c T_appKeys) clusterList() []string {
+	clusters := []string{}
+	for _, cluster := range c.Stages {
+		clusters = append(clusters, cluster.str())
+	}
+	return clusters
+}
+
+func (c T_appKeys) appList() []string {
+	apps := []string{}
+	for app := range c.Namespaces {
+		apps = append(apps, app.str())
+	}
+	return apps
 }
 
 func (c T_familyKeys) clusterListStr() string {
@@ -401,17 +454,17 @@ func (c T_familyKeys) clusterListStr() string {
 }
 
 //               family   cl-ns          cluster   namespaces
-type T_famNs map[T_family]T_familyKeys
+type T_famNsList map[T_familyName]T_familyKeys
 
-func (c T_famNs) familyList() []string {
+func (c T_famNsList) familyList() []string {
 	families := []string{}
 	for fam := range c {
-		families = append(families, string(fam))
+		families = append(families, fam.str())
 	}
 	return families
 }
 
-func (c T_famNs) familyListStr() string {
+func (c T_famNsList) familyListStr() string {
 	return strings.Join(c.familyList(), `, `)
 }
 
@@ -458,11 +511,13 @@ type T_flagOpts struct {
 	NoLog       bool
 	Debug       bool
 	Verify      bool
+	ServerMode  bool
 }
 type T_flags struct {
 	Cluster    T_clNames
 	Token      string
-	Family     T_family
+	Family     T_familyName
+	App        T_appName
 	Json       bool
 	Yaml       bool
 	Csv        bool
@@ -545,13 +600,13 @@ type T_cft_family struct {
 type T_cft_families []T_cft_family
 
 type T_cft_environment struct {
-	Name         string   `json:"name"`
-	Cluster      T_clName `json:"cluster"`
-	Pre_Cluster  T_clName `json:"pre_cluster,omitempty"`
-	Description  string   `json:"description,omitempty"`
-	Family       T_family `json:"family"`
-	Pipeline     string   `json:"pipeline,omitempty"`
-	Pre_Pipeline string   `json:"pre_pipeline,omitempty"`
+	Name         string       `json:"name"`
+	Cluster      T_clName     `json:"cluster"`
+	Pre_Cluster  T_clName     `json:"pre_cluster,omitempty"`
+	Description  string       `json:"description,omitempty"`
+	Family       T_familyName `json:"family"`
+	Pipeline     string       `json:"pipeline,omitempty"`
+	Pre_Pipeline string       `json:"pre_pipeline,omitempty"`
 }
 type T_cft_environments []T_cft_environment
 

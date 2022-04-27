@@ -55,7 +55,7 @@ func printShellCmds(commands map[string]string) {
 // - the tag must fit the tagPatetern
 // - the must be older or equal then the given minAge
 // - the istag must not be used in any of the clusters by any of: dc, pod, job, cronjob or deamonset
-func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clusters T_clNames, tagPattern string, minAge int, cause string) {
+func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, clusters T_clNames, tagPattern string, minAge int, cause string) {
 	result := map[string]string{}
 	tagPatternRegexp := regexp.MustCompile(tagPattern)
 	for _, cluster := range clusters {
@@ -88,7 +88,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 }
 
 // FilterNonbuildIstagsToDelete filters out all istags, when there is no build-tag on the same image
-func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_family, clusters T_clNames, minAge int) {
+func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_familyName, clusters T_clNames, minAge int) {
 	result := map[string]string{}
 	buildPatternRegexp := regexp.MustCompile("^.*?:.*?[A-Za-z]")
 	for _, cluster := range clusters {

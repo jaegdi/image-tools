@@ -61,8 +61,9 @@ var Clusters = T_ClusterConfig{
 	},
 }
 
-var FamilyNamespaces T_famNs
-var FamilyNamespacesStat = T_famNs{
+var FamilyNamespaces T_famNsList
+var AppNamespaces T_appNsList
+var FamilyNamespacesStat = T_famNsList{
 	"pkp": {
 		ImageNamespaces: map[T_clName][]T_nsName{
 			"cid-apc0": {"ms-jenkins", "openshift", "images-pkp"},

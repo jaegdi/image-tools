@@ -218,7 +218,8 @@ func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_family("base")].clusterListStr()+" or more than one: cid-apc0,cid-scp0,ppr-acp0")
+	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
+	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-apc0,cid-scp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -270,6 +271,7 @@ func EvalFlags() {
 	noLogPtr := flag.Bool("nolog", false, "TechOpt: disable log output to screen. Logs to logfile is not disabled")
 	debugPtr := flag.Bool("debug", false, "TechOpt: enable additional debug log output to screen")
 	verifyPtr := flag.Bool("verify", false, "TechOpt: enable additional log output to screen")
+	serverPtr := flag.Bool("server", false, "TechOpt: start in server mode and provide a rest api")
 
 	flag.Parse()
 
@@ -294,7 +296,8 @@ func EvalFlags() {
 	flags := T_flags{
 		Cluster:  T_clName(*clusterPtr).list(),
 		Token:    string(*tokenPtr),
-		Family:   T_family(*familyPtr),
+		Family:   T_familyName(*familyPtr),
+		App:      T_appName(*appPtr),
 		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr)),
 		Yaml:     bool(*yamlPtr) && !bool(*jsonPtr),
 		Csv:      (bool(*csvPtr) || (string(*csvFilePtr) != "")) && !bool(*jsonPtr),
@@ -342,6 +345,7 @@ func EvalFlags() {
 			NoLog:       *noLogPtr,
 			Debug:       *debugPtr,
 			Verify:      *verifyPtr,
+			ServerMode:  *serverPtr,
 		},
 	}
 

@@ -7,6 +7,7 @@ import (
 	"regexp"
 )
 
+// Global Vars
 var (
 	WarningLogger       *log.Logger
 	InfoLogger          *log.Logger
@@ -14,6 +15,7 @@ var (
 	DebugLogger         *log.Logger
 	Multiproc           bool
 	regexValidNamespace *regexp.Regexp
+	LogfileName         string
 )
 
 // Init is the intialization routine

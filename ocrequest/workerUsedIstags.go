@@ -58,7 +58,7 @@ func allocateUsedIstags(clusters []T_clName, clusterAppNamsepaces T_FamilyAppNam
 	close(jobsUsedIstags)
 }
 
-func goGetUsedIstagsForFamilyInAllClusters(family T_family) T_usedIstagsResult {
+func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResult {
 
 	istagResult := T_usedIstagsResult{}
 	allClusterFamilyNamespaces := goGetAppNamespacesForFamily(family)
