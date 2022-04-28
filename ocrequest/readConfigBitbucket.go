@@ -158,17 +158,17 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 				}
 				// Collect applications info
 				for _, app := range fam.Applications {
-					appname := T_appName(app)
-					appnslist := T_appNsList{}
-					appkeys := T_appKeys{}
-					if famMap.Apps[appname] == nil {
-						famMap.Apps[appname] = T_appKeys{}
-					}
+					// appname := T_appName(app)
+					// appnslist := T_appNsList{}
+					// appkeys := T_appKeys{}
+					// if famMap.Apps[appname] == nil {
+					// 	famMap.Apps[appname] = T_appKeys{}
+					// }
 					for _, namespace := range namespaces {
 						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
-							appns := T_appNamespaces{}
-							if 
-							famMap.Apps[appname]
+							// appns := T_appNamespaces{}
+							// if
+							// famMap.Apps[appname]
 						}
 					}
 				}
