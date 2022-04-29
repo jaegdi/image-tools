@@ -64,7 +64,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 			if tagPatternRegexp.MatchString(istag.str()) || tagPattern == "" {
 				for ns, tagMap := range nsTags {
 					if CmdParams.Options.Debug {
-						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
+						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonOneliner(tagMap))
 					}
 					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace) {
 						if data[family].UsedIstags[is][tag] == nil {

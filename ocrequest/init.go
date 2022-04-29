@@ -52,9 +52,9 @@ func Init() {
 	fns := genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
 	FamilyNamespaces = fns
 	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("dynamic Config", GetJsonFromMap(fns))
+	InfoLogger.Println("dynamic Config", GetJsonOneliner(fns))
 	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("Static Config", GetJsonFromMap(FamilyNamespacesStat))
+	InfoLogger.Println("Static Config", GetJsonOneliner(FamilyNamespacesStat))
 	InfoLogger.Println("------------------------------------------------------------")
 
 	EvalFlags()
