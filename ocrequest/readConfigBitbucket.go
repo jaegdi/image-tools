@@ -14,21 +14,24 @@ func getBitbucketUrl(urlpath string) string {
 
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
-	// DebugLogger.Println("url \n", url)
+	// DebugLogger.Println("url: ", url)
 	yamlstr := getHttpAnswer(url)
-	// DebugLogger.Println("yaml \n", string(yamlstr))
+	// DebugLogger.Println("yaml: ", string(yamlstr))
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
-		ErrorLogger.Println("Unmarshal multidoc yaml:\n", yamlstr, "err:\n", err.Error())
+		ErrorLogger.Println("Unmarshal multidoc yaml err:", yamlstr)
+		ErrorLogger.Println("Unmarshal multidoc yaml err:", err.Error())
 	}
-	// DebugLogger.Println("yamlmap \n", yamlmap)
+	// DebugLogger.Println("yamlmap: ", yamlmap)
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
 	// jsonstr, err := json.Marshal(yamlmap)
 	if err != nil {
-		ErrorLogger.Println("\n  yamlmap:\n    ", yamlmap, "\n  err:\n    ", err)
+		ErrorLogger.Println("yamlmap:    ", yamlmap)
+		ErrorLogger.Println("err:    ", err)
 	}
-	DebugLogger.Println("Config from scp-infra-config\n  url:", url, "\n  json:", string(jsonstr))
+	DebugLogger.Println("Config from scp-infra-config url:", url)
+	DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
 	return jsonstr
 }
 
