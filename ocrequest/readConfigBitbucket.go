@@ -39,7 +39,8 @@ func GetClusters() T_cft_clusters {
 	jsonbytes := getBitbucketData("clusters.yaml")
 	data := T_cft_clusters{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -48,7 +49,8 @@ func GetFamilies() T_cft_families {
 	jsonbytes := getBitbucketData("families.yaml")
 	data := T_cft_families{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -57,7 +59,8 @@ func GetEnvironments() T_cft_environments {
 	jsonbytes := getBitbucketData("environments.yaml")
 	data := T_cft_environments{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -66,9 +69,10 @@ func GetNamespaces() T_cft_namespaces {
 	jsonbytes := getBitbucketData("namespaces.yaml")
 	data := T_cft_namespaces{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
-	// DebugLogger.Println("data \n", data)
+	// DebugLogger.Println("data: ", data)
 	return data
 }
 
@@ -76,7 +80,8 @@ func GetPipelines() T_cft_pipelines {
 	jsonbytes := getBitbucketData("pipelines.yaml")
 	data := T_cft_pipelines{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
