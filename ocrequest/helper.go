@@ -68,6 +68,15 @@ func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) 
 	}
 }
 
+func GetJsonOneliner(dict interface{}) string {
+	j, err := json.Marshal(dict)
+	if err != nil {
+		ErrorLogger.Println("dict: ", dict)
+		ErrorLogger.Println("err: ", err)
+	}
+	return string(j)
+}
+
 // GetJsonFromMap generate json output depending on the commadline flags
 func GetJsonFromMap(dict interface{}) string {
 	buffer := &bytes.Buffer{}
