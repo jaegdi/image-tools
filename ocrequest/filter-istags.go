@@ -9,7 +9,7 @@ import (
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
-	// LogDebug("filtering:", is, tag, istag, namespace)
+	// DebugLogger.Println("filtering:", is, tag, istag, namespace)
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
@@ -26,9 +26,9 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 
 // logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
-	LogDebug("logUsedIstags::", "#### Istag:", istag, "is used.")
+	DebugLogger.Println("logUsedIstags::", "#### Istag:", istag, "is used.")
 	for _, istagdetails := range usedIstags {
-		LogDebug("logUsedIstags::", "   # -->",
+		DebugLogger.Println("logUsedIstags::", "   # -->",
 			"Cluster:", istagdetails.Cluster,
 			"UsedInNamespace:", istagdetails.UsedInNamespace,
 			"FromNamespace:", istagdetails.FromNamespace,
@@ -40,7 +40,7 @@ func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T
 // printShellCmds prints a map of shell commands sorted by the map key
 func printShellCmds(commands map[string]string) {
 	keys := make([]string, 0, len(commands))
-	// LogDebug("printShellCmds::", "printShellCmds", commands)
+	// DebugLogger.Println("printShellCmds::", "printShellCmds", commands)
 	for key := range commands {
 		keys = append(keys, key)
 	}
@@ -64,7 +64,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 			if tagPatternRegexp.MatchString(istag.str()) || tagPattern == "" {
 				for ns, tagMap := range nsTags {
 					if CmdParams.Options.Debug {
-						LogDebug("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
+						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
 					}
 					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace) {
 						if data[family].UsedIstags[is][tag] == nil {
@@ -74,7 +74,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 								"   #", cause, "-->", tagMap.Image,
 								",  Commit.Ref:", tagMap.Build.CommitRef,
 								",  Age:", tagMap.AgeInDays)
-							// LogDebug("FilterIstagsToDelete::", "key:", s, "value:", value)
+							// DebugLogger.Println("FilterIstagsToDelete::", "key:", s, "value:", value)
 							result[s] = value
 						} else {
 							logUsedIstags(data[family].UsedIstags[is][tag], is, tag, istag)

@@ -18,7 +18,7 @@ func getHttpAnswer(url string) []byte {
 
 	// Append our cert to the system pool
 	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
-		LogError("No certs appended, using system certs only")
+		ErrorLogger.Println("No certs appended, using system certs only")
 	}
 
 	// Trust the augmented cert pool in our client
@@ -30,7 +30,7 @@ func getHttpAnswer(url string) []byte {
 	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		LogError("Get " + url + " failed. " + err.Error())
+		ErrorLogger.Println("Get " + url + " failed. " + err.Error())
 		return []byte("")
 	}
 	// add header to the req
@@ -59,12 +59,12 @@ func getHttpAnswer(url string) []byte {
 	// client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		LogError("Error on sending request.\n[ERROR] -" + err.Error())
+		ErrorLogger.Println("Error on sending request.\n[ERROR] -" + err.Error())
 		return []byte("")
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		LogError("Error on reading response.\n[ERROR] -" + err.Error())
+		ErrorLogger.Println("Error on reading response.\n[ERROR] -" + err.Error())
 		return []byte("")
 	}
 	return []byte(body)

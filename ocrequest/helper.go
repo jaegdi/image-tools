@@ -3,9 +3,7 @@ package ocrequest
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"os"
 	"os/exec"
 
@@ -32,29 +30,8 @@ func ageInDays(date string) int {
 
 // exitWithError write msg to StdErr, and logfile and exits to program
 func exitWithError(errormsg ...interface{}) {
-	LogError(errormsg...)
+	ErrorLogger.Println(errormsg...)
 	os.Exit(1)
-}
-
-// LogDebug write msg to StdErr and logfile
-func LogDebug(msg ...interface{}) {
-	// if !CmdParams.Options.NoLog {
-	// 	log.Println(msg...)
-	// }
-	if CmdParams.Options.Debug {
-		DebugLogger.Println(msg...)
-	}
-	if CmdParams.Options.Verify {
-		fmt.Println(msg...)
-	}
-}
-
-// LogError write error msg to StdErr and logfile
-func LogError(msg ...interface{}) {
-	if !CmdParams.Options.NoLog {
-		log.Println(msg...)
-	}
-	ErrorLogger.Println(msg...)
 }
 
 // UnescapeUtf8InJsonBytes removes escape sign from JSON byte
@@ -99,10 +76,10 @@ func GetJsonFromMap(dict interface{}) string {
 	encoder.SetIndent("", "   ")
 	if err := encoder.Encode(dict); err != nil {
 		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
-			ErrorLogger.Println("\n  dict:\n  ", dict, "\n  err:\n  ", err)
+			ErrorLogger.Println("dict err:", dict)
+			ErrorLogger.Println("dict err:", err)
 		} else {
-			s := string(jsonBytes)
-			return s
+			return string(jsonBytes)
 		}
 	} else {
 		b := buffer.Bytes()
@@ -145,7 +122,7 @@ func UnmarshalMultidocYaml(in []byte, out *([]interface{})) error {
 func GetYamlFromMap(list interface{}) string {
 	d, err := yaml.Marshal(&list)
 	if err != nil {
-		LogError("Convert map to Yaml failed", err)
+		ErrorLogger.Println("Convert map to Yaml failed", err)
 	}
 	return string(d)
 }
@@ -477,12 +454,12 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 	}
 	out, err := cmd.StdinPipe()
 	if err != nil {
-		LogError("ExecError", err)
+		ErrorLogger.Println("ExecError", err)
 	}
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Start(); err != nil {
-		LogError("ExecError", err)
+		ErrorLogger.Println("ExecError", err)
 	}
 	return cmd, out
 }
@@ -500,10 +477,10 @@ func openbrowser(url string) {
 	case "darwin":
 		err = exec.Command("open", url).Start()
 	default:
-		LogError("unsupported platform")
+		ErrorLogger.Println("unsupported platform")
 	}
 	if err != nil {
-		LogError("ExecError", err)
+		ErrorLogger.Println("ExecError", err)
 	}
 
 }

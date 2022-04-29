@@ -50,21 +50,21 @@ func main() {
 	go InitAllImages(chanInitAllImages)
 	go GetUsedIstagsForFamily(chanUsedIsTags)
 
-	LogDebug("Wait for chanInitAllImages")
+	DebugLogger.Println("Wait for chanInitAllImages")
 	AllImages := <-chanInitAllImages
-	LogDebug("Image clusters:", len(AllImages))
+	DebugLogger.Println("Image clusters:", len(AllImages))
 
 	go GetAllIstagsForFamily(chanAllIsTags)
 
-	LogDebug("Wait for chanAllIsTags")
+	DebugLogger.Println("Wait for chanAllIsTags")
 	result.AllIstags = <-chanAllIsTags
 
-	LogDebug("Wait for chanUsedIsTags")
+	DebugLogger.Println("Wait for chanUsedIsTags")
 	result.UsedIstags = <-chanUsedIsTags
 
 	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	LogDebug("Wait for filtered chanCompleteResults")
+	DebugLogger.Println("Wait for filtered chanCompleteResults")
 	result = <-chanCompleteResults
 
 	if CmdParams.Output.UnUsed {
@@ -101,7 +101,7 @@ func main() {
 			CmdParams.Filter.Tagname != "" ||
 			CmdParams.Filter.Istagname != "" ||
 			CmdParams.Filter.Namespace != "" {
-			LogDebug(
+			DebugLogger.Println(
 				"\n--main--::\n",
 				"filter minAge: '"+fmt.Sprint(CmdParams.DeleteOpts.MinAge)+"'\n",
 				"filter pattern: '"+CmdParams.DeleteOpts.Pattern+"'\n",
@@ -125,9 +125,9 @@ func main() {
 				CmdParams.DeleteOpts.MinAge)
 		}
 		if CmdParams.DeleteOpts.Confirm {
-			LogDebug("execute oc adm prune")
+			DebugLogger.Println("execute oc adm prune")
 		} else {
-			LogDebug("run in dry run mode")
+			DebugLogger.Println("run in dry run mode")
 		}
 	}
 	// if CmdParams.Options.Profiler {

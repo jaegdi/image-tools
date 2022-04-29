@@ -47,7 +47,7 @@ func InitIsNamesForFamily(family T_family) {
 			}
 			isJson := ocGetCall(cluster, ns, "imagestreams", "")
 			if err := json.Unmarshal([]byte(isJson), &isResult); err != nil {
-				LogError("Unmarshal imagestreams. " + err.Error())
+				ErrorLogger.Println("Unmarshal imagestreams. " + err.Error())
 			}
 			if isResult["items"] != nil {
 				for _, v := range isResult["items"].([]interface{}) {
@@ -64,7 +64,7 @@ func InitIsNamesForFamily(family T_family) {
 // 	buildLabels := T_istagBuildLabels{}
 // 	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
 // 	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-// 		LogError("Unmarshal unescaped String", err)
+// 		ErrorLogger.Println("Unmarshal unescaped String", err)
 // 	}
 // 	return buildLabels
 // }
@@ -78,7 +78,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
 		// logfix
-		LogError("Error: unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
+		ErrorLogger.Println("Error: unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
 		return T_result{}
 	}
 	resultIstag := make(T_resIstag)
@@ -115,7 +115,7 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		LogDebug("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
+		DebugLogger.Println("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
 		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
 			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}

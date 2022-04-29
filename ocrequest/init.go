@@ -24,10 +24,10 @@ func Init() {
 		log.Fatal(err)
 	}
 	os.Setenv("HTTP_PROXY", "")
-	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
-	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
-	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
-	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Llongfile)
+	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
 
 	InfoLogger.Println("------------------------------------------------------------")
 	var currCluster T_clName

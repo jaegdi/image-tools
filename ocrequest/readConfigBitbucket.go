@@ -105,9 +105,9 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 	}
 	jsonstr, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		ErrorLogger.Println("\n  JsonMarshal failes\n  ERROR:  ", err)
+		ErrorLogger.Println("JsonMarshal failes:", err)
 	}
-	DebugLogger.Println("\nClusterConfig:\n  ", string(jsonstr))
+	DebugLogger.Println("ClusterConfig:", string(jsonstr))
 	return cfg
 }
 
