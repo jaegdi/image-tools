@@ -13,6 +13,6 @@ import (
 // t := T_usedIstagsResult{}; MergoNestedMaps(&t, result, r); result = t
 func MergoNestedMaps(dest, m1 interface{}) {
 	if err := mergo.Merge(dest, m1); err != nil {
-		LogError("merge m1: failed:", err)
+		ErrorLogger.Println("merge m1: failed:", err)
 	}
 }

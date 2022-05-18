@@ -148,6 +148,11 @@ EXAMPLES
   |        Report Images for family aps in cluster int as yaml report
   |
   |            image-tools -cluster=int-apc0 -family=aps -image -yaml
+  |
+  |        Report combined with pc(print columns) tool
+  |
+  |            image-tools -socks5=localhost:65022 -family=pkp -cluster=cid-apc0,int-apc0,ppr-apc0,pro-apc0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
+
 
 
   DELETE
@@ -350,7 +355,7 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
-	InfoLogger.Println(GetJsonFromMap(flags))
+	InfoLogger.Println(GetJsonOneliner(flags))
 
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")

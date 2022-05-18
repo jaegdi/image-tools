@@ -14,21 +14,24 @@ func getBitbucketUrl(urlpath string) string {
 
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
-	// DebugLogger.Println("url \n", url)
+	// DebugLogger.Println("url: ", url)
 	yamlstr := getHttpAnswer(url)
-	// DebugLogger.Println("yaml \n", string(yamlstr))
+	// DebugLogger.Println("yaml: ", string(yamlstr))
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
-		ErrorLogger.Println("Unmarshal multidoc yaml:\n", yamlstr, "err:\n", err.Error())
+		ErrorLogger.Println("Unmarshal multidoc yaml:", yamlstr)
+		ErrorLogger.Println("Unmarshal multidoc yaml:", err.Error())
 	}
-	// DebugLogger.Println("yamlmap \n", yamlmap)
+	// DebugLogger.Println("yamlmap: ", yamlmap)
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
 	// jsonstr, err := json.Marshal(yamlmap)
 	if err != nil {
-		ErrorLogger.Println("\n  yamlmap:\n    ", yamlmap, "\n  err:\n    ", err)
+		ErrorLogger.Println("yamlmap:    ", yamlmap)
+		ErrorLogger.Println("err:    ", err)
 	}
-	DebugLogger.Println("Config from scp-infra-config\n  url:", url, "\n  json:", string(jsonstr))
+	DebugLogger.Println("Config from scp-infra-config url:", url)
+	DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
 	return jsonstr
 }
 
@@ -36,7 +39,8 @@ func GetClusters() T_cft_clusters {
 	jsonbytes := getBitbucketData("clusters.yaml")
 	data := T_cft_clusters{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -45,7 +49,8 @@ func GetFamilies() T_cft_families {
 	jsonbytes := getBitbucketData("families.yaml")
 	data := T_cft_families{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -54,7 +59,8 @@ func GetEnvironments() T_cft_environments {
 	jsonbytes := getBitbucketData("environments.yaml")
 	data := T_cft_environments{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -63,9 +69,10 @@ func GetNamespaces() T_cft_namespaces {
 	jsonbytes := getBitbucketData("namespaces.yaml")
 	data := T_cft_namespaces{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
-	// DebugLogger.Println("data \n", data)
+	// DebugLogger.Println("data: ", data)
 	return data
 }
 
@@ -73,7 +80,8 @@ func GetPipelines() T_cft_pipelines {
 	jsonbytes := getBitbucketData("pipelines.yaml")
 	data := T_cft_pipelines{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr\n", string(jsonbytes), "err\n", err.Error())
+		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -97,9 +105,9 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 	}
 	jsonstr, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		ErrorLogger.Println("\n  JsonMarshal failes\n  ERROR:  ", err)
+		ErrorLogger.Println("JsonMarshal failes:", err)
 	}
-	DebugLogger.Println("\nClusterConfig:\n  ", string(jsonstr))
+	DebugLogger.Println("ClusterConfig:", string(jsonstr))
 	return cfg
 }
 
@@ -113,11 +121,15 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 	for _, fam := range families {
 		family := T_familyName(fam.Name)
 		fnc[family] = T_familyKeys{}
-		famMap := T_familyKeys{}
-		famMap.ImageNamespaces = map[T_clName][]T_nsName{}
-		famMap.Buildstages = []T_clName{}
-		famMap.Teststages = []T_clName{}
-		famMap.Apps = map[T_appName]T_appKeys{}
+		famMap := T_familyKeys{
+			ImageNamespaces: T_appNamespaceList{},
+			Stages:          []T_clName{},
+			Config:          T_ClusterConfig{},
+			Buildstages:     []T_clName{},
+			Teststages:      []T_clName{},
+			Prodstages:      []T_clName{},
+			Apps:            map[T_appName]T_appKeys{},
+		}
 		for _, environment := range environments {
 			if environment.Family == family {
 				if famMap.ImageNamespaces[environment.Cluster] == nil {
@@ -159,30 +171,48 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 				// Collect applications info
 				for _, app := range fam.Applications {
 					appname := T_appName(app)
-					appnslist := T_appNsList{}
-					appkeys := T_appKeys{}
-					if famMap.Apps[appname] == nil {
-						famMap.Apps[appname] = T_appKeys{}
-					}
+					// appnslist := T_appNsList{}
+					// appkeys := T_appKeys{}
+					app_appns := T_appNamespaceList{}
+					app_buildns := T_appNamespaceList{}
+					stages := []T_clName{}
+					buildstages := []T_clName{}
+					teststages := []T_clName{}
+					prodstages := []T_clName{}
 					for _, namespace := range namespaces {
 						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
-							// appns := T_appNamespaces{}
-							// if
-							// famMap.Apps[appname]
+							stages = append(stages, environment.Cluster)
+							if strings.Contains(string(namespace.Name), "cid-") {
+								if app_buildns[environment.Cluster] == nil {
+									app_buildns[environment.Cluster] = []T_nsName{}
+								}
+								app_buildns[environment.Cluster] = append(app_buildns[environment.Cluster], namespace.Name)
+								buildstages = append(buildstages, environment.Cluster)
+							} else {
+								if strings.Contains(string(namespace.Name), "int-") || strings.Contains(string(namespace.Name), "ppr-") {
+									buildstages = append(buildstages, environment.Cluster)
+								} else {
+									prodstages = append(prodstages, environment.Cluster)
+								}
+								app_appns[environment.Cluster] = append(app_appns[environment.Cluster], namespace.Name)
+							}
 						}
+					}
+					famMap.Apps[appname] = T_appKeys{
+						Namespaces: T_appNamespaces{
+							Buildnamespaces: app_buildns,
+							Appnamespaces:   app_appns,
+						},
+						Config:      T_ClusterConfig{},
+						Stages:      stages,
+						Buildstages: buildstages,
+						Teststages:  teststages,
+						Prodstages:  prodstages,
 					}
 				}
 			}
 		}
-		famMap.Stages = []T_clName{}
-		for cl, nslist := range famMap.ImageNamespaces {
-			if len(nslist) > 0 {
-				if !slice.Contains(famMap.Stages, cl) {
-					famMap.Stages = append(famMap.Stages, cl)
-				}
-			}
-		}
-		fnc[family] = famMap
+		fnc[T_familyName(fam.Name)] = famMap
 	}
 	return fnc
 }

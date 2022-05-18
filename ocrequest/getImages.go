@@ -15,7 +15,7 @@ func GetAllImagesOfCluster(cluster T_clName) T_ImagesMap {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {
-		LogError("unmarschal images." + err.Error())
+		ErrorLogger.Println("unmarschal images." + err.Error())
 	}
 	var metadata map[string]interface{}
 	result := T_ImagesMap{}

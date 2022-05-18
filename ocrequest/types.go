@@ -145,7 +145,7 @@ func (b T_istagBuildLabels) GetVal(s string) string {
 func (buildLabels *T_istagBuildLabels) Set(buildLabelsMap map[string]interface{}) {
 	// buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
 	// if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-	// 	LogError("Unmarshal unescaped String", err)
+	// 	ErrorLogger.Println("Unmarshal unescaped String", err)
 	// }
 	if buildLabelsMap["io.openshift.build.commit.author"] != nil {
 		buildLabels.CommitAuthor = buildLabelsMap["io.openshift.build.commit.author"].(string)
@@ -379,13 +379,13 @@ func (clusters T_clNames) contains(c T_clName) bool {
 }
 
 type T_familyKeys struct {
-	ImageNamespaces map[T_clName][]T_nsName
-	Stages          []T_clName
-	Config          map[T_clName]T_Cluster `json:"config.[],omitempty"`
-	Buildstages     []T_clName
-	Teststages      []T_clName
-	Prodstages      []T_clName
-	Apps            map[T_appName]T_appKeys
+	ImageNamespaces T_appNamespaceList      `json:"imagenamespaces,omitempty"`
+	Stages          []T_clName              `json:"stages,omitempty"`
+	Config          T_ClusterConfig         `json:"config,omitempty"`
+	Buildstages     []T_clName              `json:"buildstages,omitempty"`
+	Teststages      []T_clName              `json:"teststages,omitempty"`
+	Prodstages      []T_clName              `json:"prodstages,omitempty"`
+	Apps            map[T_appName]T_appKeys `json:"apps,omitempty"`
 }
 
 func (c T_familyKeys) clusterList() []string {
@@ -396,6 +396,14 @@ func (c T_familyKeys) clusterList() []string {
 	return clusters
 }
 
+func (c T_familyKeys) appList() []string {
+	apps := []string{}
+	for app := range c.Apps {
+		apps = append(apps, app.str())
+	}
+	return apps
+}
+
 type T_nsName string
 
 // str convert T_nsName to string
@@ -403,14 +411,14 @@ func (c T_nsName) str() string {
 	return string(c)
 }
 
-type T_namespace map[T_clName][]T_nsName
+type T_appNamespaceList map[T_clName][]T_nsName // `json:"appstagenamespaces,omitempty"`
 
 type T_appNamespaces struct {
-	Buildnamespaces T_namespace
-	Appnamespaces   T_namespace
+	Buildnamespaces T_appNamespaceList `json:"buildnamespaces,omitempty"`
+	Appnamespaces   T_appNamespaceList `json:"appnamespaces,omitempty"`
 }
 
-type T_appNsList map[T_appName]T_appNamespaces
+type T_appNsList map[T_appName]T_appNamespaces // `json:"appnamespaces,omitempty"`
 
 func (c T_appNsList) appList() []string {
 	apps := []string{}
@@ -425,12 +433,12 @@ func (c T_appNsList) appListStr() string {
 }
 
 type T_appKeys struct {
-	Namespaces  T_appNsList
-	Config      map[T_clName]T_Cluster `json:"config.[],omitempty"`
-	Stages      []T_clName
-	Buildstages []T_clName
-	Teststages  []T_clName
-	Prodstages  []T_clName
+	Namespaces  T_appNamespaces `json:"namespaces,omitempty"`
+	Config      T_ClusterConfig `json:"config,omitempty"`
+	Stages      []T_clName      `json:"stages,omitempty"`
+	Buildstages []T_clName      `json:"buildstages,omitempty"`
+	Teststages  []T_clName      `json:"teststages,omitempty"`
+	Prodstages  []T_clName      `json:"prodstages,omitempty"`
 }
 
 func (c T_appKeys) clusterList() []string {
@@ -439,14 +447,6 @@ func (c T_appKeys) clusterList() []string {
 		clusters = append(clusters, cluster.str())
 	}
 	return clusters
-}
-
-func (c T_appKeys) appList() []string {
-	apps := []string{}
-	for app := range c.Namespaces {
-		apps = append(apps, app.str())
-	}
-	return apps
 }
 
 func (c T_familyKeys) clusterListStr() string {
@@ -543,7 +543,6 @@ type T_Cluster struct {
 }
 
 type T_ClusterConfig struct {
-	// Config map[T_clName]T_Cluster `json:"Config.[],omitempty"`
 	Config map[T_clName]T_Cluster `json:"config,omitempty"`
 }
 
@@ -562,18 +561,18 @@ func (c T_csvDoc) csvDoc(typ string) {
 	if CmdParams.CsvFile == "" {
 		w := csv.NewWriter(os.Stdout)
 		if err := w.WriteAll(out); err != nil {
-			LogError("writing csv failed" + err.Error())
+			ErrorLogger.Println("writing csv failed" + err.Error())
 		}
 	} else {
 		file := CmdParams.CsvFile + "-" + typ + ".csv"
 		csvfile, err := os.OpenFile(file, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
-			LogError("failed to open file", file, err)
+			ErrorLogger.Println("failed to open file", file, err)
 		}
-		LogDebug("write CSV file for", typ, "to", file)
+		DebugLogger.Println("write CSV file for", typ, "to", file)
 		w := csv.NewWriter(csvfile)
 		if err := w.WriteAll(out); err != nil {
-			LogError("writing csv failed" + err.Error())
+			ErrorLogger.Println("writing csv failed" + err.Error())
 		}
 	}
 }

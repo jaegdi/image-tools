@@ -26,10 +26,10 @@ func Init() {
 		log.Fatal(err)
 	}
 	os.Setenv("HTTP_PROXY", "")
-	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Llongfile)
-	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Llongfile)
-	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Llongfile)
-	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Llongfile)
+	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
+	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
 
 	InfoLogger.Println("------------------------------------------------------------")
 	var currCluster T_clName
@@ -48,15 +48,18 @@ func Init() {
 	environmentsConfig := GetEnvironments()
 	namespacesConfig := GetNamespaces()
 	pipelinesConfig := GetPipelines()
-	// InfoLogger.Println("Configs", clustersConfig, "\n", environmentsConfig, "\n", namespacesConfig, "\n", pipelinesConfig)
+	// InfoLogger.Println("Cluster Configs", clustersConfig)
+	// InfoLogger.Println("Environment Configs": environmentsConfig)
+	// InfoLogger.Println("NAmespace Configs": namespacesConfig)
+	// InfoLogger.Println("Pipeline Configs": pipelinesConfig)
 	// cfg := genClusterConfig(clustersConfig)
 	// InfoLogger.Println("ClusterConfig", cfg)
 	fns := genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
 	FamilyNamespaces = fns
 	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("dynamic Config", GetJsonFromMap(fns))
+	InfoLogger.Println("dynamic Config", GetJsonOneliner(fns))
 	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("Static Config", GetJsonFromMap(FamilyNamespacesStat))
+	InfoLogger.Println("Static Config", GetJsonOneliner(FamilyNamespacesStat))
 	InfoLogger.Println("------------------------------------------------------------")
 
 	EvalFlags()
