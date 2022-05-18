@@ -166,9 +166,9 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 					}
 					for _, namespace := range namespaces {
 						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
-							appns := T_appNamespaces{}
-							if 
-							famMap.Apps[appname]
+							// appns := T_appNamespaces{}
+							// if
+							// famMap.Apps[appname]
 						}
 					}
 				}
