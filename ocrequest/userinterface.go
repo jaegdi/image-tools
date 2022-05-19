@@ -77,7 +77,7 @@ DESCRIPTION
       But it needs further parameters:
       -snapshot        delete istags with snapshot or PR-nn in the tag name.
       -nonbuild        is specific for family pkp and delete istags fo all images, if they have no build tag.
-      -minage=int      defines the minimum age (in days) for istag to delete them. Default is 60 days.
+      -delminage=int      defines the minimum age (in days) for istag to delete them. Default is 60 days.
       -delpattern=str  define a regexp pattern for istags to delete
       and
       -isname=str
@@ -175,11 +175,11 @@ EXAMPLES
   |
   |        To delete all not used images of family 'aps' in cluster cid
   |
-  |            image-tools -family=aps -cluster=cid-apc0 -delete  -minage=0 -delpattern='.'
+  |            image-tools -family=aps -cluster=cid-apc0 -delete  -delminage=0 -delpattern='.'
   |
   |        To delete all hybris istags of family pkp older than 45 days
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -minage=45
+  |            image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -delminage=45
 
 
   HINT
@@ -252,10 +252,12 @@ func EvalFlags() {
 	istagnamePtr := flag.String("istagname", "", "Report and Delete: filter output for report or delete script of one imageStreamTag")
 	tagnamePtr := flag.String("tagname", "", "Report and Delete: filter output for report or delete script of all istags with this Tag")
 	shanamePtr := flag.String("shaname", "", "Report and Delete: filter output for report or delete script of a Image with this SHA")
+	minAgePtr := flag.Int("minage", -1, "Report and Delete: filter for all istags, they are older or equal than minage")
+	maxAgePtr := flag.Int("maxage", -1, "Report and Delete: filter for all istags, they are younger or equal than minage")
 
 	// Delete flags
 	deletePatternPtr := flag.String("delpattern", "", "Delete: filter for delete script all istags with this pattern")
-	deleteMinAgePtr := flag.Int("minage", 60, "Delete: filter for delete script all istags, they are older or equal than minage")
+	deleteMinAgePtr := flag.Int("delminage", 60, "Delete: filter for delete script all istags, they are older or equal than minage")
 	deleteNonBuildPtr := flag.Bool("nonbuild", false, "Delete: filter for delete script all istags with pure version number,\n"+
 		"where the referenced image has no build-tag and istag is minimum as old as minage")
 	deleteSnapshotsPtr := flag.Bool("snapshot", false, "Delete: filter for delete script all istags,\n"+
@@ -326,6 +328,8 @@ func EvalFlags() {
 			Tagname:   T_tagName(string(*tagnamePtr)),
 			Imagename: T_shaName(string(*shanamePtr)),
 			Namespace: T_nsName(string(*namespacePtr)),
+			Minage:    *minAgePtr,
+			Maxage:    *maxAgePtr,
 		},
 		FilterReg: T_flagFiltRegexp{
 			Isname:    is_r,

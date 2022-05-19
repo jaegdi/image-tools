@@ -26,6 +26,12 @@ func getCause() string {
 	if CmdParams.Filter.Namespace != "" {
 		s = s + "_Namespace:_" + string(CmdParams.Filter.Namespace)
 	}
+	if CmdParams.Filter.Maxage != -1 {
+		s = s + "_Maxage:_" + string(CmdParams.Filter.Maxage)
+	}
+	if CmdParams.Filter.Minage != -1 {
+		s = s + "_Minage:_" + string(CmdParams.Filter.Minage)
+	}
 	return s
 }
 

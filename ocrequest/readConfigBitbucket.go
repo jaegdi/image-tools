@@ -119,6 +119,10 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 	// func body
 	fnc := T_famNsList{}
 	for _, fam := range families {
+		stages := map[T_appName][]T_clName{}
+		buildstages := map[T_appName][]T_clName{}
+		teststages := map[T_appName][]T_clName{}
+		prodstages := map[T_appName][]T_clName{}
 		family := T_familyName(fam.Name)
 		fnc[family] = T_familyKeys{}
 		famMap := T_familyKeys{
@@ -158,6 +162,9 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 						}
 					}
 				}
+				if !slice.Contains(famMap.Stages, environment.Cluster) {
+					famMap.Stages = append(famMap.Stages, environment.Cluster)
+				}
 				if !(strings.Contains(environment.Cluster.str(), "cid-") || strings.Contains(environment.Cluster.str(), "pro-")) {
 					if !slice.Contains(famMap.Teststages, environment.Cluster) {
 						famMap.Teststages = append(famMap.Teststages, environment.Cluster)
@@ -175,25 +182,48 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 					// appkeys := T_appKeys{}
 					app_appns := T_appNamespaceList{}
 					app_buildns := T_appNamespaceList{}
-					stages := []T_clName{}
-					buildstages := []T_clName{}
-					teststages := []T_clName{}
-					prodstages := []T_clName{}
+					if stages[appname] == nil {
+						stages[appname] = []T_clName{}
+					}
+					if buildstages[appname] == nil {
+						buildstages[appname] = []T_clName{}
+					}
+					if teststages[appname] == nil {
+						teststages[appname] = []T_clName{}
+					}
+					if prodstages[appname] == nil {
+						prodstages[appname] = []T_clName{}
+					}
 					for _, namespace := range namespaces {
 						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
-							stages = append(stages, environment.Cluster)
-							if strings.Contains(string(namespace.Name), "cid-") {
+							// every namespace added to stages
+							if !slice.Contains(stages[appname], environment.Cluster) {
+								stages[appname] = append(stages[appname], environment.Cluster)
+							}
+							if strings.Contains(string(environment.Cluster), "cid-") {
+								// if cid namespace
 								if app_buildns[environment.Cluster] == nil {
 									app_buildns[environment.Cluster] = []T_nsName{}
 								}
+								// add to app_buildns
 								app_buildns[environment.Cluster] = append(app_buildns[environment.Cluster], namespace.Name)
-								buildstages = append(buildstages, environment.Cluster)
-							} else {
-								if strings.Contains(string(namespace.Name), "int-") || strings.Contains(string(namespace.Name), "ppr-") {
-									buildstages = append(buildstages, environment.Cluster)
-								} else {
-									prodstages = append(prodstages, environment.Cluster)
+								// add to buildstages
+								if !slice.Contains(buildstages[appname], environment.Cluster) {
+									buildstages[appname] = append(buildstages[appname], environment.Cluster)
 								}
+							} else {
+								if strings.Contains(string(environment.Cluster), "dev-") || strings.Contains(string(environment.Cluster), "int-") || strings.Contains(string(environment.Cluster), "ppr-") {
+									// if int- or ppr- namespace, add to teststages
+									if !slice.Contains(teststages[appname], environment.Cluster) {
+										teststages[appname] = append(teststages[appname], environment.Cluster)
+									}
+								} else {
+									// must be prod namespace, add to prodstages
+									if !slice.Contains(prodstages[appname], environment.Cluster) {
+										prodstages[appname] = append(prodstages[appname], environment.Cluster)
+									}
+								}
+								// add to app_appns
 								app_appns[environment.Cluster] = append(app_appns[environment.Cluster], namespace.Name)
 							}
 						}
@@ -204,10 +234,10 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 							Appnamespaces:   app_appns,
 						},
 						Config:      T_ClusterConfig{},
-						Stages:      stages,
-						Buildstages: buildstages,
-						Teststages:  teststages,
-						Prodstages:  prodstages,
+						Stages:      stages[appname],
+						Buildstages: buildstages[appname],
+						Teststages:  teststages[appname],
+						Prodstages:  prodstages[appname],
 					}
 				}
 			}

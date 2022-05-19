@@ -8,7 +8,7 @@ import (
 )
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
-func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
+func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName, age int) bool {
 	// DebugLogger.Println("filtering:", is, tag, istag, namespace)
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
@@ -21,7 +21,12 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))) &&
 		(CmdParams.Filter.Namespace == "" ||
 			(CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace) ||
-			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Istagname.MatchString(string(namespace)))))
+			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Istagname.MatchString(string(namespace)))) &&
+		(CmdParams.Filter.Minage == -1 ||
+			(CmdParams.Filter.Minage > -1 && age >= CmdParams.Filter.Minage)) &&
+		(CmdParams.Filter.Maxage == -1 ||
+			(CmdParams.Filter.Maxage > -1 && age <= CmdParams.Filter.Maxage)))
+
 }
 
 // logUsedIstags logs the details of usedIstags to the logfile
@@ -66,7 +71,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, c
 					if CmdParams.Options.Debug {
 						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
 					}
-					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace) {
+					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace, tagMap.AgeInDays) {
 						if data[family].UsedIstags[is][tag] == nil {
 							s := (string(ns) + "/" + string(istag))
 							value := fmt.Sprintln(
@@ -109,7 +114,7 @@ func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_famil
 						fromNamespace := T_nsName(imageParts[len(imageParts)-2])
 						istag := T_istagName(imageParts[len(imageParts)-1])
 						is, tag := istag.split()
-						if matchIsIstagToFilterParams(is, tag, istag, fromNamespace) {
+						if matchIsIstagToFilterParams(is, tag, istag, fromNamespace, tags[istagname].AgeInDays) {
 							if data[family].UsedIstags[is][tag] == nil {
 								result[tn.str()] = fmt.Sprintln(
 									"oc -n", fromNamespace, "delete istag", istag,

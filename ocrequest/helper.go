@@ -3,6 +3,7 @@ package ocrequest
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -31,6 +32,7 @@ func ageInDays(date string) int {
 // exitWithError write msg to StdErr, and logfile and exits to program
 func exitWithError(errormsg ...interface{}) {
 	ErrorLogger.Println(errormsg...)
+	os.Stderr.WriteString(fmt.Sprint(errormsg...))
 	os.Exit(1)
 }
 

@@ -60,14 +60,14 @@ func InitIsNamesForFamily(family T_familyName) {
 	IsNamesForFamily = result
 }
 
-// func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
-// 	buildLabels := T_istagBuildLabels{}
-// 	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
-// 	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-// 		ErrorLogger.Println("Unmarshal unescaped String", err)
-// 	}
-// 	return buildLabels
-// }
+func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
+	buildLabels := T_istagBuildLabels{}
+	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
+	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
+		ErrorLogger.Println("Unmarshal unescaped String", err)
+	}
+	return buildLabels
+}
 
 // OcGetAllIstagsOfNamespace generates a map of all istags
 // selected by (cluster, namespace) and append it to result map
@@ -127,10 +127,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 		tagName := T_tagName(imagestreamfields[1])
 		isAge := ageInDays(isDate)
-		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname && !CmdParams.FilterReg.Isname.MatchString(string(imagestreamName)) {
-			continue
-		}
-		if CmdParams.Filter.Tagname != "" && tagName != CmdParams.Filter.Tagname && !CmdParams.FilterReg.Tagname.MatchString(string(tagName)) {
+
+		if !matchIsIstagToFilterParams(imagestreamName, tagName, istagname, isNamespace, isAge) {
 			continue
 		}
 

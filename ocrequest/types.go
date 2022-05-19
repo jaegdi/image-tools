@@ -484,6 +484,8 @@ type T_flagFilt struct {
 	Tagname   T_tagName
 	Imagename T_shaName
 	Namespace T_nsName
+	Minage    int
+	Maxage    int
 }
 
 type T_flagFiltRegexp struct {
