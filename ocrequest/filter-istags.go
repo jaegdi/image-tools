@@ -55,11 +55,16 @@ func printShellCmds(commands map[string]string) {
 	}
 }
 
+// func isImageRefencedByLatestTag() {
+
+// }
+
 // FilterIstagsToDelete generate shell commands to delete istags, when they fit the conditions
 // The conditions are:
-// - the tag must fit the tagPatetern
+// - the tag must fit the tagPattern
 // - the must be older or equal then the given minAge
 // - the istag must not be used in any of the clusters by any of: dc, pod, job, cronjob or deamonset
+// - the istag must not reference a image that is referenced by a latest tag
 func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, clusters T_clNames, tagPattern string, minAge int, cause string) {
 	result := map[string]string{}
 	tagPatternRegexp := regexp.MustCompile(tagPattern)
