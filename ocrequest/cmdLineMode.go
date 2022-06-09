@@ -87,12 +87,13 @@ func CmdlineMode() {
 				`snapshot|SNAPSHOT|\:PR-|\:[[:digit:]](\.[[:digit:]]+){2}\-202[[:digit:]]{5}\.[[:digit:]]{6}\-[[:digit:]]`,
 				CmdParams.DeleteOpts.MinAge,
 				"snapshots and pull requests")
-		}
-		if CmdParams.DeleteOpts.Pattern != "" ||
-			CmdParams.Filter.Isname != "" ||
-			CmdParams.Filter.Tagname != "" ||
-			CmdParams.Filter.Istagname != "" ||
-			CmdParams.Filter.Namespace != "" {
+		} else if CmdParams.DeleteOpts.NonBuild {
+			FilterNonbuildIstagsToDelete(
+				resultFamilies,
+				CmdParams.Family,
+				CmdParams.Cluster,
+				CmdParams.DeleteOpts.MinAge)
+		} else {
 			DebugLogger.Println(
 				"\n--main--::\n",
 				"filter minAge: '"+fmt.Sprint(CmdParams.DeleteOpts.MinAge)+"'\n",
@@ -109,13 +110,7 @@ func CmdlineMode() {
 				CmdParams.DeleteOpts.MinAge,
 				getCause())
 		}
-		if CmdParams.DeleteOpts.NonBuild {
-			FilterNonbuildIstagsToDelete(
-				resultFamilies,
-				CmdParams.Family,
-				CmdParams.Cluster,
-				CmdParams.DeleteOpts.MinAge)
-		}
+
 		if CmdParams.DeleteOpts.Confirm {
 			DebugLogger.Println("execute oc adm prune")
 		} else {

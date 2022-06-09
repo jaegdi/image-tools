@@ -67,7 +67,7 @@ func Init() {
 	InfoLogger.Println("------------------------------------------------------------")
 	InfoLogger.Println("Starting execution of image-tools")
 
-	Multiproc = false
+	Multiproc = true
 	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
 	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
 

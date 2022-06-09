@@ -55,9 +55,16 @@ func printShellCmds(commands map[string]string) {
 	}
 }
 
-// func isImageRefencedByLatestTag() {
-
-// }
+func isImageRefencedByLatestTag(image map[T_istagName]T_sha) bool {
+	tagLatestRegexp := regexp.MustCompile("^.*?:latest$")
+	// fmt.Println(GetJsonFromMap(image))
+	for istag, _ := range image {
+		if tagLatestRegexp.MatchString(istag.str()) {
+			return true
+		}
+	}
+	return false
+}
 
 // FilterIstagsToDelete generate shell commands to delete istags, when they fit the conditions
 // The conditions are:
@@ -71,13 +78,14 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, c
 	for _, cluster := range clusters {
 		for istag, nsTags := range data[family].AllIstags[cluster].Istag {
 			is, tag := istag.split()
-			if tagPatternRegexp.MatchString(istag.str()) || tagPattern == "" {
+			if (tagPatternRegexp.MatchString(istag.str()) || tagPattern == "") && tag != "latest" {
 				for ns, tagMap := range nsTags {
 					if CmdParams.Options.Debug {
 						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
 					}
 					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace, tagMap.AgeInDays) {
-						if data[family].UsedIstags[is][tag] == nil {
+						if data[family].UsedIstags[is][tag] == nil && !isImageRefencedByLatestTag(data[family].AllIstags[cluster].Image[tagMap.Image]) {
+							// fmt.Print(GetJsonFromMap(tagMap))
 							s := (string(ns) + "/" + string(istag))
 							value := fmt.Sprintln(
 								"oc -n", tagMap.Namespace, "delete istag", tagMap.Imagestream.str()+":"+tagMap.Tagname.str(),
