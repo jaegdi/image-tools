@@ -201,15 +201,17 @@ EXAMPLES
 
 CONNECTION
 
-    As default the sock5 proxy to localhost:65022 is enabled. This can be changed with the parameter -socks5=...
+    As default the sock5 proxy to localhost:65022 is enabled becaus the api of the upper clusters is only reacheable
+	over the sprungserver. To disable SOCKS5 set the parameter -socks5=no
+	If your socks5 jumpserver config listens on a different port set the parameter -socks5=<host>:<port>
 
     If there are problems with the connection to the clusters,
-    there is the option to disable the use of proxy with the
+    there is the option to disable the use of web proxy with the
     parameter '-noproxy'.
 
     A socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
     a socks tunnel over the sprungserver and give the
-    parameter '-socks5=ip:port' to the image-tools program.
+    parameter '-socks5=host:port' to the image-tools program.
 -----------------------------------------------------------------------------------------------------
 `
 
