@@ -1,0 +1,86 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"strconv"
+	"strings"
+)
+
+func contains(elems []string, v string) bool {
+	for _, s := range elems {
+		if v == s {
+			return true
+		}
+	}
+	return false
+}
+
+// UnescapeUtf8InJsonBytes removes escape sign from JSON byte
+func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) {
+	var patterns = [][2]string{
+		{`\\u`, `\u`},
+		{`%3a`, `@`},
+		{`%3A`, `:`},
+		{`\<`, `<`},
+		{`\>`, `>`},
+		{`\&`, `&`},
+	}
+	var patterns2 = [][2]string{
+		{`%3a`, `@`},
+		{`%3A`, `:`},
+		{`\<`, `<`},
+		{`\>`, `>`},
+		{`\&`, `&`},
+		{`"\"`, `"`},
+		{`\""`, `"`},
+		{`\"`, ``},
+	}
+	str := strconv.Quote(string(_jsonRaw))
+	for _, p := range patterns {
+		str = strings.Replace(str, p[0], p[1], -1)
+	}
+	if str1, err := strconv.Unquote(str); err != nil {
+		return _jsonRaw, err
+	} else {
+		for _, p := range patterns2 {
+			str1 = strings.Replace(str1, p[0], p[1], -1)
+		}
+		return []byte(str1), nil
+	}
+}
+
+func GetJsonOneliner(dict interface{}) string {
+	j, err := json.Marshal(dict)
+	if err != nil {
+		ErrorLogger.Println("dict: ", dict)
+		ErrorLogger.Println("err: ", err)
+	}
+	return string(j)
+}
+
+// GetJsonFromMap generate formated json output depending on the commadline flags
+func GetJsonFromMap(dict interface{}) string {
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
+	encoder.SetIndent("", "   ")
+	if err := encoder.Encode(dict); err != nil {
+		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
+			ErrorLogger.Println("dict: ", dict)
+			ErrorLogger.Println("err: ", err)
+		} else {
+			s := string(jsonBytes)
+			return s
+		}
+	} else {
+		b := buffer.Bytes()
+		if b1, err := UnescapeUtf8InJsonBytes(b); err != nil {
+			ErrorLogger.Println("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
+			return string(b1)
+		} else {
+			return string(b1)
+		}
+	}
+	return ""
+}

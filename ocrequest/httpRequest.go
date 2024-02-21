@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-func getHttpAnswer(url string) []byte {
+func getHttpAnswer(url string, token string) []byte {
 	// Get the SystemCertPool, continue with an empty pool on error
 	rootCAs, _ := x509.SystemCertPool()
 	if rootCAs == nil {
@@ -36,6 +36,10 @@ func getHttpAnswer(url string) []byte {
 	// add header to the req
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
+	if token != "" {
+		req.Header.Add("Authorization", "Bearer "+token)
+	}
+
 	// Send req using http Client
 	var noproxyTransport http.RoundTripper = &http.Transport{Proxy: nil, TLSClientConfig: config}
 	var defaultTransport = &http.Transport{TLSClientConfig: config}

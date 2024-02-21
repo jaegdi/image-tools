@@ -21,7 +21,7 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))) &&
 		(CmdParams.Filter.Namespace == "" ||
 			(CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace) ||
-			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Istagname.MatchString(string(namespace)))) &&
+			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Namespace.MatchString(string(namespace)))) &&
 		(CmdParams.Filter.Minage == -1 ||
 			(CmdParams.Filter.Minage > -1 && age >= CmdParams.Filter.Minage)) &&
 		(CmdParams.Filter.Maxage == -1 ||

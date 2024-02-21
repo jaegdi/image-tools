@@ -75,7 +75,7 @@ the parameters can be specified in any order
     -family=string    family name, eg. pkp, aps, ssp or fpc
 
     -cluster=string   shortname of cluster, eg.
-      cid-apc0, int-apc0, ppr-apc0 or pro-apc0
+      cid-scp0,  ppr-scp0 or pro-scp0
       cid-scp0, ppr-scp0, vpt-scp0, pro-scp0
 
 ##### Type of objects to collect and report. One of them is mandatory

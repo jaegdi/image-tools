@@ -15,7 +15,7 @@ func getBitbucketUrl(urlpath string) string {
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
 	// DebugLogger.Println("url: ", url)
-	yamlstr := getHttpAnswer(url)
+	yamlstr := getHttpAnswer(url, bitbucket_token)
 	// DebugLogger.Println("yaml: ", string(yamlstr))
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {

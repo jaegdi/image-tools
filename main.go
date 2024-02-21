@@ -29,7 +29,6 @@ func main() {
 
 	if CmdParams.Options.ServerMode {
 		fmt.Println("Will be startet in server mode")
-
 	} else {
 		CmdlineMode()
 	}

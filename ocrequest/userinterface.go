@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"strings"
 )
 
 var CmdParams T_flags
@@ -37,14 +36,14 @@ DESCRIPTION
     It never works across different families.
 
       For existing images, istags or imagestreams(is) that means it works for one or more clusters like
-        cid-apc0, int-apc0, ppr-apc0, vpt-apc0, pro-apc0
-        or more than one like 'cid-scp0,cid-apc0,ppr-scp0,ppr-apc0'
+        cid-scp0,  ppr-scp0, vpt-scp0, pro-scp0
+        or more than one like 'cid-scp0,cid-scp0,ppr-scp0,ppr-scp0'
 
     and for one families like
         'pkp, sps, fpc, aps, ...'
 
     The cluster must be defined by the mandatory parameter
-        '-cluster=[cid-apc0|int-apc0|ppr-apc0|vpt-apc0|pro-apc0|dev-scp0|cid-scp0|ppr-scp0|vpt-scp0|pro-scp0]'
+        '-cluster=[cid-scp0|int-scp0|ppr-scp0|vpt-scp0|pro-scp0|dev-scp0|cid-scp0|ppr-scp0|vpt-scp0|pro-scp0]'
 
     The family must be defined by the mandatory parameter
         '-family=[aps|fpc|pkp|ssp]
@@ -115,13 +114,13 @@ EXAMPLES
   |        Report all information for family pkp in cluster cid as json
   |        (which is the default output format)
   |
-  |            image-tools -cluster=cid-apc0 -family=pkp -all
+  |            image-tools -cluster=cid-scp0 -family=pkp -all
   |
   |            or as table
-  |            image-tools -cluster=cid-apc0 -family=pkp -all -table
+  |            image-tools -cluster=cid-scp0 -family=pkp -all -table
   |
   |            or csv in different files for each type of information
-  |            image-tools -cluster=cid-apc0 -family=pkp -all -csvfile=prefix
+  |            image-tools -cluster=cid-scp0 -family=pkp -all -csvfile=prefix
   |            writes the output to different files 'prefix-type' in current directory
   |
   |        Report only __used__ istags for family pkp as pretty printed table
@@ -129,29 +128,29 @@ EXAMPLES
   |            the pager define in the environment variable $PAGER/%PAGER%.
   |            If $PAGER is not set, it try to use 'more')
   |
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -table
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -table
   |            or json
-  |            image-tools -cluster=cid-apc0 -family=pkp -used
+  |            image-tools -cluster=cid-scp0 -family=pkp -used
   |            or yaml
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -yaml
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -yaml
   |            or csv
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -csv
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -csv
   |
   |        Report istags for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -istag -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -istag -yaml
   |
   |        Report ImageStreams for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -is -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -is -yaml
   |
   |        Report Images for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -image -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -image -yaml
   |
   |        Report combined with pc(print columns) tool
   |
-  |            image-tools -socks5=localhost:65022 -family=pkp -cluster=cid-apc0,int-apc0,ppr-apc0,pro-apc0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
+  |            image-tools -socks5=localhost:65022 -family=pkp -cluster=cid-scp0,ppr-scp0,pro-scp0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
 
 
 
@@ -161,25 +160,25 @@ EXAMPLES
   |        and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service
   |        and zahlungsstoerung-service
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot \
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot \
   |                        -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
   |
   |        To use the script output to really delete the istags, you can use the following line:
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild \
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot -nonbuild \
   |                        -delpattern='(header|footer|zahlungsstoerung)-service'      | xargs -n 1 -I{} bash -c "{}"
   |
   |        To only generate a script to delete old snapshot istags:
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot
   |
   |        To delete all not used images of family 'aps' in cluster cid
   |
-  |            image-tools -family=aps -cluster=cid-apc0 -delete  -delminage=0 -delpattern='.'
+  |            image-tools -family=aps -cluster=cid-scp0 -delete  -delminage=0 -delpattern='.'
   |
   |        To delete all hybris istags of family pkp older than 45 days
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -delminage=45
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -isname=hybris -delminage=45
 
 
   HINT
@@ -224,7 +223,7 @@ func EvalFlags() {
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
 	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-apc0,cid-scp0,ppr-acp0")
+	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-scp0,cid-scp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -365,34 +364,34 @@ func EvalFlags() {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
 	if !flags.Output.Used && (len(flags.Cluster) == 0) {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid-apc0'. Is now: ", flags.Cluster)
+		exitWithError("a shortname for cluster must given like: '-cluster=cid-scp0'. Is now: ", flags.Cluster)
 	}
-	for _, cluster := range flags.Cluster {
-		_, clusterDefined := Clusters.Config[cluster]
-		if !clusterDefined && !flags.Output.Used {
-			clusterlist := []string{}
-			for clname := range Clusters.Config {
-				clusterlist = append(clusterlist, string(clname))
-			}
-			clusters := strings.Join(clusterlist, ",")
-			exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
-		}
-	}
-	if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
-		exitWithError("Family", flags.Family, "is not defined")
-	}
+	// for _, cluster := range flags.Cluster {
+	// 	_, clusterDefined := Clusters.Config[cluster]
+	// 	if !clusterDefined && !flags.Output.Used {
+	// 		clusterlist := []string{}
+	// 		for clname := range Clusters.Config {
+	// 			clusterlist = append(clusterlist, string(clname))
+	// 		}
+	// 		clusters := strings.Join(clusterlist, ",")
+	// 		exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
+	// 	}
+	// }
+	// if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
+	// 	exitWithError("Family", flags.Family, "is not defined")
+	// }
 
-	for _, cluster := range flags.Cluster {
-		foundNamespace := false
-		for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
-			if flags.Filter.Namespace == v {
-				foundNamespace = true
-			}
-		}
-		if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
-			exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
-		}
-	}
+	// for _, cluster := range flags.Cluster {
+	// 	foundNamespace := false
+	// 	for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
+	// 		if flags.Filter.Namespace == v {
+	// 			foundNamespace = true
+	// 		}
+	// 	}
+	// 	if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
+	// 		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
+	// 	}
+	// }
 
 	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
 		exitWithError("As least one of the output flags must set")
