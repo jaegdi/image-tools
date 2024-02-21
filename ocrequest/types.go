@@ -34,7 +34,7 @@ func (c T_appName) str() string {
 	return string(c)
 }
 
-//                                 family
+// family
 type T_completeResultsFamilies map[T_familyName]T_completeResults
 
 type T_isName string
@@ -76,7 +76,8 @@ func (c T_shaName) str() string {
 }
 
 // getExistingIstags.go
-//                     is        image
+//
+//	is        image
 type T_shaStreams map[T_isName]map[T_shaName]T_resIstag
 
 func (a T_shaStreams) Add(is T_isName, image T_shaName, istag T_istag) {
@@ -242,7 +243,7 @@ type T_sha struct {
 type T_isShaTagnames map[T_istagName]interface{}
 type T_is map[T_shaName]T_isShaTagnames
 
-//                   istag     namespace
+// istag     namespace
 type T_resIstag map[T_istagName]map[T_nsName]T_istag
 type T_resIs map[T_isName]T_is
 type T_resSha map[T_shaName]map[T_istagName]T_sha
@@ -453,7 +454,7 @@ func (c T_familyKeys) clusterListStr() string {
 	return strings.Join(c.clusterList(), `, `)
 }
 
-//               family   cl-ns          cluster   namespaces
+// family   cl-ns          cluster   namespaces
 type T_famNsList map[T_familyName]T_familyKeys
 
 func (c T_famNsList) familyList() []string {
@@ -593,10 +594,10 @@ type T_cft_cluster struct {
 type T_cft_clusters []T_cft_cluster
 
 type T_cft_family struct {
-	Name              string   `json:"name",omitempty`
-	Description       string   `json:"description",omitempty`
-	Applications      []string `json:"applications",omitempty`
-	Repository_Layout string   `json:"repository_layout",omitempty`
+	Name              string   `json:"name,omitempty"`
+	Description       string   `json:"description,omitempty"`
+	Applications      []string `json:"applications,omitempty"`
+	Repository_Layout string   `json:"repository_layout,omitempty"`
 }
 type T_cft_families []T_cft_family
 
