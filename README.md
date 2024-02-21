@@ -135,24 +135,26 @@ the parameters can be specified in any order
 
     -occlient         use oc client instead of api call for cluster communication
 
+    -statcfg          us statically defined config for families instead of dynamic generated config based on files of config-tool
+
     -noproxy          disable the usage of a proxy for OpenShift API requests
 
-    -socks5=string    enable socks5 usage. E.g. -socks5=localhost:65022
+    -socks5=string    enable socks5 usage. E.g. -socks5=localhost:65022, this is the default. To disable socks5 set -socks5=no
 
 ## EXAMPLES
 
 Report all information for family pkp in cluster cid as json
 (which is the default output format)
 
-    ./image-tools  -cluster=cid -family=pkp -all
+    ./image-tools  -cluster=cid-scp0 -family=pkp -all
 
 or as table
 
-        ./image-tools  -cluster=cid -family=pkp -all -table
+        ./image-tools  -cluster=cid-scp0 -family=pkp -all -table
 
 or csv in different files for each type of information
 
-    ./image-tools  -cluster=cid -family=pkp -all -csvfile=prefix
+    ./image-tools  -cluster=cid-scp0 -family=pkp -all -csvfile=prefix
 
 writes the output to different files 'prefix-type' in current directory
 
@@ -161,49 +163,49 @@ Report only __used__ istags for family pkp as pretty printed table
     the pager define in the environment variable $PAGER/%PAGER%.
 If $PAGER is not set, it try to use 'more')
 
-        ./image-tools  -cluster=cid -family=pkp -used -table
+        ./image-tools  -family=pkp -used -table
 
 or json
 
-        ./image-tools  -cluster=cid -family=pkp -used
+        ./image-tools  -family=pkp -used
 
 or yaml
 
-    ./image-tools  -cluster=cid -family=pkp -used -yaml
+    ./image-tools  -family=pkp -used -yaml
 
 or csv
 
-    ./image-tools  -cluster=cid -family=pkp -used -csv
+    ./image-tools  -family=pkp -used -csv
 
 Report istags with tag=latest for family pkp in cluster cid as yaml report
 
-    ./image-tools  -cluster=cid -family=aps -istag -yaml -tagname=latest
+    ./image-tools  -cluster=cid-scp0 -family=aps -istag -yaml -tagname=latest
 
 Report ImageStreams for family aps in cluster int as yaml report
 
-    ./image-tools  -cluster=int -family=aps -is -yaml
+    ./image-tools  -cluster=cid-scp0 -family=aps -is -yaml
 
 Report ImageStreams with name=webcode-service for family pkp in cluster cid as table report
 
-    ./image-tools  -cluster=cid -family=pkp -is -isname=webcode-service -table
+    ./image-tools  -cluster=cid-scp0 -family=pkp -is -isname=webcode-service -table
 
 Delete: Generate a shell script as output to delete old istags(60 days, the default) for family pkp in cluster cid
     and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service and zahlungsstoerung-service
 
-        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
+        image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
 
 Delete: To use the script output to really delete the istags, you can use the following line (you must be an openshift admin):
 
-        image-tools -family=pkp -cluster=cid -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
+        image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'|xargs -n 1 -I{} bash -c "{}"
 
 Delete: To only generate a script to delete old snapshot istags:
 
-        image-tools -family=pkp -cluster=cid -delete -snapshot
+        image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot
 
 Delete: To delete all not used images of family 'aps' in cluster cid
 
-        image-tools -family=aps -cluster=cid -delete  -minage=0 -delpattern='.'
+        image-tools -family=aps -cluster=cid-scp0 -delete  -minage=0 -delpattern='.'
 
 Delete: To delete all hybris istags of family pkp older than 45 days
 
-        image-tools -family=pkp -cluster=cid -delete -isname=hybris -minage=45
+        image-tools -family=pkp -cluster=cid-scp0 -delete -isname=hybris -minage=45

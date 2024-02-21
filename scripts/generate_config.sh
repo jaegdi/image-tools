@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 dir=$(dirname "$0")
 
+# This script generates the config-clusters.go file in ocrequest dir.
+# It gets the token of sa image-pruner from every cluster to generate this config
+
+remember-current-cluster
+
 {
 cat <<EOT
 package ocrequest
@@ -30,3 +35,5 @@ cat <<EOT
 }
 EOT
 } > "$dir/../ocrequest/config-clusters.go"
+
+switch-back-to-current-cluster
