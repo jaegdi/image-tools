@@ -58,7 +58,7 @@ func printShellCmds(commands map[string]string) {
 func isImageRefencedByLatestTag(image map[T_istagName]T_sha) bool {
 	tagLatestRegexp := regexp.MustCompile("^.*?:latest$")
 	// fmt.Println(GetJsonFromMap(image))
-	for istag, _ := range image {
+	for istag := range image {
 		if tagLatestRegexp.MatchString(istag.str()) {
 			return true
 		}
