@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+cp image-tools old-version/image-tools_$(date +%F_%T)
+cp image-tools.exe old-version/image-tools_$(date +%F_%T).exe
+
 echo Generate the config-clusters.go
 scripts/generate_config.sh
 
