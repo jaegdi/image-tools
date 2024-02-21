@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 )
 
 var CmdParams T_flags
@@ -200,11 +201,13 @@ EXAMPLES
 
 CONNECTION
 
+    As default the sock5 proxy to localhost:65022 is enabled. This can be changed with the parameter -socks5=...
+
     If there are problems with the connection to the clusters,
     there is the option to disable the use of proxy with the
     parameter '-noproxy'.
 
-    Or if a socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
+    A socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
     a socks tunnel over the sprungserver and give the
     parameter '-socks5=ip:port' to the image-tools program.
 -----------------------------------------------------------------------------------------------------
@@ -268,9 +271,16 @@ func EvalFlags() {
 	insecurePtr := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
 	ocClientPtr := flag.Bool("occlient", false, "TechOpt: use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "TechOpt: disable use of proxy for API http requests")
+	statCfgPtr := flag.Bool("statcfg", false, "TechOpt: use the static defined config instead of dynamic generated config from config-tool repos")
 
-	socks5proxy := os.Getenv("SOCKS4PROXY")
-	socks5ProxyPtr := flag.String("socks5", socks5proxy, "TechOpt: set socks5 proxy url and use it for API calls.\n eg. -socks5=127.0.0.1:65022 .  If env var SOCKS5PROXY is defined, it uses this as default, ohterwise empty string")
+	socks5proxy := os.Getenv("SOCKS5PROXY")
+	if len(strings.TrimSpace(socks5proxy)) == 0 {
+		socks5proxy = "127.0.0.1:65022"
+	}
+	if socks5proxy == "no" {
+		socks5proxy = ""
+	}
+	socks5ProxyPtr := flag.String("socks5", socks5proxy, "TechOpt: set socks5 proxy url and use it for API calls.\n eg. -socks5=127.0.0.1:65022 .  If env var SOCKS5PROXY is defined, it uses this as default, otherwise '127.0.0.1:65022' string")
 	profilerPtr := flag.Bool("profiler", false,
 		"TechOpt: enable profiler support for debugging, http://localhost:6060/debug/pprof\n"+
 			" or: ~/go/bin/pprof -http localhost:8080 http://localhost:6060/debug/pprof/goroutine")
@@ -345,15 +355,16 @@ func EvalFlags() {
 			Confirm:     *deleteConfirmPtr,
 		},
 		Options: T_flagOpts{
-			InsecureSSL: *insecurePtr,
-			OcClient:    *ocClientPtr,
-			NoProxy:     *noProxyPtr,
-			Socks5Proxy: *socks5ProxyPtr,
-			Profiler:    *profilerPtr,
-			NoLog:       *noLogPtr,
-			Debug:       *debugPtr,
-			Verify:      *verifyPtr,
-			ServerMode:  *serverPtr,
+			InsecureSSL:  *insecurePtr,
+			OcClient:     *ocClientPtr,
+			NoProxy:      *noProxyPtr,
+			Socks5Proxy:  *socks5ProxyPtr,
+			Profiler:     *profilerPtr,
+			NoLog:        *noLogPtr,
+			Debug:        *debugPtr,
+			Verify:       *verifyPtr,
+			ServerMode:   *serverPtr,
+			StaticConfig: *statCfgPtr,
 		},
 	}
 

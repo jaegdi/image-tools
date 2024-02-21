@@ -61,21 +61,33 @@ func Init() {
 	// InfoLogger.Println("Pipeline Configs": pipelinesConfig)
 	// cfg := genClusterConfig(clustersConfig)
 	// InfoLogger.Println("ClusterConfig", cfg)
-	fns := genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
-	// FamilyNamespaces = fns
-	FamilyNamespaces = FamilyNamespacesStat
+
+	// use statig config if cmdparam statcfg is true
+	var fns T_famNsList
+	if CmdParams.Options.StaticConfig {
+		FamilyNamespaces = FamilyNamespacesStat
+	} else {
+		fns = genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
+		FamilyNamespaces = fns
+	}
+
 	InfoLogger.Println("------------------------------------------------------------")
 	InfoLogger.Println("dynamic Config", GetJsonOneliner(fns))
 	InfoLogger.Println("------------------------------------------------------------")
 	InfoLogger.Println("Static Config", GetJsonOneliner(FamilyNamespacesStat))
 	InfoLogger.Println("------------------------------------------------------------")
 
-	InfoLogger.Println("------------------------------------------------------------")
+	InfoLogger.Println("############################################################")
 	InfoLogger.Println("Starting execution of image-tools")
 
 	Multiproc = true
 	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
 	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
+	if CmdParams.Options.Socks5Proxy == "no" {
+		CmdParams.Options.Socks5Proxy = ""
+	}
+	InfoLogger.Println("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
+	InfoLogger.Println("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
 
 	regexValidNamespace = regexp.MustCompile(
 		`^` + string(CmdParams.Family) + `$` + `|` +

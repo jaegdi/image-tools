@@ -506,15 +506,16 @@ type T_flagDeleteOpts struct {
 }
 
 type T_flagOpts struct {
-	InsecureSSL bool
-	OcClient    bool
-	NoProxy     bool
-	Socks5Proxy string
-	Profiler    bool
-	NoLog       bool
-	Debug       bool
-	Verify      bool
-	ServerMode  bool
+	InsecureSSL  bool
+	OcClient     bool
+	NoProxy      bool
+	Socks5Proxy  string
+	Profiler     bool
+	NoLog        bool
+	Debug        bool
+	Verify       bool
+	ServerMode   bool
+	StaticConfig bool
 }
 type T_flags struct {
 	Cluster    T_clNames
