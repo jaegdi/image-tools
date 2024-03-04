@@ -21,7 +21,7 @@ type ResultUsedIstags struct {
 var jobsUsedIstags chan JobUsedIstags
 var jobResultsUsedIstags chan ResultUsedIstags
 
-var channelsizeUsedIstags = 300
+var channelsizeUsedIstags = 500
 var noOfWorkersUsedIstags = 100
 
 func workerUsedIstags(wg *sync.WaitGroup) {
@@ -76,28 +76,28 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 
 		InfoLogger.Println("Collect results for Used IsTags")
 		for result := range jobResultsUsedIstags {
-			for is := range result.istags {
-				for tag := range result.istags[is] {
-					a := []T_usedIstag{}
-					if istagResult[is] == nil {
-						istagResult[is] = map[T_tagName][]T_usedIstag{}
-					}
-					if istagResult[is][tag] == nil {
-						istagResult[is][tag] = []T_usedIstag{}
-					}
-					if istagResult[is][tag] != nil {
-						a = istagResult[is][tag]
-					}
-					for i := range result.istags[is][tag] {
-						a = append(a, result.istags[is][tag][i])
-					}
-					istagResult[is][tag] = a
-				}
+			// for is := range result.istags {
+			// 	for tag := range result.istags[is] {
+			// 		a := []T_usedIstag{}
+			// 		if istagResult[is] == nil {
+			// 			istagResult[is] = map[T_tagName][]T_usedIstag{}
+			// 		}
+			// 		if istagResult[is][tag] == nil {
+			// 			istagResult[is][tag] = []T_usedIstag{}
+			// 		}
+			// 		if istagResult[is][tag] != nil {
+			// 			a = istagResult[is][tag]
+			// 		}
+			// 		for i := range result.istags[is][tag] {
+			// 			a = append(a, result.istags[is][tag][i])
+			// 		}
+			// 		istagResult[is][tag] = a
+			// 	}
 
-			}
+			// }
 			// TODO: Mergen funktioniert nicht richtig, merged immer nur zwei namespaces
 			// r := result.istags
-			// MergoNestedMaps(&istagResult, r)
+			MergoNestedMaps(&istagResult, result.istags)
 		}
 
 	} else {
@@ -111,5 +111,6 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 			}
 		}
 	}
+	InfoLogger.Println(istagResult)
 	return istagResult
 }

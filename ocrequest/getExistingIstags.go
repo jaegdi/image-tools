@@ -117,7 +117,9 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 
 		buildLabelsMap := T_istagBuildLabels{}
 		if CmdParams.Options.Debug {
-			DebugLogger.Println("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
+			}
 		}
 		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
 			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))

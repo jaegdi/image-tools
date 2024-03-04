@@ -14,15 +14,21 @@ func getBitbucketUrl(urlpath string) string {
 
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
-	// DebugLogger.Println("url: ", url)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("url: ", url)
+	}
 	yamlstr := getHttpAnswer(url, bitbucket_token)
-	// DebugLogger.Println("yaml: ", string(yamlstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("yaml: ", string(yamlstr))
+	}
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
 		ErrorLogger.Println("Unmarshal multidoc yaml:", yamlstr)
 		ErrorLogger.Println("Unmarshal multidoc yaml:", err.Error())
 	}
-	// DebugLogger.Println("yamlmap: ", yamlmap)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("yamlmap: ", yamlmap)
+	}
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
 	// jsonstr, err := json.Marshal(yamlmap)
@@ -30,8 +36,12 @@ func getBitbucketData(filename string) []byte {
 		ErrorLogger.Println("yamlmap:    ", yamlmap)
 		ErrorLogger.Println("err:    ", err)
 	}
-	DebugLogger.Println("Config from scp-infra-config url:", url)
-	DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Config from scp-infra-config url:", url)
+	}
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
+	}
 	return jsonstr
 }
 
@@ -72,7 +82,9 @@ func GetNamespaces() T_cft_namespaces {
 		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
 		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
-	// DebugLogger.Println("data: ", data)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("data: ", data)
+	}
 	return data
 }
 
@@ -105,9 +117,13 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 	}
 	jsonstr, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		ErrorLogger.Println("JsonMarshal failes:", err)
+		if CmdParams.Options.Debug {
+			ErrorLogger.Println("JsonMarshal failes:", err)
+		}
 	}
-	DebugLogger.Println("ClusterConfig:", string(jsonstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("ClusterConfig:", string(jsonstr))
+	}
 	return cfg
 }
 

@@ -22,13 +22,8 @@ logpostfix="log-$CLUSTER-$(date +%F_%T).log"
     cat "$scriptdir/hub-list.txt"
 
 } 2>/dev/null | tee "delete-$logpostfix" | \
-    rg -av "db2:2.1.5-0|db2:2.1.3-0" | \
+    rg -av "db2|mail|maildev" | \
     xargs -n 1 -I{} bash -c "{}"
 
 # prune registry
-if [[ $CLUSTER =~ apc0 ]]; then
-    registry_url="$(oc -n default get route|grep docker-registry|awk '{print $2}')"
-else
-     registry_url="$(oc -n openshift-image-registry get route|rg default-route|pc 2)"
-fi
-oc adm prune images --registry-url="$registry_url" --keep-tag-revisions=3 --keep-younger-than=10m --confirm | tee "prune--$logpostfix"
+prune-registry-of-current-cluster.sh

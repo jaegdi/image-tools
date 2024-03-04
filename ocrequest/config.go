@@ -37,16 +37,66 @@ package ocrequest
 var FamilyNamespaces T_famNsList
 var AppNamespaces T_appNsList
 var FamilyNamespacesStat = T_famNsList{
-	"pkp": {
+	"aps": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"pkp-images"},
-			"ppr-scp0": {"pkp-images"},
-			"vpt-scp0": {"pkp-images"},
-			"pro-scp0": {"pkp-images"},
+			"cid-scp0": {"aps-images", "openshift"},
+			"ppr-scp0": {"aps-images"},
+			"vpt-scp0": {"aps-images"},
+			"pro-scp0": {"aps-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"b2b": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"b2b-images"},
+			"ppr-scp0": {"b2b-images"},
+			"vpt-scp0": {"b2b-images"},
+			"pro-scp0": {"b2b-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"b2c": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"b2c-images"},
+			"ppr-scp0": {"b2c-images"},
+			"vpt-scp0": {"b2c-images"},
+			"pro-scp0": {"b2c-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"cbs": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"cbs-images"},
+			"int-scp0": {"cbs-images"},
+			"ppr-scp0": {"cbs-images"},
+			"vpt-scp0": {"cbs-images"},
+			"pro-scp0": {"cbs-images"},
 		},
 		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
 		Buildstages: []T_clName{"cid-scp0"},
-		Teststages:  []T_clName{"ppr-scp0", "vpt-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"dca": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"dca-images"},
+			"int-scp0": {"dca-images"},
+			"ppr-scp0": {"dca-images"},
+			"vpt-scp0": {"dca-images"},
+			"pro-scp0": {"dca-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
 		Prodstages:  []T_clName{"pro-scp0"},
 	},
 	"ebs": {
@@ -56,59 +106,34 @@ var FamilyNamespacesStat = T_famNsList{
 			"vpt-scp0": {"ebs-images"},
 			"pro-scp0": {"ebs-images"},
 		},
-		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
-		Buildstages: []T_clName{"cid-scp0"},
-		Teststages:  []T_clName{"ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"pro-scp0"},
-	},
-	"aps": {
-		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"aps-images", "openshift"},
-			"ppr-scp0": {"aps-images"},
-			"vpt-scp0": {"aps-images"},
-			"pro-scp0": {"aps-images"},
-		},
-		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
-		Buildstages: []T_clName{"cid-scp0"},
-		Teststages:  []T_clName{"ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"pro-scp0"},
-	},
-	"vps": {
-		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"vps-images"},
-			"ppr-scp0": {"vps-images"},
-			"vpt-scp0": {"vps-images"},
-			"pro-scp0": {"vps-images"},
-		},
-		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
-		Buildstages: []T_clName{"cid-scp0"},
-		Teststages:  []T_clName{"ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"pro-scp0"},
-	},
-	"dca": {
-		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"images-dca"},
-			"int-scp0": {"images-dca"},
-			"ppr-scp0": {"images-dca"},
-			"vpt-scp0": {"images-dca"},
-			"pro-scp0": {"images-dca"},
-		},
-		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "pro-scp0"},
-		Buildstages: []T_clName{"cid-scp0"},
-		Teststages:  []T_clName{"ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"pro-scp0"},
-	},
-	"fpc-scp0": {
-		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"b2c-images"},
-			"ppr-scp0": {"b2c-images"},
-			// "vpt-scp0": {"b2c-images"},
-			"pro-scp0": {"b2c-images"},
-		},
-		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
 		Buildstages: []T_clName{"cid-scp0"},
 		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"ppr-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"ibs": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"ibs-images"},
+			"ppr-scp0": {"ibs-images"},
+			"vpt-scp0": {"ibs-images"},
+			"pro-scp0": {"ibs-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"pkp": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"pkp-images"},
+			"ppr-scp0": {"pkp-images"},
+			"vpt-scp0": {"pkp-images"},
+			"pro-scp0": {"pkp-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
 	},
 	"scp": {
 		ImageNamespaces: map[T_clName][]T_nsName{
@@ -120,7 +145,19 @@ var FamilyNamespacesStat = T_famNsList{
 		Stages:      []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
 		Buildstages: []T_clName{"cid-scp0"},
 		Teststages:  []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
+	},
+	"vps": {
+		ImageNamespaces: map[T_clName][]T_nsName{
+			"cid-scp0": {"vps-images"},
+			"ppr-scp0": {"vps-images"},
+			"vpt-scp0": {"vps-images"},
+			"pro-scp0": {"vps-images"},
+		},
+		Stages:      []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Buildstages: []T_clName{"cid-scp0"},
+		Teststages:  []T_clName{"cid-scp0", "ppr-scp0", "vpt-scp0"},
+		Prodstages:  []T_clName{"pro-scp0"},
 	},
 }
 

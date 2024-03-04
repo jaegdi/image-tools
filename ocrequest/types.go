@@ -265,12 +265,14 @@ type T_result struct {
 
 // get UsedIstags.go
 type T_DcResults map[string]interface{}
+type T_DeployResults map[string]interface{}
 type T_JobResults map[string]interface{}
 type T_CronjobResults map[string]interface{}
 type T_Results map[string]interface{}
 
 type T_runningObjects struct {
 	Dc      T_DcResults
+	Deploy  T_DcResults
 	Job     T_JobResults
 	Cronjob T_CronjobResults
 	Pod     T_Results
@@ -573,7 +575,9 @@ func (c T_csvDoc) csvDoc(typ string) {
 		if err != nil {
 			ErrorLogger.Println("failed to open file", file, err)
 		}
-		DebugLogger.Println("write CSV file for", typ, "to", file)
+		if CmdParams.Options.Debug {
+			DebugLogger.Println("write CSV file for", typ, "to", file)
+		}
 		w := csv.NewWriter(csvfile)
 		if err := w.WriteAll(out); err != nil {
 			ErrorLogger.Println("writing csv failed" + err.Error())

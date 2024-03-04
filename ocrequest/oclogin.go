@@ -37,7 +37,9 @@ func setClusterToken(cluster T_clName, token string) {
 
 // ocGetToken tries to get the oc token from config, if it is not defined in config, it requests it from command line parameter
 func ocGetToken(cluster T_clName) string {
-	DebugLogger.Println("Try to get cluster token for cluster:", cluster)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Try to get cluster token for cluster:", cluster)
+	}
 	token := getClusterToken(cluster)
 	if token != "" {
 		return token
@@ -69,7 +71,9 @@ func ocGetToken(cluster T_clName) string {
 // ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	DebugLogger.Println("Try to login: ", app, Clusters.Config[cluster].Name)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Try to login: ", app, Clusters.Config[cluster].Name)
+	}
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		ErrorLogger.Println("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
@@ -123,8 +127,10 @@ func readTokens(filename string) error {
 		} else {
 			InfoLogger.Println("Token read from", filePath)
 		}
-		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
-		// DebugLogger.Println(string(js))
+		js, err := json.MarshalIndent(Clusters.Config, "", "    ")
+		if CmdParams.Options.Debug {
+			DebugLogger.Println(string(js))
+		}
 		return err
 	}
 }

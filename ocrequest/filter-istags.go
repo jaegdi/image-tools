@@ -9,7 +9,9 @@ import (
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName, age int) bool {
-	// DebugLogger.Println("filtering:", is, tag, istag, namespace)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("filtering:", is, tag, istag, namespace)
+	}
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
@@ -31,7 +33,9 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 
 // logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
-	DebugLogger.Println("logUsedIstags::", "#### Istag:", istag, "is used.")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("logUsedIstags::", "#### Istag:", istag, "is used.")
+	}
 	for _, istagdetails := range usedIstags {
 		DebugLogger.Println("logUsedIstags::", "   # -->",
 			"Cluster:", istagdetails.Cluster,
@@ -45,7 +49,9 @@ func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T
 // printShellCmds prints a map of shell commands sorted by the map key
 func printShellCmds(commands map[string]string) {
 	keys := make([]string, 0, len(commands))
-	// DebugLogger.Println("printShellCmds::", "printShellCmds", commands)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("printShellCmds::", "printShellCmds", commands)
+	}
 	for key := range commands {
 		keys = append(keys, key)
 	}
@@ -92,7 +98,9 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, c
 								"   #", cause, "-->", tagMap.Image,
 								",  Commit.Ref:", tagMap.Build.CommitRef,
 								",  Age:", tagMap.AgeInDays)
-							// DebugLogger.Println("FilterIstagsToDelete::", "key:", s, "value:", value)
+							if CmdParams.Options.Debug {
+								DebugLogger.Println("FilterIstagsToDelete::", "key:", s, "value:", value)
+							}
 							result[s] = value
 						} else {
 							logUsedIstags(data[family].UsedIstags[is][tag], is, tag, istag)

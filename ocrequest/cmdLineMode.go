@@ -40,30 +40,44 @@ func CmdlineMode() {
 	go InitAllImages(chanInitAllImages)
 	go GetUsedIstagsForFamily(chanUsedIsTags)
 
-	DebugLogger.Println("Wait for chanInitAllImages")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanInitAllImages")
+	}
 	AllImages := <-chanInitAllImages
-	DebugLogger.Println("Image clusters:", len(AllImages))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Image clusters:", len(AllImages))
+	}
 
 	go GetAllIstagsForFamily(chanAllIsTags)
 
-	DebugLogger.Println("Wait for chanAllIsTags")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanAllIsTags")
+	}
 	result.AllIstags = <-chanAllIsTags
 
-	DebugLogger.Println("Wait for chanUsedIsTags")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanUsedIsTags")
+	}
 	result.UsedIstags = <-chanUsedIsTags
 
 	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	DebugLogger.Println("Wait for filtered chanCompleteResults")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for filtered chanCompleteResults")
+	}
 	result = <-chanCompleteResults
-	DebugLogger.Println("result: ", result)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("result: ", result)
+	}
 
 	if CmdParams.Output.UnUsed {
 		FilterUnusedIstags(&result)
 	}
 	// Filter results for output
 	FilterAllIstags(&result)
-	DebugLogger.Println("result after filter: ", result)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("result after filter: ", result)
+	}
 
 	resultFamilies := T_completeResultsFamilies{}
 	resultFamilies[CmdParams.Family] = result
@@ -112,9 +126,13 @@ func CmdlineMode() {
 		}
 
 		if CmdParams.DeleteOpts.Confirm {
-			DebugLogger.Println("execute oc adm prune")
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("execute oc adm prune")
+			}
 		} else {
-			DebugLogger.Println("run in dry run mode")
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("run in dry run mode")
+			}
 		}
 	}
 }

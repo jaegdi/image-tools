@@ -7,6 +7,8 @@ import (
 	"regexp"
 )
 
+type T_DebugLogger log.Logger
+
 // Global Vars
 var (
 	WarningLogger       *log.Logger
@@ -64,7 +66,7 @@ func Init() {
 
 	// use statig config if cmdparam statcfg is true
 	var fns T_famNsList
-	if CmdParams.Options.StaticConfig {
+	if CmdParams.Options.StaticConfig || true {
 		FamilyNamespaces = FamilyNamespacesStat
 	} else {
 		fns = genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
