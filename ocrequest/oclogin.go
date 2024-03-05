@@ -37,7 +37,7 @@ func setClusterToken(cluster T_clName, token string) {
 
 // ocGetToken tries to get the oc token from config, if it is not defined in config, it requests it from command line parameter
 func ocGetToken(cluster T_clName) string {
-	LogDebug("Try to get cluster token for cluster:", cluster)
+	DebugLogger.Println("Try to get cluster token for cluster:", cluster)
 	token := getClusterToken(cluster)
 	if token != "" {
 		return token
@@ -69,10 +69,10 @@ func ocGetToken(cluster T_clName) string {
 // ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	LogDebug("Try to login: ", app, Clusters.Config[cluster].Name)
+	DebugLogger.Println("Try to login: ", app, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
-		LogError("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
+		ErrorLogger.Println("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
 
 		return "login failed", err
 	} else {
@@ -96,11 +96,11 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	filePath := exPath + "/" + filename
 	js, err := json.MarshalIndent(clusterconfig, "", "    ")
 	if err != nil {
-		LogError("failed to serialize clusterconfig to json", err)
+		ErrorLogger.Println("failed to serialize clusterconfig to json", err)
 	} else {
 		err := ioutil.WriteFile(filePath, js, 0600)
 		if err != nil {
-			LogError("failed to save serialized clusterconfig as json to file", err)
+			ErrorLogger.Println("failed to save serialized clusterconfig as json to file", err)
 		}
 	}
 }
@@ -115,16 +115,16 @@ func readTokens(filename string) error {
 	filePath := exPath + "/" + filename
 	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		LogError("failed to load configfile "+filePath, err)
+		ErrorLogger.Println("failed to load configfile "+filePath, err)
 		return err
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
-			LogError("error unmarshal clusterconfig from", filePath, err)
+			ErrorLogger.Println("error unmarshal clusterconfig from", filePath, err)
 		} else {
 			InfoLogger.Println("Token read from", filePath)
 		}
 		// js, err := json.MarshalIndent(Clusters.Config, "", "    ")
-		// LogDebug(string(js))
+		// DebugLogger.Println(string(js))
 		return err
 	}
 }

@@ -19,7 +19,7 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_family) []T_nsName {
 	namespaceList := []T_nsName{}
 	err := json.Unmarshal([]byte(namespacesJson), &namespacesMap)
 	if err != nil {
-		LogError("generate Map for AppNamespaces." + err.Error())
+		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
 	} else {
 		// InfoLogger.Println("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
 		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
@@ -161,19 +161,19 @@ func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedI
 	var err error
 	err = json.Unmarshal([]byte(istagsDcJson), &istagsDcResult)
 	if err != nil {
-		LogError("Query dc" + err.Error())
+		ErrorLogger.Println("Query dc" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsJobJson), &istagsJobResult)
 	if err != nil {
-		LogError("Query job" + err.Error())
+		ErrorLogger.Println("Query job" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsCronjobJson), &istagsCronjobResult)
 	if err != nil {
-		LogError("Query cronjob" + err.Error())
+		ErrorLogger.Println("Query cronjob" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsPodJson), &istagsPodResult)
 	if err != nil {
-		LogError("Query pod" + err.Error())
+		ErrorLogger.Println("Query pod" + err.Error())
 	}
 
 	result.Dc = istagsDcResult

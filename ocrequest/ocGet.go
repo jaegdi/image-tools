@@ -76,7 +76,7 @@ func ocClientCall(cluster T_clName, namespace T_nsName, typ string, name string)
 	default:
 		cmd = exec.Command("oc", "--token", token, "get", typ, "-o", "json")
 	}
-	LogDebug(cmd)
+	DebugLogger.Println(cmd)
 	jsonstr, err := cmd.Output()
 	if err != nil {
 		exitWithError("oc get failed:", string(jsonstr), "Error:", err)
@@ -97,7 +97,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 
 	// Append our cert to the system pool
 	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
-		LogError("No certs appended, using system certs only")
+		ErrorLogger.Println("No certs appended, using system certs only")
 	}
 
 	// Trust the augmented cert pool in our client
@@ -162,11 +162,11 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	default:
 		url = Clusters.Config[cluster].Url + urlpath
 	}
-	LogDebug("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
+	DebugLogger.Println("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
 	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		LogError("Get " + url + " failed. " + err.Error())
+		ErrorLogger.Println("Get " + url + " failed. " + err.Error())
 		return []byte("")
 	}
 	// add header to the req
@@ -196,12 +196,12 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	// client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		LogError("Error on sending request.\n[ERROR] -" + err.Error())
+		ErrorLogger.Println("Error on sending request.\n[ERROR] -" + err.Error())
 		return []byte("")
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		LogError("Error on reading response.\n[ERROR] -" + err.Error())
+		ErrorLogger.Println("Error on reading response.\n[ERROR] -" + err.Error())
 		return []byte("")
 	}
 	return []byte(body)
@@ -214,7 +214,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 	if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
 		err := os.MkdirAll(tmpdir, 0755)
 		if err != nil {
-			LogDebug("failed to create cache dir", err)
+			DebugLogger.Println("failed to create cache dir", err)
 		}
 		return filename, false
 	}
@@ -226,7 +226,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 	duration := time.Since(info.ModTime())
 	// file too old
 	if duration.Minutes() > float64(1.0) {
-		LogDebug("Cache Age:", duration.Minutes())
+		DebugLogger.Println("Cache Age:", duration.Minutes())
 		return filename, false
 	}
 	return filename, true
@@ -236,7 +236,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 func writeCache(tmpdir string, filename string, content []byte) {
 	err := ioutil.WriteFile(filename, content, 0644)
 	if err != nil {
-		LogDebug("Writing cache file failed", err)
+		DebugLogger.Println("Writing cache file failed", err)
 	}
 }
 
@@ -252,7 +252,7 @@ func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) st
 	var content []byte
 	filename, cacheOk := checkCache(tmpdir, cluster, namespace, typ, name)
 	if !cacheOk {
-		LogDebug("Request Openshift for:", filename)
+		DebugLogger.Println("Request Openshift for:", filename)
 		if CmdParams.Options.OcClient {
 			content = ocClientCall(cluster, namespace, typ, name)
 		} else {
@@ -260,7 +260,7 @@ func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) st
 		}
 		writeCache(tmpdir, filename, content)
 	} else {
-		LogDebug("Use Cache for:", filename)
+		DebugLogger.Println("Use Cache for:", filename)
 		content = readCache(filename)
 	}
 	return string(content)

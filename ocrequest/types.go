@@ -139,7 +139,7 @@ func (b T_istagBuildLabels) GetVal(s string) string {
 func (buildLabels *T_istagBuildLabels) Set(buildLabelsMap map[string]interface{}) {
 	// buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
 	// if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-	// 	LogError("Unmarshal unescaped String", err)
+	// 	ErrorLogger.Println("Unmarshal unescaped String", err)
 	// }
 	if buildLabelsMap["io.openshift.build.commit.author"] != nil {
 		buildLabels.CommitAuthor = buildLabelsMap["io.openshift.build.commit.author"].(string)
@@ -507,18 +507,18 @@ func (c T_csvDoc) csvDoc(typ string) {
 	if CmdParams.CsvFile == "" {
 		w := csv.NewWriter(os.Stdout)
 		if err := w.WriteAll(out); err != nil {
-			LogError("writing csv failed" + err.Error())
+			ErrorLogger.Println("writing csv failed" + err.Error())
 		}
 	} else {
 		file := CmdParams.CsvFile + "-" + typ + ".csv"
 		csvfile, err := os.OpenFile(file, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
-			LogError("failed to open file", file, err)
+			ErrorLogger.Println("failed to open file", file, err)
 		}
-		LogDebug("write CSV file for", typ, "to", file)
+		DebugLogger.Println("write CSV file for", typ, "to", file)
 		w := csv.NewWriter(csvfile)
 		if err := w.WriteAll(out); err != nil {
-			LogError("writing csv failed" + err.Error())
+			ErrorLogger.Println("writing csv failed" + err.Error())
 		}
 	}
 }

@@ -346,7 +346,7 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
-	InfoLogger.Println(GetJsonFromMap(flags))
+	InfoLogger.Println(GetJsonOneliner(flags))
 
 	if flags.Family == "" {
 		exitWithError("a name for family must given like: '-family=pkp'")
