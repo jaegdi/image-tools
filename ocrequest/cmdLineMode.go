@@ -1,23 +1,13 @@
-package main
+package ocrequest
 
 import (
 	"fmt"
-
-	. "image-tools/ocrequest"
-	// "net/http"
-	_ "net/http/pprof"
-	// "sync"
 )
-
-func init() {
-	Init()
-}
 
 var chanAllIsTags = make(chan T_ResultExistingIstagsOverAllClusters, 1)
 var chanUsedIsTags = make(chan T_usedIstagsResult, 1)
 var chanCompleteResults = make(chan T_completeResults, 1)
 var chanInitAllImages = make(chan T_ImagesMapAllClusters, 1)
-var LogfileName string
 
 func getCause() string {
 	s := "filter"
@@ -36,42 +26,58 @@ func getCause() string {
 	if CmdParams.Filter.Namespace != "" {
 		s = s + "_Namespace:_" + string(CmdParams.Filter.Namespace)
 	}
+	if CmdParams.Filter.Maxage != -1 {
+		s = s + "_Maxage:_" + fmt.Sprintf("%d", CmdParams.Filter.Maxage)
+	}
+	if CmdParams.Filter.Minage != -1 {
+		s = s + "_Minage:_" + fmt.Sprintf("%d", CmdParams.Filter.Minage)
+	}
 	return s
 }
 
-func main() {
-	// var wg sync.WaitGroup
-	// if CmdParams.Options.Profiler {
-	// 	go func() {
-	// 		InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
-	// 	}()
-	// }
+func CmdlineMode() {
 	result := T_completeResults{}
 	go InitAllImages(chanInitAllImages)
 	go GetUsedIstagsForFamily(chanUsedIsTags)
 
-	DebugLogger.Println("Wait for chanInitAllImages")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanInitAllImages")
+	}
 	AllImages := <-chanInitAllImages
-	DebugLogger.Println("Image clusters:", len(AllImages))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Image clusters:", len(AllImages))
+	}
 
 	go GetAllIstagsForFamily(chanAllIsTags)
 
-	DebugLogger.Println("Wait for chanAllIsTags")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanAllIsTags")
+	}
 	result.AllIstags = <-chanAllIsTags
 
-	DebugLogger.Println("Wait for chanUsedIsTags")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for chanUsedIsTags")
+	}
 	result.UsedIstags = <-chanUsedIsTags
 
 	go PutShaIntoUsedIstags(chanCompleteResults, result)
 
-	DebugLogger.Println("Wait for filtered chanCompleteResults")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Wait for filtered chanCompleteResults")
+	}
 	result = <-chanCompleteResults
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("result: ", result)
+	}
 
 	if CmdParams.Output.UnUsed {
 		FilterUnusedIstags(&result)
 	}
 	// Filter results for output
 	FilterAllIstags(&result)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("result after filter: ", result)
+	}
 
 	resultFamilies := T_completeResultsFamilies{}
 	resultFamilies[CmdParams.Family] = result
@@ -95,12 +101,13 @@ func main() {
 				`snapshot|SNAPSHOT|\:PR-|\:[[:digit:]](\.[[:digit:]]+){2}\-202[[:digit:]]{5}\.[[:digit:]]{6}\-[[:digit:]]`,
 				CmdParams.DeleteOpts.MinAge,
 				"snapshots and pull requests")
-		}
-		if CmdParams.DeleteOpts.Pattern != "" ||
-			CmdParams.Filter.Isname != "" ||
-			CmdParams.Filter.Tagname != "" ||
-			CmdParams.Filter.Istagname != "" ||
-			CmdParams.Filter.Namespace != "" {
+		} else if CmdParams.DeleteOpts.NonBuild {
+			FilterNonbuildIstagsToDelete(
+				resultFamilies,
+				CmdParams.Family,
+				CmdParams.Cluster,
+				CmdParams.DeleteOpts.MinAge)
+		} else {
 			DebugLogger.Println(
 				"\n--main--::\n",
 				"filter minAge: '"+fmt.Sprint(CmdParams.DeleteOpts.MinAge)+"'\n",
@@ -117,21 +124,15 @@ func main() {
 				CmdParams.DeleteOpts.MinAge,
 				getCause())
 		}
-		if CmdParams.DeleteOpts.NonBuild {
-			FilterNonbuildIstagsToDelete(
-				resultFamilies,
-				CmdParams.Family,
-				CmdParams.Cluster,
-				CmdParams.DeleteOpts.MinAge)
-		}
+
 		if CmdParams.DeleteOpts.Confirm {
-			DebugLogger.Println("execute oc adm prune")
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("execute oc adm prune")
+			}
 		} else {
-			DebugLogger.Println("run in dry run mode")
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("run in dry run mode")
+			}
 		}
 	}
-	// if CmdParams.Options.Profiler {
-	// 	wg.Add(1)
-	// 	wg.Wait()
-	// }
 }

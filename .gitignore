@@ -9,4 +9,7 @@ deploy_to_artifactory.sh
 *.log
 __debug_bin
 image-tools.log
+ocrequest/config-clusters.go
+tmp
 old-version
+collectIstags

@@ -3,6 +3,7 @@ package ocrequest
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -31,6 +32,7 @@ func ageInDays(date string) int {
 // exitWithError write msg to StdErr, and logfile and exits to program
 func exitWithError(errormsg ...interface{}) {
 	ErrorLogger.Println(errormsg...)
+	os.Stderr.WriteString(fmt.Sprint(errormsg...))
 	os.Exit(1)
 }
 
@@ -77,7 +79,7 @@ func GetJsonOneliner(dict interface{}) string {
 	return string(j)
 }
 
-// GetJsonFromMap generate json output depending on the commadline flags
+// GetJsonFromMap generate formated json output depending on the commadline flags
 func GetJsonFromMap(dict interface{}) string {
 	buffer := &bytes.Buffer{}
 	encoder := json.NewEncoder(buffer)
@@ -85,8 +87,8 @@ func GetJsonFromMap(dict interface{}) string {
 	encoder.SetIndent("", "   ")
 	if err := encoder.Encode(dict); err != nil {
 		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
-			ErrorLogger.Println("dict err:", dict)
-			ErrorLogger.Println("dict err:", err)
+			ErrorLogger.Println("dict: ", dict)
+			ErrorLogger.Println("err: ", err)
 		} else {
 			return string(jsonBytes)
 		}
@@ -137,7 +139,7 @@ func GetYamlFromMap(list interface{}) string {
 }
 
 // GetCsvFromMap generates CSV output from map
-func GetCsvFromMap(list interface{}, family T_family) {
+func GetCsvFromMap(list interface{}, family T_familyName) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := T_csvDoc{}
 		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag", "Cluster"}
@@ -253,7 +255,7 @@ func GetCsvFromMap(list interface{}, family T_family) {
 }
 
 // GetTableFromMap generate ASCII table output from map
-func GetTableFromMap(list interface{}, family T_family) {
+func GetTableFromMap(list interface{}, family T_familyName) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
 		output := []table.Row{}
 		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}

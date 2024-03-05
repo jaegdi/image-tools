@@ -13,7 +13,7 @@ import (
 // filters them with the pattern '^<family>-' to find all namespaces, which
 // names starting with the family-name followed by a dash. It returns a slice
 // list with the application namespaces for the family.
-func GetAppNamespacesForFamily(cluster T_clName, family T_family) []T_nsName {
+func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName {
 	namespacesJson := ocGetCall(cluster, "", "namespaces", "")
 	namespacesMap := map[string]interface{}{}
 	namespaceList := []T_nsName{}
@@ -118,6 +118,12 @@ func FilterIstagsFromRunningObjects(cluster T_clName, namespace T_nsName, data T
 			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
 		}
 	}
+	if !(data.Deploy == nil || data.Deploy["items"] == nil || data.Deploy["items"].([]interface{}) == nil) {
+		for _, content := range data.Deploy["items"].([]interface{}) {
+			containers := content.(map[string]interface{})["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"]
+			results = getIstagFromContainer(cluster, namespace, containers.([]interface{}), results)
+		}
+	}
 	if !(data.Job == nil || data.Job["items"] == nil || data.Job["items"].([]interface{}) == nil) {
 		for _, content := range data.Job["items"].([]interface{}) {
 			containers := content.(map[string]interface{})["spec"].(map[string]interface{})["template"].(map[string]interface{})["spec"].(map[string]interface{})["containers"]
@@ -148,11 +154,13 @@ func FilterIstagsFromRunningObjects(cluster T_clName, namespace T_nsName, data T
 // a map with all these istags and return this map as result.
 func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedIstagsResult {
 	istagsDcJson := ocGetCall(cluster, namespace, "deploymentconfigs", "")
+	istagsDeployJson := ocGetCall(cluster, namespace, "deployments", "")
 	istagsJobJson := ocGetCall(cluster, namespace, "jobs", "")
 	istagsCronjobJson := ocGetCall(cluster, namespace, "cronjobs", "")
 	istagsPodJson := ocGetCall(cluster, namespace, "pods", "")
 
 	var istagsDcResult T_DcResults
+	var istagsDeployResult T_DcResults
 	var istagsJobResult T_JobResults
 	var istagsCronjobResult T_CronjobResults
 	var istagsPodResult T_Results
@@ -162,6 +170,10 @@ func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedI
 	err = json.Unmarshal([]byte(istagsDcJson), &istagsDcResult)
 	if err != nil {
 		ErrorLogger.Println("Query dc" + err.Error())
+	}
+	err = json.Unmarshal([]byte(istagsDeployJson), &istagsDeployResult)
+	if err != nil {
+		ErrorLogger.Println("Query deployment" + err.Error())
 	}
 	err = json.Unmarshal([]byte(istagsJobJson), &istagsJobResult)
 	if err != nil {
@@ -177,6 +189,7 @@ func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedI
 	}
 
 	result.Dc = istagsDcResult
+	result.Deploy = istagsDeployResult
 	result.Job = istagsJobResult
 	result.Cronjob = istagsCronjobResult
 	result.Pod = istagsPodResult
@@ -189,7 +202,7 @@ func ocGetAllUsedIstagsOfNamespace(cluster T_clName, namespace T_nsName) T_usedI
 // namespaces, that belongs to the family,
 // registers the images of these objects and generates
 // a map with all these istags and return this map as result.
-func GetUsedIstagsForFamilyInCluster(family T_family, cluster T_clName) T_usedIstagsResult {
+func GetUsedIstagsForFamilyInCluster(family T_familyName, cluster T_clName) T_usedIstagsResult {
 	namespace := CmdParams.Filter.Namespace
 
 	var result T_usedIstagsResult

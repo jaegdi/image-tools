@@ -14,15 +14,21 @@ func getBitbucketUrl(urlpath string) string {
 
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
-	// DebugLogger.Println("url: ", url)
-	yamlstr := getHttpAnswer(url)
-	// DebugLogger.Println("yaml: ", string(yamlstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("url: ", url)
+	}
+	yamlstr := getHttpAnswer(url, bitbucket_token)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("yaml: ", string(yamlstr))
+	}
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
-		ErrorLogger.Println("Unmarshal multidoc yaml err:", yamlstr)
-		ErrorLogger.Println("Unmarshal multidoc yaml err:", err.Error())
+		ErrorLogger.Println("Unmarshal multidoc yaml:", yamlstr)
+		ErrorLogger.Println("Unmarshal multidoc yaml:", err.Error())
 	}
-	// DebugLogger.Println("yamlmap: ", yamlmap)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("yamlmap: ", yamlmap)
+	}
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
 	// jsonstr, err := json.Marshal(yamlmap)
@@ -30,8 +36,12 @@ func getBitbucketData(filename string) []byte {
 		ErrorLogger.Println("yamlmap:    ", yamlmap)
 		ErrorLogger.Println("err:    ", err)
 	}
-	DebugLogger.Println("Config from scp-infra-config url:", url)
-	DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Config from scp-infra-config url:", url)
+	}
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
+	}
 	return jsonstr
 }
 
@@ -72,7 +82,9 @@ func GetNamespaces() T_cft_namespaces {
 		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
 		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
 	}
-	// DebugLogger.Println("data: ", data)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("data: ", data)
+	}
 	return data
 }
 
@@ -105,9 +117,13 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 	}
 	jsonstr, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		ErrorLogger.Println("JsonMarshal failes:", err)
+		if CmdParams.Options.Debug {
+			ErrorLogger.Println("JsonMarshal failes:", err)
+		}
 	}
-	DebugLogger.Println("ClusterConfig:", string(jsonstr))
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("ClusterConfig:", string(jsonstr))
+	}
 	return cfg
 }
 
@@ -115,16 +131,25 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 	families T_cft_families,
 	environments T_cft_environments,
 	namespaces T_cft_namespaces,
-	pipelines T_cft_pipelines) T_famNs {
+	pipelines T_cft_pipelines) T_famNsList {
 	// func body
-	fnc := T_famNs{}
+	fnc := T_famNsList{}
 	for _, fam := range families {
-		family := T_family(fam.Name)
+		stages := map[T_appName][]T_clName{}
+		buildstages := map[T_appName][]T_clName{}
+		teststages := map[T_appName][]T_clName{}
+		prodstages := map[T_appName][]T_clName{}
+		family := T_familyName(fam.Name)
 		fnc[family] = T_familyKeys{}
-		famMap := T_familyKeys{}
-		famMap.ImageNamespaces = map[T_clName][]T_nsName{}
-		famMap.Buildstages = []T_clName{}
-		famMap.Teststages = []T_clName{}
+		famMap := T_familyKeys{
+			ImageNamespaces: T_appNamespaceList{},
+			Stages:          []T_clName{},
+			Config:          T_ClusterConfig{},
+			Buildstages:     []T_clName{},
+			Teststages:      []T_clName{},
+			Prodstages:      []T_clName{},
+			Apps:            map[T_appName]T_appKeys{},
+		}
 		for _, environment := range environments {
 			if environment.Family == family {
 				if famMap.ImageNamespaces[environment.Cluster] == nil {
@@ -138,16 +163,6 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 						if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns) {
 							famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns)
 						}
-						//  dev pipelines
-						// if strings.Contains(environment.Cluster.str(), "cid-") && pipeline.Name == string(family)+"-dev-pipeline" {
-						// 	if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns) {
-						// 		famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns)
-						// 	}
-						// 	if !slice.Contains(famMap.Buildstages, environment.Cluster) {
-						// 		famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
-						// 	}
-						// }
-						// for _, app := range fam.Applications {
 						if strings.Contains(environment.Pipeline, "-dev-pipeline") {
 							if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns) {
 								famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Deployer_Ns)
@@ -156,21 +171,15 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 								famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
 							}
 						}
-						// if pipeline.Name == string(family)+"-"+app+"-pipeline" {
-						// 	if !slice.Contains(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns) {
-						// 		famMap.ImageNamespaces[environment.Cluster] = append(famMap.ImageNamespaces[environment.Cluster], pipeline.Image_Ns)
-						// 	}
-						// 	if !slice.Contains(famMap.Buildstages, environment.Cluster) {
-						// 		famMap.Buildstages = append(famMap.Buildstages, environment.Cluster)
-						// 	}
-						// }
-						// }
 					}
 					if pipeline.Name == environment.Pre_Pipeline {
 						if !slice.Contains(famMap.ImageNamespaces[environment.Pre_Cluster], pipeline.Image_Ns) {
 							famMap.ImageNamespaces[environment.Pre_Cluster] = append(famMap.ImageNamespaces[environment.Pre_Cluster], pipeline.Image_Ns)
 						}
 					}
+				}
+				if !slice.Contains(famMap.Stages, environment.Cluster) {
+					famMap.Stages = append(famMap.Stages, environment.Cluster)
 				}
 				if !(strings.Contains(environment.Cluster.str(), "cid-") || strings.Contains(environment.Cluster.str(), "pro-")) {
 					if !slice.Contains(famMap.Teststages, environment.Cluster) {
@@ -182,17 +191,74 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 						famMap.Prodstages = append(famMap.Prodstages, environment.Cluster)
 					}
 				}
-			}
-		}
-		famMap.Stages = []T_clName{}
-		for cl, nslist := range famMap.ImageNamespaces {
-			if len(nslist) > 0 {
-				if !slice.Contains(famMap.Stages, cl) {
-					famMap.Stages = append(famMap.Stages, cl)
+				// Collect applications info
+				for _, app := range fam.Applications {
+					appname := T_appName(app)
+					// appnslist := T_appNsList{}
+					// appkeys := T_appKeys{}
+					app_appns := T_appNamespaceList{}
+					app_buildns := T_appNamespaceList{}
+					if stages[appname] == nil {
+						stages[appname] = []T_clName{}
+					}
+					if buildstages[appname] == nil {
+						buildstages[appname] = []T_clName{}
+					}
+					if teststages[appname] == nil {
+						teststages[appname] = []T_clName{}
+					}
+					if prodstages[appname] == nil {
+						prodstages[appname] = []T_clName{}
+					}
+					for _, namespace := range namespaces {
+						if slice.Contains(namespace.Applications, app) && namespace.Environment == environment.Name {
+							// every namespace added to stages
+							if !slice.Contains(stages[appname], environment.Cluster) {
+								stages[appname] = append(stages[appname], environment.Cluster)
+							}
+							if strings.Contains(string(environment.Cluster), "cid-") {
+								// if cid namespace
+								if app_buildns[environment.Cluster] == nil {
+									app_buildns[environment.Cluster] = []T_nsName{}
+								}
+								// add to app_buildns
+								app_buildns[environment.Cluster] = append(app_buildns[environment.Cluster], namespace.Name)
+								// add to buildstages
+								if !slice.Contains(buildstages[appname], environment.Cluster) {
+									buildstages[appname] = append(buildstages[appname], environment.Cluster)
+								}
+							} else {
+								if strings.Contains(string(environment.Cluster), "dev-") || strings.Contains(string(environment.Cluster), "int-") || strings.Contains(string(environment.Cluster), "ppr-") {
+									// if int- or ppr- namespace, add to teststages
+									if !slice.Contains(teststages[appname], environment.Cluster) {
+										teststages[appname] = append(teststages[appname], environment.Cluster)
+									}
+								} else {
+									// must be prod namespace, add to prodstages
+									if !slice.Contains(prodstages[appname], environment.Cluster) {
+										prodstages[appname] = append(prodstages[appname], environment.Cluster)
+									}
+								}
+								// add to app_appns
+								app_appns[environment.Cluster] = append(app_appns[environment.Cluster], namespace.Name)
+							}
+						}
+					}
+					famMap.Apps[appname] = T_appKeys{
+						Namespaces: T_appNamespaces{
+							Buildnamespaces: app_buildns,
+							Appnamespaces:   app_appns,
+						},
+						Config:      T_ClusterConfig{},
+						Stages:      stages[appname],
+						Buildstages: buildstages[appname],
+						Teststages:  teststages[appname],
+						Prodstages:  prodstages[appname],
+					}
 				}
 			}
 		}
-		fnc[family] = famMap
+		fnc[T_familyName(fam.Name)] = famMap
 	}
 	return fnc
 }

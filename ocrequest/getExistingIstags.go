@@ -35,7 +35,7 @@ func appendJoinedNamesToImagestreams(istream T_resIs, imagestreamName T_isName, 
 
 // InitIsNamesForFamily initializes the package var IsNamesForFamily with all imagestreams from
 // the build namespaces of the family.
-func InitIsNamesForFamily(family T_family) {
+func InitIsNamesForFamily(family T_familyName) {
 	// cluster := FamilyNamespaces[CmdParams.Family].Buildstage
 	isResult := map[string]interface{}{}
 	result := make(T_IsNamesForFamily)
@@ -60,14 +60,14 @@ func InitIsNamesForFamily(family T_family) {
 	IsNamesForFamily = result
 }
 
-// func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
-// 	buildLabels := T_istagBuildLabels{}
-// 	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
-// 	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-// 		ErrorLogger.Println("Unmarshal unescaped String", err)
-// 	}
-// 	return buildLabels
-// }
+func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
+	buildLabels := T_istagBuildLabels{}
+	buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
+	if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
+		ErrorLogger.Println("Unmarshal unescaped String", err)
+	}
+	return buildLabels
+}
 
 // OcGetAllIstagsOfNamespace generates a map of all istags
 // selected by (cluster, namespace) and append it to result map
@@ -78,7 +78,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
 		// logfix
-		ErrorLogger.Println("Error: unmarshal imagestreamtags.\n" + istagsJson + "\n" + err.Error())
+		ErrorLogger.Println("Error: unmarshal imagestreamtags." + istagsJson)
+		ErrorLogger.Println("Error: unmarshal imagestreamtags." + err.Error())
 		return T_result{}
 	}
 	resultIstag := make(T_resIstag)
@@ -115,7 +116,11 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 
 		buildLabelsMap := T_istagBuildLabels{}
-		DebugLogger.Println("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
+		if CmdParams.Options.Debug {
+			if CmdParams.Options.Debug {
+				DebugLogger.Println("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
+			}
+		}
 		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
 			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
 		}
@@ -126,10 +131,8 @@ func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_ns
 		}
 		tagName := T_tagName(imagestreamfields[1])
 		isAge := ageInDays(isDate)
-		if CmdParams.Filter.Isname != "" && imagestreamName != CmdParams.Filter.Isname && !CmdParams.FilterReg.Isname.MatchString(string(imagestreamName)) {
-			continue
-		}
-		if CmdParams.Filter.Tagname != "" && tagName != CmdParams.Filter.Tagname && !CmdParams.FilterReg.Tagname.MatchString(string(tagName)) {
+
+		if !matchIsIstagToFilterParams(imagestreamName, tagName, istagname, isNamespace, isAge) {
 			continue
 		}
 

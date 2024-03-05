@@ -37,14 +37,14 @@ DESCRIPTION
     It never works across different families.
 
       For existing images, istags or imagestreams(is) that means it works for one or more clusters like
-        cid-apc0, int-apc0, ppr-apc0, vpt-apc0, pro-apc0
-        or more than one like 'cid-scp0,cid-apc0,ppr-scp0,ppr-apc0'
+        cid-scp0,  ppr-scp0, vpt-scp0, pro-scp0
+        or more than one like 'cid-scp0,cid-scp0,ppr-scp0,ppr-scp0'
 
     and for one families like
         'pkp, sps, fpc, aps, ...'
 
     The cluster must be defined by the mandatory parameter
-        '-cluster=[cid-apc0|int-apc0|ppr-apc0|vpt-apc0|pro-apc0|dev-scp0|cid-scp0|ppr-scp0|vpt-scp0|pro-scp0]'
+        '-cluster=[cid-scp0|int-scp0|ppr-scp0|vpt-scp0|pro-scp0|dev-scp0|cid-scp0|ppr-scp0|vpt-scp0|pro-scp0]'
 
     The family must be defined by the mandatory parameter
         '-family=[aps|fpc|pkp|ssp]
@@ -77,7 +77,7 @@ DESCRIPTION
       But it needs further parameters:
       -snapshot        delete istags with snapshot or PR-nn in the tag name.
       -nonbuild        is specific for family pkp and delete istags fo all images, if they have no build tag.
-      -minage=int      defines the minimum age (in days) for istag to delete them. Default is 60 days.
+      -delminage=int      defines the minimum age (in days) for istag to delete them. Default is 60 days.
       -delpattern=str  define a regexp pattern for istags to delete
       and
       -isname=str
@@ -115,13 +115,13 @@ EXAMPLES
   |        Report all information for family pkp in cluster cid as json
   |        (which is the default output format)
   |
-  |            image-tools -cluster=cid-apc0 -family=pkp -all
+  |            image-tools -cluster=cid-scp0 -family=pkp -all
   |
   |            or as table
-  |            image-tools -cluster=cid-apc0 -family=pkp -all -table
+  |            image-tools -cluster=cid-scp0 -family=pkp -all -table
   |
   |            or csv in different files for each type of information
-  |            image-tools -cluster=cid-apc0 -family=pkp -all -csvfile=prefix
+  |            image-tools -cluster=cid-scp0 -family=pkp -all -csvfile=prefix
   |            writes the output to different files 'prefix-type' in current directory
   |
   |        Report only __used__ istags for family pkp as pretty printed table
@@ -129,25 +129,30 @@ EXAMPLES
   |            the pager define in the environment variable $PAGER/%PAGER%.
   |            If $PAGER is not set, it try to use 'more')
   |
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -table
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -table
   |            or json
-  |            image-tools -cluster=cid-apc0 -family=pkp -used
+  |            image-tools -cluster=cid-scp0 -family=pkp -used
   |            or yaml
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -yaml
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -yaml
   |            or csv
-  |            image-tools -cluster=cid-apc0 -family=pkp -used -csv
+  |            image-tools -cluster=cid-scp0 -family=pkp -used -csv
   |
   |        Report istags for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -istag -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -istag -yaml
   |
   |        Report ImageStreams for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -is -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -is -yaml
   |
   |        Report Images for family aps in cluster int as yaml report
   |
-  |            image-tools -cluster=int-apc0 -family=aps -image -yaml
+  |            image-tools -cluster=int-scp0 -family=aps -image -yaml
+  |
+  |        Report combined with pc(print columns) tool
+  |
+  |            image-tools -socks5=localhost:65022 -family=pkp -cluster=cid-scp0,ppr-scp0,pro-scp0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
+
 
 
   DELETE
@@ -156,25 +161,25 @@ EXAMPLES
   |        and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service
   |        and zahlungsstoerung-service
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot \
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot \
   |                        -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
   |
   |        To use the script output to really delete the istags, you can use the following line:
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot -nonbuild \
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot -nonbuild \
   |                        -delpattern='(header|footer|zahlungsstoerung)-service'      | xargs -n 1 -I{} bash -c "{}"
   |
   |        To only generate a script to delete old snapshot istags:
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -snapshot
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -snapshot
   |
   |        To delete all not used images of family 'aps' in cluster cid
   |
-  |            image-tools -family=aps -cluster=cid-apc0 -delete  -minage=0 -delpattern='.'
+  |            image-tools -family=aps -cluster=cid-scp0 -delete  -delminage=0 -delpattern='.'
   |
   |        To delete all hybris istags of family pkp older than 45 days
   |
-  |            image-tools -family=pkp -cluster=cid-apc0 -delete -isname=hybris -minage=45
+  |            image-tools -family=pkp -cluster=cid-scp0 -delete -isname=hybris -delminage=45
 
 
   HINT
@@ -196,13 +201,17 @@ EXAMPLES
 
 CONNECTION
 
+    As default the sock5 proxy to localhost:65022 is enabled becaus the api of the upper clusters is only reacheable
+	over the sprungserver. To disable SOCKS5 set the parameter -socks5=no
+	If your socks5 jumpserver config listens on a different port set the parameter -socks5=<host>:<port>
+
     If there are problems with the connection to the clusters,
-    there is the option to disable the use of proxy with the
+    there is the option to disable the use of web proxy with the
     parameter '-noproxy'.
 
-    Or if a socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
+    A socks5 proxy can be the solution, eg. to run it from your notebook over VPN, then establish
     a socks tunnel over the sprungserver and give the
-    parameter '-socks5=ip:port' to the image-tools program.
+    parameter '-socks5=host:port' to the image-tools program.
 -----------------------------------------------------------------------------------------------------
 `
 
@@ -218,7 +227,8 @@ func EvalFlags() {
 	flag.Usage = cmdUsage
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_family("base")].clusterListStr()+" or more than one: cid-apc0,cid-scp0,ppr-acp0")
+	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
+	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-scp0,cid-scp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -246,10 +256,12 @@ func EvalFlags() {
 	istagnamePtr := flag.String("istagname", "", "Report and Delete: filter output for report or delete script of one imageStreamTag")
 	tagnamePtr := flag.String("tagname", "", "Report and Delete: filter output for report or delete script of all istags with this Tag")
 	shanamePtr := flag.String("shaname", "", "Report and Delete: filter output for report or delete script of a Image with this SHA")
+	minAgePtr := flag.Int("minage", -1, "Report and Delete: filter for all istags, they are older or equal than minage")
+	maxAgePtr := flag.Int("maxage", -1, "Report and Delete: filter for all istags, they are younger or equal than minage")
 
 	// Delete flags
 	deletePatternPtr := flag.String("delpattern", "", "Delete: filter for delete script all istags with this pattern")
-	deleteMinAgePtr := flag.Int("minage", 60, "Delete: filter for delete script all istags, they are older or equal than minage")
+	deleteMinAgePtr := flag.Int("delminage", 60, "Delete: filter for delete script all istags, they are older or equal than minage")
 	deleteNonBuildPtr := flag.Bool("nonbuild", false, "Delete: filter for delete script all istags with pure version number,\n"+
 		"where the referenced image has no build-tag and istag is minimum as old as minage")
 	deleteSnapshotsPtr := flag.Bool("snapshot", false, "Delete: filter for delete script all istags,\n"+
@@ -261,15 +273,23 @@ func EvalFlags() {
 	insecurePtr := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
 	ocClientPtr := flag.Bool("occlient", false, "TechOpt: use oc client instead of api call for cluster communication")
 	noProxyPtr := flag.Bool("noproxy", false, "TechOpt: disable use of proxy for API http requests")
+	statCfgPtr := flag.Bool("statcfg", false, "TechOpt: use the static defined config instead of dynamic generated config from config-tool repos")
 
-	socks5proxy := os.Getenv("SOCKS4PROXY")
-	socks5ProxyPtr := flag.String("socks5", socks5proxy, "TechOpt: set socks5 proxy url and use it for API calls.\n eg. -socks5=127.0.0.1:65022 .  If env var SOCKS5PROXY is defined, it uses this as default, ohterwise empty string")
+	socks5proxy := os.Getenv("SOCKS5PROXY")
+	if len(strings.TrimSpace(socks5proxy)) == 0 {
+		socks5proxy = "127.0.0.1:65022"
+	}
+	if socks5proxy == "no" {
+		socks5proxy = ""
+	}
+	socks5ProxyPtr := flag.String("socks5", socks5proxy, "TechOpt: set socks5 proxy url and use it for API calls.\n eg. -socks5=127.0.0.1:65022 .  If env var SOCKS5PROXY is defined, it uses this as default, otherwise '127.0.0.1:65022' string")
 	profilerPtr := flag.Bool("profiler", false,
 		"TechOpt: enable profiler support for debugging, http://localhost:6060/debug/pprof\n"+
 			" or: ~/go/bin/pprof -http localhost:8080 http://localhost:6060/debug/pprof/goroutine")
 	noLogPtr := flag.Bool("nolog", false, "TechOpt: disable log output to screen. Logs to logfile is not disabled")
 	debugPtr := flag.Bool("debug", false, "TechOpt: enable additional debug log output to screen")
 	verifyPtr := flag.Bool("verify", false, "TechOpt: enable additional log output to screen")
+	serverPtr := flag.Bool("server", false, "TechOpt: start in server mode and provide a rest api")
 
 	flag.Parse()
 
@@ -294,7 +314,8 @@ func EvalFlags() {
 	flags := T_flags{
 		Cluster:  T_clName(*clusterPtr).list(),
 		Token:    string(*tokenPtr),
-		Family:   T_family(*familyPtr),
+		Family:   T_familyName(*familyPtr),
+		App:      T_appName(*appPtr),
 		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr)),
 		Yaml:     bool(*yamlPtr) && !bool(*jsonPtr),
 		Csv:      (bool(*csvPtr) || (string(*csvFilePtr) != "")) && !bool(*jsonPtr),
@@ -318,6 +339,8 @@ func EvalFlags() {
 			Tagname:   T_tagName(string(*tagnamePtr)),
 			Imagename: T_shaName(string(*shanamePtr)),
 			Namespace: T_nsName(string(*namespacePtr)),
+			Minage:    *minAgePtr,
+			Maxage:    *maxAgePtr,
 		},
 		FilterReg: T_flagFiltRegexp{
 			Isname:    is_r,
@@ -334,14 +357,16 @@ func EvalFlags() {
 			Confirm:     *deleteConfirmPtr,
 		},
 		Options: T_flagOpts{
-			InsecureSSL: *insecurePtr,
-			OcClient:    *ocClientPtr,
-			NoProxy:     *noProxyPtr,
-			Socks5Proxy: *socks5ProxyPtr,
-			Profiler:    *profilerPtr,
-			NoLog:       *noLogPtr,
-			Debug:       *debugPtr,
-			Verify:      *verifyPtr,
+			InsecureSSL:  *insecurePtr,
+			OcClient:     *ocClientPtr,
+			NoProxy:      *noProxyPtr,
+			Socks5Proxy:  *socks5ProxyPtr,
+			Profiler:     *profilerPtr,
+			NoLog:        *noLogPtr,
+			Debug:        *debugPtr,
+			Verify:       *verifyPtr,
+			ServerMode:   *serverPtr,
+			StaticConfig: *statCfgPtr,
 		},
 	}
 
@@ -352,34 +377,34 @@ func EvalFlags() {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
 	if !flags.Output.Used && (len(flags.Cluster) == 0) {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid-apc0'. Is now: ", flags.Cluster)
+		exitWithError("a shortname for cluster must given like: '-cluster=cid-scp0'. Is now: ", flags.Cluster)
 	}
-	for _, cluster := range flags.Cluster {
-		_, clusterDefined := Clusters.Config[cluster]
-		if !clusterDefined && !flags.Output.Used {
-			clusterlist := []string{}
-			for clname := range Clusters.Config {
-				clusterlist = append(clusterlist, string(clname))
-			}
-			clusters := strings.Join(clusterlist, ",")
-			exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
-		}
-	}
-	if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
-		exitWithError("Family", flags.Family, "is not defined")
-	}
+	// for _, cluster := range flags.Cluster {
+	// 	_, clusterDefined := Clusters.Config[cluster]
+	// 	if !clusterDefined && !flags.Output.Used {
+	// 		clusterlist := []string{}
+	// 		for clname := range Clusters.Config {
+	// 			clusterlist = append(clusterlist, string(clname))
+	// 		}
+	// 		clusters := strings.Join(clusterlist, ",")
+	// 		exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
+	// 	}
+	// }
+	// if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
+	// 	exitWithError("Family", flags.Family, "is not defined")
+	// }
 
-	for _, cluster := range flags.Cluster {
-		foundNamespace := false
-		for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
-			if flags.Filter.Namespace == v {
-				foundNamespace = true
-			}
-		}
-		if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
-			exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
-		}
-	}
+	// for _, cluster := range flags.Cluster {
+	// 	foundNamespace := false
+	// 	for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
+	// 		if flags.Filter.Namespace == v {
+	// 			foundNamespace = true
+	// 		}
+	// 	}
+	// 	if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
+	// 		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
+	// 	}
+	// }
 
 	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
 		exitWithError("As least one of the output flags must set")

@@ -8,8 +8,10 @@ import (
 )
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
-func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName) bool {
-	// DebugLogger.Println("filtering:", is, tag, istag, namespace)
+func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName, age int) bool {
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("filtering:", is, tag, istag, namespace)
+	}
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
@@ -21,26 +23,35 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 			(CmdParams.Filter.Istagname != "" && CmdParams.FilterReg.Istagname.MatchString(string(istag)))) &&
 		(CmdParams.Filter.Namespace == "" ||
 			(CmdParams.Filter.Namespace != "" && namespace == CmdParams.Filter.Namespace) ||
-			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Istagname.MatchString(string(namespace)))))
+			(CmdParams.Filter.Namespace != "" && CmdParams.FilterReg.Namespace.MatchString(string(namespace)))) &&
+		(CmdParams.Filter.Minage == -1 ||
+			(CmdParams.Filter.Minage > -1 && age >= CmdParams.Filter.Minage)) &&
+		(CmdParams.Filter.Maxage == -1 ||
+			(CmdParams.Filter.Maxage > -1 && age <= CmdParams.Filter.Maxage)))
+
 }
 
 // logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
-	DebugLogger.Println("logUsedIstags::", "#### Istag:", istag, "is used.")
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("logUsedIstags::", " ## is: ", is, " ### tag: ", tag, "  #### Istag: ", istag, " is used.")
+	}
 	for _, istagdetails := range usedIstags {
 		DebugLogger.Println("logUsedIstags::", "   # -->",
-			"Cluster:", istagdetails.Cluster,
-			"UsedInNamespace:", istagdetails.UsedInNamespace,
-			"FromNamespace:", istagdetails.FromNamespace,
-			"Image:", istagdetails.Image,
-			"AgeInDays:", istagdetails.AgeInDays)
+			"  Cluster:", istagdetails.Cluster,
+			"  UsedInNamespace:", istagdetails.UsedInNamespace,
+			"  FromNamespace:", istagdetails.FromNamespace,
+			"  Image:", istagdetails.Image,
+			"  AgeInDays:", istagdetails.AgeInDays)
 	}
 }
 
 // printShellCmds prints a map of shell commands sorted by the map key
 func printShellCmds(commands map[string]string) {
 	keys := make([]string, 0, len(commands))
-	// DebugLogger.Println("printShellCmds::", "printShellCmds", commands)
+	if CmdParams.Options.Debug {
+		DebugLogger.Println("printShellCmds::", "printShellCmds", commands)
+	}
 	for key := range commands {
 		keys = append(keys, key)
 	}
@@ -50,31 +61,46 @@ func printShellCmds(commands map[string]string) {
 	}
 }
 
+func isImageRefencedByLatestTag(image map[T_istagName]T_sha) bool {
+	tagLatestRegexp := regexp.MustCompile("^.*?:latest$")
+	// fmt.Println(GetJsonFromMap(image))
+	for istag := range image {
+		if tagLatestRegexp.MatchString(istag.str()) {
+			return true
+		}
+	}
+	return false
+}
+
 // FilterIstagsToDelete generate shell commands to delete istags, when they fit the conditions
 // The conditions are:
-// - the tag must fit the tagPatetern
+// - the tag must fit the tagPattern
 // - the must be older or equal then the given minAge
 // - the istag must not be used in any of the clusters by any of: dc, pod, job, cronjob or deamonset
-func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clusters T_clNames, tagPattern string, minAge int, cause string) {
+// - the istag must not reference a image that is referenced by a latest tag
+func FilterIstagsToDelete(data T_completeResultsFamilies, family T_familyName, clusters T_clNames, tagPattern string, minAge int, cause string) {
 	result := map[string]string{}
 	tagPatternRegexp := regexp.MustCompile(tagPattern)
 	for _, cluster := range clusters {
 		for istag, nsTags := range data[family].AllIstags[cluster].Istag {
 			is, tag := istag.split()
-			if tagPatternRegexp.MatchString(istag.str()) || tagPattern == "" {
+			if (tagPatternRegexp.MatchString(istag.str()) || tagPattern == "") && tag != "latest" {
 				for ns, tagMap := range nsTags {
 					if CmdParams.Options.Debug {
-						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonOneliner(tagMap))
+						DebugLogger.Println("FilterIstagsToDelete::", "ns:", ns, "tagMap:", GetJsonFromMap(tagMap))
 					}
-					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace) {
-						if data[family].UsedIstags[is][tag] == nil {
+					if tagMap.AgeInDays >= minAge && matchIsIstagToFilterParams(is, tag, istag, tagMap.Namespace, tagMap.AgeInDays) {
+						if data[family].UsedIstags[is][tag] == nil && !isImageRefencedByLatestTag(data[family].AllIstags[cluster].Image[tagMap.Image]) {
+							// fmt.Print(GetJsonFromMap(tagMap))
 							s := (string(ns) + "/" + string(istag))
 							value := fmt.Sprintln(
 								"oc -n", tagMap.Namespace, "delete istag", tagMap.Imagestream.str()+":"+tagMap.Tagname.str(),
 								"   #", cause, "-->", tagMap.Image,
 								",  Commit.Ref:", tagMap.Build.CommitRef,
 								",  Age:", tagMap.AgeInDays)
-							// DebugLogger.Println("FilterIstagsToDelete::", "key:", s, "value:", value)
+							if CmdParams.Options.Debug {
+								DebugLogger.Println("FilterIstagsToDelete::", "key:", s, "value:", value)
+							}
 							result[s] = value
 						} else {
 							logUsedIstags(data[family].UsedIstags[is][tag], is, tag, istag)
@@ -88,7 +114,7 @@ func FilterIstagsToDelete(data T_completeResultsFamilies, family T_family, clust
 }
 
 // FilterNonbuildIstagsToDelete filters out all istags, when there is no build-tag on the same image
-func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_family, clusters T_clNames, minAge int) {
+func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_familyName, clusters T_clNames, minAge int) {
 	result := map[string]string{}
 	buildPatternRegexp := regexp.MustCompile("^.*?:.*?[A-Za-z]")
 	for _, cluster := range clusters {
@@ -109,7 +135,7 @@ func FilterNonbuildIstagsToDelete(data T_completeResultsFamilies, family T_famil
 						fromNamespace := T_nsName(imageParts[len(imageParts)-2])
 						istag := T_istagName(imageParts[len(imageParts)-1])
 						is, tag := istag.split()
-						if matchIsIstagToFilterParams(is, tag, istag, fromNamespace) {
+						if matchIsIstagToFilterParams(is, tag, istag, fromNamespace, tags[istagname].AgeInDays) {
 							if data[family].UsedIstags[is][tag] == nil {
 								result[tn.str()] = fmt.Sprintln(
 									"oc -n", fromNamespace, "delete istag", istag,
