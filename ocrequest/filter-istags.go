@@ -34,15 +34,15 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 // logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
 	if CmdParams.Options.Debug {
-		DebugLogger.Println("logUsedIstags::", "#### Istag:", istag, "is used.")
+		DebugLogger.Println("logUsedIstags::", " ## is: ", is, " ### tag: ", tag, "  #### Istag: ", istag, " is used.")
 	}
 	for _, istagdetails := range usedIstags {
 		DebugLogger.Println("logUsedIstags::", "   # -->",
-			"Cluster:", istagdetails.Cluster,
-			"UsedInNamespace:", istagdetails.UsedInNamespace,
-			"FromNamespace:", istagdetails.FromNamespace,
-			"Image:", istagdetails.Image,
-			"AgeInDays:", istagdetails.AgeInDays)
+			"  Cluster:", istagdetails.Cluster,
+			"  UsedInNamespace:", istagdetails.UsedInNamespace,
+			"  FromNamespace:", istagdetails.FromNamespace,
+			"  Image:", istagdetails.Image,
+			"  AgeInDays:", istagdetails.AgeInDays)
 	}
 }
 

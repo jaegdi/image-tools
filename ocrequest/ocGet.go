@@ -245,7 +245,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 
 // writeCache writes the connntent to the cache file
 func writeCache(tmpdir string, filename string, content []byte) {
-	err := ioutil.WriteFile(filename, content, 0644)
+	err := ioutil.WriteFile(tmpdir+"/"+filename, content, 0644)
 	if err != nil {
 		if CmdParams.Options.Debug {
 			DebugLogger.Println("Writing cache file failed", err)
