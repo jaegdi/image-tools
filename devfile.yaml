@@ -106,7 +106,7 @@ metadata:
   name: golang-example
   annotations:
     che.eclipse.org/devfile: |
-      schemaVersion: 2.2.2
+      schemaVersion: 2.2.0
       metadata:
         name: golang-example
       components:
