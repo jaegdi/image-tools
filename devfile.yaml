@@ -10,6 +10,8 @@ components:
           value: /projects:/home/user/go
         - name: GOCACHE
           value: /tmp/.cache
+        - name: GOPROXY
+          value: https://jaegdi:!Glotzbobbel1@artifactory-pro.sf-bk.de:8443/artifactory/api/go/go
       endpoints:
         - name: 8080-https
           targetPort: 8080
