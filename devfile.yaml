@@ -1,6 +1,6 @@
 schemaVersion: 2.2.2
 metadata:
-  name: golang-example
+  name: image-tools
 components:
   - name: tools
     container:
