@@ -20,35 +20,20 @@ components:
       memoryLimit: 2.5Gi
       mountSources: true
 commands:
-  - id: run-outyet
+  - id: build
     exec:
-      label: 1.1 Run outyet
+      label: 1.Build
       component: tools
-      workingDir: ${PROJECT_SOURCE}/outyet
-      commandLine: go get -d && go run main.go
+      workingDir: ${PROJECTS_ROOT}/image-tools
+      commandLine: go build
       group:
-        kind: run
-  - id: stop-outyet
+        kind: build
+  - id: run
     exec:
-      label: 1.2 Stop outyet
+      label: 2.Run
       component: tools
-      commandLine: kill $(pidof go)
-      group:
-        kind: run
-  - id: test-outyet
-    exec:
-      label: 1.3 Test outyet
-      component: tools
-      workingDir: ${PROJECT_SOURCE}/outyet
-      commandLine: go test
-      group:
-        kind: test
-  - id: run-current-file
-    exec:
-      label: Run current file
-      component: tools
-      workingDir: ${fileDirname}
-      commandLine: go get -d && go run ${file}
+      workingDir: ${PROJECTS_ROOT}/image-tools
+      commandLine: ./image-tools
       group:
         kind: run
 projects:
