@@ -64,7 +64,7 @@ func Init() {
 	// cfg := genClusterConfig(clustersConfig)
 	// InfoLogger.Println("ClusterConfig", cfg)
 
-	// use statig config if cmdparam statcfg is true
+	// use static config if cmdparam statcfg is true
 	var fns T_famNsList
 	if CmdParams.Options.StaticConfig || true {
 		FamilyNamespaces = FamilyNamespacesStat
@@ -112,4 +112,10 @@ func Init() {
 		}
 	}
 	InitIsNamesForFamily(CmdParams.Family)
+}
+
+func DebugMsg(p interface{}...) {
+    	if CmdParams.Options.Debug {
+    		DebugLogger.Println(p)
+    	}
 }
