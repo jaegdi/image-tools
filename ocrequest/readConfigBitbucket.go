@@ -117,13 +117,9 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 	}
 	jsonstr, err := json.MarshalIndent(cfg, "", "  ")
 	if err != nil {
-		if CmdParams.Options.Debug {
-			ErrorLogger.Println("JsonMarshal failes:", err)
-		}
+		DebugMsg("JsonMarshal failes:", err)
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("ClusterConfig:", string(jsonstr))
-	}
+	DebugMsg("ClusterConfig:", string(jsonstr))
 	return cfg
 }
 
@@ -133,6 +129,7 @@ func genFamilyNamespacesConfig(clusters T_cft_clusters,
 	namespaces T_cft_namespaces,
 	pipelines T_cft_pipelines) T_famNsList {
 	// func body
+	DebugMsg("genFamilyNamespacesConfig", clusters, families, namespaces, pipelines)
 	fnc := T_famNsList{}
 	for _, fam := range families {
 		stages := map[T_appName][]T_clName{}

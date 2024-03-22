@@ -114,8 +114,12 @@ func Init() {
 	InitIsNamesForFamily(CmdParams.Family)
 }
 
-func DebugMsg(p interface{}...) {
-    	if CmdParams.Options.Debug {
-    		DebugLogger.Println(p)
-    	}
+func DebugMsg(p ...interface{}) {
+	if CmdParams.Options.Debug {
+		DebugLogger.Println(p...)
+	}
+}
+
+func InfoMsg(p ...interface{}) {
+	InfoLogger.Println(p...)
 }

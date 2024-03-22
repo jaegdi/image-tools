@@ -3,12 +3,9 @@ package ocrequest
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
-	"path/filepath"
-
-	// "log"
 	"os/exec"
+	"path/filepath"
 )
 
 // getClusterToken fetch login token from Clusters config
@@ -77,7 +74,6 @@ func ocLogin(cluster T_clName) (string, error) {
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		ErrorLogger.Println("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
-
 		return "login failed", err
 	} else {
 		cmd := exec.Command("oc", "whoami", "-t")
@@ -102,7 +98,7 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	if err != nil {
 		ErrorLogger.Println("failed to serialize clusterconfig to json", err)
 	} else {
-		err := ioutil.WriteFile(filePath, js, 0600)
+		err := os.WriteFile(filePath, js, 0600)
 		if err != nil {
 			ErrorLogger.Println("failed to save serialized clusterconfig as json to file", err)
 		}
@@ -117,7 +113,7 @@ func readTokens(filename string) error {
 	}
 	exPath := filepath.Dir(ex)
 	filePath := exPath + "/" + filename
-	file, err := ioutil.ReadFile(filePath)
+	file, err := os.ReadFile(filePath)
 	if err != nil {
 		ErrorLogger.Println("failed to load configfile "+filePath, err)
 		return err

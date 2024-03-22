@@ -44,12 +44,12 @@ func createWorkerPoolUsedIstags(noOfWorkersUsedIstags int) {
 
 func allocateUsedIstags(clusters []T_clName, clusterAppNamsepaces T_FamilyAppNamespaces) {
 	jobNr := 0
-	for cl := 0; cl < len(clusters); cl++ {
-		InfoLogger.Println("Start JobUsedIstags for cluster" + clusters[cl])
-		namespaces := clusterAppNamsepaces[clusters[cl]]
-		for i := 0; i < len(namespaces); i++ {
-			InfoLogger.Println("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(namespaces[i]))
-			job := JobUsedIstags{jobNr, clusters[cl], namespaces[i]}
+	for _, cluster := range clusters {
+		InfoLogger.Println("Start JobUsedIstags for cluster" + cluster)
+		namespaces := clusterAppNamsepaces[cluster]
+		for _, namespace := range namespaces {
+			InfoLogger.Println("Start job for cluster " + string(cluster) + " in namespace " + string(namespace))
+			job := JobUsedIstags{jobNr, cluster, namespace}
 			jobsUsedIstags <- job
 			jobNr++
 		}

@@ -5,11 +5,10 @@ package ocrequest
 import (
 	"crypto/tls"
 	"crypto/x509"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"os/exec"
-	"strings"
 	"time"
 
 	"golang.org/x/net/proxy"
@@ -111,50 +110,28 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	// Create a Bearer string by appending string access token
 	bearer := "Bearer " + ocGetToken(cluster)
 	calltyp := typ
-	if strings.Contains(cluster.str(), "scp0") { // check if cluster is openshift4
-		switch typ {
-		case "images":
-			urlpath = "/apis/image.openshift.io/v1"
-		case "imagestreamtags", "imagestreams":
-			urlpath = "/apis/image.openshift.io/v1/namespaces/" + namespace.str()
-		case "namespace":
-			urlpath = "/api/v1/namespaces/" + namespace.str()
-		case "deploymentconfigs":
-			urlpath = "/apis/apps.openshift.io/v1/namespaces/" + namespace.str()
-		case "deployments":
-			urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
-		case "jobs":
-			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
-		case "cronjobs":
-			urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
-		case "builds", "buildconfigs":
-			urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
-		case "namespaces":
-			urlpath = "/api/v1/namespaces"
-			typ = ""
-		default:
-			urlpath = "/api/v1/namespaces"
-		}
-	} else { //  else cluster is openshift3
-		switch typ {
-		case "images":
-			urlpath = "/apis/image.openshift.io/v1/"
-		case "imagestreamtags", "imagestreams", "deploymentconfigs", "namespace":
-			urlpath = "/oapi/v1/namespaces/" + namespace.str()
-		case "deployments":
-			urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
-		case "jobs":
-			urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
-		case "cronjobs":
-			urlpath = "/apis/batch/v1beta1/namespaces/" + namespace.str()
-		case "builds", "buildconfigs":
-			urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
-		case "namespaces":
-			urlpath = "/api/v1/namespaces"
-			typ = ""
-		default:
-			urlpath = "/api/v1/namespaces"
-		}
+	switch typ {
+	case "images":
+		urlpath = "/apis/image.openshift.io/v1"
+	case "imagestreamtags", "imagestreams":
+		urlpath = "/apis/image.openshift.io/v1/namespaces/" + namespace.str()
+	case "namespace":
+		urlpath = "/api/v1/namespaces/" + namespace.str()
+	case "deploymentconfigs":
+		urlpath = "/apis/apps.openshift.io/v1/namespaces/" + namespace.str()
+	case "deployments":
+		urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
+	case "jobs":
+		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
+	case "cronjobs":
+		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
+	case "builds", "buildconfigs":
+		urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
+	case "namespaces":
+		urlpath = "/api/v1/namespaces"
+		typ = ""
+	default:
+		urlpath = "/api/v1/namespaces"
 	}
 	switch {
 	case typ != "" && name != "":
@@ -195,7 +172,6 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 		client = &http.Client{Transport: httpTransport}
 		// set our socks5 as the dialer
 		httpTransport.Dial = dialer.Dial
-
 	}
 	// client := &http.Client{}
 	resp, err := client.Do(req)
@@ -203,7 +179,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 		ErrorLogger.Println("Error on sending request. " + err.Error())
 		return []byte("")
 	}
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		ErrorLogger.Println("Error on reading response. " + err.Error())
 		return []byte("")
@@ -245,7 +221,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 
 // writeCache writes the connntent to the cache file
 func writeCache(tmpdir string, filename string, content []byte) {
-	err := ioutil.WriteFile(tmpdir+"/"+filename, content, 0644)
+	err := os.WriteFile(tmpdir+"/"+filename, content, 0644)
 	if err != nil {
 		if CmdParams.Options.Debug {
 			DebugLogger.Println("Writing cache file failed", err)
@@ -255,7 +231,7 @@ func writeCache(tmpdir string, filename string, content []byte) {
 
 // readCache read from the cache file
 func readCache(filename string) []byte {
-	content, _ := ioutil.ReadFile(filename)
+	content, _ := os.ReadFile(filename)
 	return content
 }
 

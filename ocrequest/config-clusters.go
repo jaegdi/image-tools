@@ -6,8 +6,18 @@ var Clusters = T_ClusterConfig{
 		"dev-scp0": {
 			Name:          "dev-scp0",
 			Url:           "https://api.dev-scp0.sf-rz.de:6443",
-			Token:         "eyJhbGciOiJSUzI1NiIsImtpZCI6IkJDcXdZNV95YjFFampiWFJGTW1LLVJJRnpZc29WLV9PVFY4eHFYMFlMUDAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1oamY5NyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIyOTczNzY0OC1iNDVmLTQ0NDMtYTU3Zi1iYzk1NmU3YjdiM2EiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.y6C30QlWqOOX6UMwnDnBWc8MnH2DKEUa733nBfbGaN9YjLJn75eU_Lj2iq_OQY5Q-JTw_fzd4fR6C-_F8Yi8EKJJTzXMUwDFkJMY6chCMVjzw7ccgLzKebE7tWRsy5PocD0KdweRSBU38Ehr9xapvy1c4q_BD0zkgLqb8kxEtgBq0bwEpg3-RkLXfO8Jf8uiLZsBm5WZFBAx_PW1Rt2mvYuHpbb9x7jYS5__MaFrj6QVqKznONB3bQ9u5RYwE13lMOCZrd9zh-N9oa0-6VtHucngC-r88K5Ccy2yE0C_GNOAnGNQ-GLvJRcZt9GGNcJ8zu3OgtmBfgRzqxNbSnmL6OGOx3EGVv0ZK1LsNFF9auur0cqwyTK8N75YwB8r7mpiCSrYtUBrpnzI0k2zCFihV6YP3YiIsSjx2zkxVBBaA6Q3PcIx-miAmKghyou_aSBGFUEBHNKijVrpMXYBRrTd-Ou_sEu2uwUpYraSu49XnGy3gBgpHvuoOElzQan9P9xrfLnsrgvC1H9s90Dwp9dTRJ_2fICSufo_5F-6jhGtZNwUsjX-WclY6KWIQ3HkmCF5HEjGdxJ0fg1Vf96u4DXHDbX2BB8IK8dwyqJ-l9fBEKZ_Z4oXhO5oeydihheguDY_QiWQ1_ZN7t9cnekdLIAbT0BHlpF-Z9kdUaFlzltATpY",
+			Token:         "",
 			ConfigToolUrl: "https://scpconfig-service-master.apps.dev-scp0.sf-rz.de"},
+		"dev-scp1-c1": {
+			Name:          "dev-scp1-c1",
+			Url:           "https://api.dev-scp1-c1.sf-rz.de:6443",
+			Token:         "",
+			ConfigToolUrl: "https://scpconfig-service-master.apps.dev-scp1-c1.sf-rz.de"},
+		"dev-scp1-c2": {
+			Name:          "dev-scp1-c2",
+			Url:           "https://api.dev-scp1-c2.sf-rz.de:6443",
+			Token:         "",
+			ConfigToolUrl: "https://scpconfig-service-master.apps.dev-scp1-c2.sf-rz.de"},
 		"cid-scp0": {
 			Name:          "cid-scp0",
 			Url:           "https://api.cid-scp0.sf-rz.de:6443",
@@ -28,5 +38,10 @@ var Clusters = T_ClusterConfig{
 			Url:           "https://api.pro-scp0.sf-rz.de:6443",
 			Token:         "eyJhbGciOiJSUzI1NiIsImtpZCI6IndGRFo3REpZNlh0bmd2SWtyOFVnNXQxclp5dElPS2RLbWNTWDlGSDhwS1kifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjbHVzdGVyLXRhc2tzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImltYWdlLXBydW5lci10b2tlbi1nOXZtdiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJpbWFnZS1wcnVuZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2MjZlMzU0YS0xYTRmLTQ0ZDYtOTdmOS1jNjAxMjA4ZTMxNzYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6Y2x1c3Rlci10YXNrczppbWFnZS1wcnVuZXIifQ.wuyxvfzeDVIfQkI012uh_Bi3MbWaiMy6-jFXRqbd2rhvudp84KbrPyGYIFNgzrtnvCe815vtTw9dWk7lr5M7Y6aUp1Vb5CsLRty7NbXKa2J8LPHHmpwwEdMWcbBVLEHCUVmZee4nZ0WsTKjxRsvFrJ99a0-ikLIVPkUdZG9yon5dgPpy2j0j5PD7zk0hQAF1wgs7LjsR11uOJkZso0XcoXyDdiKPNMDI6ySBg0q1pJ6TaLkihWCw3OPB-aDvOFJBL_6FWCJV5MBV10LIZYXV5TsNRvQKoID6qHftZIQvEhKYtQu7Q3d1kNIq71bYkF09vRhIctP1gBkmbtGq9c9ZBsGHTWWgwIwNI192ztjPHpKMidbfpDmCuKn3-iIF4dDxFS8ApUfjDB79ib0TsoARp3lFrGQV9Ea-V7IRqgndcoKbYZ9Ebu9m0gUUV8W95d8Q0VX1vNyKzhYVSrsp-3ot6OIbHJDlJuljaOv-jGGS3063MT_lYkypEySYUe3dQDrur2--BnTF2hA7SOP57y-AuQdIOMT9LvxEUxqL_JRpu-lx5CY7NH6VCXI2kkbbqeJxMgNw5f1AMlcVvxVW7WX-VYTv0RH6iCw02OKMydVPZF-aDloXQK6_yHGj3tCd73i3cwAezgEEIxHE4-XEQq_gqZNxo6FngqOdV4MkvXwH_y0",
 			ConfigToolUrl: "https://scpconfig-service-master.apps.pro-scp0.sf-rz.de"},
+		"pro-scp1": {
+			Name:          "pro-scp1",
+			Url:           "https://api.pro-scp1.sf-rz.de:6443",
+			Token:         "",
+			ConfigToolUrl: "https://scpconfig-service-master.apps.pro-scp1.sf-rz.de"},
 	},
 }

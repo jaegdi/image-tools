@@ -15,12 +15,12 @@ var Clusters = T_ClusterConfig{
 	Config: map[T_clName]T_Cluster{
 EOT
 
-for cluster in dev-scp0 cid-scp0 ppr-scp0 vpt-scp0 pro-scp0; do
+for cluster in dev-scp0 dev-scp1-c1 dev-scp1-c2 cid-scp0 ppr-scp0 vpt-scp0 pro-scp0 pro-scp1; do
     # shellcheck source=/dev/null
     . ocl $cluster cluster-tasks &>/dev/null
     ocw 1>&2
-    secret="$(oc get secret|rg image-pruner|rg token|head -n 1|pc 1)"
-    token="$(oc get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)"
+    secret="$(oc -n cluster-tasks get secret|rg image-pruner|rg token|head -n 1|pc 1)"
+    token="$(oc -n cluster-tasks get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)"
     cat <<EOT
 		"$cluster": {
 			Name:          "$cluster",
