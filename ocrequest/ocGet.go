@@ -14,7 +14,7 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-// Schufa Root CA
+// RZ Root CA
 var (
 	certs = `-----BEGIN CERTIFICATE-----
 MIIHNjCCBR6gAwIBAgIJAN58FKMMGU5JMA0GCSqGSIb3DQEBCwUAMIHCMQswCQYD

@@ -39,7 +39,7 @@ var AppNamespaces T_appNsList
 var FamilyNamespacesStat = T_famNsList{
 	"aps": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"aps-images", "openshift"},
+			"cid-scp0": {"aps-images", "aps-build"},
 			"ppr-scp0": {"aps-images"},
 			"vpt-scp0": {"aps-images"},
 			"pro-scp0": {"aps-images"},
@@ -101,7 +101,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"ebs": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"ebs-images"},
+			"cid-scp0": {"ebs-images", "ebs-build"},
 			"ppr-scp0": {"ebs-images"},
 			"vpt-scp0": {"ebs-images"},
 			"pro-scp0": {"ebs-images"},
@@ -125,7 +125,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"pkp": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"pkp-images"},
+			"cid-scp0": {"pkp-images", "pkp-build"},
 			"ppr-scp0": {"pkp-images"},
 			"vpt-scp0": {"pkp-images"},
 			"pro-scp0": {"pkp-images"},
@@ -137,7 +137,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"scp": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"scp-images", "scp-baseimages"},
+			"cid-scp0": {"scp-images", "scp-build", "scp-baseimages"},
 			"ppr-scp0": {"scp-images", "scp-baseimages"},
 			"vpt-scp0": {"scp-images", "scp-baseimages"},
 			"pro-scp0": {"scp-images", "scp-baseimages"},
