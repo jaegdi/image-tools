@@ -16,17 +16,16 @@ package ocrequest
 var Clusters = T_ClusterConfig{
 	Config: map[T_clName]T_Cluster{
 EOT
-#                                   dev-scp1-c2
-for cluster in dev-scp0 dev-scp1-c1             cid-scp0 ppr-scp0 vpt-scp0 pro-scp0 pro-scp1; do
+for cluster in $(cluster_list all); do
 	echo >&2
-	CLUSTER="$cluster"
-	echo -n "Login into $cluster" >&2
+	echo -n "Login into '$cluster'" >&2
     # shellcheck source=/dev/null
-	timeout 3 ocl $CLUSTER cluster-tasks &>/dev/null || { echo >&2;echo '------------------'  >&2; continue; }
+	timeout 5 ocl $cluster cluster-tasks &>/dev/null || { echo >&2;echo '------------------'  >&2; continue; }
 	echo -n ", get namespace: " >&2
 	ocw 1>&2 || continue
-	echo -n "get secret" >&2
-	secret="$(oc -n cluster-tasks get secret|rg image-pruner|rg token|head -n 1|pc 1)" || continue
+	secretname='image-pruner'
+	echo -n "get secret $secretname" >&2
+	secret="$(oc -n cluster-tasks get secret|rg "$secretname"|rg token|head -n 1|pc 1)" || { echo ", no secret of $secretname found !" >&2;echo '------------------'  >&2; continue; }
 	echo -n ", get token" >&2
 	token="$(oc -n cluster-tasks get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)" || continue
 	echo -n ", write config" >&2
