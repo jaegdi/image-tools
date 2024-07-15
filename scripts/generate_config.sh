@@ -20,7 +20,7 @@ for cluster in $(cluster_list all); do
 	echo >&2
 	echo -n "Login into '$cluster'" >&2
     # shellcheck source=/dev/null
-	timeout 5 ocl $cluster cluster-tasks &>/dev/null || { echo >&2;echo '------------------'  >&2; continue; }
+	timeout 5 ocl "$cluster" cluster-tasks &>/dev/null || { echo >&2;echo '------------------'  >&2; continue; }
 	echo -n ", get namespace: " >&2
 	ocw 1>&2 || continue
 	secretname='image-pruner'
@@ -29,13 +29,13 @@ for cluster in $(cluster_list all); do
 	echo -n ", get token" >&2
 	token="$(oc -n cluster-tasks get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)" || continue
 	echo -n ", write config" >&2
-	cat <<EOT
-		"$cluster": {
-			Name:          "$cluster",
-			Url:           "https://api.$cluster.sf-rz.de:6443",
-			Token:         "$token",
-			ConfigToolUrl: "https://scpconfig-service-master.apps.$cluster.sf-rz.de"},
-EOT
+	cat <<-EOT
+	        "$cluster": {
+	            Name:          "$cluster",
+	            Url:           "https://api.$cluster.sf-rz.de:6443",
+	            Token:         "$token",
+	            ConfigToolUrl: "https://scpconfig-service-master.apps.$cluster.sf-rz.de"},
+	EOT
 	echo ", config written." >&2
 	echo '-----------------' >&2
 done
@@ -47,3 +47,5 @@ EOT
 } > "$dir/../ocrequest/config-clusters.go"
 
 switch-back-to-current-cluster
+
+lless "$dir/../ocrequest/config-clusters.go"
