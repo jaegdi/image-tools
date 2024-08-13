@@ -45,16 +45,16 @@ func createWorkerPoolUsedIstags(noOfWorkersUsedIstags int) {
 func allocateUsedIstags(clusters []T_clName, clusterAppNamsepaces T_FamilyAppNamespaces) {
 	jobNr := 0
 	for _, cluster := range clusters {
-		InfoLogger.Println("Start JobUsedIstags for cluster" + cluster)
+		InfoMsg("Start JobUsedIstags for cluster" + cluster)
 		namespaces := clusterAppNamsepaces[cluster]
 		for _, namespace := range namespaces {
-			InfoLogger.Println("Start job for cluster " + string(cluster) + " in namespace " + string(namespace))
+			InfoMsg("Start job for cluster " + string(cluster) + " in namespace " + string(namespace))
 			job := JobUsedIstags{jobNr, cluster, namespace}
 			jobsUsedIstags <- job
 			jobNr++
 		}
 	}
-	InfoLogger.Println("close jobsUsedIstags")
+	InfoMsg("close jobsUsedIstags")
 	close(jobsUsedIstags)
 }
 
@@ -68,13 +68,13 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 		jobsUsedIstags = make(chan JobUsedIstags, channelsizeUsedIstags)
 		jobResultsUsedIstags = make(chan ResultUsedIstags, channelsizeUsedIstags)
 
-		InfoLogger.Println("Allocate and start JobsUsedIstags")
+		InfoMsg("Allocate and start JobsUsedIstags")
 		go allocateUsedIstags(FamilyNamespaces[family].Stages, allClusterFamilyNamespaces)
 
-		InfoLogger.Println("Create Worker Pool for Used IsTags")
+		InfoMsg("Create Worker Pool for Used IsTags")
 		createWorkerPoolUsedIstags(noOfWorkersUsedIstags)
 
-		InfoLogger.Println("Collect results for Used IsTags")
+		InfoMsg("Collect results for Used IsTags")
 		for result := range jobResultsUsedIstags {
 			// for is := range result.istags {
 			// 	for tag := range result.istags[is] {
@@ -111,6 +111,6 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 			}
 		}
 	}
-	InfoLogger.Println(istagResult)
+	InfoMsg(istagResult)
 	return istagResult
 }

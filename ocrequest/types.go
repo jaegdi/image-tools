@@ -575,9 +575,7 @@ func (c T_csvDoc) csvDoc(typ string) {
 		if err != nil {
 			ErrorLogger.Println("failed to open file", file, err)
 		}
-		if CmdParams.Options.Debug {
-			DebugLogger.Println("write CSV file for", typ, "to", file)
-		}
+		DebugMsg("write CSV file for", typ, "to", file)
 		w := csv.NewWriter(csvfile)
 		if err := w.WriteAll(out); err != nil {
 			ErrorLogger.Println("writing csv failed" + err.Error())

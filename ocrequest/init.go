@@ -36,33 +36,33 @@ func Init() {
 	// FamilyNamespaces = FamilyNamespacesStat
 	EvalFlags()
 
-	InfoLogger.Println("------------------------------------------------------------")
+	InfoMsg("------------------------------------------------------------")
 	var currCluster T_clName
 
 	if len(CmdParams.Cluster) > 0 {
-		InfoLogger.Println("Get cluster from parameter -cluster")
+		InfoMsg("Get cluster from parameter -cluster")
 		currCluster = CmdParams.Cluster[0]
 	} else {
 		if cl := os.Getenv("CLUSTER"); cl != "" {
-			InfoLogger.Println("Set cluster to env var CLUSTER", cl)
+			InfoMsg("Set cluster to env var CLUSTER", cl)
 			currCluster = T_clName(cl)
 		} else {
-			InfoLogger.Println("Set cluster to default value -cluster=cid-scp0")
+			InfoMsg("Set cluster to default value -cluster=cid-scp0")
 			currCluster = "cid-scp0"
 		}
 	}
-	InfoLogger.Println("Starting reading config from", currCluster, "config-tools")
+	InfoMsg("Starting reading config from", currCluster, "config-tools")
 	clustersConfig := GetClusters()
 	familiesConfig := GetFamilies()
 	environmentsConfig := GetEnvironments()
 	namespacesConfig := GetNamespaces()
 	pipelinesConfig := GetPipelines()
-	// InfoLogger.Println("Cluster Configs", clustersConfig)
-	// InfoLogger.Println("Environment Configs": environmentsConfig)
-	// InfoLogger.Println("NAmespace Configs": namespacesConfig)
-	// InfoLogger.Println("Pipeline Configs": pipelinesConfig)
+	// InfoMsg("Cluster Configs", clustersConfig)
+	// InfoMsg("Environment Configs": environmentsConfig)
+	// InfoMsg("NAmespace Configs": namespacesConfig)
+	// InfoMsg("Pipeline Configs": pipelinesConfig)
 	// cfg := genClusterConfig(clustersConfig)
-	// InfoLogger.Println("ClusterConfig", cfg)
+	// InfoMsg("ClusterConfig", cfg)
 
 	// use static config if cmdparam statcfg is true
 	var fns T_famNsList
@@ -73,41 +73,41 @@ func Init() {
 		FamilyNamespaces = fns
 	}
 
-	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("dynamic Config", GetJsonOneliner(fns))
-	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("Static Config", GetJsonOneliner(FamilyNamespacesStat))
-	InfoLogger.Println("------------------------------------------------------------")
+	InfoMsg("------------------------------------------------------------")
+	InfoMsg("dynamic Config", GetJsonOneliner(fns))
+	InfoMsg("------------------------------------------------------------")
+	InfoMsg("Static Config", GetJsonOneliner(FamilyNamespacesStat))
+	InfoMsg("------------------------------------------------------------")
 
-	InfoLogger.Println("############################################################")
-	InfoLogger.Println("Starting execution of image-tools")
+	InfoMsg("############################################################")
+	InfoMsg("Starting execution of image-tools")
 
 	Multiproc = true
-	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
-	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
+	InfoMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
+	InfoMsg("Multithreading: " + fmt.Sprint(Multiproc))
 	if CmdParams.Options.Socks5Proxy == "no" {
 		CmdParams.Options.Socks5Proxy = ""
 	}
-	InfoLogger.Println("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
-	InfoLogger.Println("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
+	InfoMsg("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
+	InfoMsg("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
 
-	regexValidNamespace = regexp.MustCompile(
-		`^` + string(CmdParams.Family) + `$` + `|` +
-			`^` + string(CmdParams.Family) + `-.*` + `|` +
-			`.*?-` + string(CmdParams.Family) + `-.*` + `|` +
-			`.*?-` + string(CmdParams.Family) + `$`)
+	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
+	// + `|` +
+	// `^` + string(CmdParams.Family) + `-.*` + `|` +
+	// `^.*?-` + string(CmdParams.Family) + `-.*` + `|` +
+	// `^.*?-` + string(CmdParams.Family) + `$`)
 
 	for _, cluster := range CmdParams.Cluster {
 		if len(Clusters.Config[cluster].Token) < 10 {
-			InfoLogger.Println("Try to read clusterconfig.json")
+			InfoMsg("Try to read clusterconfig.json")
 			if err := readTokens("clusterconfig.json"); err != nil {
-				InfoLogger.Println("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
+				InfoMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
 				for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
 					ocGetToken(cluster)
 				}
 				saveTokens(Clusters, "clusterconfig.json")
 			} else {
-				InfoLogger.Println("Clusterconfig and Tokens loaded from clusterconfig.json")
+				InfoMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 			}
 		}
 	}
@@ -115,11 +115,13 @@ func Init() {
 }
 
 func DebugMsg(p ...interface{}) {
-	if CmdParams.Options.Debug {
-		DebugLogger.Println(p...)
-	}
+	DebugLogger.Println(p...)
 }
 
 func InfoMsg(p ...interface{}) {
 	InfoLogger.Println(p...)
+}
+
+func ErrorMsg(p ...interface{}) {
+	ErrorLogger.Println(p...)
 }

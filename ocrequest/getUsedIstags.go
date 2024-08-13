@@ -2,6 +2,7 @@ package ocrequest
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/stretchr/stew/slice"
 
@@ -18,15 +19,16 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName
 	namespacesMap := map[string]interface{}{}
 	namespaceList := []T_nsName{}
 	err := json.Unmarshal([]byte(namespacesJson), &namespacesMap)
+	// InfoMsg(GetJsonFromMap(namespacesMap))
 	if err != nil {
 		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
 	} else {
-		// InfoLogger.Println("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
+		// InfoMsg("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
 		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
 			for _, v := range namespacesMap["items"].([]interface{}) {
 				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
 					ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-					if ns != "" && regexValidNamespace.MatchString(ns) {
+					if len(ns) > 0 && regexValidNamespace.MatchString(ns) {
 						namespaceList = append(namespaceList, T_nsName(ns))
 					}
 				}
@@ -84,6 +86,9 @@ func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []in
 			continue
 		}
 		if CmdParams.Filter.Istagname != "" && istag != CmdParams.Filter.Istagname && !CmdParams.FilterReg.Istagname.MatchString(string(istag)) {
+			continue
+		}
+		if CmdParams.Filter.Istagname != "" && istag != T_istagName(CmdParams.Filter.Namespace) && !CmdParams.FilterReg.Istagname.MatchString(string(istag)) {
 			continue
 		}
 		if CmdParams.Filter.Imagename != "" && image != CmdParams.Filter.Imagename {
@@ -208,7 +213,7 @@ func GetUsedIstagsForFamilyInCluster(family T_familyName, cluster T_clName) T_us
 	var result T_usedIstagsResult
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
-			InfoLogger.Println("Get used istags of cluster: ", cluster, "in namespace:", ns)
+			InfoMsg("Get used istags of cluster: ", cluster, "in namespace:", ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			MergoNestedMaps(&result, r)
 		}
@@ -247,14 +252,17 @@ func PutShaIntoUsedIstags(c chan T_completeResults, results T_completeResults) {
 func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 	var result T_usedIstagsResult
 	if Multiproc {
+		fmt.Println("Get used istags for family: ", CmdParams.Family)
 		result = goGetUsedIstagsForFamilyInAllClusters(CmdParams.Family)
+		fmt.Println(GetJsonFromMap(result))
 	} else {
 		clusters := FamilyNamespaces[CmdParams.Family].Stages
 		for _, cluster := range clusters {
-			InfoLogger.Println("Get used istags in cluster:", cluster)
+			InfoMsg("Get used istags in cluster:", cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
 			MergoNestedMaps(&result, resultCluster)
 		}
 	}
 	c <- result
+	DebugMsg("UsedImagetags scraped")
 }

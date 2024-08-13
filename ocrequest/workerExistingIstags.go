@@ -13,7 +13,7 @@ type JobExistingIstags struct {
 	namespace T_nsName
 }
 
-//                                             cluster
+// cluster
 type T_ResultExistingIstagsOverAllClusters map[T_clName]T_result
 
 type ResultExistingIstags struct {
@@ -50,16 +50,16 @@ func createWorkerPoolForExistingIstags(noOfWorkersExistingIstags int) {
 func allocateExistingIstags(family T_familyName, clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
-		InfoLogger.Println("Start JobExistingIstags for cluster" + clusters[cl])
+		InfoMsg("Start JobExistingIstags for cluster" + clusters[cl])
 		clusterFamNamespaces := FamilyNamespaces[family].ImageNamespaces[clusters[cl]]
 		for i := 0; i < len(clusterFamNamespaces); i++ {
-			InfoLogger.Println("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
+			InfoMsg("Start job for cluster " + string(clusters[cl]) + " in namespace " + string(clusterFamNamespaces[i]))
 			job := JobExistingIstags{jobNr, clusters[cl], clusterFamNamespaces[i]}
 			jobsExistingIstags <- job
 			jobNr++
 		}
 	}
-	InfoLogger.Println("close jobsExistingIstags")
+	InfoMsg("close jobsExistingIstags")
 	close(jobsExistingIstags)
 }
 
@@ -72,13 +72,13 @@ func goGetExistingIstagsForFamilyInAllClusters(family T_familyName) T_ResultExis
 		jobsExistingIstags = make(chan JobExistingIstags, channelsizeExistingIstags)
 		jobResultsExistingIstags = make(chan ResultExistingIstags, channelsizeExistingIstags)
 
-		InfoLogger.Println("Allocate and start JobsExistingIstags")
+		InfoMsg("Allocate and start JobsExistingIstags")
 		go allocateExistingIstags(family, FamilyNamespaces[family].Stages)
 
-		InfoLogger.Println("Create Worker Pool")
+		InfoMsg("Create Worker Pool")
 		createWorkerPoolForExistingIstags(noOfWorkersExistingIstags)
 
-		InfoLogger.Println("Collect results")
+		InfoMsg("Collect results")
 		for result := range jobResultsExistingIstags {
 			r := result.Istags
 			MergoNestedMaps(&istagResult, r)

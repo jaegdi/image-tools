@@ -24,6 +24,21 @@ DESCRIPTION
         - generate shellscript output to delete istags when parameter -delete is set.
           The -delete parameter disables the report output, instead the delete script is generated as output
 
+
+  Per defaul image-tools is executed as a cmdline tool but with parameter -server it can be startet as a webservice.
+
+  image-tools as web-service
+
+    In serverMode image-tools looks for used images in all clusters filtered by family and tagname and returns the a
+    JSON list as HTTP response
+
+    image-tools starts a webserver to listen on port 8080.
+    To request the webservice by curl, use the following pattern:
+
+        curl "http://localhost:8080/execute?family=exampleFamily&tagname=exampleTagname" | jq
+
+  image-tools as cmdline tool
+
     image-tools only read information around images from the clusters and generate output. It never change or
     delete something in the clusters. Eg. for delete istags it only generates a script output, which than can
     be executed by a cluster admin to really delete the istags.
@@ -371,9 +386,9 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
-	InfoLogger.Println(GetJsonOneliner(flags))
+	InfoMsg(GetJsonFromMap(flags))
 
-	if flags.Family == "" {
+	if flags.Family == "" && !flags.Options.ServerMode {
 		exitWithError("a name for family must given like: '-family=pkp'")
 	}
 	if !flags.Output.Used && (len(flags.Cluster) == 0) {
@@ -406,7 +421,10 @@ func EvalFlags() {
 	// 	}
 	// }
 
-	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
+	if !flags.Options.ServerMode && !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
 		exitWithError("As least one of the output flags must set")
+	}
+	if flags.Options.ServerMode {
+		CmdParams.Output.Used = true
 	}
 }

@@ -51,12 +51,12 @@ func allocateAppNamespaces(family T_familyName) {
 	jobNr := 0
 	clusters := FamilyNamespaces[family].Stages
 	for cl := 0; cl < len(clusters); cl++ {
-		InfoLogger.Println("Start JobAppNamespaces for cluster" + clusters[cl])
+		InfoMsg("Start JobAppNamespaces for cluster" + clusters[cl])
 		job := JobAppNamespaces{jobNr, clusters[cl], family}
 		jobsAppNamespaces <- job
 		jobNr++
 	}
-	InfoLogger.Println("close jobsAppNamespaces")
+	InfoMsg("close jobsAppNamespaces")
 	close(jobsAppNamespaces)
 }
 
@@ -66,13 +66,13 @@ func goGetAppNamespacesForFamily(family T_familyName) T_FamilyAppNamespaces {
 
 	jobsAppNamespaces = make(chan JobAppNamespaces, channelsizeAppNamespaces)
 	jobResultsAppNamespaces = make(chan ResultAppNamespaces, channelsizeAppNamespaces)
-	InfoLogger.Println("Allocate and start JobsAppNamespaces")
+	InfoMsg("Allocate and start JobsAppNamespaces")
 	go allocateAppNamespaces(family)
 
-	InfoLogger.Println("Create Worker Pool AppNamespaces")
+	InfoMsg("Create Worker Pool AppNamespaces")
 	createWorkerPoolAppNamespaces(noOfWorkersAppNamespaces)
 
-	InfoLogger.Println("Collect results")
+	InfoMsg("Collect results")
 	for jobResult := range jobResultsAppNamespaces {
 		resmap := T_FamilyAppNamespaces{jobResult.cluster: jobResult.namespaces}
 		MergoNestedMaps(&appNameSpaces, resmap)

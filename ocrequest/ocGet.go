@@ -75,9 +75,7 @@ func ocClientCall(cluster T_clName, namespace T_nsName, typ string, name string)
 	default:
 		cmd = exec.Command("oc", "--token", token, "get", typ, "-o", "json")
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println(cmd)
-	}
+	DebugMsg(cmd)
 	jsonstr, err := cmd.Output()
 	if err != nil {
 		exitWithError("oc get failed:", string(jsonstr), "Error:", err)
@@ -141,9 +139,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	default:
 		url = Clusters.Config[cluster].Url + urlpath
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
-	}
+	DebugMsg("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
 	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -184,9 +180,7 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 		ErrorLogger.Println("Error on reading response. " + err.Error())
 		return []byte("")
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("body:", string(body))
-	}
+	DebugMsg("body:", string(body))
 	return body
 }
 
@@ -197,9 +191,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 	if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
 		err := os.MkdirAll(tmpdir, 0755)
 		if err != nil {
-			if CmdParams.Options.Debug {
-				DebugLogger.Println("failed to create cache dir", err)
-			}
+			DebugMsg("failed to create cache dir", err)
 		}
 		return filename, false
 	}
@@ -211,9 +203,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 	duration := time.Since(info.ModTime())
 	// file too old
 	if duration.Minutes() > float64(1.0) {
-		if CmdParams.Options.Debug {
-			DebugLogger.Println("Cache Age:", duration.Minutes())
-		}
+		DebugMsg("Cache Age:", duration.Minutes())
 		return filename, false
 	}
 	return filename, true
@@ -223,9 +213,7 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 func writeCache(tmpdir string, filename string, content []byte) {
 	err := os.WriteFile(tmpdir+"/"+filename, content, 0644)
 	if err != nil {
-		if CmdParams.Options.Debug {
-			DebugLogger.Println("Writing cache file failed", err)
-		}
+		DebugMsg("Writing cache file failed", err)
 	}
 }
 
@@ -241,9 +229,7 @@ func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) st
 	var content []byte
 	filename, cacheOk := checkCache(tmpdir, cluster, namespace, typ, name)
 	if !cacheOk {
-		if CmdParams.Options.Debug {
-			DebugLogger.Println("Request Openshift for:", filename)
-		}
+		DebugMsg("Request Openshift for:", filename)
 		if CmdParams.Options.OcClient {
 			content = ocClientCall(cluster, namespace, typ, name)
 		} else {
@@ -251,9 +237,7 @@ func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) st
 		}
 		writeCache(tmpdir, filename, content)
 	} else {
-		if CmdParams.Options.Debug {
-			DebugLogger.Println("Use Cache for:", filename)
-		}
+		DebugMsg("Use Cache for:", filename)
 		content = readCache(filename)
 	}
 	return string(content)

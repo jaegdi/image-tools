@@ -173,7 +173,7 @@ func GetCsvFromMap(list interface{}, family T_familyName) {
 		for _, cluster := range CmdParams.Cluster {
 			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
 				for _, istagMap := range nsMap {
-					// InfoLogger.Println("namespace:", ns)
+					// InfoMsg("namespace:", ns)
 					line := T_csvLine{}
 					line = append(line, string(family))
 					line = append(line, "allIstags")
@@ -288,7 +288,7 @@ func GetTableFromMap(list interface{}, family T_familyName) {
 		for _, cluster := range CmdParams.Cluster {
 			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
 				for _, istagMap := range nsMap {
-					// InfoLogger.Println("namespace:", ns)
+					// InfoMsg("namespace:", ns)
 					line := table.Row{}
 					// line = append(line, "allIstags")
 					// line = append(line, "istag")
@@ -396,7 +396,7 @@ func tablePrettyprint(out []table.Row) {
 	// get height of terminal
 	// _, height, err := terminal.GetSize(0)
 	// if err != nil {
-	// 	InfoLogger.Println("failedt o get terminal size")
+	// 	InfoMsg("failedt o get terminal size")
 	// 	height = 60
 	// }
 	fd := int(os.Stdout.Fd())

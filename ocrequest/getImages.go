@@ -46,7 +46,7 @@ func InitAllImages(c chan T_ImagesMapAllClusters) {
 		}
 	}
 	for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-		InfoLogger.Println("Number of Images found in", cluster, ":", len(ImagesMap[cluster]))
+		InfoMsg("Number of Images found in", cluster, ":", len(ImagesMap[cluster]))
 	}
 	c <- ImagesMap
 	// c <- "InitAllImages Done!"
