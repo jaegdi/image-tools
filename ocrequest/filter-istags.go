@@ -9,7 +9,7 @@ import (
 
 // matchIsIstagToFilterParams returns true when the filters are empty or a defined filter matches to his corresponding item
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName, age int) bool {
-	DebugMsg("filtering:", is, tag, istag, namespace)
+	VerifyMsg("filtering:", is, tag, istag, namespace)
 	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
@@ -31,9 +31,9 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 
 // logUsedIstags logs the details of usedIstags to the logfile
 func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T_istagName) {
-	DebugMsg("logUsedIstags::", " ## is: ", is, " ### tag: ", tag, "  #### Istag: ", istag, " is used.")
+	VerifyMsg("logUsedIstags::", " ## is: ", is, " ### tag: ", tag, "  #### Istag: ", istag, " is used.")
 	for _, istagdetails := range usedIstags {
-		DebugLogger.Println("logUsedIstags::", "   # -->",
+		VerifyLogger.Println("logUsedIstags::", "   # -->",
 			"  Cluster:", istagdetails.Cluster,
 			"  UsedInNamespace:", istagdetails.UsedInNamespace,
 			"  FromNamespace:", istagdetails.FromNamespace,

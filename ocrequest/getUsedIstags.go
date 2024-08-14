@@ -19,16 +19,20 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName
 	namespacesMap := map[string]interface{}{}
 	namespaceList := []T_nsName{}
 	err := json.Unmarshal([]byte(namespacesJson), &namespacesMap)
-	// InfoMsg(GetJsonFromMap(namespacesMap))
+	DebugMsg(GetJsonFromMap(namespacesMap))
 	if err != nil {
 		ErrorLogger.Println("generate Map for AppNamespaces." + err.Error())
 	} else {
-		// InfoMsg("CHECK: cluster:"+cluster+" family:"+family+" => map:", namespacesMap)
+		DebugMsg("CHECK: cluster:", cluster, "family:", family, " => map:", namespacesMap)
+		VerifyMsg("Length of namespacesMap in cluster", cluster, "is:", len(namespacesMap["items"].([]interface{})))
 		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
 			for _, v := range namespacesMap["items"].([]interface{}) {
 				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
+					// VerifyMsg("Iterating over namespaceMap:", v.(map[string]interface{})["metadata"].(map[string]interface{})["name"])
 					ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+					DebugMsg("Iterating over namespaceMap:", ns)
 					if len(ns) > 0 && regexValidNamespace.MatchString(ns) {
+						DebugMsg("Add Namespace to list:", ns)
 						namespaceList = append(namespaceList, T_nsName(ns))
 					}
 				}
@@ -213,7 +217,7 @@ func GetUsedIstagsForFamilyInCluster(family T_familyName, cluster T_clName) T_us
 	var result T_usedIstagsResult
 	if namespace == "" {
 		for _, ns := range GetAppNamespacesForFamily(cluster, family) {
-			InfoMsg("Get used istags of cluster: ", cluster, "in namespace:", ns)
+			VerifyMsg("Get used istags of cluster: ", cluster, "in namespace:", ns)
 			r := ocGetAllUsedIstagsOfNamespace(cluster, ns)
 			MergoNestedMaps(&result, r)
 		}
@@ -258,7 +262,7 @@ func GetUsedIstagsForFamily(c chan T_usedIstagsResult) {
 	} else {
 		clusters := FamilyNamespaces[CmdParams.Family].Stages
 		for _, cluster := range clusters {
-			InfoMsg("Get used istags in cluster:", cluster)
+			VerifyMsg("Get used istags in cluster:", cluster)
 			resultCluster := GetUsedIstagsForFamilyInCluster(CmdParams.Family, cluster)
 			MergoNestedMaps(&result, resultCluster)
 		}

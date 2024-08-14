@@ -187,6 +187,10 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 // checkCache checks if the cache file exists and is not older than 1 minute
 func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string, name string) (string, bool) {
 	filename := tmpdir + "/" + "cache_" + string(cluster) + "_" + string(namespace) + "_" + typ + "_" + name + ".tmp"
+	//  no cache in serverMode
+	if CmdParams.Options.ServerMode {
+		return filename, false
+	}
 	//  dir not exist
 	if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
 		err := os.MkdirAll(tmpdir, 0755)
@@ -211,9 +215,12 @@ func checkCache(tmpdir string, cluster T_clName, namespace T_nsName, typ string,
 
 // writeCache writes the connntent to the cache file
 func writeCache(tmpdir string, filename string, content []byte) {
-	err := os.WriteFile(tmpdir+"/"+filename, content, 0644)
-	if err != nil {
-		DebugMsg("Writing cache file failed", err)
+	// no cache in serverMode
+	if !CmdParams.Options.ServerMode {
+		err := os.WriteFile(tmpdir+"/"+filename, content, 0644)
+		if err != nil {
+			DebugMsg("Writing cache file failed", err)
+		}
 	}
 }
 

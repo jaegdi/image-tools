@@ -386,7 +386,7 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
-	InfoMsg(GetJsonFromMap(flags))
+	VerifyMsg(GetJsonFromMap(flags))
 
 	if flags.Family == "" && !flags.Options.ServerMode {
 		exitWithError("a name for family must given like: '-family=pkp'")

@@ -2,44 +2,22 @@ package ocrequest
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 )
 
-type T_DebugLogger log.Logger
-
-// Global Vars
-var (
-	WarningLogger       *log.Logger
-	InfoLogger          *log.Logger
-	ErrorLogger         *log.Logger
-	DebugLogger         *log.Logger
-	Multiproc           bool
-	regexValidNamespace *regexp.Regexp
-	LogfileName         string
-)
-
 // Init is the intialization routine
 func Init() {
-	err := os.Remove(LogFileName)
-	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
 	os.Setenv("HTTP_PROXY", "")
-	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-
+	InitLogging()
 	// FamilyNamespaces = FamilyNamespacesStat
+
 	EvalFlags()
 
 	InfoMsg("------------------------------------------------------------")
 	var currCluster T_clName
 
-	if len(CmdParams.Cluster) > 0 {
+	if len(CmdParams.Cluster) > 0 && !CmdParams.Options.ServerMode {
 		InfoMsg("Get cluster from parameter -cluster")
 		currCluster = CmdParams.Cluster[0]
 	} else {
@@ -57,10 +35,10 @@ func Init() {
 	environmentsConfig := GetEnvironments()
 	namespacesConfig := GetNamespaces()
 	pipelinesConfig := GetPipelines()
-	// InfoMsg("Cluster Configs", clustersConfig)
-	// InfoMsg("Environment Configs": environmentsConfig)
-	// InfoMsg("NAmespace Configs": namespacesConfig)
-	// InfoMsg("Pipeline Configs": pipelinesConfig)
+	VerifyMsg("Cluster Configs", clustersConfig)
+	VerifyMsg("Environment Configs", environmentsConfig)
+	VerifyMsg("NAmespace Configs", namespacesConfig)
+	VerifyMsg("Pipeline Configs", pipelinesConfig)
 	// cfg := genClusterConfig(clustersConfig)
 	// InfoMsg("ClusterConfig", cfg)
 
@@ -112,16 +90,41 @@ func Init() {
 		}
 	}
 	InitIsNamesForFamily(CmdParams.Family)
+	if CmdParams.Options.ServerMode {
+		InitServerMode(CmdParams)
+		InfoMsg("ServerMode is enabled")
+	}
 }
 
-func DebugMsg(p ...interface{}) {
-	DebugLogger.Println(p...)
-}
+func InitServerMode(cp T_flags) {
+	CmdParams.Family = cp.Family
+	CmdParams.Filter = cp.Filter
+	CmdParams.Output = cp.Output
+	// CmdParams.Output.Istag = cp.Output.Istag
+	// CmdParams.Output.Image = cp.Output.Image
+	// CmdParams.Output.Used = cp.Output.Used
+	// CmdParams.Output.UnUsed = cp.Output.UnUsed
+	// CmdParams.Output.All = cp.Output.All
 
-func InfoMsg(p ...interface{}) {
-	InfoLogger.Println(p...)
-}
+	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
+	CmdParams.FilterReg.Namespace = regexValidNamespace
 
-func ErrorMsg(p ...interface{}) {
-	ErrorLogger.Println(p...)
+	if CmdParams.Filter.Tagname != "" {
+		CmdParams.FilterReg.Tagname = regexp.MustCompile(CmdParams.Filter.Tagname.str())
+	}
+	if CmdParams.Filter.Isname != "" {
+		CmdParams.FilterReg.Isname = regexp.MustCompile(CmdParams.Filter.Isname.str())
+	}
+	if CmdParams.Filter.Istagname != "" {
+		CmdParams.FilterReg.Istagname = regexp.MustCompile(CmdParams.Filter.Istagname.str())
+	}
+	// if CmdParams.Filter.Tagname != "" {
+	// 	tag_r = regexp.MustCompile(CmdParams.Filter.Tagname)
+	// }
+	// if string(*namespacePtr) != "" {
+	// 	ns_r = regexp.MustCompile(string(*namespacePtr))
+	// }
+
+	// CmdParams.Options.Debug = true
+	CmdParams.Options.Verify = true
 }

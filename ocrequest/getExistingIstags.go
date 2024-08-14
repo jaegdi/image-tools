@@ -74,7 +74,7 @@ func setBuildLabels(buildLabelsMap map[string]interface{}) T_istagBuildLabels {
 // and return the result map
 func OcGetAllIstagsOfNamespace(result T_result, cluster T_clName, namespace T_nsName) T_result {
 	istagsJson := ocGetCall(cluster, namespace, "imagestreamtags", "")
-	InfoMsg("istagJson:", istagsJson)
+	DebugMsg("istagJson:", istagsJson)
 	var istagsMap map[string]interface{}
 	if err := json.Unmarshal([]byte(istagsJson), &istagsMap); err != nil {
 		// logfix

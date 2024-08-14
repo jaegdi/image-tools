@@ -44,12 +44,12 @@ func createWorkerPoolExistingImages(noOfWorkersExistingImages int) {
 func allocateExistingImages(clusters []T_clName) {
 	jobNr := 0
 	for cl := 0; cl < len(clusters); cl++ {
-		InfoMsg("Start JobExistingImages for cluster" + clusters[cl])
+		VerifyMsg("Start JobExistingImages for cluster" + clusters[cl])
 		job := JobExistingImages{jobNr, clusters[cl]}
 		jobsExistingImages <- job
 		jobNr++
 	}
-	InfoMsg("close jobsExistingImages")
+	VerifyMsg("close jobsExistingImages")
 	close(jobsExistingImages)
 }
 
@@ -60,13 +60,13 @@ func goGetExistingImagesInAllClusters() T_ImagesMapAllClusters {
 	jobsExistingImages = make(chan JobExistingImages, channelsizeExistingImages)
 	jobResultsExistingImages = make(chan ResultExistingImages, channelsizeExistingImages)
 
-	InfoMsg("Allocate and start JobsExistingImages")
+	VerifyMsg("Allocate and start JobsExistingImages")
 	go allocateExistingImages(FamilyNamespaces[CmdParams.Family].Stages)
 
-	InfoMsg("Create Worker Pool for Existing Images")
+	VerifyMsg("Create Worker Pool for Existing Images")
 	createWorkerPoolExistingImages(noOfWorkersExistingImages)
 
-	InfoMsg("Collect results for existing images")
+	VerifyMsg("Collect results for existing images")
 	for result := range jobResultsExistingImages {
 		MergoNestedMaps(&istagResult, result.images)
 	}

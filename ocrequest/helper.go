@@ -393,14 +393,14 @@ func tablePrettyprint(out []table.Row) {
 	if len(out) == 0 {
 		return
 	}
-	// get height of terminal
-	// _, height, err := terminal.GetSize(0)
-	// if err != nil {
-	// 	InfoMsg("failedt o get terminal size")
-	// 	height = 60
-	// }
+
+	// get terminal size
 	fd := int(os.Stdout.Fd())
-	_, height, _ := terminal.GetSize(fd)
+	_, height, terr := terminal.GetSize(fd)
+	if terr != nil {
+		height = 60
+		ErrorMsg("failedt o get terminal size, set it to", height)
+	}
 
 	// activate pager
 	var cmd *exec.Cmd
@@ -409,6 +409,7 @@ func tablePrettyprint(out []table.Row) {
 		pager.Close()
 		_ = cmd.Wait()
 	}()
+
 	// define table output
 	t := table.NewWriter()
 	t.SetOutputMirror(pager)

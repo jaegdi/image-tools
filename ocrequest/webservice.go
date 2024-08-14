@@ -2,7 +2,6 @@ package ocrequest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -16,25 +15,68 @@ import (
 func StartServer() {
 	http.HandleFunc("/execute", func(w http.ResponseWriter, r *http.Request) {
 		family := r.URL.Query().Get("family")
-		tagname := r.URL.Query().Get("tagname")
+		kind := r.URL.Query().Get("kind")
+		cluster := r.URL.Query().Get("cluster")
+		filter_tagname := r.URL.Query().Get("tagname")
+		filter_namespace := r.URL.Query().Get("namespace")
 
-		if family == "" || tagname == "" {
+		InfoMsg("--------------  New request  --------------")
+
+		if kind == "tag_is_used " && (family == "" || filter_tagname == "") {
 			http.Error(w, "Missing parameters", http.StatusBadRequest)
-			fmt.Println("Error: Missing parameters")
+			ErrorMsg("Error: Missing parameters")
+			ErrorMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
 			return
-		} else {
-			fmt.Println("family: ", family, "tagname: ", tagname)
 		}
 
-		CmdParams.Family = T_familyName(family)
-		CmdParams.Filter.Tagname = T_tagName(tagname)
-		// CmdParams.Options.Debug = true
-		// CmdParams.Options.Verify = true
-		fmt.Println(GetJsonFromMap(CmdParams))
+		if kind == "" {
+			kind = "is_used"
+		}
+
+		cmdParams := T_flags{}
+		cmdParams.Family = T_familyName(family)
+		cmdParams.Cluster = T_clName(cluster).list()
+		// Switch block to handle different kinds
+		switch kind {
+		case "used":
+			cmdParams.Output.Used = true
+		case "tag_is_used":
+			cmdParams.Output.Used = true
+		case "unused":
+			cmdParams.Output.UnUsed = true
+		case "istag":
+			cmdParams.Output.Istag = true
+		case "is":
+			cmdParams.Output.Is = true
+		case "image":
+			cmdParams.Output.Image = true
+		case "all":
+			cmdParams.Output.All = true
+		default:
+			// Handle unknown kind
+			http.Error(w, "Invalid kind parameter", http.StatusBadRequest)
+			ErrorMsg("Error: Invalid kind parameter")
+			ErrorMsg("family:", cmdParams.Family, "| kind:", kind, "| tagname:", filter_tagname)
+			return
+		}
+		cmdParams.Filter.Tagname = T_tagName(filter_tagname)
+		cmdParams.Filter.Namespace = T_nsName(filter_namespace)
+		InitServerMode(cmdParams)
+
+		InfoMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
 		result := CmdlineMode()
 
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(result)
+		if kind == "tag_is_used" {
+			tagIsUsed := len(result.UsedIstags) > 0
+			response := map[string]interface{}{
+				"Result":    result,
+				"TagIsUsed": tagIsUsed,
+			}
+			json.NewEncoder(w).Encode(response)
+		} else {
+			json.NewEncoder(w).Encode(result)
+		}
 	})
 	http.ListenAndServe(":8080", nil)
 }

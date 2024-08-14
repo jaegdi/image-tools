@@ -21,8 +21,8 @@ type ResultUsedIstags struct {
 var jobsUsedIstags chan JobUsedIstags
 var jobResultsUsedIstags chan ResultUsedIstags
 
-var channelsizeUsedIstags = 500
-var noOfWorkersUsedIstags = 100
+var channelsizeUsedIstags = 800
+var noOfWorkersUsedIstags = 200
 
 func workerUsedIstags(wg *sync.WaitGroup) {
 	for job := range jobsUsedIstags {
@@ -42,19 +42,19 @@ func createWorkerPoolUsedIstags(noOfWorkersUsedIstags int) {
 	close(jobResultsUsedIstags)
 }
 
-func allocateUsedIstags(clusters []T_clName, clusterAppNamsepaces T_FamilyAppNamespaces) {
+func allocateUsedIstags(clusters []T_clName, clusterAppNamespaces T_FamilyAppNamespaces) {
 	jobNr := 0
 	for _, cluster := range clusters {
-		InfoMsg("Start JobUsedIstags for cluster" + cluster)
-		namespaces := clusterAppNamsepaces[cluster]
+		VerifyMsg("Start JobUsedIstags for cluster"+cluster, "Namespaces:", clusterAppNamespaces)
+		namespaces := clusterAppNamespaces[cluster]
 		for _, namespace := range namespaces {
-			InfoMsg("Start job for cluster " + string(cluster) + " in namespace " + string(namespace))
+			VerifyMsg("Start job for cluster " + string(cluster) + " in namespace " + string(namespace))
 			job := JobUsedIstags{jobNr, cluster, namespace}
 			jobsUsedIstags <- job
 			jobNr++
 		}
 	}
-	InfoMsg("close jobsUsedIstags")
+	VerifyMsg("close jobsUsedIstags")
 	close(jobsUsedIstags)
 }
 
@@ -64,43 +64,25 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 	allClusterFamilyNamespaces := goGetAppNamespacesForFamily(family)
 
 	if CmdParams.Filter.Namespace == "" {
-
+		VerifyMsg("Start without Namespace Filter")
 		jobsUsedIstags = make(chan JobUsedIstags, channelsizeUsedIstags)
 		jobResultsUsedIstags = make(chan ResultUsedIstags, channelsizeUsedIstags)
 
-		InfoMsg("Allocate and start JobsUsedIstags")
+		VerifyMsg("Allocate and start JobsUsedIstags")
 		go allocateUsedIstags(FamilyNamespaces[family].Stages, allClusterFamilyNamespaces)
 
-		InfoMsg("Create Worker Pool for Used IsTags")
+		VerifyMsg("Create Worker Pool for Used IsTags")
 		createWorkerPoolUsedIstags(noOfWorkersUsedIstags)
 
-		InfoMsg("Collect results for Used IsTags")
+		VerifyMsg("Collect results for Used IsTags")
+		VerifyMsg("jobResultsUsedIstags:", jobResultsUsedIstags)
 		for result := range jobResultsUsedIstags {
-			// for is := range result.istags {
-			// 	for tag := range result.istags[is] {
-			// 		a := []T_usedIstag{}
-			// 		if istagResult[is] == nil {
-			// 			istagResult[is] = map[T_tagName][]T_usedIstag{}
-			// 		}
-			// 		if istagResult[is][tag] == nil {
-			// 			istagResult[is][tag] = []T_usedIstag{}
-			// 		}
-			// 		if istagResult[is][tag] != nil {
-			// 			a = istagResult[is][tag]
-			// 		}
-			// 		for i := range result.istags[is][tag] {
-			// 			a = append(a, result.istags[is][tag][i])
-			// 		}
-			// 		istagResult[is][tag] = a
-			// 	}
-
-			// }
-			// TODO: Mergen funktioniert nicht richtig, merged immer nur zwei namespaces
-			// r := result.istags
+			VerifyMsg("Result for job ", result.job.id, "content", result)
 			MergoNestedMaps(&istagResult, result.istags)
 		}
 
 	} else {
+		VerifyMsg("Start with Namespace Filter", CmdParams.Filter.Namespace)
 		for _, cluster := range FamilyNamespaces[family].Stages {
 			namespaces := GetAppNamespacesForFamily(cluster, family)
 			for _, namespace := range namespaces {
@@ -111,6 +93,6 @@ func goGetUsedIstagsForFamilyInAllClusters(family T_familyName) T_usedIstagsResu
 			}
 		}
 	}
-	InfoMsg(istagResult)
+	VerifyMsg(istagResult)
 	return istagResult
 }
