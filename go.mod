@@ -1,8 +1,8 @@
 module image-tools
 
-go 1.21.0
+go 1.22.0
 
-toolchain go1.21.3
+toolchain go1.22.3
 
 require (
 	github.com/imdario/mergo v0.3.11

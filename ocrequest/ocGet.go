@@ -3,9 +3,11 @@
 package ocrequest
 
 import (
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"io"
+	"net"
 	"net/http"
 	"os"
 	"os/exec"
@@ -151,12 +153,29 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
 	// Send req using http Client
-	var noproxyTransport http.RoundTripper = &http.Transport{Proxy: nil, TLSClientConfig: config}
-	var defaultTransport = &http.Transport{TLSClientConfig: config}
-	var client = &http.Client{Transport: defaultTransport}
+	var noproxyTransport http.RoundTripper = &http.Transport{
+		Proxy:           nil,
+		TLSClientConfig: config,
+		DialContext: (&net.Dialer{
+			Timeout: 10 * time.Second, // Set connection timeout
+		}).DialContext,
+	}
+	var defaultTransport = &http.Transport{
+		TLSClientConfig: config,
+		DialContext: (&net.Dialer{
+			Timeout: 10 * time.Second, // Set connection timeout
+		}).DialContext,
+	}
+	var client = &http.Client{
+		Transport: defaultTransport,
+		Timeout:   10 * time.Second, // Set request timeout
+	}
 	// NO_PROXY handling
 	if CmdParams.Options.NoProxy {
-		client = &http.Client{Transport: noproxyTransport}
+		client = &http.Client{
+			Transport: noproxyTransport,
+			Timeout:   10 * time.Second, // Set request timeout
+		}
 	}
 	// Socks5 proxy handling
 	if CmdParams.Options.Socks5Proxy != "" {
@@ -164,17 +183,27 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 		if err != nil {
 			exitWithError("can't connect to the proxy: ", err)
 		}
-		httpTransport := &http.Transport{TLSClientConfig: config}
-		client = &http.Client{Transport: httpTransport}
-		// set our socks5 as the dialer
-		httpTransport.Dial = dialer.Dial
+		dialContext := func(ctx context.Context, network, addr string) (net.Conn, error) {
+			return dialer.Dial(network, addr)
+		}
+		httpTransport := &http.Transport{
+			DialContext:           dialContext,
+			TLSClientConfig:       config,
+			TLSHandshakeTimeout:   10 * time.Second,
+			ExpectContinueTimeout: 1 * time.Second,
+		}
+		client = &http.Client{
+			Transport: httpTransport,
+			Timeout:   10 * time.Second, // Set request timeout
+		}
 	}
-	// client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		ErrorLogger.Println("Error on sending request. " + err.Error())
 		return []byte("")
 	}
+	defer resp.Body.Close()
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		ErrorLogger.Println("Error on reading response. " + err.Error())

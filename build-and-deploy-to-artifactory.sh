@@ -13,6 +13,7 @@ go build
 echo "Build windows binary of image-tools"
 GOOS=windows GOARCH=amd64 go build
 
+# aritfactory-upload.sh is a tool in the admintools repo
 if ./image-tools -family=ebs -used > /dev/null; then
     echo "Push to artifactory"
     artifactory-upload.sh  -lf=image-tools       -tr=scptools-bin-develop   -tf=tools/image-tools/image-tools-linux

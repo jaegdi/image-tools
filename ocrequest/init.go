@@ -9,10 +9,10 @@ import (
 // Init is the intialization routine
 func Init() {
 	os.Setenv("HTTP_PROXY", "")
-	InitLogging()
 	// FamilyNamespaces = FamilyNamespacesStat
 
 	EvalFlags()
+	InitLogging()
 
 	InfoMsg("------------------------------------------------------------")
 	var currCluster T_clName
@@ -61,31 +61,22 @@ func Init() {
 	InfoMsg("Starting execution of image-tools")
 
 	Multiproc = true
-	InfoMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
-	InfoMsg("Multithreading: " + fmt.Sprint(Multiproc))
-	if CmdParams.Options.Socks5Proxy == "no" {
-		CmdParams.Options.Socks5Proxy = ""
-	}
-	InfoMsg("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
-	InfoMsg("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
 
 	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
-	// + `|` +
-	// `^` + string(CmdParams.Family) + `-.*` + `|` +
-	// `^.*?-` + string(CmdParams.Family) + `-.*` + `|` +
-	// `^.*?-` + string(CmdParams.Family) + `$`)
 
-	for _, cluster := range CmdParams.Cluster {
-		if len(Clusters.Config[cluster].Token) < 10 {
-			InfoMsg("Try to read clusterconfig.json")
-			if err := readTokens("clusterconfig.json"); err != nil {
-				InfoMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
-				for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-					ocGetToken(cluster)
+	if !CmdParams.Options.ServerMode {
+		for _, cluster := range CmdParams.Cluster {
+			if len(Clusters.Config[cluster].Token) < 10 {
+				InfoMsg("Try to read clusterconfig.json")
+				if err := readTokens("clusterconfig.json"); err != nil {
+					InfoMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
+					for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
+						ocGetToken(cluster)
+					}
+					saveTokens(Clusters, "clusterconfig.json")
+				} else {
+					InfoMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 				}
-				saveTokens(Clusters, "clusterconfig.json")
-			} else {
-				InfoMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 			}
 		}
 	}
@@ -94,17 +85,19 @@ func Init() {
 		InitServerMode(CmdParams)
 		InfoMsg("ServerMode is enabled")
 	}
+	InfoMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
+	InfoMsg("Multithreading: " + fmt.Sprint(Multiproc))
+	InfoMsg("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
+	InfoMsg("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
+	if CmdParams.Options.Socks5Proxy == "no" {
+		CmdParams.Options.Socks5Proxy = ""
+	}
 }
 
 func InitServerMode(cp T_flags) {
 	CmdParams.Family = cp.Family
 	CmdParams.Filter = cp.Filter
 	CmdParams.Output = cp.Output
-	// CmdParams.Output.Istag = cp.Output.Istag
-	// CmdParams.Output.Image = cp.Output.Image
-	// CmdParams.Output.Used = cp.Output.Used
-	// CmdParams.Output.UnUsed = cp.Output.UnUsed
-	// CmdParams.Output.All = cp.Output.All
 
 	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
 	CmdParams.FilterReg.Namespace = regexValidNamespace
@@ -118,12 +111,6 @@ func InitServerMode(cp T_flags) {
 	if CmdParams.Filter.Istagname != "" {
 		CmdParams.FilterReg.Istagname = regexp.MustCompile(CmdParams.Filter.Istagname.str())
 	}
-	// if CmdParams.Filter.Tagname != "" {
-	// 	tag_r = regexp.MustCompile(CmdParams.Filter.Tagname)
-	// }
-	// if string(*namespacePtr) != "" {
-	// 	ns_r = regexp.MustCompile(string(*namespacePtr))
-	// }
 
 	// CmdParams.Options.Debug = true
 	CmdParams.Options.Verify = true

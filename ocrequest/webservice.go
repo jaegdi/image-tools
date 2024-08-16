@@ -22,7 +22,7 @@ func StartServer() {
 
 		InfoMsg("--------------  New request  --------------")
 
-		if kind == "tag_is_used " && (family == "" || filter_tagname == "") {
+		if kind == "is_tag_used " && (family == "" || filter_tagname == "") {
 			http.Error(w, "Missing parameters", http.StatusBadRequest)
 			ErrorMsg("Error: Missing parameters")
 			ErrorMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
@@ -40,7 +40,7 @@ func StartServer() {
 		switch kind {
 		case "used":
 			cmdParams.Output.Used = true
-		case "tag_is_used":
+		case "is_tag_used":
 			cmdParams.Output.Used = true
 		case "unused":
 			cmdParams.Output.UnUsed = true
@@ -67,7 +67,7 @@ func StartServer() {
 		result := CmdlineMode()
 
 		w.Header().Set("Content-Type", "application/json")
-		if kind == "tag_is_used" {
+		if kind == "is_tag_used" {
 			tagIsUsed := len(result.UsedIstags) > 0
 			response := map[string]interface{}{
 				"Result":    result,

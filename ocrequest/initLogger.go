@@ -23,10 +23,20 @@ var (
 )
 
 func InitLogging() {
-	err := os.Remove(LogFileName)
-	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
+	var logfile *os.File
+	var err error
+
+	if CmdParams.Options.ServerMode {
+		logfile = os.Stdout
+	} else {
+		err = os.Remove(LogFileName)
+		if err != nil && !os.IsNotExist(err) {
+			log.Fatal(err)
+		}
+		logfile, err = os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
