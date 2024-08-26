@@ -85,11 +85,94 @@ func ocClientCall(cluster T_clName, namespace T_nsName, typ string, name string)
 	return []byte(jsonstr)
 }
 
-// ocApiCall requests an openshift-cluster via API and return the answer as string.
-func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []byte {
-	var url string
-	var urlpath string
+// ocApiCall requests an OpenShift cluster via API and returns the response as a byte slice.
+//
+// Parameters:
+// - cluster: The cluster name.
+// - namespace: The namespace name.
+// - resourceType: The type of the resource to request.
+// - resourceName: The name of the resource to request.
+//
+// Returns:
+// - A byte slice containing the API response.
+func ocApiCall(cluster T_clName, namespace T_nsName, resourceType string, resourceName string) []byte {
+	baseURL := string(Clusters.Config[cluster].Url)
+	url := buildURL(cluster, baseURL, namespace, resourceType, resourceName)
 
+	config := createTLSConfig()
+	bearerToken := "Bearer " + ocGetToken(cluster)
+
+	req, err := createRequest(url, bearerToken)
+	if err != nil {
+		ErrorMsg("Get " + url + " failed. " + err.Error())
+		return []byte("")
+	}
+
+	client := createHTTPClient(config)
+	resp, err := client.Do(req)
+	if err != nil {
+		ErrorMsg("Error on sending request. " + err.Error())
+		return []byte("")
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		ErrorMsg("Error on reading response. " + err.Error())
+		return []byte("")
+	}
+	DebugMsg("body:", string(body))
+	return body
+}
+
+// buildURL constructs the URL for the API request based on the resource type and name.
+//
+// Parameters:
+// - baseURL: The base URL of the cluster.
+// - namespace: The namespace name.
+// - resourceType: The type of the resource to request.
+// - resourceName: The name of the resource to request.
+//
+// Returns:
+// - A string containing the constructed URL.
+func buildURL(cluster T_clName, baseURL string, namespace T_nsName, resourceType string, resourceName string) string {
+	var url string
+	switch resourceType {
+	case "images", "is", "imagestreams", "istags", "imagestreamtags":
+		url = baseURL + "/apis/image.openshift.io/v1/" + resourceType
+	case "dc", "deploymentconfigs":
+		url = baseURL + "/apis/apps.openshift.io/v1/namespaces/" + namespace.str() + "/deploymentconfigs"
+	case "deployments":
+		url = baseURL + "/apis/apps/v1/namespaces/" + namespace.str() + "/deployments"
+	case "jobs", "cronjobs":
+		url = baseURL + "/apis/batch/v1/namespaces/" + namespace.str() + "/" + resourceType
+	case "builds", "buildconfigs":
+		url = baseURL + "/apis/build.openshift.io/v1/namespaces/" + namespace.str() + "/" + resourceType
+	case "daemonsets", "replicasets", "pods":
+		url = baseURL + "/apis/apps/v1/namespaces/" + namespace.str() + "/" + resourceType
+	case "pipelines", "tasks", "clustertasks":
+		url = baseURL + "/apis/tekton.dev/v1beta1/namespaces/" + namespace.str() + "/" + resourceType
+	default:
+		if namespace.str() != "" {
+			url = baseURL + "/apis/apps/v1/namespaces/" + namespace.str() + "/" + resourceType
+		} else {
+			url = baseURL + "/api/v1/" + resourceType
+		}
+	}
+
+	if resourceName != "" {
+		url += "/" + resourceName
+	}
+
+	DebugMsg("call API to cluster: ", cluster, "with: ", url, "to get: ", resourceType, resourceName, ".")
+	return url
+}
+
+// createTLSConfig creates a TLS configuration with the system cert pool and additional certs.
+//
+// Returns:
+// - A pointer to a tls.Config containing the TLS configuration.
+func createTLSConfig() *tls.Config {
 	// Get the SystemCertPool, continue with an empty pool on error
 	rootCAs, _ := x509.SystemCertPool()
 	if rootCAs == nil {
@@ -98,119 +181,92 @@ func ocApiCall(cluster T_clName, namespace T_nsName, typ string, name string) []
 
 	// Append our cert to the system pool
 	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
-		ErrorLogger.Println("No certs appended, using system certs only")
+		ErrorMsg("No certs appended, using system certs only")
 	}
 
 	// Trust the augmented cert pool in our client
-	config := &tls.Config{
+	return &tls.Config{
 		InsecureSkipVerify: CmdParams.Options.InsecureSSL,
 		RootCAs:            rootCAs,
 	}
+}
 
-	// Create a Bearer string by appending string access token
-	bearer := "Bearer " + ocGetToken(cluster)
-	calltyp := typ
-	switch typ {
-	case "images":
-		urlpath = "/apis/image.openshift.io/v1"
-	case "imagestreamtags", "imagestreams":
-		urlpath = "/apis/image.openshift.io/v1/namespaces/" + namespace.str()
-	case "namespace":
-		urlpath = "/api/v1/namespaces/" + namespace.str()
-	case "deploymentconfigs":
-		urlpath = "/apis/apps.openshift.io/v1/namespaces/" + namespace.str()
-	case "deployments":
-		urlpath = "/apis/apps/v1/namespaces/" + namespace.str()
-	case "jobs":
-		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
-	case "cronjobs":
-		urlpath = "/apis/batch/v1/namespaces/" + namespace.str()
-	case "builds", "buildconfigs":
-		urlpath = "/apis/build.openshift.io/v1/namespaces/" + namespace.str()
-	case "namespaces":
-		urlpath = "/api/v1/namespaces"
-		typ = ""
-	default:
-		urlpath = "/api/v1/namespaces"
-	}
-	switch {
-	case typ != "" && name != "":
-		url = Clusters.Config[cluster].Url + urlpath + "/" + typ + "/" + name
-	case typ != "":
-		url = Clusters.Config[cluster].Url + urlpath + "/" + typ
-	default:
-		url = Clusters.Config[cluster].Url + urlpath
-	}
-	DebugMsg("call API to cluster: ", cluster, "with: ", url, "to get: ", calltyp, name, ".")
+// createRequest creates an HTTP GET request with the specified URL and bearer token.
+//
+// Parameters:
+// - url: The URL for the request.
+// - bearerToken: The bearer token for authorization.
+//
+// Returns:
+// - A pointer to an http.Request containing the created request.
+// - An error if the request creation fails.
+func createRequest(url string, bearerToken string) (*http.Request, error) {
 	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		ErrorLogger.Println("Get " + url + " failed. " + err.Error())
-		return []byte("")
+		return nil, err
 	}
-	// add header to the req
-	req.Header.Set("Authorization", bearer)
+	// Add headers to the request
+	req.Header.Set("Authorization", bearerToken)
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
-	// Send req using http Client
-	var noproxyTransport http.RoundTripper = &http.Transport{
-		Proxy:           nil,
+	return req, nil
+}
+
+// createHTTPClient creates an HTTP client with the specified TLS configuration and proxy settings.
+//
+// Parameters:
+// - config: A pointer to a tls.Config containing the TLS configuration.
+//
+// Returns:
+// - A pointer to an http.Client containing the created client.
+func createHTTPClient(config *tls.Config) *http.Client {
+	// Initialize the HTTP transport with the provided TLS configuration and a default timeout
+	var transport http.RoundTripper = &http.Transport{
 		TLSClientConfig: config,
 		DialContext: (&net.Dialer{
-			Timeout: 10 * time.Second, // Set connection timeout
+			Timeout: 10 * time.Second,
 		}).DialContext,
 	}
-	var defaultTransport = &http.Transport{
-		TLSClientConfig: config,
-		DialContext: (&net.Dialer{
-			Timeout: 10 * time.Second, // Set connection timeout
-		}).DialContext,
-	}
-	var client = &http.Client{
-		Transport: defaultTransport,
-		Timeout:   10 * time.Second, // Set request timeout
-	}
-	// NO_PROXY handling
+
+	// Check if the NoProxy option is enabled
 	if CmdParams.Options.NoProxy {
-		client = &http.Client{
-			Transport: noproxyTransport,
-			Timeout:   10 * time.Second, // Set request timeout
+		// If NoProxy is enabled, create a transport without a proxy and with a shorter timeout
+		transport = &http.Transport{
+			Proxy:           nil,
+			TLSClientConfig: config,
+			DialContext: (&net.Dialer{
+				Timeout: 5 * time.Second,
+			}).DialContext,
 		}
 	}
-	// Socks5 proxy handling
+
+	// Check if a SOCKS5 proxy is specified
 	if CmdParams.Options.Socks5Proxy != "" {
+		// Create a SOCKS5 dialer
 		dialer, err := proxy.SOCKS5("tcp", CmdParams.Options.Socks5Proxy, nil, proxy.Direct)
 		if err != nil {
-			exitWithError("can't connect to the proxy: ", err)
+			// If there is an error creating the SOCKS5 dialer, return a client with a short timeout
+			return &http.Client{Timeout: 5 * time.Second}
 		}
+		// Define a dial context function using the SOCKS5 dialer
 		dialContext := func(ctx context.Context, network, addr string) (net.Conn, error) {
 			return dialer.Dial(network, addr)
 		}
-		httpTransport := &http.Transport{
+		// Create a transport with the SOCKS5 dial context and shorter timeouts
+		transport = &http.Transport{
 			DialContext:           dialContext,
 			TLSClientConfig:       config,
-			TLSHandshakeTimeout:   10 * time.Second,
-			ExpectContinueTimeout: 1 * time.Second,
-		}
-		client = &http.Client{
-			Transport: httpTransport,
-			Timeout:   10 * time.Second, // Set request timeout
+			TLSHandshakeTimeout:   5 * time.Second,
+			ExpectContinueTimeout: 5 * time.Second,
 		}
 	}
-	resp, err := client.Do(req)
-	if err != nil {
-		ErrorLogger.Println("Error on sending request. " + err.Error())
-		return []byte("")
-	}
-	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		ErrorLogger.Println("Error on reading response. " + err.Error())
-		return []byte("")
+	// Return the HTTP client with the configured transport and a short timeout
+	return &http.Client{
+		Transport: transport,
+		Timeout:   5 * time.Second,
 	}
-	DebugMsg("body:", string(body))
-	return body
 }
 
 // checkCache checks if the cache file exists and is not older than 1 minute
@@ -262,6 +318,7 @@ func readCache(filename string) []byte {
 // ocGetCall requests an openshift-cluster via API or oc-client and return the answer as string.
 func ocGetCall(cluster T_clName, namespace T_nsName, typ string, name string) string {
 	tmpdir := "/tmp/tmp-report-istags"
+	VerifyMsg("cluster:", cluster, "| namespace:", namespace, "| type:", typ, "| name:", name)
 	var content []byte
 	filename, cacheOk := checkCache(tmpdir, cluster, namespace, typ, name)
 	if !cacheOk {

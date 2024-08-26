@@ -28,9 +28,10 @@ spec:
       - args:
         - -server
         - -socks5=no
+        - -statcfg
         command:
-        - image-tools
-        image: image-registry.openshift-image-registry.svc:5000/scp-images/image-tool:latest
+        - image-tool
+        image: registry-quay-quay.apps.pro-scp1.sf-rz.de/scp-images/image-tool:latest
         imagePullPolicy: Always
         name: image-tool
         terminationMessagePath: /dev/termination-log

@@ -98,6 +98,15 @@ func (a T_shaStreams) Add(is T_isName, image T_shaName, istag T_istag) {
 }
 
 type T_Istags_List map[T_istagName]bool
+
+func (a T_Istags_List) List() []string {
+	l := []string{}
+	for k := range a {
+		l = append(l, string(k))
+	}
+	return l
+}
+
 type T_shaNames map[T_shaName]T_Istags_List
 
 func (a T_shaNames) Add(sha T_shaName, istag T_istagName) {
@@ -146,7 +155,7 @@ func (b T_istagBuildLabels) GetVal(s string) string {
 func (buildLabels *T_istagBuildLabels) Set(buildLabelsMap map[string]interface{}) {
 	// buildLabelsJSON := []byte(GetJsonFromMap(buildLabelsMap))
 	// if err := json.Unmarshal(buildLabelsJSON, &buildLabels); err != nil {
-	// 	ErrorLogger.Println("Unmarshal unescaped String", err)
+	// 	ErrorMsg("Unmarshal unescaped String", err)
 	// }
 	if buildLabelsMap["io.openshift.build.commit.author"] != nil {
 		buildLabels.CommitAuthor = buildLabelsMap["io.openshift.build.commit.author"].(string)
@@ -362,13 +371,16 @@ func (c T_clName) str() string {
 type T_clNames []T_clName
 
 func (c T_clName) list() T_clNames {
-	clusters := strings.Split(string(c), ",")
+	clusters := []string{}
+	clusters = strings.Split(string(c), ",")
 	clusterlist := T_clNames{}
 	for _, cl := range clusters {
 		x := T_clName(cl)
 		clusterlist = append(clusterlist, x)
 	}
-	print(clusterlist)
+	if len(clusterlist) == 0 {
+		clusterlist = append(clusterlist, T_clName(""))
+	}
 	return clusterlist
 }
 
@@ -444,31 +456,63 @@ type T_appKeys struct {
 	Prodstages  []T_clName      `json:"prodstages,omitempty"`
 }
 
+// clusterList returns a list of cluster names as strings.
+// It iterates through the Stages field of T_appKeys and collects the cluster names.
+//
+// Returns:
+// - A slice of strings containing the cluster names.
 func (c T_appKeys) clusterList() []string {
+	// Initialize an empty slice to hold the cluster names
 	clusters := []string{}
+	// Iterate through each cluster in the Stages field
 	for _, cluster := range c.Stages {
+		// Append the string representation of each cluster name to the slice
 		clusters = append(clusters, cluster.str())
 	}
 	return clusters
 }
 
+// clusterListStr returns a comma-separated string of cluster names.
+// It calls the clusterList method to get the list of clusters and then joins them into a single string.
+//
+// Returns:
+// - A string containing the cluster names separated by commas.
 func (c T_familyKeys) clusterListStr() string {
-	return strings.Join(c.clusterList(), `, `)
+	// Call the clusterList method to get the list of cluster names
+	clusters := c.clusterList()
+	// Join the cluster names into a single string, separated by commas
+	return strings.Join(clusters, ", ")
 }
 
 // family   cl-ns          cluster   namespaces
 type T_famNsList map[T_familyName]T_familyKeys
 
+// familyList returns a list of family names as strings.
+// It iterates through the T_famNsList map and collects the family names.
+//
+// Returns:
+// - A slice of strings containing the family names.
 func (c T_famNsList) familyList() []string {
+	// Initialize an empty slice to hold the family names
 	families := []string{}
+	// Iterate through the map keys (family names)
 	for fam := range c {
+		// Append the string representation of each family name to the slice
 		families = append(families, fam.str())
 	}
 	return families
 }
 
+// familyListStr returns a comma-separated string of family names.
+// It calls the familyList method to get the list of family names and then joins them into a single string.
+//
+// Returns:
+// - A string containing the family names separated by commas.
 func (c T_famNsList) familyListStr() string {
-	return strings.Join(c.familyList(), `, `)
+	// Call the familyList method to get the list of family names
+	families := c.familyList()
+	// Join the family names into a single string, separated by commas
+	return strings.Join(families, ", ")
 }
 
 //------------------------------------------
@@ -558,27 +602,45 @@ type T_csvLine []string
 
 type T_csvDoc []T_csvLine
 
-// csvDoc converts a T_csvDoc to csv and print it out or if CmdParams.CsvFile is defined it writes the csv to this file
+// csvDoc converts a T_csvDoc to CSV format and prints it out or writes it to a file if CmdParams.CsvFile is defined.
+//
+// Parameters:
+// - typ: A string representing the type of the CSV document.
 func (c T_csvDoc) csvDoc(typ string) {
+	// Initialize an empty slice to hold the CSV rows
 	out := [][]string{}
+	// Iterate through each line in the T_csvDoc
 	for _, l := range c {
+		// Append each line to the output slice
 		out = append(out, l)
 	}
+
+	// Check if the CsvFile parameter is defined
 	if CmdParams.CsvFile == "" {
+		// If CsvFile is not defined, write the CSV to stdout
 		w := csv.NewWriter(os.Stdout)
+		// Write all rows to the CSV writer
 		if err := w.WriteAll(out); err != nil {
-			ErrorLogger.Println("writing csv failed" + err.Error())
+			// Log an error message if writing the CSV fails
+			ErrorMsg("writing csv failed: " + err.Error())
 		}
 	} else {
+		// If CsvFile is defined, write the CSV to the specified file
 		file := CmdParams.CsvFile + "-" + typ + ".csv"
+		// Open the file with truncation, creation, and write-only flags
 		csvfile, err := os.OpenFile(file, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
-			ErrorLogger.Println("failed to open file", file, err)
+			// Log an error message if opening the file fails
+			ErrorMsg("failed to open file: ", file, err)
 		}
+		// Log a debug message indicating the CSV file being written
 		DebugMsg("write CSV file for", typ, "to", file)
+		// Create a new CSV writer for the file
 		w := csv.NewWriter(csvfile)
+		// Write all rows to the CSV writer
 		if err := w.WriteAll(out); err != nil {
-			ErrorLogger.Println("writing csv failed" + err.Error())
+			// Log an error message if writing the CSV fails
+			ErrorMsg("writing csv failed: " + err.Error())
 		}
 	}
 }

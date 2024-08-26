@@ -86,6 +86,8 @@ func CmdlineMode() T_completeResults {
 	resultFamilies[CmdParams.Family] = result
 	if !CmdParams.Delete {
 		switch {
+		case CmdParams.Html:
+			GetHtmlTableFromMap(result, CmdParams.Family)
 		case CmdParams.Json:
 			fmt.Println(GetJsonFromMap(resultFamilies))
 		case CmdParams.Yaml:
@@ -93,7 +95,7 @@ func CmdlineMode() T_completeResults {
 		case CmdParams.Csv:
 			GetCsvFromMap(result, CmdParams.Family)
 		case (CmdParams.Table || CmdParams.TabGroup):
-			GetTableFromMap(result, CmdParams.Family)
+			GetTextTableFromMap(result, CmdParams.Family)
 		case CmdParams.Options.ServerMode:
 			return result
 		}

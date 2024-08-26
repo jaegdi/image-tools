@@ -44,12 +44,6 @@ func InitLogging() {
 	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
 	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
 	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
-
-	// InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	// VerifyLogger = log.New(logfile, "VERIFY: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	// WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	// ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	// DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
 }
 
 func InfoMsg(p ...interface{}) {
@@ -62,13 +56,18 @@ func VerifyMsg(p ...interface{}) {
 	if CmdParams.Options.Verify {
 		caller := getCaller()
 		p = append([]interface{}{caller}, p...)
+		if VerifyLogger == nil {
+			InitLogging()
+		}
 		VerifyLogger.Println(p...)
 	}
 }
 
 func ErrorMsg(p ...interface{}) {
 	caller := getCaller()
+	prevCaller := getPreviousCaller()
 	p = append([]interface{}{caller}, p...)
+	p = append([]interface{}{prevCaller}, p...)
 	ErrorLogger.Println(p...)
 }
 
@@ -89,5 +88,17 @@ func getCaller() string {
 	if fn == nil {
 		return "unknown"
 	}
-	return fmt.Sprintf("caller:%s:%d| ", fn.Name(), line)
+	return fmt.Sprintf("caller: %s:%d| ", fn.Name(), line)
+}
+
+func getPreviousCaller() string {
+	pc, _, line, ok := runtime.Caller(3)
+	if !ok {
+		return "unknown"
+	}
+	fn := runtime.FuncForPC(pc)
+	if fn == nil {
+		return "unknown"
+	}
+	return fmt.Sprintf("prevCaller: %s:%d| ", fn.Name(), line)
 }

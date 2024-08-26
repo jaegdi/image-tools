@@ -11,7 +11,7 @@ import (
 	"gopkg.in/yaml.v2"
 
 	// "reflect"
-	"runtime"
+
 	"strconv"
 	"strings"
 	"time"
@@ -32,7 +32,7 @@ func ageInDays(date string) int {
 // exitWithError write msg to StdErr, and logfile and exits to program
 func exitWithError(errormsg ...interface{}) {
 	ErrorLogger.Println(errormsg...)
-	os.Stderr.WriteString(fmt.Sprint(errormsg...))
+	os.Stderr.WriteString(fmt.Sprint(errormsg...) + "\n")
 	os.Exit(1)
 }
 
@@ -73,8 +73,8 @@ func UnescapeUtf8InJsonBytes(_jsonRaw json.RawMessage) (json.RawMessage, error) 
 func GetJsonOneliner(dict interface{}) string {
 	j, err := json.Marshal(dict)
 	if err != nil {
-		ErrorLogger.Println("dict: ", dict)
-		ErrorLogger.Println("err: ", err)
+		ErrorMsg("dict: ", dict)
+		ErrorMsg("err: ", err)
 	}
 	return string(j)
 }
@@ -87,15 +87,15 @@ func GetJsonFromMap(dict interface{}) string {
 	encoder.SetIndent("", "   ")
 	if err := encoder.Encode(dict); err != nil {
 		if jsonBytes, err := json.MarshalIndent(dict, "", "  "); err != nil {
-			ErrorLogger.Println("dict: ", dict)
-			ErrorLogger.Println("err: ", err)
+			ErrorMsg("dict: ", dict)
+			ErrorMsg("err: ", err)
 		} else {
 			return string(jsonBytes)
 		}
 	} else {
 		b := buffer.Bytes()
 		if b1, err := UnescapeUtf8InJsonBytes(b); err != nil {
-			ErrorLogger.Println("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
+			ErrorMsg("UnescapeUtf8InJsonBytes failed::", "in: ", string(b), "out: ", string(b1))
 			return string(b1)
 		} else {
 			return string(b1)
@@ -133,300 +133,528 @@ func UnmarshalMultidocYaml(in []byte, out *([]interface{})) error {
 func GetYamlFromMap(list interface{}) string {
 	d, err := yaml.Marshal(&list)
 	if err != nil {
-		ErrorLogger.Println("Convert map to Yaml failed", err)
+		ErrorMsg("Convert map to Yaml failed", err)
 	}
 	return string(d)
 }
 
-// GetCsvFromMap generates CSV output from map
+// GetCsvFromMap generates CSV output from a map based on the specified output parameters.
+// It processes different types of data (ImageStreams, ImageStreamTags, Images, Used ImageStreamTags, and Unused ImageStreamTags)
+// and generates corresponding CSV files.
+//
+// Parameters:
+// - list: The data structure containing the ImageStreamTags information.
+// - family: The family name (T_familyName) to include in the CSV output.
 func GetCsvFromMap(list interface{}, family T_familyName) {
 	if CmdParams.Output.Is || CmdParams.Output.All {
-		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag", "Cluster"}
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
-				for image, shaMap := range isMap {
-					for istag := range shaMap {
-						line := T_csvLine{}
-						line = append(line, string(family))
-						line = append(line, "allIstags")
-						line = append(line, "is")
-						line = append(line, is.str())
-						line = append(line, image.str())
-						line = append(line, istag.str())
-						line = append(line, cluster.str())
-						output = append(output, line)
-					}
-				}
-			}
-		}
-		output.csvDoc("imagestreams")
+		generateCsvForImageStreams(list, family)
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
-		output := T_csvDoc{}
-		// headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "istag"} //, "Imagestream", "Tagname", "Cluster", "Namespace", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
-		headline = append(headline, "Cluster")
-		headline = append(headline, toArrayString(T_istag{}.Names())...)
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
-				for _, istagMap := range nsMap {
-					// InfoMsg("namespace:", ns)
-					line := T_csvLine{}
-					line = append(line, string(family))
-					line = append(line, "allIstags")
-					line = append(line, "istag")
-					line = append(line, istagName.str())
-					line = append(line, cluster.str())
-					line = append(line, toArrayString(istagMap.Values())...)
-					output = append(output, line)
-				}
-			}
-		}
-		output.csvDoc("istags")
+		generateCsvForImageStreamTags(list, family)
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
-		output := T_csvDoc{}
-		// headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
-				for istag, istagMap := range shaMap {
+		generateCsvForImages(list, family)
+	}
+	if CmdParams.Output.Used || CmdParams.Output.All {
+		generateCsvForUsedImageStreamTags(list, family)
+	}
+	if CmdParams.Output.UnUsed || CmdParams.Output.All {
+		generateCsvForUnusedImageStreamTags(list, family)
+	}
+}
+
+// generateCsvForImageStreams generates CSV output for ImageStreams.
+// It iterates through the provided list of image streams and their associated tags, creating a CSV document with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing image streams and their tags.
+// - family: The family name used for generating the CSV content.
+func generateCsvForImageStreams(list interface{}, family T_familyName) {
+	// Initialize the CSV document with a headline
+	output := T_csvDoc{}
+	headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Image", "ImagestreamTag", "Cluster"}
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image stream in the list for the current cluster
+		for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
+			// Iterate through each image in the image stream
+			for image, shaMap := range isMap {
+				// Iterate through each image stream tag
+				for istag := range shaMap {
+					// Create a new CSV line with the relevant details
 					line := T_csvLine{}
 					line = append(line, string(family))
 					line = append(line, "allIstags")
-					line = append(line, "image")
-					line = append(line, shaName.str())
-					line = append(line, istag.str())
-					line = append(line, istagMap.Imagestream.str())
-					line = append(line, cluster.str())
-					line = append(line, istagMap.Namespace.str())
-					// line = append(line, istagMap.Link)
-					line = append(line, istagMap.Date)
-					line = append(line, strconv.Itoa(istagMap.AgeInDays))
-					for tag := range istagMap.Istags {
-						//  make a real copy of line !!!!
-						copyOfLine := append([]string{}, line...)
-						copyOfLine = append(copyOfLine, tag.str())
-						output = append(output, copyOfLine)
-					}
-				}
-			}
-		}
-		output.csvDoc("images")
-	}
-	if CmdParams.Output.Used || CmdParams.Output.All {
-		output := T_csvDoc{}
-		headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Tag"} //, "UsedInNamespace", "Image", "UsedInCluster"}
-		headline = append(headline, toArrayString(T_usedIstag{}.Names())...)
-		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).UsedIstags {
-			for istag, istagArray := range isMap { //.(map[string][]map[string]string) {
-				for _, istagMap := range istagArray {
-					line := T_csvLine{}
-					line = append(line, string(family))
-					line = append(line, "usedistags")
-					line = append(line, "is:tag")
+					line = append(line, "is")
 					line = append(line, is.str())
+					line = append(line, image.str())
 					line = append(line, istag.str())
-					line = append(line, toArrayString(istagMap.Values())...)
+					line = append(line, cluster.str())
+					// Append the line to the CSV document
 					output = append(output, line)
 				}
 			}
 		}
-		output.csvDoc("used-istags")
 	}
-	if CmdParams.Output.UnUsed || CmdParams.Output.All {
-		output := T_csvDoc{}
-		headline := T_csvLine{"unusedImagestreamtag"}
-		headline = append(headline, toArrayString(T_unUsedIstag{}.Names())...)
-		output = append(output, headline)
-		for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
-			line := T_csvLine{}
-			line = append(line, istag.str())
-			line = append(line, toArrayString(istagMap.Values())...)
-			output = append(output, line)
-		}
-		output.csvDoc("unused-istags")
-	}
+	// Generate the CSV file with the name "imagestreams"
+	output.csvDoc("imagestreams")
 }
 
-// GetTableFromMap generate ASCII table output from map
-func GetTableFromMap(list interface{}, family T_familyName) {
-	if CmdParams.Output.Is || CmdParams.Output.All {
-		output := []table.Row{}
-		headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
-				for image, shaMap := range isMap {
-					for istag := range shaMap {
-						line := table.Row{}
-						// line = append(line, "allIstags")
-						// line = append(line, "is")
-						line = append(line, is)
-						line = append(line, image)
-						line = append(line, istag)
-						line = append(line, cluster)
-						output = append(output, line)
-					}
+// generateCsvForImageStreamTags generates CSV output for ImageStreamTags.
+// It iterates through the provided list of image stream tags, creating a CSV document with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing image stream tags.
+// - family: The family name used for generating the CSV content.
+func generateCsvForImageStreamTags(list interface{}, family T_familyName) {
+	// Initialize the CSV document with a headline
+	output := T_csvDoc{}
+	headline := T_csvLine{"Family", "DataRange", "DataType", "istag", "Cluster"}
+	// Append the names of the istag fields to the headline
+	headline = append(headline, toArrayString(T_istag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image stream tag name in the list for the current cluster
+		for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
+			// Iterate through each namespace map for the current image stream tag name
+			for _, istagMap := range nsMap {
+				// Create a new CSV line with the relevant details
+				line := T_csvLine{}
+				line = append(line, string(family))
+				line = append(line, "allIstags")
+				line = append(line, "istag")
+				line = append(line, istagName.str())
+				line = append(line, cluster.str())
+				// Append the values of the istag map to the line
+				line = append(line, toArrayString(istagMap.Values())...)
+				// Append the line to the CSV document
+				output = append(output, line)
+			}
+		}
+	}
+	// Generate the CSV file with the name "istags"
+	output.csvDoc("istags")
+}
+
+// generateCsvForImages generates CSV output for Images.
+// It iterates through the provided list of images and their associated tags, creating a CSV document with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing images and their tags.
+// - family: The family name used for generating the CSV content.
+func generateCsvForImages(list interface{}, family T_familyName) {
+	// Initialize the CSV document with a headline
+	output := T_csvDoc{}
+	headline := T_csvLine{"Family", "DataRange", "DataType", "Image", "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image in the list for the current cluster
+		for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
+			// Iterate through each image stream tag associated with the image
+			for istag, istagMap := range shaMap {
+				// Create a new CSV line with the relevant details
+				line := T_csvLine{}
+				line = append(line, string(family))
+				line = append(line, "allIstags")
+				line = append(line, "image")
+				line = append(line, shaName.str())
+				line = append(line, istag.str())
+				line = append(line, istagMap.Imagestream.str())
+				line = append(line, cluster.str())
+				line = append(line, istagMap.Namespace.str())
+				line = append(line, istagMap.Date)
+				line = append(line, strconv.Itoa(istagMap.AgeInDays))
+				// Iterate through each tag reference in the image stream tag map
+				for tag := range istagMap.Istags {
+					// Create a copy of the line and append the tag reference
+					copyOfLine := append([]string{}, line...)
+					copyOfLine = append(copyOfLine, tag.str())
+					// Append the line to the CSV document
+					output = append(output, copyOfLine)
 				}
 			}
 		}
-		tablePrettyprint(output)
+	}
+	// Generate the CSV file with the name "images"
+	output.csvDoc("images")
+}
+
+// generateCsvForUsedImageStreamTags generates CSV output for Used ImageStreamTags.
+// It iterates through the provided list of used image stream tags, creating a CSV document with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing used image stream tags.
+// - family: The family name used for generating the CSV content.
+func generateCsvForUsedImageStreamTags(list interface{}, family T_familyName) {
+	// Initialize the CSV document with a headline
+	output := T_csvDoc{}
+	headline := T_csvLine{"Family", "DataRange", "DataType", "Imagestream", "Tag"}
+	// Append the names of the used image stream tag fields to the headline
+	headline = append(headline, toArrayString(T_usedIstag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each image stream in the list of used image stream tags
+	for is, isMap := range list.(T_completeResults).UsedIstags {
+		// Iterate through each image stream tag in the image stream
+		for istag, istagArray := range isMap {
+			// Iterate through each map of used image stream tag details
+			for _, istagMap := range istagArray {
+				// Create a new CSV line with the relevant details
+				line := T_csvLine{}
+				line = append(line, string(family))
+				line = append(line, "usedistags")
+				line = append(line, "is:tag")
+				line = append(line, is.str())
+				line = append(line, istag.str())
+				// Append the values of the used image stream tag map to the line
+				line = append(line, toArrayString(istagMap.Values())...)
+				// Append the line to the CSV document
+				output = append(output, line)
+			}
+		}
+	}
+	// Generate the CSV file with the name "used-istags"
+	output.csvDoc("used-istags")
+}
+
+// generateCsvForUnusedImageStreamTags generates CSV output for Unused ImageStreamTags.
+// It iterates through the provided list of unused image stream tags, creating a CSV document with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing unused image stream tags.
+// - family: The family name used for generating the CSV content.
+func generateCsvForUnusedImageStreamTags(list interface{}, family T_familyName) {
+	// Initialize the CSV document with a headline
+	InfoMsg(family)
+	output := T_csvDoc{}
+	headline := T_csvLine{"unusedImagestreamtag"}
+	// Append the names of the unused image stream tag fields to the headline
+	headline = append(headline, toArrayString(T_unUsedIstag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each unused image stream tag in the list
+	for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
+		// Create a new CSV line with the relevant details
+		line := T_csvLine{}
+		line = append(line, istag.str())
+		// Append the values of the unused image stream tag map to the line
+		line = append(line, toArrayString(istagMap.Values())...)
+		// Append the line to the CSV document
+		output = append(output, line)
+	}
+	// Generate the CSV file with the name "unused-istags"
+	output.csvDoc("unused-istags")
+}
+
+// GetTextTableFromMap generates ASCII table output from a map based on the specified output parameters.
+// It processes different types of data (ImageStreams, ImageStreamTags, Images, Used ImageStreamTags, and Unused ImageStreamTags)
+// and generates corresponding ASCII tables.
+//
+// Parameters:
+// - list: The data structure containing the ImageStreamTags information.
+// - family: The family name (T_familyName) to include in the table output.
+func GetTextTableFromMap(list interface{}, family T_familyName) {
+	if CmdParams.Output.Is || CmdParams.Output.All {
+		generateTableForImageStreams(list, family)
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
-		output := []table.Row{}
-		// headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Link", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
-		headline := table.Row{"istag " + string(family)} //, "Cluster", "Imagestream", "Tagname", "Namespace", "Date", "AgeInDays", "Image", "CommitAuthor", "CommitDate", "CommitId", "CommitRef", "Commitversion", "IsProdImage", "BuildNName", "BuildNamespace"}
-		headline = append(headline, "Cluster")
-		headline = append(headline, toTableRow(T_istag{}.Names())...)
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
-				for _, istagMap := range nsMap {
-					// InfoMsg("namespace:", ns)
-					line := table.Row{}
-					// line = append(line, "allIstags")
-					// line = append(line, "istag")
-					line = append(line, istagName)
-					line = append(line, cluster)
-					line = append(line, toTableRow(istagMap.Values())...)
-					output = append(output, line)
-				}
-			}
-		}
-		tablePrettyprint(output)
+		generateTableForImageStreamTags(list, family)
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
-		output := []table.Row{}
-		// headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Link", "Date", "AgeInDays", "IsTagReferences"}
-		headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
-		output = append(output, headline)
-		for _, cluster := range CmdParams.Cluster {
-			for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
-				for istag, istagMap := range shaMap {
-					line := table.Row{}
-					// line = append(line, "allIstags")
-					// line = append(line, "image")
-					line = append(line, shaName)
-					line = append(line, istag)
-					line = append(line, istagMap.Imagestream)
-					line = append(line, cluster)
-					line = append(line, istagMap.Namespace)
-					// line = append(line, istagMap.Link)
-					line = append(line, istagMap.Date)
-					line = append(line, strconv.Itoa(istagMap.AgeInDays))
-					for tag := range istagMap.Istags {
-						//  make a real copy of line !!!!
-						copyOfLine := append([]interface{}{}, line...)
-						copyOfLine = append(copyOfLine, tag)
-						output = append(output, copyOfLine)
-					}
-				}
-			}
-		}
-		tablePrettyprint(output)
+		generateTableForImages(list, family)
 	}
 	if CmdParams.Output.Used || CmdParams.Output.All {
-		output := []table.Row{}
-		headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"}
-		headline = append(headline, toTableRow(T_usedIstag{}.Names())...)
-		output = append(output, headline)
-		for is, isMap := range list.(T_completeResults).UsedIstags {
-			for istag, istagArray := range isMap { //.(map[string][]map[string]string) {
-				for _, istagMap := range istagArray {
-					line := table.Row{}
-					// line = append(line, "usedistags")
-					// line = append(line, "is:tag")
-					line = append(line, is)
-					line = append(line, istag)
-					line = append(line, toTableRow(istagMap.Values())...)
-					output = append(output, line)
-				}
-			}
-		}
-		tablePrettyprint(output)
+		generateTableForUsedImageStreamTags(list, family)
 	}
 	if CmdParams.Output.UnUsed || CmdParams.Output.All {
-		output := []table.Row{}
-		headline := table.Row{"unused Imagestreamtag"}
-		headline = append(headline, toTableRow(T_unUsedIstag{}.Names())...)
-		output = append(output, headline)
-		for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
-			line := table.Row{}
-			line = append(line, istag)
-			line = append(line, toTableRow(istagMap.Values())...)
-			output = append(output, line)
-		}
-		tablePrettyprint(output)
+		generateTableForUnusedImageStreamTags(list, family)
 	}
 }
 
-// toTableRow convert a slice of interface{} to table.Row
+// generateTableForImageStreams generates ASCII table output for ImageStreams.
+// It iterates through the provided list of image streams and their associated tags, creating an ASCII table with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing image streams and their tags.
+// - family: The family name used for generating the table content.
+func generateTableForImageStreams(list interface{}, family T_familyName) {
+	// Initialize the table output with a headline
+	output := []table.Row{}
+	headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image stream in the list for the current cluster
+		for is, isMap := range list.(T_completeResults).AllIstags[cluster].Is {
+			// Iterate through each image in the image stream
+			for image, shaMap := range isMap {
+				// Iterate through each image stream tag
+				for istag := range shaMap {
+					// Create a new table row with the relevant details
+					line := table.Row{is, image, istag, cluster}
+					// Append the row to the table output
+					output = append(output, line)
+				}
+			}
+		}
+	}
+	// Pretty print the table output
+	tablePrettyprint(output)
+}
+
+// generateTableForImageStreamTags generates ASCII table output for ImageStreamTags.
+// It iterates through the provided list of image stream tags, creating an ASCII table with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing image stream tags.
+// - family: The family name used for generating the table content.
+func generateTableForImageStreamTags(list interface{}, family T_familyName) {
+	// Initialize the table output with a headline
+	output := []table.Row{}
+	headline := table.Row{"istag " + string(family), "Cluster"}
+	// Append the names of the istag fields to the headline
+	headline = append(headline, toTableRow(T_istag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image stream tag name in the list for the current cluster
+		for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
+			// Iterate through each namespace map for the current image stream tag name
+			for _, istagMap := range nsMap {
+				// Create a new table row with the relevant details
+				line := table.Row{istagName, cluster}
+				// Append the values of the istag map to the row
+				line = append(line, toTableRow(istagMap.Values())...)
+				// Append the row to the table output
+				output = append(output, line)
+			}
+		}
+	}
+	// Pretty print the table output
+	tablePrettyprint(output)
+}
+
+// generateTableForImages generates ASCII table output for Images.
+// It iterates through the provided list of images and their associated tags, creating an ASCII table with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing images and their tags.
+// - family: The family name used for generating the table content.
+func generateTableForImages(list interface{}, family T_familyName) {
+	// Initialize the table output with a headline
+	output := []table.Row{}
+	headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
+	output = append(output, headline)
+
+	// Iterate through each cluster specified in the command parameters
+	for _, cluster := range CmdParams.Cluster {
+		// Iterate through each image in the list for the current cluster
+		for shaName, shaMap := range list.(T_completeResults).AllIstags[cluster].Image {
+			// Iterate through each image stream tag associated with the image
+			for istag, istagMap := range shaMap {
+				// Create a new table row with the relevant details
+				line := table.Row{shaName, istag, istagMap.Imagestream, cluster, istagMap.Namespace, istagMap.Date, strconv.Itoa(istagMap.AgeInDays)}
+				// Iterate through each tag reference in the image stream tag map
+				for tag := range istagMap.Istags {
+					// Create a copy of the line and append the tag reference
+					copyOfLine := append([]interface{}{}, line...)
+					copyOfLine = append(copyOfLine, tag)
+					// Append the row to the table output
+					output = append(output, copyOfLine)
+				}
+			}
+		}
+	}
+	// Pretty print the table output
+	tablePrettyprint(output)
+}
+
+// generateTableForUsedImageStreamTags generates ASCII table output for Used ImageStreamTags.
+// It iterates through the provided list of used image stream tags, creating an ASCII table with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing used image stream tags.
+// - family: The family name used for generating the table content.
+func generateTableForUsedImageStreamTags(list interface{}, family T_familyName) {
+	// Initialize the table output with a headline
+	output := []table.Row{}
+	headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"}
+	// Append the names of the used image stream tag fields to the headline
+	headline = append(headline, toTableRow(T_usedIstag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each image stream in the list of used image stream tags
+	for is, isMap := range list.(T_completeResults).UsedIstags {
+		// Iterate through each image stream tag in the image stream
+		for istag, istagArray := range isMap {
+			// Iterate through each map of used image stream tag details
+			for _, istagMap := range istagArray {
+				// Create a new table row with the relevant details
+				line := table.Row{is, istag}
+				// Append the values of the used image stream tag map to the row
+				line = append(line, toTableRow(istagMap.Values())...)
+				// Append the row to the table output
+				output = append(output, line)
+			}
+		}
+	}
+	// Pretty print the table output
+	tablePrettyprint(output)
+}
+
+// generateTableForUnusedImageStreamTags generates ASCII table output for Unused ImageStreamTags.
+// It iterates through the provided list of unused image stream tags, creating an ASCII table with the relevant details.
+//
+// Parameters:
+// - list: The data structure containing unused image stream tags.
+// - family: The family name used for generating the table content.
+func generateTableForUnusedImageStreamTags(list interface{}, family T_familyName) {
+	InfoMsg(family)
+	// Initialize the table output with a headline
+	output := []table.Row{}
+	headline := table.Row{"unused Imagestreamtag"}
+	// Append the names of the unused image stream tag fields to the headline
+	headline = append(headline, toTableRow(T_unUsedIstag{}.Names())...)
+	output = append(output, headline)
+
+	// Iterate through each unused image stream tag in the list
+	for istag, istagMap := range list.(T_completeResults).UnUsedIstags {
+		// Create a new table row with the relevant details
+		line := table.Row{istag}
+		// Append the values of the unused image stream tag map to the row
+		line = append(line, toTableRow(istagMap.Values())...)
+		// Append the row to the table output
+		output = append(output, line)
+	}
+	// Pretty print the table output
+	tablePrettyprint(output)
+}
+
+// toTableRow converts a variadic slice of interface{} to a table.Row.
+// It iterates through the provided slice of interface{} and flattens any nested slices.
+//
+// Parameters:
+// - arr: A variadic slice of interface{} representing the table row values.
+//
+// Returns:
+// - A table.Row containing the flattened values.
 func toTableRow(arr ...interface{}) table.Row {
 	o := table.Row{}
+	// Iterate through each element in the variadic slice
 	for _, v := range arr {
+		// Type assert the element to a slice of interface{}
 		for _, w := range v.([]interface{}) {
+			// Append each element of the nested slice to the table.Row
 			o = append(o, w)
 		}
 	}
 	return o
 }
 
-// toArrayString convert a slice of interface{} to slice of string
+// toArrayString converts a variadic slice of interface{} to a slice of strings.
+// It iterates through the provided slice of interface{} and flattens any nested slices, converting each element to a string.
+//
+// Parameters:
+// - arr: A variadic slice of interface{} representing the input values.
+//
+// Returns:
+// - A slice of strings containing the flattened and converted values.
 func toArrayString(arr ...interface{}) []string {
 	o := []string{}
+	// Iterate through each element in the variadic slice
 	for _, v := range arr {
+		// Type assert the element to a slice of interface{}
 		for _, w := range v.([]interface{}) {
+			// Append each element of the nested slice to the output slice after converting to string
 			o = append(o, w.(string))
 		}
 	}
 	return o
 }
 
-// tablePrettyprint print ASCII table
+// tablePrettyprint prints an ASCII table.
+// It formats and displays the provided table rows in a paginated and styled ASCII table.
+//
+// Parameters:
+// - out: A slice of table.Row representing the rows to be printed.
 func tablePrettyprint(out []table.Row) {
+	// If there are no rows to print, return immediately
 	if len(out) == 0 {
 		return
 	}
 
-	// get terminal size
-	fd := int(os.Stdout.Fd())
-	_, height, terr := terminal.GetSize(fd)
-	if terr != nil {
-		height = 60
-		ErrorMsg("failedt o get terminal size, set it to", height)
-	}
+	// Get the terminal height
+	height := getTerminalHeight()
 
-	// activate pager
-	var cmd *exec.Cmd
-	cmd, pager = runPager()
+	// Activate the pager
+	cmd, pager := activatePager()
 	defer func() {
+		// Ensure the pager is closed and the command waits for completion
 		pager.Close()
 		_ = cmd.Wait()
 	}()
 
-	// define table output
+	// Define and render the table output
+	renderTable(out, pager, height)
+}
+
+// getTerminalHeight retrieves the terminal height.
+// If it fails to get the terminal size, it sets a default height.
+//
+// Returns:
+// - An integer representing the terminal height.
+func getTerminalHeight() int {
+	fd := int(os.Stdout.Fd())
+	_, height, terr := terminal.GetSize(fd)
+	if terr != nil {
+		// If getting the terminal size fails, set a default height
+		height = 60
+		ErrorMsg("failed to get terminal size, set it to", height)
+	}
+	return height
+}
+
+// activatePager activates the pager for table output.
+//
+// Returns:
+// - A pointer to exec.Cmd representing the pager command.
+// - A pipe writer for the pager.
+func activatePager() (*exec.Cmd, io.WriteCloser) {
+	cmd, pager := runPager()
+	return cmd, pager
+}
+
+// renderTable defines and renders the table output.
+//
+// Parameters:
+// - out: A slice of table.Row representing the rows to be printed.
+// - pager: A pipe writer for the pager.
+// - height: An integer representing the terminal height.
+func renderTable(out []table.Row, pager io.WriteCloser, height int) {
+	// Define the table output
 	t := table.NewWriter()
-	t.SetOutputMirror(pager)
-	t.AppendHeader(out[0])
-	t.AppendFooter(table.Row{" ", " ", " "})
-	t.AppendRows(out[1:])
-	t.SetStyle(table.StyleColoredBright)
-	t.SortBy([]table.SortBy{
+	t.SetOutputMirror(pager)                 // Set the output to the pager
+	t.AppendHeader(out[0])                   // Append the header row
+	t.AppendFooter(table.Row{" ", " ", " "}) // Append a footer row
+	t.AppendRows(out[1:])                    // Append the data rows
+	t.SetStyle(table.StyleColoredBright)     // Set the table style
+	t.SortBy([]table.SortBy{                 // Define sorting for the table
 		{Number: 1, Mode: table.Asc},
 		{Number: 2, Mode: table.Asc},
 		{Number: 3, Mode: table.Asc},
 	})
-	t.SetAutoIndex(true)
-	// t.SetStyle(table.StyleLight)
-	// t.Style().Options.SeparateRows = true
-	// t.SetAllowedRowLength(450)
-	t.SetPageSize(height - 4)
+	t.SetAutoIndex(true)      // Enable automatic indexing of rows
+	t.SetPageSize(height - 4) // Set the page size based on terminal height
+
+	// If TabGroup parameter is set, configure column merging
 	if CmdParams.TabGroup {
 		t.SetColumnConfigs([]table.ColumnConfig{
 			{Number: 1, AutoMerge: true},
@@ -439,17 +667,20 @@ func tablePrettyprint(out []table.Row) {
 			{Number: 8, AutoMerge: true},
 		})
 	}
-	if CmdParams.Html {
-		t.Style().HTML = table.HTMLOptions{
-			CSSClass:    "game-of-thrones",
-			EmptyColumn: "&nbsp;",
-			EscapeText:  true,
-			Newline:     "<br/>",
-		}
-		t.RenderHTML()
-	} else {
-		t.Render()
-	}
+
+	// // If Html parameter is set, render the table as HTML
+	// if CmdParams.Html {
+	// 	t.Style().HTML = table.HTMLOptions{
+	// 		CSSClass:    "game-of-thrones",
+	// 		EmptyColumn: "&nbsp;",
+	// 		EscapeText:  true,
+	// 		Newline:     "<br/>",
+	// 	}
+	// 	t.RenderHTML()
+	// } else {
+	// // Otherwise, render the table as ASCII
+	t.Render()
+	// }
 }
 
 // runPager starts less or the standard pager of os and pipes output into its Stdin
@@ -466,33 +697,12 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 	}
 	out, err := cmd.StdinPipe()
 	if err != nil {
-		ErrorLogger.Println("ExecError", err)
+		ErrorMsg("ExecError", err)
 	}
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Start(); err != nil {
-		ErrorLogger.Println("ExecError", err)
+		ErrorMsg("ExecError", err)
 	}
 	return cmd, out
-}
-
-// openbrowser alternative to open browser for html
-// TODO
-func openbrowser(url string) {
-	var err error
-
-	switch runtime.GOOS {
-	case "linux":
-		err = exec.Command("xdg-open", url).Start()
-	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-	case "darwin":
-		err = exec.Command("open", url).Start()
-	default:
-		ErrorLogger.Println("unsupported platform")
-	}
-	if err != nil {
-		ErrorLogger.Println("ExecError", err)
-	}
-
 }

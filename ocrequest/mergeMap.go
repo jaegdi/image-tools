@@ -4,15 +4,15 @@ import (
 	"github.com/imdario/mergo"
 )
 
-// MergoNestedMaps merges two maps.
-// As first parameter the __address__ of an empty map of the same type as the two maps, they should be merged, must given.
-// the second parameter is the destination map, the third parameter is the map that should be merged into destination map.
-// The merged result is in the first parameter. After execution of this function, the var of the first parameter must
-// assigned to the destination map.
-// Example:
-// t := T_usedIstagsResult{}; MergoNestedMaps(&t, result, r); result = t
+// MergoNestedMaps merges two nested maps using the mergo.Merge function.
+// The destination map is modified to include the contents of the source map.
+// If an error occurs during the merge, it is logged using the ErrorLogger.
+//
+// Parameters:
+// - dest: The destination map that will be modified to include the contents of the source map.
+// - m1: The source map whose contents will be merged into the destination map.
 func MergoNestedMaps(dest, m1 interface{}) {
 	if err := mergo.Merge(dest, m1); err != nil {
-		ErrorLogger.Println("merge m1: failed:", err)
+		ErrorMsg("merge m1: failed:", err)
 	}
 }

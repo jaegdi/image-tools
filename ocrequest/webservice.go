@@ -30,8 +30,9 @@ func StartServer() {
 		}
 
 		if kind == "" {
-			kind = "is_used"
+			kind = "is_tag_used"
 		}
+		html := true
 
 		cmdParams := T_flags{}
 		cmdParams.Family = T_familyName(family)
@@ -42,6 +43,7 @@ func StartServer() {
 			cmdParams.Output.Used = true
 		case "is_tag_used":
 			cmdParams.Output.Used = true
+			html = false
 		case "unused":
 			cmdParams.Output.UnUsed = true
 		case "istag":
@@ -64,18 +66,28 @@ func StartServer() {
 		InitServerMode(cmdParams)
 
 		InfoMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
+		VerifyMsg("\nCmdParams Options:", GetJsonFromMap(CmdParams.Options), "Output:", GetJsonFromMap(CmdParams.Output))
 		result := CmdlineMode()
-
-		w.Header().Set("Content-Type", "application/json")
-		if kind == "is_tag_used" {
-			tagIsUsed := len(result.UsedIstags) > 0
-			response := map[string]interface{}{
-				"Result":    result,
-				"TagIsUsed": tagIsUsed,
+		VerifyMsg("\nCmdParams Result:", GetJsonFromMap(result))
+		if html {
+			htmldata, err := GetHtmlTableFromMap(result, T_familyName(family))
+			if err != nil {
+				ErrorMsg("Error creating template:", err)
 			}
-			json.NewEncoder(w).Encode(response)
+			w.Write([]byte(htmldata))
 		} else {
-			json.NewEncoder(w).Encode(result)
+			w.Header().Set("Content-Type", "application/json")
+			if kind == "is_tag_used" {
+				tagIsUsed := len(result.UsedIstags) > 0
+				response := map[string]interface{}{
+					// "Result":    result,
+					"TagName":   filter_tagname,
+					"TagIsUsed": tagIsUsed,
+				}
+				json.NewEncoder(w).Encode(response)
+			} else {
+				json.NewEncoder(w).Encode(result)
+			}
 		}
 	})
 	http.ListenAndServe(":8080", nil)
