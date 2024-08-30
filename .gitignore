@@ -1,6 +1,7 @@
 *.csv
 log*.txt
-image-tools
+image-tool
+image-tool.exe
 *.exe
 clusterconfig*
 .swp
