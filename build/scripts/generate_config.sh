@@ -48,4 +48,4 @@ EOT
 
 switch-back-to-current-cluster
 
-lless "$dir/../../ocrequest/config-clusters.go"
+# lless "$dir/../../ocrequest/config-clusters.go"

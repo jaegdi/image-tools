@@ -140,5 +140,5 @@ func InitServerMode(cp T_flags) {
 	}
 
 	// Enable verification option
-	CmdParams.Options.Verify = true
+	// CmdParams.Options.Verify = true
 }
