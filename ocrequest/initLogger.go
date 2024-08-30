@@ -8,9 +8,10 @@ import (
 	"runtime"
 )
 
+// T_DebugLogger ist ein Alias für log.Logger
 type T_DebugLogger log.Logger
 
-// Global Vars
+// Globale Variablen für verschiedene Logger
 var (
 	WarningLogger       *log.Logger
 	InfoLogger          *log.Logger
@@ -22,23 +23,28 @@ var (
 	LogfileName         string
 )
 
+// InitLogging initialisiert die Logger für verschiedene Log-Level
 func InitLogging() {
 	var logfile *os.File
 	var err error
 
+	// Wenn der Server-Modus aktiviert ist, logge in die Standardausgabe
 	if CmdParams.Options.ServerMode {
 		logfile = os.Stdout
 	} else {
+		// Andernfalls entferne die bestehende Logdatei, falls vorhanden
 		err = os.Remove(LogFileName)
 		if err != nil && !os.IsNotExist(err) {
 			log.Fatal(err)
 		}
+		// Öffne oder erstelle eine neue Logdatei
 		logfile, err = os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
 
+	// Initialisiere die verschiedenen Logger
 	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
 	VerifyLogger = log.New(logfile, "VERIFY: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
 	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
@@ -46,12 +52,14 @@ func InitLogging() {
 	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lmsgprefix)
 }
 
+// InfoMsg loggt eine Informationsnachricht
 func InfoMsg(p ...interface{}) {
 	caller := getCaller()
 	p = append([]interface{}{caller}, p...)
 	InfoLogger.Println(p...)
 }
 
+// VerifyMsg loggt eine Verifizierungsnachricht, wenn die Verifizierungsoption aktiviert ist
 func VerifyMsg(p ...interface{}) {
 	if CmdParams.Options.Verify {
 		caller := getCaller()
@@ -63,6 +71,7 @@ func VerifyMsg(p ...interface{}) {
 	}
 }
 
+// ErrorMsg loggt eine Fehlermeldung
 func ErrorMsg(p ...interface{}) {
 	caller := getCaller()
 	prevCaller := getPreviousCaller()
@@ -71,6 +80,7 @@ func ErrorMsg(p ...interface{}) {
 	ErrorLogger.Println(p...)
 }
 
+// DebugMsg loggt eine Debug-Nachricht, wenn die Debug-Option aktiviert ist
 func DebugMsg(p ...interface{}) {
 	if CmdParams.Options.Debug {
 		caller := getCaller()
@@ -79,6 +89,7 @@ func DebugMsg(p ...interface{}) {
 	}
 }
 
+// getCaller gibt den Aufrufer der Funktion zurück
 func getCaller() string {
 	pc, _, line, ok := runtime.Caller(2)
 	if !ok {
@@ -91,6 +102,7 @@ func getCaller() string {
 	return fmt.Sprintf("caller: %s:%d| ", fn.Name(), line)
 }
 
+// getPreviousCaller gibt den vorherigen Aufrufer der Funktion zurück
 func getPreviousCaller() string {
 	pc, _, line, ok := runtime.Caller(3)
 	if !ok {

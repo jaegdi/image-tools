@@ -1,0 +1,20 @@
+# https://bitbucket.sf-bk.de/scm/scptools/go-bitbucket.git
+base_url: "https://bitbucket.sf-bk.de"
+username: "jaegdi"
+password: "your-password"
+pr:
+  title: "My Pull Request"
+  description: "This is a pull request created by a Go client"
+  state: "OPEN"
+  open: true
+  closed: false
+  fromRef:
+    id: "refs/heads/feature-branch"
+    repository: "image-tools"
+    project:
+        key: "scptools"
+  toRef:
+    id: "refs/heads/master"
+    repository: "image-tools"
+    project:
+        key: "scptools"
