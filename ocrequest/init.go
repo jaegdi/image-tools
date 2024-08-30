@@ -2,124 +2,143 @@ package ocrequest
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 )
 
-type T_DebugLogger log.Logger
-
-// Global Vars
-var (
-	WarningLogger       *log.Logger
-	InfoLogger          *log.Logger
-	ErrorLogger         *log.Logger
-	DebugLogger         *log.Logger
-	Multiproc           bool
-	regexValidNamespace *regexp.Regexp
-	LogfileName         string
-)
-
-// Init is the intialization routine
+// Init is the initialization routine for setting up the environment and configurations.
+// It sets environment variables, initializes logging, evaluates command-line flags, and reads configurations.
 func Init() {
-	err := os.Remove(LogFileName)
-	logfile, err := os.OpenFile(LogFileName, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// Clear the HTTP_PROXY environment variable
 	os.Setenv("HTTP_PROXY", "")
-	InfoLogger = log.New(logfile, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	WarningLogger = log.New(logfile, "WARNING: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	ErrorLogger = log.New(logfile, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
-	DebugLogger = log.New(logfile, "DEBUG: ", log.Ldate|log.Ltime|log.Lmsgprefix|log.Llongfile)
 
-	// FamilyNamespaces = FamilyNamespacesStat
+	// Initialize logging
 	EvalFlags()
+	InitLogging()
 
-	InfoLogger.Println("------------------------------------------------------------")
+	InfoMsg("------------------------------------------------------------")
 	var currCluster T_clName
 
-	if len(CmdParams.Cluster) > 0 {
-		InfoLogger.Println("Get cluster from parameter -cluster")
+	// Determine the current cluster based on command-line parameters or environment variables
+	if len(CmdParams.Cluster) > 0 && !CmdParams.Options.ServerMode {
+		InfoMsg("Get cluster from parameter -cluster")
 		currCluster = CmdParams.Cluster[0]
 	} else {
 		if cl := os.Getenv("CLUSTER"); cl != "" {
-			InfoLogger.Println("Set cluster to env var CLUSTER", cl)
+			InfoMsg("Set cluster to env var CLUSTER", cl)
 			currCluster = T_clName(cl)
 		} else {
-			InfoLogger.Println("Set cluster to default value -cluster=cid-scp0")
+			InfoMsg("Set cluster to default value -cluster=cid-scp0")
 			currCluster = "cid-scp0"
 		}
 	}
-	InfoLogger.Println("Starting reading config from", currCluster, "config-tools")
-	clustersConfig := GetClusters()
-	familiesConfig := GetFamilies()
-	environmentsConfig := GetEnvironments()
-	namespacesConfig := GetNamespaces()
-	pipelinesConfig := GetPipelines()
-	// InfoLogger.Println("Cluster Configs", clustersConfig)
-	// InfoLogger.Println("Environment Configs": environmentsConfig)
-	// InfoLogger.Println("NAmespace Configs": namespacesConfig)
-	// InfoLogger.Println("Pipeline Configs": pipelinesConfig)
-	// cfg := genClusterConfig(clustersConfig)
-	// InfoLogger.Println("ClusterConfig", cfg)
 
-	// use static config if cmdparam statcfg is true
-	var fns T_famNsList
-	if CmdParams.Options.StaticConfig || true {
+	// Load static or dynamic configuration based on command-line options
+	if CmdParams.Options.StaticConfig {
+		// Use static config if cmdparam statcfg is true
 		FamilyNamespaces = FamilyNamespacesStat
+		// Log the static configurations
+		InfoMsg("------------------------------------------------------------")
+		InfoMsg("Static Config", GetJsonOneliner(FamilyNamespacesStat))
 	} else {
+		InfoMsg("Starting reading config from", currCluster, "config-tools")
+		// Read various configurations
+		clustersConfig := GetClusters()
+		familiesConfig := GetFamilies()
+		environmentsConfig := GetEnvironments()
+		namespacesConfig := GetNamespaces()
+		pipelinesConfig := GetPipelines()
+
+		// Log the configurations
+		VerifyMsg("Cluster Configs", clustersConfig)
+		VerifyMsg("Environment Configs", environmentsConfig)
+		VerifyMsg("Namespace Configs", namespacesConfig)
+		VerifyMsg("Pipeline Configs", pipelinesConfig)
+
+		// Generate family namespaces configuration
+		var fns T_famNsList
 		fns = genFamilyNamespacesConfig(clustersConfig, familiesConfig, environmentsConfig, namespacesConfig, pipelinesConfig)
 		FamilyNamespaces = fns
+		// Log the static configurations
+		InfoMsg("------------------------------------------------------------")
+		InfoMsg("dynamic Config", GetJsonOneliner(fns))
 	}
+	// End of Log the dynamic and static configurations
+	InfoMsg("------------------------------------------------------------")
 
-	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("dynamic Config", GetJsonOneliner(fns))
-	InfoLogger.Println("------------------------------------------------------------")
-	InfoLogger.Println("Static Config", GetJsonOneliner(FamilyNamespacesStat))
-	InfoLogger.Println("------------------------------------------------------------")
+	InfoMsg("############################################################")
+	InfoMsg("Starting execution of image-tools")
 
-	InfoLogger.Println("############################################################")
-	InfoLogger.Println("Starting execution of image-tools")
-
+	// Enable multiprocessing
 	Multiproc = true
-	InfoLogger.Println("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
-	InfoLogger.Println("Multithreading: " + fmt.Sprint(Multiproc))
-	if CmdParams.Options.Socks5Proxy == "no" {
-		CmdParams.Options.Socks5Proxy = ""
-	}
-	InfoLogger.Println("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
-	InfoLogger.Println("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
 
-	regexValidNamespace = regexp.MustCompile(
-		`^` + string(CmdParams.Family) + `$` + `|` +
-			`^` + string(CmdParams.Family) + `-.*` + `|` +
-			`.*?-` + string(CmdParams.Family) + `-.*` + `|` +
-			`.*?-` + string(CmdParams.Family) + `$`)
+	// Compile a regular expression for validating namespaces
+	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
 
-	for _, cluster := range CmdParams.Cluster {
-		if len(Clusters.Config[cluster].Token) < 10 {
-			InfoLogger.Println("Try to read clusterconfig.json")
-			if err := readTokens("clusterconfig.json"); err != nil {
-				InfoLogger.Println("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
-				for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-					ocGetToken(cluster)
+	// If not in server mode, read cluster configurations
+	if !CmdParams.Options.ServerMode {
+		for _, cluster := range CmdParams.Cluster {
+			// Check if the token length is less than 10
+			if len(Clusters.Config[cluster].Token) < 10 {
+				InfoMsg("Try to read clusterconfig.json")
+				// Attempt to read tokens from clusterconfig.json
+				if err := readTokens("clusterconfig.json"); err != nil {
+					InfoMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
+					// If reading tokens fails, get tokens from clusters using oc login
+					for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
+						ocGetToken(cluster)
+					}
+					// Save the tokens to clusterconfig.json
+					saveTokens(Clusters, "clusterconfig.json")
+				} else {
+					InfoMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
 				}
-				saveTokens(Clusters, "clusterconfig.json")
-			} else {
-				InfoLogger.Println("Clusterconfig and Tokens loaded from clusterconfig.json")
 			}
 		}
 	}
+	// Initialize image stream names for the family
 	InitIsNamesForFamily(CmdParams.Family)
-}
-
-func DebugMsg(p ...interface{}) {
-	if CmdParams.Options.Debug {
-		DebugLogger.Println(p...)
+	// If server mode is enabled, initialize server mode
+	if CmdParams.Options.ServerMode {
+		InitServerMode(CmdParams)
+		InfoMsg("ServerMode is enabled")
+	}
+	// Log various options
+	InfoMsg("disable proxy: " + fmt.Sprint(CmdParams.Options.NoProxy))
+	InfoMsg("Multithreading: " + fmt.Sprint(Multiproc))
+	InfoMsg("StaticConfig: " + fmt.Sprint(CmdParams.Options.StaticConfig))
+	InfoMsg("Socks5Proxy: " + fmt.Sprint(CmdParams.Options.Socks5Proxy))
+	if CmdParams.Options.Socks5Proxy == "no" {
+		CmdParams.Options.Socks5Proxy = ""
 	}
 }
 
-func InfoMsg(p ...interface{}) {
-	InfoLogger.Println(p...)
+// InitServerMode initializes the server mode with the provided command-line parameters.
+// It sets up regular expressions for filtering namespaces, tag names, image stream names, and image stream tag names.
+//
+// Parameters:
+// - cp: The command-line parameters to use for initializing the server mode.
+func InitServerMode(cp T_flags) {
+	// Set command parameters from the provided flags
+	CmdParams.Family = cp.Family
+	CmdParams.Filter = cp.Filter
+	CmdParams.Output = cp.Output
+
+	// Compile a regular expression for validating namespaces
+	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
+	CmdParams.FilterReg.Namespace = regexValidNamespace
+
+	// Compile regular expressions for filtering tag names, image stream names, and image stream tag names
+	if CmdParams.Filter.Tagname != "" {
+		CmdParams.FilterReg.Tagname = regexp.MustCompile(CmdParams.Filter.Tagname.str())
+	}
+	if CmdParams.Filter.Isname != "" {
+		CmdParams.FilterReg.Isname = regexp.MustCompile(CmdParams.Filter.Isname.str())
+	}
+	if CmdParams.Filter.Istagname != "" {
+		CmdParams.FilterReg.Istagname = regexp.MustCompile(CmdParams.Filter.Istagname.str())
+	}
+
+	// Enable verification option
+	// CmdParams.Options.Verify = true
 }

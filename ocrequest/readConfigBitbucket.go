@@ -14,34 +14,24 @@ func getBitbucketUrl(urlpath string) string {
 
 func getBitbucketData(filename string) []byte {
 	url := getBitbucketUrl(filename)
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("url: ", url)
-	}
+	DebugMsg("url: ", url)
 	yamlstr := getHttpAnswer(url, bitbucket_token)
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("yaml: ", string(yamlstr))
-	}
+	DebugMsg("yaml: ", string(yamlstr))
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
-		ErrorLogger.Println("Unmarshal multidoc yaml:", yamlstr)
-		ErrorLogger.Println("Unmarshal multidoc yaml:", err.Error())
+		ErrorMsg("Unmarshal multidoc yaml:", yamlstr)
+		ErrorMsg("Unmarshal multidoc yaml:", err.Error())
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("yamlmap: ", yamlmap)
-	}
+	DebugMsg("yamlmap: ", yamlmap)
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
 	// jsonstr, err := json.Marshal(yamlmap)
 	if err != nil {
-		ErrorLogger.Println("yamlmap:    ", yamlmap)
-		ErrorLogger.Println("err:    ", err)
+		ErrorMsg("yamlmap:    ", yamlmap)
+		ErrorMsg("err:    ", err)
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("Config from scp-infra-config url:", url)
-	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("Config from scp-infra-config json:", string(jsonstr))
-	}
+	DebugMsg("Config from scp-infra-config url:", url)
+	DebugMsg("Config from scp-infra-config json:", string(jsonstr))
 	return jsonstr
 }
 
@@ -49,8 +39,8 @@ func GetClusters() T_cft_clusters {
 	jsonbytes := getBitbucketData("clusters.yaml")
 	data := T_cft_clusters{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
-		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
+		ErrorMsg("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorMsg("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -59,8 +49,8 @@ func GetFamilies() T_cft_families {
 	jsonbytes := getBitbucketData("families.yaml")
 	data := T_cft_families{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
-		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
+		ErrorMsg("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorMsg("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -69,8 +59,8 @@ func GetEnvironments() T_cft_environments {
 	jsonbytes := getBitbucketData("environments.yaml")
 	data := T_cft_environments{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
-		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
+		ErrorMsg("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorMsg("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }
@@ -79,12 +69,10 @@ func GetNamespaces() T_cft_namespaces {
 	jsonbytes := getBitbucketData("namespaces.yaml")
 	data := T_cft_namespaces{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
-		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
+		ErrorMsg("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorMsg("Unmarshal jsonstr err:", err.Error())
 	}
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("data: ", data)
-	}
+	DebugMsg("data: ", data)
 	return data
 }
 
@@ -92,8 +80,8 @@ func GetPipelines() T_cft_pipelines {
 	jsonbytes := getBitbucketData("pipelines.yaml")
 	data := T_cft_pipelines{}
 	if err := json.Unmarshal(jsonbytes, &data); err != nil {
-		ErrorLogger.Println("Unmarshal jsonstr:", string(jsonbytes))
-		ErrorLogger.Println("Unmarshal jsonstr err:", err.Error())
+		ErrorMsg("Unmarshal jsonstr:", string(jsonbytes))
+		ErrorMsg("Unmarshal jsonstr err:", err.Error())
 	}
 	return data
 }

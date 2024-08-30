@@ -24,6 +24,21 @@ DESCRIPTION
         - generate shellscript output to delete istags when parameter -delete is set.
           The -delete parameter disables the report output, instead the delete script is generated as output
 
+
+  Per defaul image-tools is executed as a cmdline tool but with parameter -server it can be startet as a webservice.
+
+  image-tools as web-service
+
+    In serverMode image-tools looks for used images in all clusters filtered by family and tagname and returns the a
+    JSON list as HTTP response
+
+    image-tools starts a webserver to listen on port 8080.
+    To request the webservice by curl, use the following pattern:
+
+        curl "http://localhost:8080/execute?family=exampleFamily&tagname=exampleTagname" | jq
+
+  image-tools as cmdline tool
+
     image-tools only read information around images from the clusters and generate output. It never change or
     delete something in the clusters. Eg. for delete istags it only generates a script output, which than can
     be executed by a cluster admin to really delete the istags.
@@ -225,6 +240,7 @@ CONNECTION
 // EvalFlags evaluate all command line flags and set a struct with their values
 func EvalFlags() {
 	flag.Usage = cmdUsage
+
 	// Global Flags
 	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
 	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
@@ -311,77 +327,77 @@ func EvalFlags() {
 	}
 
 	// define map with all flags
-	flags := T_flags{
-		Cluster:  T_clName(*clusterPtr).list(),
-		Token:    string(*tokenPtr),
-		Family:   T_familyName(*familyPtr),
-		App:      T_appName(*appPtr),
-		Json:     bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr)),
-		Yaml:     bool(*yamlPtr) && !bool(*jsonPtr),
-		Csv:      (bool(*csvPtr) || (string(*csvFilePtr) != "")) && !bool(*jsonPtr),
-		CsvFile:  string(*csvFilePtr),
-		Delete:   bool(*deletePtr),
-		Html:     bool(*htmlPtr) && !bool(*jsonPtr),
-		Table:    bool(*tablePtr) && !bool(*jsonPtr),
-		TabGroup: bool(*tabgroupPtr) && !bool(*jsonPtr),
+	flags := T_flags{}
+	flags.Cluster = T_clName(*clusterPtr).list()
+	flags.Token = string(*tokenPtr)
+	flags.Family = T_familyName(*familyPtr)
+	flags.App = T_appName(*appPtr)
+	flags.Json = bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr))
+	flags.Yaml = bool(*yamlPtr) && !bool(*jsonPtr)
+	flags.Csv = (bool(*csvPtr) || (string(*csvFilePtr) != "")) && !bool(*jsonPtr)
+	flags.CsvFile = string(*csvFilePtr)
+	flags.Delete = bool(*deletePtr)
+	flags.Html = bool(*htmlPtr) && !bool(*jsonPtr)
+	flags.Table = bool(*tablePtr) && !bool(*jsonPtr)
+	flags.TabGroup = bool(*tabgroupPtr) && !bool(*jsonPtr)
 
-		Output: T_flagOut{
-			Is:     *isPtr,
-			Istag:  *istagPtr,
-			Image:  *shaPtr,
-			Used:   *usedPtr,
-			UnUsed: *unusedPtr,
-			All:    *allPtr,
-		},
-		Filter: T_flagFilt{
-			Isname:    T_isName(string(*isnamePtr)),
-			Istagname: T_istagName(string(*istagnamePtr)),
-			Tagname:   T_tagName(string(*tagnamePtr)),
-			Imagename: T_shaName(string(*shanamePtr)),
-			Namespace: T_nsName(string(*namespacePtr)),
-			Minage:    *minAgePtr,
-			Maxage:    *maxAgePtr,
-		},
-		FilterReg: T_flagFiltRegexp{
-			Isname:    is_r,
-			Istagname: istag_r,
-			Tagname:   tag_r,
-			Namespace: ns_r,
-		},
-		DeleteOpts: T_flagDeleteOpts{
-			Pattern:     *deletePatternPtr,
-			MinAge:      *deleteMinAgePtr,
-			NonBuild:    *deleteNonBuildPtr,
-			Snapshots:   *deleteSnapshotsPtr,
-			PruneImages: *pruneImagesPtr,
-			Confirm:     *deleteConfirmPtr,
-		},
-		Options: T_flagOpts{
-			InsecureSSL:  *insecurePtr,
-			OcClient:     *ocClientPtr,
-			NoProxy:      *noProxyPtr,
-			Socks5Proxy:  *socks5ProxyPtr,
-			Profiler:     *profilerPtr,
-			NoLog:        *noLogPtr,
-			Debug:        *debugPtr,
-			Verify:       *verifyPtr,
-			ServerMode:   *serverPtr,
-			StaticConfig: *statCfgPtr,
-		},
+	flags.Output = T_flagOut{
+		Is:     *isPtr,
+		Istag:  *istagPtr,
+		Image:  *shaPtr,
+		Used:   *usedPtr,
+		UnUsed: *unusedPtr,
+		All:    *allPtr,
+	}
+	flags.Filter = T_flagFilt{
+		Isname:    T_isName(string(*isnamePtr)),
+		Istagname: T_istagName(string(*istagnamePtr)),
+		Tagname:   T_tagName(string(*tagnamePtr)),
+		Imagename: T_shaName(string(*shanamePtr)),
+		Namespace: T_nsName(string(*namespacePtr)),
+		Minage:    *minAgePtr,
+		Maxage:    *maxAgePtr,
+	}
+	flags.FilterReg = T_flagFiltRegexp{
+		Isname:    is_r,
+		Istagname: istag_r,
+		Tagname:   tag_r,
+		Namespace: ns_r,
+	}
+	flags.DeleteOpts = T_flagDeleteOpts{
+		Pattern:     *deletePatternPtr,
+		MinAge:      *deleteMinAgePtr,
+		NonBuild:    *deleteNonBuildPtr,
+		Snapshots:   *deleteSnapshotsPtr,
+		PruneImages: *pruneImagesPtr,
+		Confirm:     *deleteConfirmPtr,
+	}
+	flags.Options = T_flagOpts{
+		InsecureSSL:  *insecurePtr,
+		OcClient:     *ocClientPtr,
+		NoProxy:      *noProxyPtr,
+		Socks5Proxy:  *socks5ProxyPtr,
+		Profiler:     *profilerPtr,
+		NoLog:        *noLogPtr,
+		Debug:        *debugPtr,
+		Verify:       *verifyPtr,
+		ServerMode:   *serverPtr,
+		StaticConfig: *statCfgPtr,
 	}
 
 	CmdParams = flags
-	InfoLogger.Println(GetJsonOneliner(flags))
+	// VerifyMsg("-- Test --")
+	// VerifyMsg(GetJsonFromMap(flags))
 
-	if flags.Family == "" {
-		exitWithError("a name for family must given like: '-family=pkp'")
+	if CmdParams.Family == "" && !CmdParams.Options.ServerMode {
+		exitWithError("\nA name for family must given like: '-family=pkp'")
 	}
-	if !flags.Output.Used && (len(flags.Cluster) == 0) {
-		exitWithError("a shortname for cluster must given like: '-cluster=cid-scp0'. Is now: ", flags.Cluster)
+	if !CmdParams.Options.ServerMode && !CmdParams.Output.Used && len(CmdParams.Cluster[0]) == 0 {
+		exitWithError("\nA shortname for cluster must given like: '-cluster=cid-scp0' or -cluster=cid-scp0,ppr-scp0. Is now: ", flags.Cluster[0])
 	}
-	// for _, cluster := range flags.Cluster {
+	// for _, cluster := range CmdParams.Cluster {
 	// 	_, clusterDefined := Clusters.Config[cluster]
-	// 	if !clusterDefined && !flags.Output.Used {
+	// 	if !clusterDefined && !CmdParams.Output.Used {
 	// 		clusterlist := []string{}
 	// 		for clname := range Clusters.Config {
 	// 			clusterlist = append(clusterlist, string(clname))
@@ -390,23 +406,26 @@ func EvalFlags() {
 	// 		exitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
 	// 	}
 	// }
-	// if FamilyNamespaces[flags.Family].ImageNamespaces == nil {
-	// 	exitWithError("Family", flags.Family, "is not defined")
+	// if FamilyNamespaces[CmdParams.Family].ImageNamespaces == nil {
+	// 	exitWithError("Family", CmdParams.Family, "is not defined")
 	// }
 
-	// for _, cluster := range flags.Cluster {
+	// for _, cluster := range CmdParams.Cluster {
 	// 	foundNamespace := false
-	// 	for _, v := range FamilyNamespaces[flags.Family].ImageNamespaces[cluster] {
-	// 		if flags.Filter.Namespace == v {
+	// 	for _, v := range FamilyNamespaces[CmdParams.Family].ImageNamespaces[cluster] {
+	// 		if CmdParams.Filter.Namespace == v {
 	// 			foundNamespace = true
 	// 		}
 	// 	}
-	// 	if !foundNamespace && !(flags.Filter.Namespace == "") && !flags.Output.Used {
-	// 		exitWithError("Namespace", flags.Filter.Namespace, "is no image namespace for family", flags.Family)
+	// 	if !foundNamespace && !(CmdParams.Filter.Namespace == "") && !CmdParams.Output.Used {
+	// 		exitWithError("Namespace", CmdParams.Filter.Namespace, "is no image namespace for family", CmdParams.Family)
 	// 	}
 	// }
 
-	if !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
-		exitWithError("As least one of the output flags must set")
+	if !CmdParams.Options.ServerMode && !(*isPtr || *istagPtr || *shaPtr || *allPtr || *usedPtr || *unusedPtr || *deletePtr) {
+		exitWithError("\nAs least one of the output flags must set")
+	}
+	if CmdParams.Options.ServerMode {
+		CmdParams.Output.Used = true
 	}
 }

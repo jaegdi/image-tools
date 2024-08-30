@@ -3,7 +3,7 @@ package ocrequest
 import (
 	"crypto/tls"
 	"crypto/x509"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"golang.org/x/net/proxy"
@@ -18,7 +18,7 @@ func getHttpAnswer(url string, token string) []byte {
 
 	// Append our cert to the system pool
 	if ok := rootCAs.AppendCertsFromPEM([]byte(certs)); !ok {
-		ErrorLogger.Println("No certs appended, using system certs only")
+		ErrorMsg("No certs appended, using system certs only")
 	}
 
 	// Trust the augmented cert pool in our client
@@ -30,7 +30,7 @@ func getHttpAnswer(url string, token string) []byte {
 	// Create a new request using http
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		ErrorLogger.Println("Get " + url + " failed. " + err.Error())
+		ErrorMsg("Get " + url + " failed. " + err.Error())
 		return []byte("")
 	}
 	// add header to the req
@@ -63,12 +63,12 @@ func getHttpAnswer(url string, token string) []byte {
 	// client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		ErrorLogger.Println("Error on sending request." + err.Error())
+		ErrorMsg("Error on sending request." + err.Error())
 		return []byte("")
 	}
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		ErrorLogger.Println("Error on reading response." + err.Error())
+		ErrorMsg("Error on reading response." + err.Error())
 		return []byte("")
 	}
 	return []byte(body)

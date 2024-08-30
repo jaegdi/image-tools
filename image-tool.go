@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	. "image-tools/ocrequest"
+	. "image-tool/ocrequest"
 	// _ "net/http/pprof"
 )
 
@@ -22,15 +21,16 @@ func main() {
 	// 	defer pprof.StopCPUProfile()
 	// 	go func() {
 	// 		runtime.SetBlockProfileRate(1)
-	// 		InfoLogger.Println(http.ListenAndServe("localhost:6060", nil))
+	// 		InfoMsg(http.ListenAndServe("localhost:6060", nil))
 	// 	}()
 	// }
 	// // --%<---- End Profiling
 
 	if CmdParams.Options.ServerMode {
-		fmt.Println("Will be startet in server mode")
+		// CmdParams.Output.Used = true
+		StartServer()
 	} else {
-		CmdlineMode()
+		_ = CmdlineMode()
 	}
 
 	// // --%<---- Begin Profiling

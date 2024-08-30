@@ -44,8 +44,8 @@ cat <<EOT
 	},
 }
 EOT
-} > "$dir/../ocrequest/config-clusters.go"
+} > "$dir/../../ocrequest/config-clusters.go"
 
 switch-back-to-current-cluster
 
-lless "$dir/../ocrequest/config-clusters.go"
+# lless "$dir/../../ocrequest/config-clusters.go"

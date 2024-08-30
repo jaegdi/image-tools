@@ -15,7 +15,7 @@ func GetAllImagesOfCluster(cluster T_clName) T_ImagesMap {
 	imagesJson := ocGetCall(cluster, "", "images", "")
 	var imagesMap map[string]interface{}
 	if err := json.Unmarshal([]byte(imagesJson), &imagesMap); err != nil {
-		ErrorLogger.Println("unmarschal images." + err.Error())
+		ErrorMsg("unmarschal images." + err.Error())
 	}
 	var metadata map[string]interface{}
 	result := T_ImagesMap{}
@@ -46,7 +46,7 @@ func InitAllImages(c chan T_ImagesMapAllClusters) {
 		}
 	}
 	for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-		InfoLogger.Println("Number of Images found in", cluster, ":", len(ImagesMap[cluster]))
+		VerifyMsg("Number of Images found in", cluster, ":", len(ImagesMap[cluster]))
 	}
 	c <- ImagesMap
 	// c <- "InitAllImages Done!"

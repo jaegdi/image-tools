@@ -1,25 +1,32 @@
 #!/bin/bash
 set -e
 
-cp image-tools "old-version/image-tools_$(date +%F_%T)"
-cp image-tools.exe "old-version/image-tools_$(date +%F_%T).exe"
+[ -f image-tool ] && cp image-tool "old-version/image-tool_$(date +%F_%T)"
+[ -f image-tool.exe ] && cp image-tool.exe "old-version/image-tool.exe_$(date +%F_%T).exe"
 
-echo Generate the config-clusters.go
-scripts/generate_config.sh
+# echo Generate the config-clusters.go
+# build/scripts/generate_config.sh
 
-echo "Build linux binary of image-tools"
+echo "Build linux binary of image-tool"
 go build
 
-echo "Build windows binary of image-tools"
+echo "Build windows binary of image-tool"
 GOOS=windows GOARCH=amd64 go build
 
-if ./image-tools -family=ebs -used > /dev/null; then
+if ./image-tool -family=ebs -used > /dev/null; then
     echo "Push to artifactory"
-    artifactory-upload.sh  -lf=image-tools       -tr=scptools-bin-develop   -tf=tools/image-tools/image-tools-linux
-    artifactory-upload.sh  -lf=image-tools       -tr=scpas-bin-develop      -tf=istag_and_image_management/image-tools-linux
-    artifactory-upload.sh  -lf=image-tools.exe   -tr=scptools-bin-develop   -tf=tools/image-tools/image-tools-windows
-    artifactory-upload.sh  -lf=image-tools.exe   -tr=scpas-bin-develop      -tf=istag_and_image_management/image-tools-windows
+
+    artifactory-upload.sh -lf=image-tool       -tr=scptools-bin-dev-local   -tf=/tools/image-tools/image-tools-linux/
+    artifactory-upload.sh -lf=image-tool       -tr=scpas-bin-dev-local      -tf=/istag_and_image_management/image-tools-linux/
+
+    artifactory-upload.sh -lf=image-tool.exe   -tr=scptools-bin-dev-local   -tf=/tools/image-tools/image-tools-windows/
+    artifactory-upload.sh -lf=image-tool.exe   -tr=scpas-bin-dev-local      -tf=/istag_and_image_management/image-tools-windows/
+
+    # jf rt u --server-id default --flat image-tool  /scptools-bin-develop/tools/image-tools/image-tools-linux/image-tool
+    # jf rt u --server-id default --flat image-tool  /scpas-bin-develop/istag_and_image_management/image-tools-linux/image-tool
+    # jf rt u --server-id default --flat image-tool.exe  /scptools-bin-develop/tools/image-tools/image-tools-windows/image-tool.exe
+    # jf rt u --server-id default --flat image-tool.exe  /scpas-bin-develop/istag_and_image_management/image-tools-windows/image-tool.exe
 
     echo "Copy it to share folder PEWI4124://Daten"
-    cp image-tools image-tools.exe  /gast-drive-d/Daten/
+    cp image-tool image-tool.exe  /gast-drive-d/Daten/
 fi

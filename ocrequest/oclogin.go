@@ -1,11 +1,16 @@
 package ocrequest
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 )
 
 // getClusterToken fetch login token from Clusters config
@@ -14,9 +19,9 @@ func getClusterToken(cluster T_clName) string {
 	if _, ok := Clusters.Config[cluster]; ok {
 		token = Clusters.Config[cluster].Token
 		if token != "" {
-			DebugLogger.Print("Got token for cluster ", cluster, " from Clusters.Token")
+			DebugMsg("Got token for cluster ", cluster, " from Clusters.Token")
 		} else {
-			ErrorLogger.Print("Failed to get token for cluster ", cluster, " from Clusters.Token")
+			ErrorMsg("Failed to get token for cluster ", cluster, " from Clusters.Token")
 		}
 	}
 	// fmt.Println(token)
@@ -34,9 +39,7 @@ func setClusterToken(cluster T_clName, token string) {
 
 // ocGetToken tries to get the oc token from config, if it is not defined in config, it requests it from command line parameter
 func ocGetToken(cluster T_clName) string {
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("Try to get cluster token for cluster:", cluster)
-	}
+	DebugMsg("Try to get cluster token for cluster:", cluster)
 	token := getClusterToken(cluster)
 	if token != "" {
 		return token
@@ -68,12 +71,10 @@ func ocGetToken(cluster T_clName) string {
 // ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	if CmdParams.Options.Debug {
-		DebugLogger.Println("Try to login: ", app, Clusters.Config[cluster].Name)
-	}
+	DebugMsg("Try to login: ", app, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
-		ErrorLogger.Println("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
+		ErrorMsg("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))
 		return "login failed", err
 	} else {
 		cmd := exec.Command("oc", "whoami", "-t")
@@ -96,11 +97,11 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	filePath := exPath + "/" + filename
 	js, err := json.MarshalIndent(clusterconfig, "", "    ")
 	if err != nil {
-		ErrorLogger.Println("failed to serialize clusterconfig to json", err)
+		ErrorMsg("failed to serialize clusterconfig to json", err)
 	} else {
 		err := os.WriteFile(filePath, js, 0600)
 		if err != nil {
-			ErrorLogger.Println("failed to save serialized clusterconfig as json to file", err)
+			ErrorMsg("failed to save serialized clusterconfig as json to file", err)
 		}
 	}
 }
@@ -115,18 +116,86 @@ func readTokens(filename string) error {
 	filePath := exPath + "/" + filename
 	file, err := os.ReadFile(filePath)
 	if err != nil {
-		ErrorLogger.Println("failed to load configfile "+filePath, err)
+		ErrorMsg("failed to load configfile "+filePath, err)
 		return err
 	} else {
 		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
-			ErrorLogger.Println("error unmarshal clusterconfig from", filePath, err)
+			ErrorMsg("error unmarshal clusterconfig from", filePath, err)
 		} else {
-			InfoLogger.Println("Token read from", filePath)
+			VerifyMsg("Token read from", filePath)
 		}
 		js, err := json.MarshalIndent(Clusters.Config, "", "    ")
-		if CmdParams.Options.Debug {
-			DebugLogger.Println(string(js))
-		}
+		DebugMsg(string(js))
 		return err
+	}
+}
+
+// readTokens reads the token from the config file or a Kubernetes secret if running in ServerMode
+func readServerTokens(filename string) error {
+	if CmdParams.Options.ServerMode {
+		// Read tokens from Kubernetes secret
+		config, err := rest.InClusterConfig()
+		if err != nil {
+			ErrorMsg("failed to load in-cluster config", err)
+			return err
+		}
+
+		clientset, err := kubernetes.NewForConfig(config)
+		if err != nil {
+			ErrorMsg("failed to create Kubernetes client", err)
+			return err
+		}
+
+		// Get the namespace the Pod is running in
+		namespace, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+		if err != nil {
+			ErrorMsg("failed to read namespace", err)
+			return err
+		}
+
+		secret, err := clientset.CoreV1().Secrets(string(namespace)).Get(context.TODO(), "your-secret-name", metav1.GetOptions{})
+		if err != nil {
+			ErrorMsg("failed to get secret", err)
+			return err
+		}
+
+		tokenData, ok := secret.Data["token"]
+		if !ok {
+			err := fmt.Errorf("token not found in secret")
+			ErrorMsg("token not found in secret", err)
+			return err
+		}
+
+		if err := json.Unmarshal(tokenData, &Clusters); err != nil {
+			ErrorMsg("error unmarshal clusterconfig from secret", err)
+			return err
+		}
+
+		VerifyMsg("Token read from Kubernetes secret")
+		js, err := json.MarshalIndent(Clusters.Config, "", "    ")
+		DebugMsg(string(js))
+		return err
+	} else {
+		// Read tokens from config file
+		ex, err := os.Executable()
+		if err != nil {
+			panic(err)
+		}
+		exPath := filepath.Dir(ex)
+		filePath := exPath + "/" + filename
+		file, err := os.ReadFile(filePath)
+		if err != nil {
+			ErrorMsg("failed to load configfile "+filePath, err)
+			return err
+		} else {
+			if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
+				ErrorMsg("error unmarshal clusterconfig from", filePath, err)
+			} else {
+				VerifyMsg("Token read from", filePath)
+			}
+			js, err := json.MarshalIndent(Clusters.Config, "", "    ")
+			DebugMsg(string(js))
+			return err
+		}
 	}
 }
