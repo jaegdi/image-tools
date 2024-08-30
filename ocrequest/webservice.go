@@ -116,24 +116,29 @@ func handleDocumentation(w http.ResponseWriter, r *http.Request) {
 // - w: The http.ResponseWriter to write the response to.
 // - r: The http.Request object containing the query parameters.
 func handleExecute(w http.ResponseWriter, r *http.Request) {
+	// Extrahiere die Query-Parameter aus der URL
 	family := r.URL.Query().Get("family")
 	kind := r.URL.Query().Get("kind")
 	cluster := r.URL.Query().Get("cluster")
 	filter_tagname := r.URL.Query().Get("tagname")
 	filter_namespace := r.URL.Query().Get("namespace")
 
+	// Logge eine Informationsnachricht über die neue Anfrage
 	InfoMsg("--------------  New request  --------------")
 
+	// Validierung der erforderlichen Parameter
 	if err := validateParams(family, kind, filter_tagname); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		ErrorMsg("Error:", err)
 		return
 	}
 
+	// Setze den Standardwert für 'kind', falls nicht angegeben
 	if kind == "" {
 		kind = "is_tag_used"
 	}
 
+	// Initialisiere die Kommando-Parameter basierend auf den Abfrageparametern
 	cmdParams, html, err := initializeCmdParams(family, kind, cluster, filter_tagname, filter_namespace)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -141,13 +146,18 @@ func handleExecute(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Initialisiere den Servermodus mit den Kommando-Parametern
 	InitServerMode(cmdParams)
 
+	// Logge die Details der Anfrage
 	InfoMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
 	VerifyMsg("\nCmdParams Options:", GetJsonFromMap(CmdParams.Options), "Output:", GetJsonFromMap(CmdParams.Output))
+
+	// Führe den Befehl aus und erhalte das Ergebnis
 	result := CmdlineMode()
 	VerifyMsg("\nCmdParams Result:", GetJsonFromMap(result))
 
+	// Verarbeite die Ergebnisse und schreibe die Antwort
 	processResults(w, result, family, html, kind, filter_tagname)
 }
 
