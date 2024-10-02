@@ -12,26 +12,44 @@ func getBitbucketUrl(urlpath string) string {
 	return "https://bitbucket.sf-bk.de/projects/SCPDEPLOY/repos/scp-infra-config/raw/" + urlpath + "?at=refs%2Fheads%2Fmaster"
 }
 
+// getBitbucketData ruft die Konfigurationsdaten von Bitbucket ab und gibt sie als JSON-Byte-Array zurück.
+// Die Funktion führt folgende Schritte aus:
+// 1. Erzeugt die URL für die Bitbucket-Anfrage.
+// 2. Holt die YAML-Daten von der URL.
+// 3. Unmarshalt die YAML-Daten in eine Map.
+// 4. Konvertiert die Map in ein JSON-Byte-Array und gibt es zurück.
 func getBitbucketData(filename string) []byte {
+	// Erzeuge die URL für die Bitbucket-Anfrage basierend auf dem Dateinamen
 	url := getBitbucketUrl(filename)
 	DebugMsg("url: ", url)
+
+	// Hole die YAML-Daten von der URL unter Verwendung des Bitbucket-Tokens
 	yamlstr := getHttpAnswer(url, bitbucket_token)
 	DebugMsg("yaml: ", string(yamlstr))
+
+	// Unmarshal die YAML-Daten in eine Map
 	yamlmap := []interface{}{}
 	if err := UnmarshalMultidocYaml(yamlstr, &yamlmap); err != nil {
+		// Logge eine Fehlermeldung, falls das Unmarshalling fehlschlägt
 		ErrorMsg("Unmarshal multidoc yaml:", yamlstr)
 		ErrorMsg("Unmarshal multidoc yaml:", err.Error())
 	}
 	DebugMsg("yamlmap: ", yamlmap)
+
+	// Konvertiere die Map in ein JSON-Byte-Array
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	jsonstr, err := json.Marshal(&yamlmap)
-	// jsonstr, err := json.Marshal(yamlmap)
 	if err != nil {
+		// Logge eine Fehlermeldung, falls die Konvertierung fehlschlägt
 		ErrorMsg("yamlmap:    ", yamlmap)
 		ErrorMsg("err:    ", err)
 	}
+
+	// Logge die URL und die JSON-Daten
 	DebugMsg("Config from scp-infra-config url:", url)
 	DebugMsg("Config from scp-infra-config json:", string(jsonstr))
+
+	// Gib das JSON-Byte-Array zurück
 	return jsonstr
 }
 
