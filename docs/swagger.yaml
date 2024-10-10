@@ -24,7 +24,6 @@ paths:
       - description: The tagname parameter (required for 'is_tag_used')
         in: query
         name: tagname
-        required: true
         type: string
       - description: The namespace parameter
         in: query

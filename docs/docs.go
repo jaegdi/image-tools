@@ -52,8 +52,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "The tagname parameter (required for 'is_tag_used')",
                         "name": "tagname",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     },
                     {
                         "type": "string",

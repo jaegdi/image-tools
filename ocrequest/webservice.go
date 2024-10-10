@@ -105,7 +105,7 @@ func handleDocumentation(w http.ResponseWriter, r *http.Request) {
 // @Param   family     query    string     true        "The family parameter (required for 'is_tag_used')"
 // @Param   kind       query    string     false       "The kind of operation to perform. Valid values are 'used', 'is_tag_used', 'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'"
 // @Param   cluster    query    string     false       "The cluster parameter"
-// @Param   tagname    query    string     true        "The tagname parameter (required for 'is_tag_used')"
+// @Param   tagname    query    string     false        "The tagname parameter (required for 'is_tag_used')"
 // @Param   namespace  query    string     false       "The namespace parameter"
 // @Success 200 {object} map[string]interface{}
 // @Failure 400 {string} string "Missing or invalid parameters"
