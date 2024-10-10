@@ -4,7 +4,28 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	_ "image-tool/docs" // Import the generated docs
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
+
+// @title Webservice IMAGE-TOOL API
+// @version 1.0
+// @description This is a sample server for IMAGE-TOOL.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:8080
+// @BasePath /
+
+// @query.collection.format multi
 
 // T_flags, T_familyName, T_clName, T_tagName, T_nsName, CmdParams, InitServerMode, CmdlineMode, InfoMsg, ErrorMsg, VerifyMsg, GetJsonFromMap, GetHtmlTableFromMap
 // sollten hier definiert oder importiert werden
@@ -19,8 +40,10 @@ import (
 // handleDocumentation serves the documentation page.
 // StartServer starts the HTTP server and handles incoming requests.
 func StartServer() {
+	InfoMsg("Starting server on port 8080")
 	http.HandleFunc("/", handleDocumentation)
 	http.HandleFunc("/execute", handleExecute)
+	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -45,48 +68,7 @@ func StartServer() {
 // - w: The http.ResponseWriter to write the HTML content to.
 // - r: The http.Request object (not used in this function).
 func handleDocumentation(w http.ResponseWriter, r *http.Request) {
-	docPage := `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Webservice IMAGE-TOOL Documentation</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1 { color: #333; }
-        p { margin: 10px 0; }
-        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-    </style>
-</head>
-<body>
-    <h1>Webservice IMAGE-TOOL Documentation</h1>
-    <p>Welcome to the webservice documentation page of the image-tool. Below you will find information on how to use the webservice.</p>
-    <h2>Endpoints</h2>
-	<h3>GET /</h3>
-	<p>This endpoint show this documentation</p>
-    <h3>GET /execute</h3>
-    <p>This endpoint executes a command based on the provided query parameters.</p>
-    <p><strong>Query Parameters:</strong></p>
-    <ul>
-        <li><code>family</code> (required for <code>is_tag_used</code>): The family parameter.</li>
-        <li><code>kind</code>: The kind of operation to perform. Valid values are <code>is_tag_used</code>.
-		<br><pre>       The default is <code>is_tag_used</code></pre></li>
-        <li><code>cluster</code>: The cluster parameter (is not necessary for kind <code>is_tag_used</code>): eg. cid-scp0, ... or pro-scp0</li>
-        <li><code>tagname</code> (required for <code>is_tag_used</code>): The tagname parameter.</li>
-        <li><code>namespace</code>: The namespace parameter.</li>
-    </ul>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><code>200 OK</code>: The command was executed successfully. The response is in JSON format.
-		<br><pre>       eg.: <code>{"TagIsUsed":true,"TagName":"pkp-3.19.0-build-3"}</code>
-		<br>       eg.: <code>{"TagIsUsed":false,"TagName":"pkp-x-not-there"}</code></pre></li>
-
-        <li><code>400 Bad Request</code>: Missing or invalid parameters.</li>
-    </ul>
-    <p>Example usage:</p>
-    <pre><code>GET /execute?family=pkp&kind=is_tag_used&tagname=pkp-3.19.0-build-3</code></pre>
-</body>
-</html>
-`
+	docPage := GetDocPage()
 	w.Header().Set("Content-Type", "text/html")
 	w.Write([]byte(docPage))
 }
@@ -115,6 +97,19 @@ func handleDocumentation(w http.ResponseWriter, r *http.Request) {
 // Parameters:
 // - w: The http.ResponseWriter to write the response to.
 // - r: The http.Request object containing the query parameters.
+// @Summary Execute a command
+// @Description Executes a command based on the provided query parameters.
+// @Tags execute
+// @Accept  json
+// @Produce  json
+// @Param   family     query    string     true        "The family parameter (required for 'is_tag_used')"
+// @Param   kind       query    string     false       "The kind of operation to perform. Valid values are 'used', 'is_tag_used', 'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'"
+// @Param   cluster    query    string     false       "The cluster parameter"
+// @Param   tagname    query    string     true        "The tagname parameter (required for 'is_tag_used')"
+// @Param   namespace  query    string     false       "The namespace parameter"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {string} string "Missing or invalid parameters"
+// @Router /execute [get]
 func handleExecute(w http.ResponseWriter, r *http.Request) {
 	// Extrahiere die Query-Parameter aus der URL
 	family := r.URL.Query().Get("family")
@@ -139,15 +134,15 @@ func handleExecute(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Initialisiere die Kommando-Parameter basierend auf den Abfrageparametern
-	cmdParams, html, err := initializeCmdParams(family, kind, cluster, filter_tagname, filter_namespace)
+	_, html, err := initializeCmdParams(family, kind, cluster, filter_tagname, filter_namespace)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		ErrorMsg("Error:", err)
 		return
 	}
-
+	InfoMsg("Parameters:", GetJsonFromMap(CmdParams))
 	// Initialisiere den Servermodus mit den Kommando-Parametern
-	InitServerMode(cmdParams)
+	InitServerMode(CmdParams)
 
 	// Logge die Details der Anfrage
 	InfoMsg("family:", family, "| kind:", kind, "| tagname:", filter_tagname)
@@ -171,55 +166,61 @@ func validateParams(family, kind, tagname string) error {
 
 // initializeCmdParams initializes the command parameters based on the query parameters.
 func initializeCmdParams(family, kind, cluster, tagname, namespace string) (T_flags, bool, error) {
-	cmdParams := T_flags{}
-	cmdParams.Family = T_familyName(family)
-	cmdParams.Cluster = T_clName(cluster).list()
+	// cmdParams := T_flags{}
+	CmdParams.Family = T_familyName(family)
+	CmdParams.Cluster = T_clName(cluster).list()
+	CmdParams.Filter.Tagname = T_tagName(tagname)
+	CmdParams.Filter.Namespace = T_nsName(namespace)
 	html := true
+	CmdParams.Output.All = false
+	CmdParams.Output.Image = false
+	CmdParams.Output.Is = false
+	CmdParams.Output.Istag = false
+	CmdParams.Output.UnUsed = false
+	CmdParams.Output.Used = false
 
 	switch kind {
 	case "used":
-		cmdParams.Output.Used = true
+		CmdParams.Output.Used = true
 	case "is_tag_used":
-		cmdParams.Output.Used = true
+		CmdParams.Output.Used = true
 		html = false
 	case "unused":
-		cmdParams.Output.UnUsed = true
+		CmdParams.Output.UnUsed = true
 	case "istag":
-		cmdParams.Output.Istag = true
+		CmdParams.Output.Istag = true
 	case "is":
-		cmdParams.Output.Is = true
+		CmdParams.Output.Is = true
 	case "image":
-		cmdParams.Output.Image = true
+		CmdParams.Output.Image = true
 	case "all":
-		cmdParams.Output.All = true
+		CmdParams.Output.All = true
 	default:
-		return cmdParams, html, fmt.Errorf("Invalid kind parameter")
+		return CmdParams, html, fmt.Errorf("Invalid kind parameter")
 	}
-
-	cmdParams.Filter.Tagname = T_tagName(tagname)
-	cmdParams.Filter.Namespace = T_nsName(namespace)
-	return cmdParams, html, nil
+	CmdParams.Html = html
+	return CmdParams, html, nil
 }
 
 // processResults processes the results and writes the response.
 func processResults(w http.ResponseWriter, result T_completeResults, family string, html bool, kind, tagname string) {
-	if html {
-		htmldata, err := GetHtmlTableFromMap(result, T_familyName(family))
-		if err != nil {
-			ErrorMsg("Error creating template:", err)
-		}
-		w.Write([]byte(htmldata))
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		if kind == "is_tag_used" {
+	switch kind {
+	case "is_tag_used":
+		{
 			tagIsUsed := len(result.UsedIstags) > 0
 			response := map[string]interface{}{
 				"TagName":   tagname,
 				"TagIsUsed": tagIsUsed,
 			}
 			json.NewEncoder(w).Encode(response)
-		} else {
-			json.NewEncoder(w).Encode(result)
 		}
+	default:
+		htmldata := GetTextTableFromMap(result, T_familyName(family))
+		if html {
+			w.Header().Set("Content-Type", "text/html")
+		} else {
+			w.Header().Set("Content-Type", "application/json")
+		}
+		w.Write([]byte(htmldata))
 	}
 }

@@ -84,22 +84,7 @@ func CmdlineMode() T_completeResults {
 
 	resultFamilies := T_completeResultsFamilies{}
 	resultFamilies[CmdParams.Family] = result
-	if !CmdParams.Delete {
-		switch {
-		case CmdParams.Html:
-			GetHtmlTableFromMap(result, CmdParams.Family)
-		case CmdParams.Json:
-			fmt.Println(GetJsonFromMap(resultFamilies))
-		case CmdParams.Yaml:
-			fmt.Println(GetYamlFromMap(resultFamilies))
-		case CmdParams.Csv:
-			GetCsvFromMap(result, CmdParams.Family)
-		case (CmdParams.Table || CmdParams.TabGroup):
-			GetTextTableFromMap(result, CmdParams.Family)
-		case CmdParams.Options.ServerMode:
-			return result
-		}
-	} else {
+	if CmdParams.Delete {
 		if CmdParams.DeleteOpts.Snapshots {
 			FilterIstagsToDelete(
 				resultFamilies,
@@ -136,6 +121,21 @@ func CmdlineMode() T_completeResults {
 			DebugMsg("execute oc adm prune")
 		} else {
 			DebugMsg("run in dry run mode")
+		}
+	} else {
+		switch {
+		case CmdParams.Html:
+			GetTextTableFromMap(result, CmdParams.Family)
+		case CmdParams.Json:
+			fmt.Println(GetJsonFromMap(resultFamilies))
+		case CmdParams.Yaml:
+			fmt.Println(GetYamlFromMap(resultFamilies))
+		case CmdParams.Csv:
+			GetCsvFromMap(result, CmdParams.Family)
+		case (CmdParams.Table || CmdParams.TabGroup):
+			GetTextTableFromMap(result, CmdParams.Family)
+		case CmdParams.Options.ServerMode:
+			return result
 		}
 	}
 

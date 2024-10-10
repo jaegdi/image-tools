@@ -29,9 +29,9 @@ func ageInDays(date string) int {
 	return int(today.Sub(t).Hours()) / 24
 }
 
-// exitWithError write msg to StdErr, and logfile and exits to program
-func exitWithError(errormsg ...interface{}) {
-	ErrorLogger.Println(errormsg...)
+// ExitWithError write msg to StdErr, and logfile and exits to program
+func ExitWithError(errormsg ...interface{}) {
+	ErrorMsg(errormsg...)
 	os.Stderr.WriteString(fmt.Sprint(errormsg...) + "\n")
 	os.Exit(1)
 }
@@ -183,17 +183,19 @@ func generateCsvForImageStreams(list interface{}, family T_familyName) {
 			for image, shaMap := range isMap {
 				// Iterate through each image stream tag
 				for istag := range shaMap {
-					// Create a new CSV line with the relevant details
-					line := T_csvLine{}
-					line = append(line, string(family))
-					line = append(line, "allIstags")
-					line = append(line, "is")
-					line = append(line, is.str())
-					line = append(line, image.str())
-					line = append(line, istag.str())
-					line = append(line, cluster.str())
-					// Append the line to the CSV document
-					output = append(output, line)
+					if strings.HasPrefix(istag.str(), family.str()) {
+						// Create a new CSV line with the relevant details
+						line := T_csvLine{}
+						line = append(line, string(family))
+						line = append(line, "allIstags")
+						line = append(line, "is")
+						line = append(line, is.str())
+						line = append(line, image.str())
+						line = append(line, istag.str())
+						line = append(line, cluster.str())
+						// Append the line to the CSV document
+						output = append(output, line)
+					}
 				}
 			}
 		}
@@ -305,17 +307,19 @@ func generateCsvForUsedImageStreamTags(list interface{}, family T_familyName) {
 		for istag, istagArray := range isMap {
 			// Iterate through each map of used image stream tag details
 			for _, istagMap := range istagArray {
-				// Create a new CSV line with the relevant details
-				line := T_csvLine{}
-				line = append(line, string(family))
-				line = append(line, "usedistags")
-				line = append(line, "is:tag")
-				line = append(line, is.str())
-				line = append(line, istag.str())
-				// Append the values of the used image stream tag map to the line
-				line = append(line, toArrayString(istagMap.Values())...)
-				// Append the line to the CSV document
-				output = append(output, line)
+				if nsBelongsToFamily(istagMap.UsedInNamespace, family) || nsBelongsToFamily(istagMap.FromNamespace, family) {
+					// Create a new CSV line with the relevant details
+					line := T_csvLine{}
+					line = append(line, string(family))
+					line = append(line, "usedistags")
+					line = append(line, "is:tag")
+					line = append(line, is.str())
+					line = append(line, istag.str())
+					// Append the values of the used image stream tag map to the line
+					line = append(line, toArrayString(istagMap.Values())...)
+					// Append the line to the CSV document
+					output = append(output, line)
+				}
 			}
 		}
 	}
@@ -359,22 +363,24 @@ func generateCsvForUnusedImageStreamTags(list interface{}, family T_familyName) 
 // Parameters:
 // - list: The data structure containing the ImageStreamTags information.
 // - family: The family name (T_familyName) to include in the table output.
-func GetTextTableFromMap(list interface{}, family T_familyName) {
+func GetTextTableFromMap(list interface{}, family T_familyName) string {
+	result := ""
 	if CmdParams.Output.Is || CmdParams.Output.All {
-		generateTableForImageStreams(list, family)
+		result = generateTableForImageStreams(list, family)
 	}
 	if CmdParams.Output.Istag || CmdParams.Output.All {
-		generateTableForImageStreamTags(list, family)
+		result = generateTableForImageStreamTags(list, family)
 	}
 	if CmdParams.Output.Image || CmdParams.Output.All {
-		generateTableForImages(list, family)
+		result = generateTableForImages(list, family)
 	}
 	if CmdParams.Output.Used || CmdParams.Output.All {
-		generateTableForUsedImageStreamTags(list, family)
+		result = generateTableForUsedImageStreamTags(list, family)
 	}
 	if CmdParams.Output.UnUsed || CmdParams.Output.All {
-		generateTableForUnusedImageStreamTags(list, family)
+		result = generateTableForUnusedImageStreamTags(list, family)
 	}
+	return result
 }
 
 // generateTableForImageStreams generates ASCII table output for ImageStreams.
@@ -383,7 +389,7 @@ func GetTextTableFromMap(list interface{}, family T_familyName) {
 // Parameters:
 // - list: The data structure containing image streams and their tags.
 // - family: The family name used for generating the table content.
-func generateTableForImageStreams(list interface{}, family T_familyName) {
+func generateTableForImageStreams(list interface{}, family T_familyName) string {
 	// Initialize the table output with a headline
 	output := []table.Row{}
 	headline := table.Row{"Imagestream " + string(family), "Image", "ImagestreamTag", "Cluster"}
@@ -397,16 +403,43 @@ func generateTableForImageStreams(list interface{}, family T_familyName) {
 			for image, shaMap := range isMap {
 				// Iterate through each image stream tag
 				for istag := range shaMap {
-					// Create a new table row with the relevant details
-					line := table.Row{is, image, istag, cluster}
-					// Append the row to the table output
-					output = append(output, line)
+					if strings.HasPrefix(istag.str(), family.str()) {
+						// Create a new table row with the relevant details
+						line := table.Row{is, image, istag, cluster}
+						// Append the row to the table output
+						output = append(output, line)
+					}
 				}
 			}
 		}
 	}
 	// Pretty print the table output
-	tablePrettyprint(output)
+	return tablePrettyprint(output)
+}
+
+// Beispiel für slice.Contains Funktion
+func sliceContains(slice []T_nsName, item T_nsName) bool {
+	for _, s := range slice {
+		if s == item {
+			return true
+		}
+	}
+	return false
+}
+
+func testFamilyNamespaces(ns T_nsName, family T_familyName) bool {
+	if sliceContains(FamilyNamespaces[family].nsList(), ns) {
+		// Der Namespace ist in der nsList enthalten
+		return true
+	}
+	return false
+}
+
+func nsBelongsToFamily(ns T_nsName, family T_familyName) bool {
+	if family.str() == "" || strings.HasPrefix(ns.str(), string(family)) || testFamilyNamespaces(ns, family) {
+		return true
+	}
+	return false
 }
 
 // generateTableForImageStreamTags generates ASCII table output for ImageStreamTags.
@@ -415,7 +448,7 @@ func generateTableForImageStreams(list interface{}, family T_familyName) {
 // Parameters:
 // - list: The data structure containing image stream tags.
 // - family: The family name used for generating the table content.
-func generateTableForImageStreamTags(list interface{}, family T_familyName) {
+func generateTableForImageStreamTags(list interface{}, family T_familyName) string {
 	// Initialize the table output with a headline
 	output := []table.Row{}
 	headline := table.Row{"istag " + string(family), "Cluster"}
@@ -428,18 +461,20 @@ func generateTableForImageStreamTags(list interface{}, family T_familyName) {
 		// Iterate through each image stream tag name in the list for the current cluster
 		for istagName, nsMap := range list.(T_completeResults).AllIstags[cluster].Istag {
 			// Iterate through each namespace map for the current image stream tag name
-			for _, istagMap := range nsMap {
-				// Create a new table row with the relevant details
-				line := table.Row{istagName, cluster}
-				// Append the values of the istag map to the row
-				line = append(line, toTableRow(istagMap.Values())...)
-				// Append the row to the table output
-				output = append(output, line)
+			for ns, istagMap := range nsMap {
+				if nsBelongsToFamily(ns, family) {
+					// Create a new table row with the relevant details
+					line := table.Row{istagName, cluster}
+					// Append the values of the istag map to the row
+					line = append(line, toTableRow(istagMap.Values())...)
+					// Append the row to the table output
+					output = append(output, line)
+				}
 			}
 		}
 	}
 	// Pretty print the table output
-	tablePrettyprint(output)
+	return tablePrettyprint(output)
 }
 
 // generateTableForImages generates ASCII table output for Images.
@@ -448,7 +483,7 @@ func generateTableForImageStreamTags(list interface{}, family T_familyName) {
 // Parameters:
 // - list: The data structure containing images and their tags.
 // - family: The family name used for generating the table content.
-func generateTableForImages(list interface{}, family T_familyName) {
+func generateTableForImages(list interface{}, family T_familyName) string {
 	// Initialize the table output with a headline
 	output := []table.Row{}
 	headline := table.Row{"Image " + string(family), "Istag", "Imagestream", "Cluster", "Namespace", "Date", "AgeInDays", "IsTagReferences"}
@@ -474,7 +509,7 @@ func generateTableForImages(list interface{}, family T_familyName) {
 		}
 	}
 	// Pretty print the table output
-	tablePrettyprint(output)
+	return tablePrettyprint(output)
 }
 
 // generateTableForUsedImageStreamTags generates ASCII table output for Used ImageStreamTags.
@@ -483,7 +518,7 @@ func generateTableForImages(list interface{}, family T_familyName) {
 // Parameters:
 // - list: The data structure containing used image stream tags.
 // - family: The family name used for generating the table content.
-func generateTableForUsedImageStreamTags(list interface{}, family T_familyName) {
+func generateTableForUsedImageStreamTags(list interface{}, family T_familyName) string {
 	// Initialize the table output with a headline
 	output := []table.Row{}
 	headline := table.Row{"Imagestream (used for " + string(family) + ")", "Tag (used)"}
@@ -507,7 +542,7 @@ func generateTableForUsedImageStreamTags(list interface{}, family T_familyName) 
 		}
 	}
 	// Pretty print the table output
-	tablePrettyprint(output)
+	return tablePrettyprint(output)
 }
 
 // generateTableForUnusedImageStreamTags generates ASCII table output for Unused ImageStreamTags.
@@ -516,7 +551,7 @@ func generateTableForUsedImageStreamTags(list interface{}, family T_familyName) 
 // Parameters:
 // - list: The data structure containing unused image stream tags.
 // - family: The family name used for generating the table content.
-func generateTableForUnusedImageStreamTags(list interface{}, family T_familyName) {
+func generateTableForUnusedImageStreamTags(list interface{}, family T_familyName) string {
 	InfoMsg(family)
 	// Initialize the table output with a headline
 	output := []table.Row{}
@@ -535,7 +570,7 @@ func generateTableForUnusedImageStreamTags(list interface{}, family T_familyName
 		output = append(output, line)
 	}
 	// Pretty print the table output
-	tablePrettyprint(output)
+	return tablePrettyprint(output)
 }
 
 // toTableRow converts a variadic slice of interface{} to a table.Row.
@@ -585,25 +620,27 @@ func toArrayString(arr ...interface{}) []string {
 //
 // Parameters:
 // - out: A slice of table.Row representing the rows to be printed.
-func tablePrettyprint(out []table.Row) {
+func tablePrettyprint(out []table.Row) string {
 	// If there are no rows to print, return immediately
 	if len(out) == 0 {
-		return
+		return ""
 	}
 
 	// Get the terminal height
 	height := getTerminalHeight()
 
 	// Activate the pager
-	cmd, pager := activatePager()
+	cmd, pager, pagername := activatePager()
 	defer func() {
 		// Ensure the pager is closed and the command waits for completion
-		pager.Close()
-		_ = cmd.Wait()
+		if pager != nil {
+			pager.Close()
+			_ = cmd.Wait()
+		}
 	}()
 
 	// Define and render the table output
-	renderTable(out, pager, height)
+	return renderTable(out, pager, height, pagername)
 }
 
 // getTerminalHeight retrieves the terminal height.
@@ -612,14 +649,17 @@ func tablePrettyprint(out []table.Row) {
 // Returns:
 // - An integer representing the terminal height.
 func getTerminalHeight() int {
-	fd := int(os.Stdout.Fd())
-	_, height, terr := terminal.GetSize(fd)
-	if terr != nil {
-		// If getting the terminal size fails, set a default height
-		height = 60
-		ErrorMsg("failed to get terminal size, set it to", height)
+	if !CmdParams.Html {
+		fd := int(os.Stdout.Fd())
+		_, height, terr := terminal.GetSize(fd)
+		if terr != nil {
+			// If getting the terminal size fails, set a default height
+			height = 60
+			ErrorMsg("failed to get terminal size, set it to", height)
+		}
+		return height
 	}
-	return height
+	return 0
 }
 
 // activatePager activates the pager for table output.
@@ -627,9 +667,12 @@ func getTerminalHeight() int {
 // Returns:
 // - A pointer to exec.Cmd representing the pager command.
 // - A pipe writer for the pager.
-func activatePager() (*exec.Cmd, io.WriteCloser) {
-	cmd, pager := runPager()
-	return cmd, pager
+func activatePager() (*exec.Cmd, io.WriteCloser, string) {
+	if CmdParams.Html {
+		return nil, nil, ""
+	}
+	cmd, pager, pagername := runPager()
+	return cmd, pager, pagername
 }
 
 // renderTable defines and renders the table output.
@@ -638,21 +681,30 @@ func activatePager() (*exec.Cmd, io.WriteCloser) {
 // - out: A slice of table.Row representing the rows to be printed.
 // - pager: A pipe writer for the pager.
 // - height: An integer representing the terminal height.
-func renderTable(out []table.Row, pager io.WriteCloser, height int) {
+func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername string) string {
 	// Define the table output
 	t := table.NewWriter()
-	t.SetOutputMirror(pager)                 // Set the output to the pager
+	if !CmdParams.Html {
+		if pager != nil {
+			t.SetOutputMirror(pager) // Set the output to the pager
+			if pagername == "ov" {   // If the pager is ov, set the page size to zero
+				t.SetPageSize(0)
+			} else {
+				t.SetPageSize(height - 4) // Set the page size based on terminal height
+			}
+		}
+		// t.SetStyle(table.StyleColoredBright) // Set the table style
+		t.SetStyle(table.StyleColoredBlackOnGreenWhite)
+	}
 	t.AppendHeader(out[0])                   // Append the header row
 	t.AppendFooter(table.Row{" ", " ", " "}) // Append a footer row
 	t.AppendRows(out[1:])                    // Append the data rows
-	t.SetStyle(table.StyleColoredBright)     // Set the table style
 	t.SortBy([]table.SortBy{                 // Define sorting for the table
 		{Number: 1, Mode: table.Asc},
 		{Number: 2, Mode: table.Asc},
 		{Number: 3, Mode: table.Asc},
 	})
-	t.SetAutoIndex(true)      // Enable automatic indexing of rows
-	t.SetPageSize(height - 4) // Set the page size based on terminal height
+	t.SetAutoIndex(true) // Enable automatic indexing of rows
 
 	// If TabGroup parameter is set, configure column merging
 	if CmdParams.TabGroup {
@@ -668,33 +720,109 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int) {
 		})
 	}
 
-	// // If Html parameter is set, render the table as HTML
-	// if CmdParams.Html {
-	// 	t.Style().HTML = table.HTMLOptions{
-	// 		CSSClass:    "game-of-thrones",
-	// 		EmptyColumn: "&nbsp;",
-	// 		EscapeText:  true,
-	// 		Newline:     "<br/>",
-	// 	}
-	// 	t.RenderHTML()
-	// } else {
-	// // Otherwise, render the table as ASCII
-	t.Render()
-	// }
+	// If Html parameter is set, render the table as HTML
+	if CmdParams.Html {
+		t.Style().HTML = table.HTMLOptions{
+			CSSClass:    "game-of-thrones",
+			EmptyColumn: "&nbsp;",
+			EscapeText:  true,
+			Newline:     "<br/>",
+		}
+		htmlTable := t.RenderHTML()
+		downloadButton := `
+            <button onclick="downloadTableAsExcel()">Download as Excel</button>
+        `
+		downloadButton2 := `
+            <script>
+                function downloadTableAsExcel() {
+                    var table = document.querySelector('.dataTables_scrollBody > table');
+                    var html = table.outerHTML;
+                    var url = 'data:application/vnd.ms-excel,' + escape(html);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'table.xls');
+                    link.click();
+                }
+            </script>
+        `
+		dataTableScript := `
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+            <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+            <style>
+                html, body {
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+                .dataTables_wrapper {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .dataTables_wrapper .dataTables_filter {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                table {
+                    width: 100%;
+                }
+                .dataTables_scrollBody {
+                    flex: 1 1 auto;
+                    overflow: auto;
+                }
+                .dataTables_scrollHead {
+                    flex: 0 0 auto;
+                }
+            </style>
+            <script>
+                $(document).ready(function() {
+                    var table = $('table').DataTable({
+                        "scrollY": "calc(100vh - 150px)",
+                        "scrollCollapse": true,
+                        "paging": false,
+                        "scrollX": true
+                    });
+                    $('.dataTables_filter').append(` + "`" + downloadButton + "`" + `);
+                });
+            </script>
+        `
+		return dataTableScript + htmlTable + downloadButton2
+	} else {
+		t.Render()
+		return ""
+	}
 }
 
 // runPager starts less or the standard pager of os and pipes output into its Stdin
-func runPager() (*exec.Cmd, io.WriteCloser) {
-	pager := os.Getenv("PAGER")
-	if pager == "" {
-		pager = "more"
-	}
+func runPager() (*exec.Cmd, io.WriteCloser, string) {
+	var pager string
 	var cmd *exec.Cmd
-	if pager == "less" {
-		cmd = exec.Command(pager, "-m", "-n", "-g", "-i", "-J", "-R", "-S", "--underline-special", "--SILENT")
-	} else {
-		cmd = exec.Command(pager)
+
+	if CmdParams.Html {
+		return nil, nil, ""
 	}
+	if _, err := exec.LookPath("ov"); err == nil {
+		pager = "ov"
+	} else {
+		pager = os.Getenv("PAGER")
+	}
+	switch pager {
+	case "less":
+		{
+			cmd = exec.Command(pager, "-m", "-n", "-g", "-i", "-J", "-R", "-S", "--underline-special", "--SILENT")
+		}
+	case "ov":
+		{
+			cmd = exec.Command("ov", "-w=false", "-c", "-H", "1", "-d", "' +'")
+		}
+	default:
+		{
+			cmd = exec.Command(pager)
+		}
+	}
+
 	out, err := cmd.StdinPipe()
 	if err != nil {
 		ErrorMsg("ExecError", err)
@@ -704,5 +832,5 @@ func runPager() (*exec.Cmd, io.WriteCloser) {
 	if err := cmd.Start(); err != nil {
 		ErrorMsg("ExecError", err)
 	}
-	return cmd, out
+	return cmd, out, pager
 }

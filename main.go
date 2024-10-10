@@ -27,7 +27,6 @@ func main() {
 	// // --%<---- End Profiling
 
 	if CmdParams.Options.ServerMode {
-		// CmdParams.Output.Used = true
 		StartServer()
 	} else {
 		_ = CmdlineMode()

@@ -52,7 +52,7 @@ func getHttpAnswer(url string, token string) []byte {
 	if CmdParams.Options.Socks5Proxy != "" {
 		dialer, err := proxy.SOCKS5("tcp", CmdParams.Options.Socks5Proxy, nil, proxy.Direct)
 		if err != nil {
-			exitWithError("can't connect to the proxy:", err)
+			ExitWithError("can't connect to the proxy:", err)
 		}
 		httpTransport := &http.Transport{TLSClientConfig: config}
 		client = &http.Client{Transport: httpTransport}

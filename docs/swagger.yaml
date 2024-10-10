@@ -1,0 +1,48 @@
+info:
+  contact: {}
+paths:
+  /execute:
+    get:
+      consumes:
+      - application/json
+      description: Executes a command based on the provided query parameters.
+      parameters:
+      - description: The family parameter (required for 'is_tag_used')
+        in: query
+        name: family
+        required: true
+        type: string
+      - description: The kind of operation to perform. Valid values are 'used', 'is_tag_used',
+          'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'
+        in: query
+        name: kind
+        type: string
+      - description: The cluster parameter
+        in: query
+        name: cluster
+        type: string
+      - description: The tagname parameter (required for 'is_tag_used')
+        in: query
+        name: tagname
+        required: true
+        type: string
+      - description: The namespace parameter
+        in: query
+        name: namespace
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing or invalid parameters
+          schema:
+            type: string
+      summary: Execute a command
+      tags:
+      - execute
+swagger: "2.0"

@@ -51,7 +51,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"b2b": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"b2b-images"},
+			"cid-scp0": {"b2b-images", "b2b-build"},
 			"ppr-scp0": {"b2b-images"},
 			"vpt-scp0": {"b2b-images"},
 			"pro-scp0": {"b2b-images"},
@@ -63,7 +63,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"b2c": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"b2c-images"},
+			"cid-scp0": {"b2c-images", "b2b-build"},
 			"ppr-scp0": {"b2c-images"},
 			"vpt-scp0": {"b2c-images"},
 			"pro-scp0": {"b2c-images"},
@@ -75,7 +75,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"cbs": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"cbs-images"},
+			"cid-scp0": {"cbs-images", "cbs-build"},
 			"int-scp0": {"cbs-images"},
 			"ppr-scp0": {"cbs-images"},
 			"vpt-scp0": {"cbs-images"},
@@ -88,7 +88,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"dca": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"dca-images"},
+			"cid-scp0": {"dca-images", "dca-build"},
 			"int-scp0": {"dca-images"},
 			"ppr-scp0": {"dca-images"},
 			"vpt-scp0": {"dca-images"},
@@ -113,7 +113,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"ibs": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"ibs-images"},
+			"cid-scp0": {"ibs-images", "ibs-build"},
 			"ppr-scp0": {"ibs-images"},
 			"vpt-scp0": {"ibs-images"},
 			"pro-scp0": {"ibs-images"},
@@ -149,7 +149,7 @@ var FamilyNamespacesStat = T_famNsList{
 	},
 	"vps": {
 		ImageNamespaces: map[T_clName][]T_nsName{
-			"cid-scp0": {"vps-images"},
+			"cid-scp0": {"vps-images", "vps-build"},
 			"ppr-scp0": {"vps-images"},
 			"vpt-scp0": {"vps-images"},
 			"pro-scp0": {"vps-images"},

@@ -8,22 +8,22 @@ ENV LANG=en_US.UTF-8
 USER root
 
 # get the credentials from the secret, that is mounted in the build config
-COPY build/scripts/fix-permissions.sh /usr/local/bin/fix-permissions.sh
-COPY build/scripts/create-netrc.sh /usr/local/bin/create-netrc.sh
-COPY build/pipeline-secrets/password /password
-COPY build/pipeline-secrets/username /username
+# COPY build/scripts/fix-permissions.sh /usr/local/bin/fix-permissions.sh
+# COPY build/scripts/create-netrc.sh /usr/local/bin/create-netrc.sh
+# COPY build/pipeline-secrets/password /password
+# COPY build/pipeline-secrets/username /username
 COPY build/certs/*.crt /etc/pki/ca-trust/source/anchors/
 COPY image-tool /usr/bin/
 COPY clusterconfig.json /usr/bin/
 
-RUN chmod a+rx /usr/local/bin/fix-permissions.sh /usr/local/bin/create-netrc.sh \
-    && /usr/local/bin/create-netrc.sh 'my-password-file' ${ART_HOSTNAME} \
+RUN # chmod a+rx /usr/local/bin/fix-permissions.sh /usr/local/bin/create-netrc.sh \
+    # && /usr/local/bin/create-netrc.sh 'my-password-file' ${ART_HOSTNAME} \
     && chgrp root /usr/bin/image-tool \
     && chgrp root /usr/bin/clusterconfig.json \
     && chmod a+rx /usr/bin/image-tool \
     && chmod a+rw /usr/bin/clusterconfig.json \
-    && update-ca-trust extract \
-    && rm my-password-file
+    && update-ca-trust extract
+    # && rm my-password-file
 
 
 # COPY scptools-bitbucket/password /password
@@ -55,4 +55,4 @@ RUN chmod a+rx /usr/local/bin/fix-permissions.sh /usr/local/bin/create-netrc.sh 
 #     && yum update -a \
 #     && yum clean all
 
-CMD ["image-tools", "-socks5=no", "-server", "-statcfg"]
+CMD ["image-tool", "-socks5=no", "-server", "-statcfg"]

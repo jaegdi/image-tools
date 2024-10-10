@@ -4,8 +4,8 @@
 
 Download it from
 
-- [image-tools  for linux](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/image-tools/image-tools))
-- [image-tools .exe for windows](https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/image-tools.exe/image-tools.exe))
+- [image-tools  for linux](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/))
+- [image-tools .exe for windows](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/))
 
 and store it somewhere in your PATH. It is a statically linked go program and no installation is neccessary.
 
@@ -209,3 +209,8 @@ Delete: To delete all not used images of family 'aps' in cluster cid
 Delete: To delete all hybris istags of family pkp older than 45 days
 
         image-tools -family=pkp -cluster=cid-scp0 -delete -isname=hybris -minage=45
+
+!!!  To check, which images are not deleted, because they are in use you can check the logfile, which is created in the current directory
+```bash
+ cat image-tools.log  |  grep logUsedIstags:  |  sort -k5  |  column -t
+```

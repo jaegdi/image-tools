@@ -61,8 +61,24 @@ func Init() {
 		FamilyNamespaces = fns
 		// Log the static configurations
 		InfoMsg("------------------------------------------------------------")
-		InfoMsg("dynamic Config", GetJsonOneliner(fns))
+		InfoMsg("dynamic Config", GetJsonFromMap(fns))
 	}
+	// check some parameters
+	if FamilyNamespaces[CmdParams.Family].ImageNamespaces == nil && !(CmdParams.Family == "all" || CmdParams.Options.ServerMode) {
+		ExitWithError("Family ", CmdParams.Family, " is not defined")
+	}
+	for _, cluster := range CmdParams.Cluster {
+		foundNamespace := false
+		for _, v := range FamilyNamespaces[CmdParams.Family].ImageNamespaces[cluster] {
+			if CmdParams.Filter.Namespace == v {
+				foundNamespace = true
+			}
+		}
+		if !foundNamespace && !(CmdParams.Filter.Namespace == "") && !CmdParams.Output.Used {
+			ExitWithError("Namespace ", CmdParams.Filter.Namespace, " is no image namespace for family ", CmdParams.Family)
+		}
+	}
+
 	// End of Log the dynamic and static configurations
 	InfoMsg("------------------------------------------------------------")
 
@@ -120,9 +136,9 @@ func Init() {
 // - cp: The command-line parameters to use for initializing the server mode.
 func InitServerMode(cp T_flags) {
 	// Set command parameters from the provided flags
-	CmdParams.Family = cp.Family
-	CmdParams.Filter = cp.Filter
-	CmdParams.Output = cp.Output
+	// CmdParams.Family = cp.Family
+	// CmdParams.Filter = cp.Filter
+	// CmdParams.Output = cp.Output
 
 	// Compile a regular expression for validating namespaces
 	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)

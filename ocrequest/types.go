@@ -484,6 +484,23 @@ func (c T_familyKeys) clusterListStr() string {
 	return strings.Join(clusters, ", ")
 }
 
+func (c T_familyKeys) nsList() []T_nsName {
+	nlist := []T_nsName{}
+	for app := range c.Apps {
+		for _, nsList := range c.Apps[app].Namespaces.Appnamespaces {
+			for _, n := range nsList {
+				nlist = append(nlist, n)
+			}
+		}
+	}
+	for _, nsList := range c.ImageNamespaces {
+		for _, n := range nsList {
+			nlist = append(nlist, n)
+		}
+	}
+	return nlist
+}
+
 // family   cl-ns          cluster   namespaces
 type T_famNsList map[T_familyName]T_familyKeys
 
@@ -658,11 +675,34 @@ type T_cft_cluster struct {
 }
 type T_cft_clusters []T_cft_cluster
 
+// T_quay definiert die Struktur für Quay-spezifische Metadaten
+type T_quay struct {
+	Quay_Enabled      bool   `json:"quay_enabled"`
+	Quay_Rights_Group string `json:"quay_rights_group"`
+	Quota             int    `json:"quota"`
+}
+
+// T_cft_Metadata definiert die Struktur für die Metadaten
+type T_cft_Metadata struct {
+	Argoproj                string     `json:"argoproj"`
+	Argoname                string     `json:"argoname"`
+	Image_ns                T_nsName   `json:"image_ns"`
+	Deployer_sa             string     `json:"deployer_sa"`
+	Pipeline_namespaces_cid []T_nsName `json:"pipeline_namespaces_cid"`
+	Appmon_instance_cid     string     `json:"appmon_instance_cid"`
+	Appmon_instance_ppr     string     `json:"appmon_instance_ppr"`
+	Appmon_instance_vpt     string     `json:"appmon_instance_vpt,omitempty"`
+	Appmon_instance_pro     string     `json:"appmon_instance_pro,omitempty"`
+	Active                  bool       `json:"active"`
+	Quay                    T_quay     `json:"quay"`
+}
+
 type T_cft_family struct {
-	Name              string   `json:"name,omitempty"`
-	Description       string   `json:"description,omitempty"`
-	Applications      []string `json:"applications,omitempty"`
-	Repository_Layout string   `json:"repository_layout,omitempty"`
+	Name              string         `json:"name,omitempty"`
+	Description       string         `json:"description,omitempty"`
+	Applications      []string       `json:"applications,omitempty"`
+	Repository_Layout string         `json:"repository_layout,omitempty"`
+	Metadata          T_cft_Metadata `json:"metadata,omitempty"`
 }
 type T_cft_families []T_cft_family
 

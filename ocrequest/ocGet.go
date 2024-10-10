@@ -80,7 +80,7 @@ func ocClientCall(cluster T_clName, namespace T_nsName, typ string, name string)
 	DebugMsg(cmd)
 	jsonstr, err := cmd.Output()
 	if err != nil {
-		exitWithError("oc get failed:", string(jsonstr), "Error:", err)
+		ExitWithError("oc get failed:", string(jsonstr), "Error:", err)
 	}
 	return []byte(jsonstr)
 }

@@ -57,7 +57,7 @@ func ocGetToken(cluster T_clName) string {
 				fmt.Println("-- Then execute 'oc whoami -t' and put the token in the clusterconfig.json file.")
 				fmt.Println("-- Repeat this for all clusters(int, ppr, pro) and put the pro token also to vpt.")
 				fmt.Println("Then try again to exec this application.")
-				exitWithError("Login failed to:", cluster)
+				ExitWithError("Login failed to:", cluster)
 			}
 			setClusterToken(cluster, t)
 			return t
