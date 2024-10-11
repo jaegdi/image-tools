@@ -7,6 +7,8 @@ set -e
 # echo Generate the config-clusters.go
 # build/scripts/generate_config.sh
 
+echo "Generate swagger doc"
+swag i
 echo "Build linux binary of image-tool"
 go build -v
 

@@ -6,12 +6,17 @@ dir=$(dirname "$scriptdir")
 echo "Dir: $dir"
 cd "$dir"
 CLUSTER="${1:-$CLUSTER}"
-ocl cid-scp0 -d
-ocl
+ocl cid-scp0 -d > /dev/null
+ocl > /dev/null
 echo "CLUSTER: $CLUSTER"
 
-if echo && echo "### start go build" && go build -v && echo "### go build ready" && \
-   echo && echo "### start image build" && podman build . | tee build.log; then
+echo "Generate sawagger doc"
+swag init
+echo "### start go build"
+go build -v
+echo "### go build ready"
+
+if echo && echo "### start image build" && podman build . | tee build.log; then
     imagesha="$(tail -n 1 < build.log)"
     rm build.log
 

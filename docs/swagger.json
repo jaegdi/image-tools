@@ -4,9 +4,25 @@
         "contact": {}
     },
     "paths": {
-        "/execute": {
+        "/": {
             "get": {
-                "description": "Executes a command based on the provided query parameters.",
+                "description": "handleDocumentation serves the documentation page for the webservice.\nIt provides information on how to use the webservice, including available endpoints,\nrequired query parameters, and example usage.\n\nThe documentation is served as an HTML page with the following structure:\n- A title and introductory text\n- A list of endpoints with descriptions\n- A list of query parameters for each endpoint\n- A list of possible responses\n- An example usage of the endpoint\n\nThe HTML content is written directly to the response writer.\n\nExample usage:\nWhen a user navigates to the root URL (\"/\"), this function will be called\nand the documentation page will be displayed.\n\nParameters:\n- w: The http.ResponseWriter to write the HTML content to.\n- r: The http.Request object (not used in this function).\n",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "documentation"
+                ],
+                "summary": "Show documentation",
+                "responses": {}
+            }
+        },
+        "/is-tag-used": {
+            "get": {
+                "description": "Executes a query based on the provided query parameters.\nhandleIsTagUsed handles the /execute endpoint.\nThis function processes incoming HTTP requests to the /execute endpoint,\nexecutes the specified command based on the provided query parameters,\nand returns the result in either HTML or JSON format.\n\nQuery Parameters:\n- family: The family parameter (required for \"is_tag_used\").\n- tagname: The tagname parameter (required for \"is_tag_used\").\n\nResponses:\n- 200 OK: The command was executed successfully. The response is in JSON format\nor HTML format based on the kind parameter.\n- 400 Bad Request: Missing or invalid parameters.\n\nExample usage:\nGET /query?family=exampleFamily\u0026tagname=exampleTag\n",
                 "consumes": [
                     "application/json"
                 ],
@@ -14,9 +30,54 @@
                     "application/json"
                 ],
                 "tags": [
-                    "execute"
+                    "query"
                 ],
-                "summary": "Execute a command",
+                "summary": "Check if a image tag is used somewhere in the clusters.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The family parameter (required for 'is_tag_used')",
+                        "name": "family",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "The tagname parameter (required for 'is_tag_used')",
+                        "name": "tagname",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Missing or invalid parameters",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/query": {
+            "get": {
+                "description": "handleQuery handles the /query endpoint.\nThis function processes incoming HTTP requests to the /query endpoint,\nexecutes the specified command based on the provided query parameters,\nand returns the result in either HTML or JSON format.\n\nQuery Parameters:\n- family:    The family parameter (required for \"is_tag_used\").\n- kind:      The kind of operation to perform. Valid values are \"used\", \"is_tag_used\",\n\"unused\", \"istag\", \"is\", \"image\", \"all\". Default is \"is_tag_used\".\n- tagname:   The tagname parameter to filter the istags by this tagname.\n- cluster:   The cluster parameter.\n- namespace: The namespace parameter.\n\nResponses:\n- 200 OK: The command was executed successfully. The response is in JSON format\nor HTML format based on the kind parameter.\n- 400 Bad Request: Missing or invalid parameters.\n\nExample usage:\nGET /query?family=exampleFamily\u0026kind=used\u0026tagname=exampleTag\n\nThe result is a HTML-Table with the queried items and theirs details\n\nThis table can be downloaded by the \"Download as Excel\"\n\nThe table is presented with a filter function and\na sort function for each column in the table.\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "query"
+                ],
+                "summary": "Execute a query",
                 "parameters": [
                     {
                         "type": "string",
@@ -33,14 +94,14 @@
                     },
                     {
                         "type": "string",
-                        "description": "The cluster parameter",
-                        "name": "cluster",
+                        "description": "The tagname parameter (required for 'is_tag_used')",
+                        "name": "tagname",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "The tagname parameter (required for 'is_tag_used')",
-                        "name": "tagname",
+                        "description": "The cluster parameter",
+                        "name": "cluster",
                         "in": "query"
                     },
                     {

@@ -720,6 +720,34 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 		})
 	}
 
+	// If TabGroup parameter is set, configure column merging
+	if CmdParams.TabGroup {
+		t.SetColumnConfigs([]table.ColumnConfig{
+			{Number: 1, AutoMerge: true},
+			{Number: 2, AutoMerge: true},
+			{Number: 3, AutoMerge: true},
+			{Number: 4, AutoMerge: true},
+			{Number: 5, AutoMerge: true},
+			{Number: 6, AutoMerge: true},
+			{Number: 7, AutoMerge: true},
+			{Number: 8, AutoMerge: true},
+		})
+	}
+
+	// If TabGroup parameter is set, configure column merging
+	if CmdParams.TabGroup {
+		t.SetColumnConfigs([]table.ColumnConfig{
+			{Number: 1, AutoMerge: true},
+			{Number: 2, AutoMerge: true},
+			{Number: 3, AutoMerge: true},
+			{Number: 4, AutoMerge: true},
+			{Number: 5, AutoMerge: true},
+			{Number: 6, AutoMerge: true},
+			{Number: 7, AutoMerge: true},
+			{Number: 8, AutoMerge: true},
+		})
+	}
+
 	// If Html parameter is set, render the table as HTML
 	if CmdParams.Html {
 		t.Style().HTML = table.HTMLOptions{
@@ -730,65 +758,102 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 		}
 		htmlTable := t.RenderHTML()
 		downloadButton := `
-            <button onclick="downloadTableAsExcel()">Download as Excel</button>
-        `
+			<button class="btn btn-primary" onclick="downloadTableAsExcel()">Download as Excel</button>
+		`
 		downloadButton2 := `
-            <script>
-                function downloadTableAsExcel() {
-                    var table = document.querySelector('.dataTables_scrollBody > table');
-                    var html = table.outerHTML;
-                    var url = 'data:application/vnd.ms-excel,' + escape(html);
-                    var link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'table.xls');
-                    link.click();
-                }
-            </script>
-        `
+			<script>
+				function downloadTableAsExcel() {
+					var table = document.querySelector('.dataTables_scrollBody > table');
+					var html = table.outerHTML;
+					var url = 'data:application/vnd.ms-excel,' + escape(html);
+					var link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'table.xls');
+					link.click();
+				}
+			</script>
+		`
 		dataTableScript := `
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-            <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-            <style>
-                html, body {
-                    height: 100%;
-                    margin: 0;
-                    padding: 0;
-                }
-                .dataTables_wrapper {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                }
-                .dataTables_wrapper .dataTables_filter {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                table {
-                    width: 100%;
-                }
-                .dataTables_scrollBody {
-                    flex: 1 1 auto;
-                    overflow: auto;
-                }
-                .dataTables_scrollHead {
-                    flex: 0 0 auto;
-                }
-            </style>
-            <script>
-                $(document).ready(function() {
-                    var table = $('table').DataTable({
-                        "scrollY": "calc(100vh - 150px)",
-                        "scrollCollapse": true,
-                        "paging": false,
-                        "scrollX": true
-                    });
-                    $('.dataTables_filter').append(` + "`" + downloadButton + "`" + `);
-                });
-            </script>
-        `
-		return dataTableScript + htmlTable + downloadButton2
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+			<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.bootstrap4.min.css">
+			<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+			<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+			<script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
+			<script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+			<style>
+				html, body {
+					height: 100%;
+					margin: 0;
+					padding: 0;
+				}
+				.dataTables_wrapper {
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+				}
+				.dataTables_wrapper .dataTables_filter {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+				table {
+					width: 100% !important;
+				}
+				td, th {
+					white-space: nowrap; /* Verhindert das Umbrechen der Zellinhalte */
+				}
+				th, td:first-child, th:first-child {
+					background-color: #f2f2f2; /* Hellgrauer Hintergrund für die erste Spalte */
+					padding-right: 10px; /* Abstand zum rechten Rand in der ersten Spalte */
+				}
+				th, .DTFC_LeftHeadWrapper th, .DTFC_LeftBodyWrapper td {
+					background-color: #e2e2e2; /* Grauer Hintergrund für die Kopfzeile und fixierte Spalten */
+				}
+				.dataTables_scrollBody {
+					flex: 1 1 auto;
+					overflow: auto;
+				}
+				.dataTables_scrollHead {
+					flex: 0 0 auto;
+				}
+			</style>
+			<script>
+				$(document).ready(function() {
+					var table = $('table').DataTable({
+						"scrollY": "calc(100vh - 150px)",
+						"scrollCollapse": true,
+						"paging": false,
+						"scrollX": true,
+						"fixedHeader": true, // Fixiert die Kopfzeile
+						"fixedColumns": {
+							"leftColumns": 2 // Fixiert die ersten beiden Spalten
+						}
+					});
+					$('.dataTables_filter').append(` + "`" + downloadButton + "`" + `);
+				});
+			</script>
+		`
+		return `
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<title>Table</title>
+				` + dataTableScript + `
+			</head>
+			<body>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							` + htmlTable + `
+						</div>
+					</div>
+				</div>
+				` + downloadButton2 + `
+			</body>
+			</html>
+		`
 	} else {
 		t.Render()
 		return ""
