@@ -61,9 +61,11 @@ func GetDocPage() string {
 		<p>Welcome to the webservice documentation page of the image-tool. Below you will find information on how to use the webservice.</p>
 
 		<h2>Endpoints</h2>
-
 		<h3>GET /</h3>
 		<p>This endpoint show this documentation</p>
+
+		<h3>GET /swagger</h3>
+		<p>This endpoint provides the Swagger documentation for the webservice. <a href="/swagger">Click here</a> to access the Swagger documentation.</p>
 
 		<h3>GET /is-tag-used</h3>
 		<p>This endpoint checks, if the as parameter given tagname is as imagetag used in a pod somewhere in the clusters.</p>
@@ -289,7 +291,7 @@ func GetDocPage() string {
 				link.click();
 			}
 		</script>
-        <hr> <!-- Horizontale Linie eingefügt -->
+		<hr> <!-- Horizontale Linie eingefügt -->
 	</body>
 	</html>
 	`

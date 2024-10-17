@@ -71,7 +71,7 @@ func ocGetToken(cluster T_clName) string {
 // ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	DebugMsg("Try to login: ", app, Clusters.Config[cluster].Name)
+	DebugMsg("Try to login: ", app, cluster, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		ErrorMsg("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))

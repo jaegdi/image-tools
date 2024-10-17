@@ -45,7 +45,7 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName
 					ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
 					DebugMsg("Iterating over namespaceMap:", ns)
 
-					// Check if the namespace name matches the regex pattern
+					// add namespace to namespacelist if the namespace name matches the regex pattern
 					if len(ns) > 0 && regexValidNamespace.MatchString(ns) {
 						DebugMsg("Add Namespace to list:", ns)
 						namespaceList = append(namespaceList, T_nsName(ns))
