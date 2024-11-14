@@ -1,58 +1,43 @@
 # Multistage Stage 0 as base
-FROM default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-baseimages/fedora:40
+FROM golang:alpine as builder
+ENV CGO_ENABLED=1
+ENV https_proxy=http://webproxy.sf-bk.de:8181/
+ENV HTTPS_PROXY=$https_proxy
+WORKDIR /usr/local/go/src/image-tool
+COPY build ./build/
+COPY docs ./docs/
+COPY ocrequest ./ocrequest/
+COPY *.go .
+COPY go.mod .
+COPY clusterconfig.json .
+RUN apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++ \
+    && ls -l build/certs
 
+RUN apk add --no-cache --update git build-base
+RUN pwd \
+    && ls -l \
+    && go mod tidy \
+	&& go build
+
+# ----------------------------------------------------------------------------------------------------------------------------------
+
+FROM alpine:latest as runner
 LABEL maintainer="Dirk Jäger <dirk.jaeger@schufa.de>"
 
 ENV LANG=en_US.UTF-8
+ENV TZ=Europe/Berlin
+ENV https_proxy=http://webproxy.sf-bk.de:8181/
+ENV HTTPS_PROXY=$https_proxy
 
-USER root
+RUN apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++
+COPY --from=builder /usr/local/go/src/image-tool/build/certs/*.crt /usr/local/share/ca-certificates/
+COPY --from=builder /usr/local/go/src/image-tool/image-tool /usr/bin/image-tool
+COPY --from=builder /usr/local/go/src/image-tool/clusterconfig.json /usr/bin/
 
-# get the credentials from the secret, that is mounted in the build config
-# COPY build/scripts/fix-permissions.sh /usr/local/bin/fix-permissions.sh
-# COPY build/scripts/create-netrc.sh /usr/local/bin/create-netrc.sh
-# COPY build/pipeline-secrets/password /password
-# COPY build/pipeline-secrets/username /username
-COPY build/certs/*.crt /etc/pki/ca-trust/source/anchors/
-COPY image-tool /usr/bin/
-COPY clusterconfig.json /usr/bin/
-
-RUN # chmod a+rx /usr/local/bin/fix-permissions.sh /usr/local/bin/create-netrc.sh \
-    # && /usr/local/bin/create-netrc.sh 'my-password-file' ${ART_HOSTNAME} \
-    && chgrp root /usr/bin/image-tool \
+RUN chgrp root /usr/bin/image-tool \
     && chgrp root /usr/bin/clusterconfig.json \
     && chmod a+rx /usr/bin/image-tool \
     && chmod a+rw /usr/bin/clusterconfig.json \
-    && update-ca-trust extract
-    # && rm my-password-file
-
-
-# COPY scptools-bitbucket/password /password
-# COPY scptools-bitbucket/username /username
-
-# RUN /usr/local/bin/create-netrc.sh 'art-password-file' ${ART_HOSTNAME} \
-#     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/kustomize/kustomize \
-#         -o /usr/local/bin/kustomize       \
-#     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/yq/yq \
-#         -o /usr/local/bin/yq              \
-#     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/pc/pc \
-#         -o /usr/local/bin/pc              \
-#     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/cosign/cosign-linux-amd64 \
-#         -o /usr/local/bin/cosign          \
-#     && chmod a+x /usr/local/bin/kustomize  \
-#     && chmod a+x /usr/local/bin/yq         \
-#     && chmod a+x /usr/local/bin/pc         \
-#     && chmod a+x /usr/local/bin/cosign     \
-#     && ls -l /usr/local/bin                \
-#     && rm art-password-file
-
-# RUN export CURL_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt \
-#     && INSTALL_PKGS="gettext rsync skopeo jq git" \
-#     && yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS \
-#     && yum update -a \
-#     && yum clean all
+    && update-ca-certificates
 
 CMD ["image-tool", "-socks5=no", "-server", "-statcfg"]

@@ -90,11 +90,12 @@ func handleDocumentation(w http.ResponseWriter, r *http.Request) {
 // @Description
 // @Description Query Parameters:
 // @Description   - family:    The family parameter (required for "is_tag_used").
+// @Description   - cluster:   The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0 (Not used for kind=image or used)
 // @Description   - kind:      The kind of operation to perform. Valid values are "used", "is_tag_used",
 // @Description                "unused", "istag", "is", "image", "all". Default is "is_tag_used".
-// @Description   - tagname:   The tagname parameter to filter the istags by this tagname.
-// @Description   - cluster:   The cluster parameter.
-// @Description   - namespace: The namespace parameter.
+// @Description Optional Query Parameters:
+// @Description   - tagname:   The tagname parameter to filter the istags by this tagname. Is interpreted as regex.
+// @Description   - namespace: The namespace parameter to filter objects only from this namespace or namespace pattern.
 // @Description
 // @Description Responses:
 // @Description   - 200 OK: The command was executed successfully. The response is in JSON format

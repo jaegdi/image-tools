@@ -18,7 +18,7 @@ func GetDocPage() string {
 		<style>
 			html, body {
 				height: 100%;
-				margin: 0;
+				margin: 10px;
 				padding: 0;
 			}
 			.dataTables_wrapper {
@@ -55,10 +55,36 @@ func GetDocPage() string {
 				` + "`" + `);
 			});
 		</script>
+		<style type="text/css">
+			.left
+			{
+				float: left;
+				margin-left: 50px;
+			}
+
+			.right
+			{
+				float: right;
+				margin-right: 50px;
+			}
+			#content
+			{
+			}
+		</style>
 	</head>
 	<body>
 		<h1>Webservice IMAGE-TOOL Documentation</h1>
-		<p>Welcome to the webservice documentation page of the image-tool. Below you will find information on how to use the webservice.</p>
+
+		<p style="margin-left: 25px;">Welcome to the webservice documentation page of the image-tool. Below you will find information on how to use the webservice.</p>
+		<p style="margin-left: 25px;">This webservice provides a sub of the functionalilies, that the <code>cli image-tool</code> provides.</p>
+		<p style="margin-left: 25px;">Therefore for more detailed queries or generation of image prune skripts unds the <code>cli image-tool</code>.</p>
+		<br>
+		<p style="margin-left: 25px;">There are two main function:</p>
+		<br>
+		<p style="margin-left: 25px;">/is-tag-used:   check if images with this tag are used somewhere in the cluster and give a json response with the answer.</p>
+		<br>
+		<p style="margin-left: 25px;">/query:         execute a query to find all objects and genereates a table with this objects and detail informatin as answer.</p>
+		<br>
 
 		<h2>Endpoints</h2>
 		<h3>GET /</h3>
@@ -67,39 +93,49 @@ func GetDocPage() string {
 		<h3>GET /swagger</h3>
 		<p>This endpoint provides the Swagger documentation for the webservice. <a href="/swagger">Click here</a> to access the Swagger documentation.</p>
 
+		<br>
+		<hr> <!-- Horizontale Linie eingefügt -->
+
 		<h3>GET /is-tag-used</h3>
 		<p>This endpoint checks, if the as parameter given tagname is as imagetag used in a pod somewhere in the clusters.</p>
-		<p><strong>Query Parameters:</strong></p>
+		<h4>Query Parameters:</h4>
 		<ul>
 			<li><code>family</code> (required for <code>is_tag_used</code>): The family parameter.</li>
 			<li><code>tagname</code> (required for <code>is_tag_used</code>): The tagname parameter.</li>
 		</ul>
 
-		<p><strong>Responses:</strong></p>
+		<h4>Responses:</h4>
 		<ul>
 			<li><code>200 OK</code>: The command was executed successfully. The response is in JSON format.
-			<br><pre>       eg.: <code>{"TagIsUsed":true,"TagName":"pkp-3.19.0-build-3"}</code>
-			<br>       eg.: <code>{"TagIsUsed":false,"TagName":"pkp-x-not-there"}</code></pre></li>
+				<pre>
+					<br>       eg.: <code>{"TagIsUsed":true,"TagName":"pkp-3.19.0-build-3"}</code>
+					<br>       eg.: <code>{"TagIsUsed":false,"TagName":"pkp-x-not-there"}</code>
+				</pre>
+			</li>
 
 			<li><code>400 Bad Request</code>: Missing or invalid parameters.</li>
 		</ul>
-		<p>Example usage:</p>
-		<pre><code>GET /execute?family=pkp&kind=is_tag_used&tagname=pkp-3.19.0-build-3</code></pre>
+
+		<h4>Example usage:</h4>
+		<p><a href="/is-tag-used?family=pkp&kind=is_tag_used&tagname=pkp-3.19.0-build-3">GET /is-tag-used?family=pkp&kind=is_tag_used&tagname=pkp-3.19.0-build-3</a></p>
+		<h4>Example answer</h4>
+		<code>{"TagIsUsed":true,"TagName":"pkp-3.19.0-build-3"}</code>
+		<br>
+		<hr> <!-- Horizontale Linie eingefügt -->
 
 		<h3>GET /query</h3>
 		<p>This endpoint executes a query to generate several lists as answers, depending onthe parameters.</p>
-		<p><strong>Query Parameters:</strong></p>
+		<h4>Query Parameters:</h4>
+		<table>
 		<ul>
-			<li><code>family</code> (required for <code>is_tag_used</code>): The family parameter.</li>
-			<li><code>kind</code>:    The kind of operation to perform. Valid values are: <code>istag, image, is, used</code>.
-			<br><pre>                 The default is <code>istag</code></pre></li>
-			<li><code>tagname</code>: optional. This is a name or a regex pattern of an imagetag. This string is alway interpreted as regex. Valid values are: <code>pkp-3.19, build-1, v1.0.*, used</code>.
-			<li><pre>                 special chars like '.*{}[]:' must be masked with a '\', if they want explicitly set in the string.</pre></li>
-			<li><code>cluster</code>: The cluster parameter, eg. cid-scp0, ... or pro-scp0</li>
-			<li><code>namespace</code>: The namespace parameter.</li>
+			<tr><td><li><code>family</code>:</td>  	<td>The family parameter, eg. pkp, ebs, b2c, b2b, vps, ...</li></td></tr>
+			<tr><td><li><code>cluster</code>:</td> 	<td>The cluster parameter, eg. cid-scp0, ppr-scp0 ... or pro-scp0</li></td></tr>
+			<tr><td><li><code>kind</code>:</td>    	<td>The kind of operation to perform. Valid values are: <code>istag, image, is, used</code>. <br>The default is <code>istag</code></pre></li></td></tr>
+			<tr><td><li><code>tagname</code>:</td> 	<td>optional. This is a name or a regex pattern of an imagetag. This string is alway interpreted as regex. <br>Valid values are: <code>pkp-3.19, build-1, v1.0.*, used</code>. <br>Special chars like '.*{}[]:' must be masked with a '\', if they want explicitly set in the string.</pre></li></td></tr>
+			<tr><td><li><code>namespace</code>:</td> <td>optional. List only objects from this namespace.</li></td></tr>
 		</ul>
-
-		<p><strong>Responses:</strong></p>
+		</table>
+		<h4>Responses:</h4>
 		<ul>
 			<li><code>200 OK</code>: The command was executed successfully. The response is in text/HTML format.
 			<br>A HTML table wit all of the image details found in the cluster.
@@ -110,12 +146,22 @@ func GetDocPage() string {
 
 			<li><code>400 Bad Request</code>: Missing or invalid parameters.</li>
 		</ul>
+
+		<h4>Example usage:</h4>
+		<p>Get all istags from family=scp in all clusters with any tagname</p>
+		<p><a href="/query?family=scp&kind=istag&cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0">GET /query?family=scp&kind=istag&cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0</a></p>
+		<p>Get all istags from family=pkp in all clusters with any tagname</p>
+		<p><a href="/query?family=pkp&kind=istag&cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0">GET /query?family=pkp&kind=istag&cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0</a></p>
+		<p>Get all used istags from family=pkp in all clusters with any tagname</p>
+		<p><a href="/query?family=pkp&kind=used">GET /query?family=pkp&kind=used</a></p>
+		<hr>
+
+		<h4>Example usage:</h4>
+		<p>Get all istags from family=pkp in cluster=cid-scp0, where the tagname contains '0.9'</p>
+		<p><a href="/query?family=pkp&cluster=cid-scp0&kind=istag&tagname=0.9">GET /query?family=pkp&cluster=cid-scp0&kind=istag&tagname=0.9</a></p>
+
+		<h4>Example answer</h4>
 		<hr> <!-- Horizontale Linie eingefügt -->
-		<h3>Example usage:</h3>
-		<pre><code>GET /execute?family=pkp&kind=istag&tagname=0.9</code></pre>
-		<br>
-		<hr> <!-- Horizontale Linie eingefügt -->
-		<h3>Example answer</h3>
 		<br>
 		<table class="game-of-thrones">
 			<thead>
@@ -291,6 +337,7 @@ func GetDocPage() string {
 				link.click();
 			}
 		</script>
+		<br>
 		<hr> <!-- Horizontale Linie eingefügt -->
 	</body>
 	</html>

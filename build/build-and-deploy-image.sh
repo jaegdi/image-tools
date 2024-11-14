@@ -13,7 +13,7 @@ echo "CLUSTER: $CLUSTER"
 echo "Generate sawagger doc"
 swag init
 echo "### start go build"
-go build -v
+go build -tags netgo -v
 echo "### go build ready"
 
 if echo && echo "### start image build" && podman build . | tee build.log; then
