@@ -25,15 +25,9 @@ spec:
         deployment: image-tool
     spec:
       containers:
-      - args:
-        - -server
-        - -socks5=no
-        - -statcfg
-        command:
-        - image-tool
-        image: registry-quay-quay.apps.pro-scp1.sf-rz.de/scp-images/image-tool:latest
+      - name: image-tool
+        image: registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:latest
         imagePullPolicy: Always
-        name: image-tool
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         ports:

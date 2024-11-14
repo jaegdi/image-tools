@@ -49,7 +49,7 @@ func logUsedIstags(usedIstags []T_usedIstag, is T_isName, tag T_tagName, istag T
 	VerifyMsg("logUsedIstags::", " ## is: ", is, " ### tag: ", tag, "  #### Istag: ", istag, " is used.")
 	// Iterate through each used image stream tag and log its details
 	for _, istagdetails := range usedIstags {
-		VerifyLogger.Println("logUsedIstags::", "   # -->",
+		VerifyLogger.Println("logUsedIstags::", istag, "   # -->",
 			"  Cluster:", istagdetails.Cluster,
 			"  UsedInNamespace:", istagdetails.UsedInNamespace,
 			"  FromNamespace:", istagdetails.FromNamespace,

@@ -57,7 +57,7 @@ func ocGetToken(cluster T_clName) string {
 				fmt.Println("-- Then execute 'oc whoami -t' and put the token in the clusterconfig.json file.")
 				fmt.Println("-- Repeat this for all clusters(int, ppr, pro) and put the pro token also to vpt.")
 				fmt.Println("Then try again to exec this application.")
-				exitWithError("Login failed to:", cluster)
+				ExitWithError("Login failed to:", cluster)
 			}
 			setClusterToken(cluster, t)
 			return t
@@ -71,7 +71,7 @@ func ocGetToken(cluster T_clName) string {
 // ocLogin tries to login with the token into the cluster
 func ocLogin(cluster T_clName) (string, error) {
 	app := "ocl"
-	DebugMsg("Try to login: ", app, Clusters.Config[cluster].Name)
+	DebugMsg("Try to login: ", app, cluster, Clusters.Config[cluster].Name)
 	cmd := exec.Command(app, Clusters.Config[cluster].Name)
 	if stdout, err := cmd.Output(); err != nil {
 		ErrorMsg("cmd: ", app, Clusters.Config[cluster].Name, err.Error()+":"+string(stdout))

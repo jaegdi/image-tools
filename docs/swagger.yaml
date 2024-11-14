@@ -1,0 +1,152 @@
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - text/html
+      description: |
+        handleDocumentation serves the documentation page for the webservice.
+        It provides information on how to use the webservice, including available endpoints,
+        required query parameters, and example usage.
+
+        The documentation is served as an HTML page with the following structure:
+        - A title and introductory text
+        - A list of endpoints with descriptions
+        - A list of query parameters for each endpoint
+        - A list of possible responses
+        - An example usage of the endpoint
+
+        The HTML content is written directly to the response writer.
+
+        Example usage:
+        When a user navigates to the root URL ("/"), this function will be called
+        and the documentation page will be displayed.
+
+        Parameters:
+        - w: The http.ResponseWriter to write the HTML content to.
+        - r: The http.Request object (not used in this function).
+      produces:
+      - text/html
+      responses: {}
+      summary: Show documentation
+      tags:
+      - documentation
+  /is-tag-used:
+    get:
+      consumes:
+      - application/json
+      description: |
+        Executes a query based on the provided query parameters.
+        handleIsTagUsed handles the /execute endpoint.
+        This function processes incoming HTTP requests to the /execute endpoint,
+        executes the specified command based on the provided query parameters,
+        and returns the result in either HTML or JSON format.
+
+        Query Parameters:
+        - family: The family parameter (required for "is_tag_used").
+        - tagname: The tagname parameter (required for "is_tag_used").
+
+        Responses:
+        - 200 OK: The command was executed successfully. The response is in JSON format
+        or HTML format based on the kind parameter.
+        - 400 Bad Request: Missing or invalid parameters.
+
+        Example usage:
+        GET /query?family=exampleFamily&tagname=exampleTag
+      parameters:
+      - description: The family parameter (required for 'is_tag_used')
+        in: query
+        name: family
+        required: true
+        type: string
+      - description: The tagname parameter (required for 'is_tag_used')
+        in: query
+        name: tagname
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing or invalid parameters
+          schema:
+            type: string
+      summary: Check if a image tag is used somewhere in the clusters.
+      tags:
+      - query
+  /query:
+    get:
+      consumes:
+      - application/json
+      description: |
+        handleQuery handles the /query endpoint.
+        This function processes incoming HTTP requests to the /query endpoint,
+        executes the specified command based on the provided query parameters,
+        and returns the result in either HTML or JSON format.
+
+        Query Parameters:
+        - family:    The family parameter (required for "is_tag_used").
+        - kind:      The kind of operation to perform. Valid values are "used", "is_tag_used",
+        "unused", "istag", "is", "image", "all". Default is "is_tag_used".
+        - tagname:   The tagname parameter to filter the istags by this tagname.
+        - cluster:   The cluster parameter.
+        - namespace: The namespace parameter.
+
+        Responses:
+        - 200 OK: The command was executed successfully. The response is in JSON format
+        or HTML format based on the kind parameter.
+        - 400 Bad Request: Missing or invalid parameters.
+
+        Example usage:
+        GET /query?family=exampleFamily&kind=used&tagname=exampleTag
+
+        The result is a HTML-Table with the queried items and theirs details
+
+        This table can be downloaded by the "Download as Excel"
+
+        The table is presented with a filter function and
+        a sort function for each column in the table.
+      parameters:
+      - description: The family parameter (required for 'is_tag_used')
+        in: query
+        name: family
+        required: true
+        type: string
+      - description: The kind of operation to perform. Valid values are 'used', 'is_tag_used',
+          'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'
+        in: query
+        name: kind
+        type: string
+      - description: The tagname parameter (required for 'is_tag_used')
+        in: query
+        name: tagname
+        type: string
+      - description: The cluster parameter
+        in: query
+        name: cluster
+        type: string
+      - description: The namespace parameter
+        in: query
+        name: namespace
+        type: string
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing or invalid parameters
+          schema:
+            type: string
+      summary: Execute a query
+      tags:
+      - query
+swagger: "2.0"

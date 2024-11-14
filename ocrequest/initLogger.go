@@ -54,6 +54,9 @@ func InitLogging() {
 
 // InfoMsg loggt eine Informationsnachricht
 func InfoMsg(p ...interface{}) {
+	if InfoLogger == nil {
+		InitLogging()
+	}
 	caller := getCaller()
 	p = append([]interface{}{caller}, p...)
 	InfoLogger.Println(p...)
@@ -62,6 +65,9 @@ func InfoMsg(p ...interface{}) {
 // VerifyMsg loggt eine Verifizierungsnachricht, wenn die Verifizierungsoption aktiviert ist
 func VerifyMsg(p ...interface{}) {
 	if CmdParams.Options.Verify {
+		if VerifyLogger == nil {
+			InitLogging()
+		}
 		caller := getCaller()
 		p = append([]interface{}{caller}, p...)
 		if VerifyLogger == nil {
@@ -73,6 +79,9 @@ func VerifyMsg(p ...interface{}) {
 
 // ErrorMsg loggt eine Fehlermeldung
 func ErrorMsg(p ...interface{}) {
+	if ErrorLogger == nil {
+		InitLogging()
+	}
 	caller := getCaller()
 	prevCaller := getPreviousCaller()
 	p = append([]interface{}{caller}, p...)
@@ -83,6 +92,9 @@ func ErrorMsg(p ...interface{}) {
 // DebugMsg loggt eine Debug-Nachricht, wenn die Debug-Option aktiviert ist
 func DebugMsg(p ...interface{}) {
 	if CmdParams.Options.Debug {
+		if DebugLogger == nil {
+			InitLogging()
+		}
 		caller := getCaller()
 		p = append([]interface{}{caller}, p...)
 		DebugLogger.Println(p...)

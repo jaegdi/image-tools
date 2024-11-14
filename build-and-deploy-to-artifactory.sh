@@ -7,11 +7,13 @@ set -e
 # echo Generate the config-clusters.go
 # build/scripts/generate_config.sh
 
+echo "Generate swagger doc"
+swag i
 echo "Build linux binary of image-tool"
-go build
+go build -v
 
 echo "Build windows binary of image-tool"
-GOOS=windows GOARCH=amd64 go build
+GOOS=windows GOARCH=amd64 go build -v
 
 if ./image-tool -family=ebs -used > /dev/null; then
     echo "Push to artifactory"
