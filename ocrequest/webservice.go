@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	_ "image-tool/docs" // Import the generated docs
 
@@ -43,11 +44,143 @@ var initialCmdParams T_flags
 // @Description StartServer starts the HTTP server and handles incoming requests.
 func StartServer() {
 	InfoMsg("Starting server on port 8080")
-	http.HandleFunc("/", handleDocumentation)
+	http.HandleFunc("/", handleWebForm)
+	http.HandleFunc("/doc", handleDocumentation)
 	http.HandleFunc("/query", handleQuery)
 	http.HandleFunc("/is-tag-used", handleIsTagUsed)
 	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", nil)
+}
+
+// handleWebForm serves the web form for entering query parameters.
+func handleWebForm(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		r.ParseForm()
+		family := r.FormValue("family")
+		clusters := r.Form["cluster"]
+		kind := r.FormValue("kind")
+		tagname := r.FormValue("tagname")
+		namespace := r.FormValue("namespace")
+
+		cluster := strings.Join(clusters, ",")
+
+		if family != "" && cluster != "" && kind != "" {
+			queryURL := fmt.Sprintf("/query?family=%s&cluster=%s&kind=%s&tagname=%s&namespace=%s", family, cluster, kind, tagname, namespace)
+			http.Redirect(w, r, queryURL, http.StatusSeeOther)
+			return
+		}
+	}
+
+	form := `
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Query Form</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f4f4f4;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
+			.container {
+				background-color: #fff;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				width: 400px;
+			}
+			h1 {
+				text-align: center;
+				color: #333;
+			}
+			label {
+				display: block;
+				margin-top: 10px;
+				color: #555;
+			}
+			select, input[type="text"], input[type="submit"] {
+				width: 100%;
+				padding: 8px;
+				margin-top: 5px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+			}
+			input[type="submit"] {
+				background-color: #007bff;
+				color: white;
+				border: none;
+				cursor: pointer;
+				margin-top: 20px;
+			}
+			input[type="submit"]:hover {
+				background-color: #0056b3;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Enter Query Parameters</h1>
+			<form action="/" method="post">
+				<div class="form-group">
+					<label for="family" title="The family parameter (required for 'is_tag_used')">Family:</label>
+					<select class="form-control" name="family" multiple>
+						<option value="aps">aps</option>
+						<option value="b2b">b2b</option>
+						<option value="b2c">b2c</option>
+						<option value="cbs">cbs</option>
+						<option value="dca">dca</option>
+						<option value="ebs">ebs</option>
+						<option value="ibs">ibs</option>
+						<option value="pkp">pkp</option>
+						<option value="scp">scp</option>
+						<option value="vps">vps</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="cluster" title="The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0">Cluster:</label>
+					<select class="form-control" name="cluster" multiple>
+						<option value="dev-scp0">dev-scp0</option>
+						<option value="cid-scp0">cid-scp0</option>
+						<option value="ppr-scp0">ppr-scp0</option>
+						<option value="vpt-scp0">vpt-scp0</option>
+						<option value="pro-scp0">pro-scp0</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="kind" title="The kind of operation to perform. Valid values are 'used', 'is_tag_used', 'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'">Kind:</label>
+					<select class="form-control" name="kind">
+						<option value="used">used</option>
+						<option value="is_tag_used">is_tag_used</option>
+						<option value="unused">unused</option>
+						<option value="istag">istag</option>
+						<option value="is">is</option>
+						<option value="image">image</option>
+						<option value="all">all</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="tagname" title="The tagname parameter to filter the istags by this tagname. Is interpreted as regex.">Tagname:</label>
+					<input type="text" class="form-control" name="tagname">
+				</div>
+				<div class="form-group">
+					<label for="namespace" title="The namespace parameter to filter objects only from this namespace or namespace pattern.">Namespace:</label>
+					<input type="text" class="form-control" name="namespace">
+				</div>
+				<input type="submit" class="btn btn-primary" value="Submit">
+			</form>
+		</div>
+	</body>
+	</html>
+	`
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte(form))
+
 }
 
 // @Description handleDocumentation serves the documentation page for the webservice.

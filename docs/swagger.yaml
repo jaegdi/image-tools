@@ -91,11 +91,12 @@ paths:
 
         Query Parameters:
         - family:    The family parameter (required for "is_tag_used").
+        - cluster:   The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0 (Not used for kind=image or used)
         - kind:      The kind of operation to perform. Valid values are "used", "is_tag_used",
         "unused", "istag", "is", "image", "all". Default is "is_tag_used".
-        - tagname:   The tagname parameter to filter the istags by this tagname.
-        - cluster:   The cluster parameter.
-        - namespace: The namespace parameter.
+        Optional Query Parameters:
+        - tagname:   The tagname parameter to filter the istags by this tagname. Is interpreted as regex.
+        - namespace: The namespace parameter to filter objects only from this namespace or namespace pattern.
 
         Responses:
         - 200 OK: The command was executed successfully. The response is in JSON format

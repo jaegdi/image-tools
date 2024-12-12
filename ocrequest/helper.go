@@ -720,33 +720,33 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 		})
 	}
 
-	// If TabGroup parameter is set, configure column merging
-	if CmdParams.TabGroup {
-		t.SetColumnConfigs([]table.ColumnConfig{
-			{Number: 1, AutoMerge: true},
-			{Number: 2, AutoMerge: true},
-			{Number: 3, AutoMerge: true},
-			{Number: 4, AutoMerge: true},
-			{Number: 5, AutoMerge: true},
-			{Number: 6, AutoMerge: true},
-			{Number: 7, AutoMerge: true},
-			{Number: 8, AutoMerge: true},
-		})
-	}
+	// // If TabGroup parameter is set, configure column merging
+	// if CmdParams.TabGroup {
+	// 	t.SetColumnConfigs([]table.ColumnConfig{
+	// 		{Number: 1, AutoMerge: true},
+	// 		{Number: 2, AutoMerge: true},
+	// 		{Number: 3, AutoMerge: true},
+	// 		{Number: 4, AutoMerge: true},
+	// 		{Number: 5, AutoMerge: true},
+	// 		{Number: 6, AutoMerge: true},
+	// 		{Number: 7, AutoMerge: true},
+	// 		{Number: 8, AutoMerge: true},
+	// 	})
+	// }
 
-	// If TabGroup parameter is set, configure column merging
-	if CmdParams.TabGroup {
-		t.SetColumnConfigs([]table.ColumnConfig{
-			{Number: 1, AutoMerge: true},
-			{Number: 2, AutoMerge: true},
-			{Number: 3, AutoMerge: true},
-			{Number: 4, AutoMerge: true},
-			{Number: 5, AutoMerge: true},
-			{Number: 6, AutoMerge: true},
-			{Number: 7, AutoMerge: true},
-			{Number: 8, AutoMerge: true},
-		})
-	}
+	// // If TabGroup parameter is set, configure column merging
+	// if CmdParams.TabGroup {
+	// 	t.SetColumnConfigs([]table.ColumnConfig{
+	// 		{Number: 1, AutoMerge: true},
+	// 		{Number: 2, AutoMerge: true},
+	// 		{Number: 3, AutoMerge: true},
+	// 		{Number: 4, AutoMerge: true},
+	// 		{Number: 5, AutoMerge: true},
+	// 		{Number: 6, AutoMerge: true},
+	// 		{Number: 7, AutoMerge: true},
+	// 		{Number: 8, AutoMerge: true},
+	// 	})
+	// }
 
 	// If Html parameter is set, render the table as HTML
 	if CmdParams.Html {

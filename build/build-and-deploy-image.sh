@@ -10,7 +10,7 @@ ocl cid-scp0 -d > /dev/null
 ocl > /dev/null
 echo "CLUSTER: $CLUSTER"
 
-echo "Generate sawagger doc"
+echo "Generate swagger doc"
 swag init
 echo "### start go build"
 go build -tags netgo -v
