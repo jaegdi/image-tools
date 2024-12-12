@@ -34,7 +34,7 @@ if echo && echo "### start image build" && podman build . | tee build.log; then
 
         if [[ $dst =~ pro-scp1 ]]; then
             echo '----------------------------------------------------------------------------------------------------------'
-            echo "Deplopy image to registry-quay-quay.apps.pro-scp1.sf-rz.de"
+            echo "Deplopy image to registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion"
             podman login -u "$USER" -p "$(kwallet-query -f admin -r ldappassword admin)" registry-quay-quay.apps.pro-scp1.sf-rz.de
             podman tag "$imagesha"  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
             podman push  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
@@ -48,7 +48,9 @@ if echo && echo "### start image build" && podman build . | tee build.log; then
     echo '----------------------------------------------------------------------------------------------------------'
     oc delete -f deploy-"$CLUSTER"-image-tool.yml
     echo '----------------------------------------------------------------------------------------------------------'
-    oc apply -f deploy-"$CLUSTER"-image-tool.yml
+    cat deploy-"$CLUSTER"-image-tool.yml | \
+        sed -e "s/image: registry-quay-quay.apps.pro-scp1.sf-rz.de\/scp\/image-tool.*/image: registry-quay-quay.apps.pro-scp1.sf-rz.de\/scp\/image-tool:$tagversion/" | \
+            oc apply -f-
 else
     echo "Build failed"
     exit 1
