@@ -15,18 +15,19 @@ swag init
 echo "### start go build"
 go build -tags netgo -v
 echo "### go build ready"
+tagversion=$(git describe --tags $(git rev-list --tags --max-count=1)|tr ' ' '_'|tr -d '\n')
 
 if echo && echo "### start image build" && podman build . | tee build.log; then
     imagesha="$(tail -n 1 < build.log)"
     rm build.log
 
-    echo "tag $imagesha to  default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:latest"
-    podman tag "$imagesha" default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:latest
-    podman push default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:latest
+    echo "tag $imagesha to  default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion"
+    podman tag "$imagesha" default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion
+    podman push default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion
 
     for dst in pro-scp1;do  #  cid-scp0 pro-scp0
         echo '----------------------------------------------------------------------------------------------------------'
-        copy-image.sh -v scl=cid-scp0 dcl=$dst sns=scp-images dns=scp-images image=image-tool:latest;
+        copy-image.sh -v scl=cid-scp0 dcl=$dst sns=scp-images dns=scp-images image=image-tool:$tagversion;
         echo '----------------------------------------------------------------------------------------------------------'
 
         . ocl $dst
@@ -35,8 +36,8 @@ if echo && echo "### start image build" && podman build . | tee build.log; then
             echo '----------------------------------------------------------------------------------------------------------'
             echo "Deplopy image to registry-quay-quay.apps.pro-scp1.sf-rz.de"
             podman login -u "$USER" -p "$(kwallet-query -f admin -r ldappassword admin)" registry-quay-quay.apps.pro-scp1.sf-rz.de
-            podman tag "$imagesha"  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:latest
-            podman push  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:latest
+            podman tag "$imagesha"  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
+            podman push  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
             echo '----------------------------------------------------------------------------------------------------------'
             oc project scp-ops-central
         else
