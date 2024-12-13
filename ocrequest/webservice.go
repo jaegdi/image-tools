@@ -446,6 +446,14 @@ func processResults(w http.ResponseWriter, result T_completeResults, family stri
 		}
 	default:
 		htmldata := GetTextTableFromMap(result, T_familyName(family))
+		// Define query parameters string
+		queryParams := fmt.Sprintf(`
+			<div style="display: inline-block; margin-right: 20px;">
+				<strong>Query Parameters:</strong> Family: <strong>%s</strong> Kind: <strong>%s</strong> Tagname: <strong>%s</strong>
+			</div>
+		`, family, kind, tagname)
+		htmldata = strings.Replace(htmldata, "<!-- QueryParams -->", queryParams, 1)
+		// InfoMsg("HTML Data:", htmldata)
 		if html {
 			w.Header().Set("Content-Type", "text/html")
 		} else {

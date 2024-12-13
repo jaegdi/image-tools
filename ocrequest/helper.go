@@ -803,6 +803,7 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 				}
 				td, th {
 					white-space: nowrap; /* Verhindert das Umbrechen der Zellinhalte */
+					padding-right: 10px; /* Abstand zwischen den Spalten */
 				}
 				th, td:first-child, th:first-child {
 					background-color: #f2f2f2; /* Hellgrauer Hintergrund für die erste Spalte */
@@ -829,7 +830,19 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 						"fixedHeader": true, // Fixiert die Kopfzeile
 						"fixedColumns": {
 							"leftColumns": 2 // Fixiert die ersten beiden Spalten
-						}
+						},
+						"columnDefs": [
+							{
+								"targets": "_all",
+								"className": "dt-left"
+							},
+							{
+								"targets": function (idx, data, node) {
+									return idx > 0 && $.isNumeric(data) ? idx : null;
+								},
+								"className": "dt-right"
+							}
+						]
 					});
 					$('.dataTables_filter').append(` + "`" + downloadButton + "`" + `);
 				});
@@ -843,14 +856,15 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 				` + dataTableScript + `
 			</head>
 			<body>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							` + htmlTable + `
-						</div>
+			<div class="container-fluid">
+				<div class="row">
+					<!-- QueryParams -->
+					<div class="col-12">
+						` + htmlTable + `
 					</div>
 				</div>
-				` + downloadButton2 + `
+			</div>
+			` + downloadButton2 + `
 			</body>
 			</html>
 		`
