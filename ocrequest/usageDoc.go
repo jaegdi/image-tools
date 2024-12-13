@@ -50,14 +50,15 @@ MAN PAGE
   image-tool
         - Generates reports about images, image streams (is), and image stream tags (istag)
           with information such as AgeInDays, Date, Namespace, Buildtags, etc.
-          for an application family (e.g., pkp, fpc, aps, ssp)
+          for an application family (e.g., pkp, fpc, aps, ssp, ...)
         or
         - Generates a shell script to delete istags when the -delete parameter is set.
           The -delete parameter disables the report output and instead generates the delete shell script as output.
 
-  By default, image-tool is executed as a command-line tool, but with the -server parameter, it can be started as a web service.
+  By default, image-tool is executed as a command-line tool, but with the -server parameter, it can be started as a web service
+  and then listens for requests on port 8080.
 
-  image-tool as a web service
+  IMAGE-TOOL AS A WEB SERVICE
 
     In server mode, image-tool looks for used images in all clusters filtered by family and tag name and returns a
     JSON list as an HTTP response.
@@ -67,7 +68,12 @@ MAN PAGE
 
         curl "http://localhost:8080/execute?family=exampleFamily&tagname=exampleTagname" | jq
 
-  image-tool as cmdline tool
+    Or connect the Browser to http://localhost:8080, you get a query mask to enter the family and tagname and query patterns.
+    The result is then presented in the Browser as a interactive table with sort and filter options and a export function to
+    export the result table as EXCEL-file.
+
+
+    IMAGE-TOOL AS CMDLINE TOOL
 
     image-tool only read information around images from the clusters and generate output. It never change or
     delete something in the clusters. Eg. for delete istags it only generates a script output, which than can
@@ -77,72 +83,81 @@ MAN PAGE
     Additional it writes the log messages also to STDERR. To disable the log output to STDERR use parameter -nolog
     The report or delete-script output is written to STDOUT.
 
-  - For reporting existing Images and delete istags it operates cluster and family specific.
-    For reporting used images it works over all clusters but family specific.
-    It never works across different families.
 
-      For existing images, istags or imagestreams(is) that means it works for one or more clusters like
-        cid-scp0,  ppr-scp0, vpt-scp0, pro-scp0
-        or more than one like 'cid-scp0,cid-scp0,ppr-scp0,ppr-scp0'
+    REPORTING
 
-    and for one families like
-        'pkp, sps, fpc, aps, ...'
+      - For reporting existing Images and delete istags it operates cluster and family specific.
+        For reporting used images it works over all clusters but family specific.
+        It never works across different families.
 
-    The cluster must be defined by the mandatory parameter. To run the query across multiple clusters,
-    multiple clusters can be specified, separated by commas.
-        '-cluster=[cid-scp0|ppr-scp0|vpt-scp0|pro-scp0|dev-scp0|dev-scp1-c1|dev-scp1-c2|pro-scp1]'
+          For query existing images, istags or imagestreams(is) the -cluster and -family must be defined.
 
-    The family must be defined by the mandatory parameter
-        '-family=[aps|fpc|pkp|ssp]
+          For query used istags the -family must be defined.
 
-  - Generate reports about imagestreamtags, imagestreams and images.
-        The content of the report can be defined by the mandatory parameter
-        '-output=[is|istag|image|used|unused|all]'.
+        The cluster must be defined by the -cluster parameter.
 
-  - For used images it looks in all clusters and reports the istags used
-      by any deploymentconfig, job, cronjob or pod of all namespaces that
-      belong to the application family.
+            -cluster=cid-scp0
 
-  - Variable output format: json(default), yaml, csv, csvfile, table and tabgroup
-      (table with grouped rows for identical content).
-      Output as table or tabgroup is automatically piped into less (or what is defined as PAGER)
+        To run the query across multiple clusters, multiple clusters can be specified, separated by commas.
 
-  - filter data for reports.
-      By specifying one of the parameters
-          -isname=..., -istagname=..., tagname=... or -shaname=...
-      the report is filtered.
+            -cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0
 
-  - delete istags based on filters
-      The idea is to delete istags by filterpatterns like
-      'older than n days' and/or 'istag name like pattern'
-      The image tool didn't delete the istags directly instead
-      it generate a shell-script that can be executed by a cluster admin
-      to delete the istag, they fit to the given filter parameters
+        The family must be defined by the mandatory parameter
 
-      To switch from reporting mode to delete mode, set the praameter -delete
-      But it needs further parameters:
-      -snapshot        delete istags with snapshot or PR-nn in the tag name.
-      -nonbuild        is specific for family pkp and delete istags fo all images, if they have no build tag.
-      -delminage=int      defines the minimum age (in days) for istag to delete them. Default is 60 days.
-      -delpattern=str  define a regexp pattern for istags to delete
-      and
-      -isname=str
-      -tagname=str
-      -istagname=str
-      -namespace=str
-      can also be used to filter istags to delete them.
-      See examples in the EXAMPLES section
+            '-family=[aps|fpc|pkp|ssp]
 
-    For this reports the data is collected from the openshift cluster defined by
-    the mandatory parameters
-         '-cluster=...' and the
-         'family=...'
-    For type '-used' (also included in type '-all') the data is collected
-    from all clusters.
+      - Generate reports about imagestreamtags, imagestreams and images.
+            The content of the report can be defined by the mandatory parameter
+            '-output=[is|istag|image|used|unused|all]'.
 
-    For more speed a cache is build from the first run in  /tmp/tmp-report-istags/*
-    and used if not older than 5 minutes. If the cache is older or deleted, the
-    data is fresh collected from the clusters.
+      - For used images it looks in all clusters and reports the istags used
+          by any deploymentconfig, job, cronjob or pod of all namespaces that
+          belong to the application family.
+
+      - Variable output format: json(default), yaml, csv, csvfile, table and tabgroup
+          (table with grouped rows for identical content).
+          Output as table or tabgroup is automatically piped into less (or what is defined as PAGER)
+
+      - filter data for reports.
+          By specifying one of the parameters with a regex pattern or a name:
+              -isname=<regex-pattern>, -istagname=<regex-pattern>, tagname=<regex-pattern> or -shaname=<regex-pattern>
+          the report is filtered.
+
+        For this reports the data is collected from the openshift cluster defined by
+        the mandatory parameters
+              '-cluster=...' and the
+              'family=...'
+        For type '-used' (also included in type '-all') the data is collected
+        from all clusters.
+
+        For more speed a cache is build from the first run in  /tmp/tmp-report-istags/*
+        and used if not older than 5 minutes. If the cache is older or deleted, the
+        data is fresh collected from the clusters.
+
+
+    DELETE
+
+      - delete istags based on filters
+          The idea is to delete istags by filterpatterns like
+          'older than n days' and/or 'istag name like pattern'
+          The image tool didn't delete the istags directly instead
+          it generate a shell-script that can be executed by a namespace admin or cluster admin
+          to delete the istags, they fit to the given filter parameters.
+          The final delete (or prune) in the registry must be done by a cluster admin with the oc client.
+
+          To switch from reporting mode to delete mode, set the parameter -delete
+          But it needs one or more parameters:
+          -snapshot        delete istags with snapshot or PR-nn in the tag name.
+          -nonbuild        is specific for family pkp and delete istags for all images, if they have no build tag.
+          -delminage=int   defines the minimum age (in days) for istag to delete them. Default is 60 days.
+          -delpattern=str  define a regexp pattern for istags to delete
+          and
+          -isname=str
+          -tagname=str
+          -istagname=str
+          -namespace=str
+          can also be used to filter istags to delete them.
+          See examples in the EXAMPLES section
 
 
 INSTALLATION
@@ -162,7 +177,8 @@ INSTALLATION
 
 EXAMPLES
 
-  SERVERMODE
+
+SERVERMODE ------------------------------------------------------------------------------------------------------------------
   |
   |        Start the image-tool with the parameter -server
   |        The image-tool opens a listening port on localhost:8080 to listen for requests
@@ -178,7 +194,7 @@ EXAMPLES
   -----------------------------------------------------------------------------------------------------------------------------
 
 
-  REPORTING
+  REPORTING -------------------------------------------------------------------------------------------------------------------
   |
   |        Report all information for family pkp in cluster cid as json
   |        (which is the default output format)
@@ -224,7 +240,7 @@ EXAMPLES
   -----------------------------------------------------------------------------------------------------------------------------
 
 
-  DELETE
+  DELETE ----------------------------------------------------------------------------------------------------------------------
   |
   |        Generate a shell script to delete old istags(60 days, the default) for family pkp in cluster cid
   |        and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service
@@ -255,12 +271,12 @@ EXAMPLES
   |
   |            cat image-tool.log  |  grep logUsedIstags:  |  sort -k5  |  column -t
   |
-  | HINT
+  | HINT ----------------------------------------------------------------------------------------------------------------------
   |
-  |        To directly delete the istags, that reportet by 'image-tool -delete ...', make shure, you are
-  |        logged in into the correct cluster, because the output is executed with oc client and work on the
-  |        currently logged in cluster. And append the following to the end of the image-tool - command:
-  |
+  |        To directly delete the istags, that reportet by 'image-tool -delete ...' :
+  |        - make shure, you are logged in into the correct cluster, because the output is executed
+  |          with oc client and work on the currently logged in cluster.
+  |        - and append the following command to the end of the image-tool - command:
   |
   |            | xargs -n 1 -I{} bash -c "{}"
   |
@@ -278,7 +294,8 @@ EXAMPLES
   -----------------------------------------------------------------------------------------------------------------------------
 
 
-  CONNECTION
+  CONNECTION TO THE REGISTRY --------------------------------------------------------------------------------------------------
+  |
   |        As default the sock5 proxy to localhost:65022 is enabled becaus the api of the upper clusters is only reacheable
   |        over the sprungserver. To disable SOCKS5 set the parameter -socks5=no
   |        If your socks5 jumpserver config listens on a different port set the parameter -socks5=<host>:<port>

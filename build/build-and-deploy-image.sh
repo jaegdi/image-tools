@@ -17,9 +17,9 @@ go build -tags netgo -v
 echo "### go build ready"
 tagversion=$(git describe --tags $(git rev-list --tags --max-count=1)|tr ' ' '_'|tr -d '\n')
 
+rm -f build.log
 if echo && echo "### start image build" && podman build . | tee build.log; then
     imagesha="$(tail -n 1 < build.log)"
-    rm build.log
 
     echo "tag $imagesha to  default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion"
     podman tag "$imagesha" default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion
