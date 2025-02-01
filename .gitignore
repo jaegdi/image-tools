@@ -16,3 +16,4 @@ old-version
 collectIstags
 ocrequest/org_config-clusters.go
 build/pipeline-secrets
+slim.report.json
