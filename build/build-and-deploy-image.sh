@@ -15,7 +15,7 @@ swag init
 echo "### start go build"
 go build -tags netgo -v
 echo "### go build ready"
-tagversion=$(git describe --tags $(git rev-list --tags --max-count=1)|tr ' ' '_'|tr -d '\n')
+tagversion=$(get-git-tag.sh)
 
 rm -f build.log
 if echo && echo "### start image build" && podman build . | tee build.log; then

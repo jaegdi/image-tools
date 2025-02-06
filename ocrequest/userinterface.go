@@ -17,7 +17,8 @@ func EvalFlags() {
 	manPtr := flag.Bool("man", false, "Print the ManPage")
 
 	// Global Flags
-	familyPtr := flag.String("family", "", "Mandatory: family name, eg.: "+FamilyNamespaces.familyListStr())
+	familyPtr := flag.String("family", "", "Mandatory: family or appgroup name, eg.: "+FamilyNamespaces.familyListStr())
+	appgroupPtr := flag.String("appgroup", "", "Mandatory: appgroup or family name, eg.: "+FamilyNamespaces.familyListStr())
 	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
 	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-scp0,cid-scp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
@@ -111,7 +112,11 @@ func EvalFlags() {
 	flags := T_flags{}
 	flags.Cluster = T_clName(*clusterPtr).list()
 	flags.Token = string(*tokenPtr)
+	// if *familyPtr != "" {
+	flags.Family = T_familyName(*appgroupPtr)
 	flags.Family = T_familyName(*familyPtr)
+	// } else {
+	// }
 	flags.App = T_appName(*appPtr)
 	flags.Json = bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr))
 	flags.Yaml = bool(*yamlPtr) && !bool(*jsonPtr)
