@@ -315,11 +315,19 @@ func getBuildLabelsMap(cluster T_clName, istagname T_istagName, sha T_shaName) T
 	if CmdParams.Options.Debug {
 		DebugMsg("IsTag: "+istagname, "ImagesMap: ", ImagesMap)
 	}
-	if ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"] != nil {
-		if len(ImagesMap[cluster]) > 0 && ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"] != nil {
-			buildLabelsMap.Set(ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"].(map[string]interface{})["Config"].(map[string]interface{})["Labels"].(map[string]interface{}))
-		}
+	imageMetadata, ok := ImagesMap[cluster][sha.str()].(map[string]interface{})["dockerImageMetadata"]
+	if !ok || imageMetadata == nil {
+		return buildLabelsMap
 	}
+	config, ok := imageMetadata.(map[string]interface{})["Config"]
+	if !ok || config == nil {
+		return buildLabelsMap
+	}
+	labels, ok := config.(map[string]interface{})["Labels"]
+	if !ok || labels == nil {
+		return buildLabelsMap
+	}
+	buildLabelsMap.Set(labels.(map[string]interface{}))
 	return buildLabelsMap
 }
 

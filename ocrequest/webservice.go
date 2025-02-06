@@ -49,7 +49,10 @@ func StartServer() {
 	http.HandleFunc("/query", handleQuery)
 	http.HandleFunc("/is-tag-used", handleIsTagUsed)
 	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		ErrorMsg("Error starting server:", err)
+	}
 }
 
 // handleWebForm serves the web form for entering query parameters.
