@@ -190,10 +190,11 @@ type T_istag struct {
 	Tagname     T_tagName
 	Namespace   T_nsName
 	// Link        string
-	Date      string
-	AgeInDays int
-	Image     T_shaName
-	Build     T_istagBuildLabels
+	Date        string
+	AgeInDays   int
+	Image       T_shaName
+	Build       T_istagBuildLabels
+	RegistryUrl string // Neues Feld hinzugefügt
 }
 
 func ToGenericArray(arr ...interface{}) []interface{} {
@@ -287,12 +288,14 @@ type T_runningObjects struct {
 	Pod     T_Results
 }
 
+type T_registryUrl string
 type T_usedIstag struct {
 	Cluster         T_clName
 	UsedInNamespace T_nsName
 	FromNamespace   T_nsName
 	AgeInDays       int
 	Image           T_shaName
+	RegistryUrl     T_registryUrl // Neues Feld hinzugefügt
 }
 
 func (c T_usedIstag) Values() interface{} {

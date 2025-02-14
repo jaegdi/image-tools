@@ -255,7 +255,7 @@ func FilterUnusedIstags(result *T_completeResults) {
 		// Iterate through each istag in the current cluster
 		for x := range istags {
 			// Extract the image stream (is) and tag from the istag
-			_, _, is, tag, _ := GetIsAndTag(x.str())
+			_, _, is, tag, _, _ := GetIsAndTag(x.str())
 			// Check if the istag is not used
 			if used[is][tag] == nil {
 				// If the istag is unused, create a new T_unUsedIstag struct

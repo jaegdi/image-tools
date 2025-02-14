@@ -70,12 +70,16 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName
 // - T_isName: The name of the ImageStream.
 // - T_tagName: The name of the tag.
 // - T_nsName: The namespace of the image.
-func GetIsAndTag(imagestr string) (T_shaName, T_istagName, T_isName, T_tagName, T_nsName) {
+func GetIsAndTag(imagestr string) (T_shaName, T_istagName, T_isName, T_tagName, T_nsName, T_registryUrl) {
 	var is T_isName
 	var tag T_tagName
 	var image T_shaName
 	imageParts := strings.Split(imagestr, "/")
 	var fromNamespace T_nsName
+	var registryURL T_registryUrl
+
+	// Check if the image string contains a
+	registryURL = T_registryUrl(imagestr)
 
 	// Check if the image string contains a namespace
 	if len(imageParts) < 2 {
@@ -111,7 +115,7 @@ func GetIsAndTag(imagestr string) (T_shaName, T_istagName, T_isName, T_tagName, 
 		tag = T_tagName(istagParts[len(istagParts)-1])
 	}
 
-	return image, istag, is, tag, fromNamespace
+	return image, istag, is, tag, fromNamespace, registryURL
 }
 
 // getIstagFromContainer extracts ImageStreamTag information from a list of containers and updates the results map.
@@ -132,7 +136,7 @@ func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []in
 		// Extract the image SHA from the container
 		image := T_shaName(container.(map[string]interface{})["image"].(string))
 		// Get the ImageStreamTag details from the image SHA
-		image, istag, is, tag, fromNamespace := GetIsAndTag(string(image))
+		image, istag, is, tag, fromNamespace, fromregistry := GetIsAndTag(string(image))
 
 		// Apply filters to determine if the ImageStreamTag should be included in the results
 		if CmdParams.Filter.Isname != "" && is != CmdParams.Filter.Isname && !CmdParams.FilterReg.Isname.MatchString(string(is)) {
@@ -157,6 +161,7 @@ func getIstagFromContainer(cluster T_clName, namespace T_nsName, containers []in
 			FromNamespace:   fromNamespace,
 			Image:           image,
 			Cluster:         cluster,
+			RegistryUrl:     fromregistry,
 		}
 
 		results = AddUsedIstag(results, is, tag, usedIstag)
