@@ -14,3 +14,8 @@ Emitted 'error' event on ReadStream instance at:
 }
 
 Node.js v20.14.0
+Setting log level to warn
+## Ungit started ##
+
+Took 421ms to start server.
+Navigate to http://localhost:8448/#/repository?path=/home/dirk/devel/go/github-jaegdi/image-tools.git
