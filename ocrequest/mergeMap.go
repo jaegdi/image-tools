@@ -1,7 +1,8 @@
 package ocrequest
 
 import (
-	"github.com/imdario/mergo"
+	//#"github.com/imdario/mergo"
+	"dario.cat/mergo"
 )
 
 // MergoNestedMaps merges two nested maps using the mergo.Merge function.
