@@ -5,6 +5,11 @@ set -Eeo pipefail
 # set -x
 # This script generates the config-clusters.go file in ocrequest dir.
 # It gets the token of sa image-pruner from every cluster to generate this config
+domain="$1"
+if [ -z "$domain" ]; then
+    echo "the domain for the cluster must be givan as parameter. eg. mydomain.de"
+    exit 1
+fi
 
 remember-current-cluster || exit 1
 
@@ -32,9 +37,9 @@ for cluster in $(cluster_list all); do
 	cat <<-EOT
 	        "$cluster": {
 	            Name:          "$cluster",
-	            Url:           "https://api.$cluster.sf-rz.de:6443",
+	            Url:           "https://api.$cluster.$domain:6443",
 	            Token:         "$token",
-	            ConfigToolUrl: "https://scpconfig-service-master.apps.$cluster.sf-rz.de"},
+	            ConfigToolUrl: "https://scpconfig-service-master.apps.$cluster.$domain"},
 	EOT
 	echo ", config written." >&2
 	echo '-----------------' >&2
