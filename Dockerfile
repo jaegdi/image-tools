@@ -10,7 +10,8 @@ COPY ocrequest ./ocrequest/
 COPY *.go .
 COPY go.mod .
 COPY clusterconfig.json .
-RUN apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++ \
+RUN apk update \
+    && apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++ \
     && ls -l build/certs
 
 RUN apk add --no-cache --update git build-base
@@ -29,7 +30,8 @@ ENV TZ=Europe/Berlin
 ENV https_proxy=http://webproxy.sf-bk.de:8181/
 ENV HTTPS_PROXY=$https_proxy
 
-RUN apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++
+RUN apk update \
+    && apk --no-cache add ca-certificates tzdata libc6-compat libgcc libstdc++
 COPY --from=builder /usr/local/go/src/image-tool/build/certs/*.crt /usr/local/share/ca-certificates/
 COPY --from=builder /usr/local/go/src/image-tool/image-tool /usr/bin/image-tool
 COPY --from=builder /usr/local/go/src/image-tool/clusterconfig.json /usr/bin/

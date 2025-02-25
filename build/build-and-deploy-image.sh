@@ -17,7 +17,7 @@ git checkout "$tagversion"
 
 echo "Generate swagger doc"
 swag init
-echo "### start go build"
+echo "### start go build with tag '$tagversion'"
 go build -tags netgo -v
 echo "### go build ready"
 
