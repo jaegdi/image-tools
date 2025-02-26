@@ -142,10 +142,10 @@ var FamilyNamespacesStat = T_famNsList{
 			"vpt-scp0": {"scp-images", "scp-baseimages"},
 			"pro-scp0": {"scp-images", "scp-baseimages"},
 		},
-		Stages:      []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0"},
+		Stages:      []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0", "pro-scp1"},
 		Buildstages: []T_clName{"cid-scp0"},
 		Teststages:  []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0"},
-		Prodstages:  []T_clName{"pro-scp0"},
+		Prodstages:  []T_clName{"pro-scp0", "pro-scp1"},
 	},
 	"vps": {
 		ImageNamespaces: map[T_clName][]T_nsName{
