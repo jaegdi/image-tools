@@ -11,7 +11,7 @@ cd "$dir"
 CLUSTER="${1:-$CLUSTER}"
 ocl cid-scp0 -d > /dev/null
 ocl > /dev/null
-echo "CLUSTER: $CLUSTER"
+echo "deploy on CLUSTER: $CLUSTER"
 tagversion=$(get-git-tag.sh)
 git checkout "$tagversion"
 
