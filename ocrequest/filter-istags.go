@@ -231,9 +231,17 @@ func FilterAllIstags(result *T_completeResults) {
 				result.AllIstags[cluster] = x
 			}
 		}
-		// Remove used image stream tags if not specified for output
-		if !outputflags.Used && !CmdParams.Delete {
-			result.UsedIstags = T_usedIstagsResult{}
+		// remove all elements from result map, that not belong to the app given family
+		for _, cluster := range CmdParams.Cluster {
+			family := string(CmdParams.Family)
+			for istag := range result.AllIstags[cluster].Istag {
+				for istagname := range (*result).AllIstags[cluster].Istag[istag] {
+					// Delete the istag from result map if the Namespoace is not prefixed with family string
+					if !strings.HasPrefix(string(result.AllIstags[cluster].Istag[istag][istagname].Namespace), family) {
+						delete(result.AllIstags[cluster].Istag, istag)
+					}
+				}
+			}
 		}
 	}
 }
