@@ -35,20 +35,22 @@ func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName
 		ErrorMsg("generate Map for AppNamespaces." + err.Error())
 	} else {
 		DebugMsg("CHECK: cluster:", cluster, "family:", family, " => map:", namespacesMap)
-		VerifyMsg("Length of namespacesMap in cluster", cluster, "is:", len(namespacesMap["items"].([]interface{})))
+		if items, ok := namespacesMap["items"]; ok {
+			VerifyMsg("Length of namespacesMap in cluster", cluster, "is:", len(items.([]interface{})))
 
-		// Check if the namespacesMap contains metadata and items
-		if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(namespacesMap["items"].([]interface{})) > 0 {
-			// Iterate over the items in the namespacesMap
-			for _, v := range namespacesMap["items"].([]interface{}) {
-				if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
-					ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-					DebugMsg("Iterating over namespaceMap:", ns)
+			// Check if the namespacesMap contains metadata and items
+			if len(namespacesMap["metadata"].(map[string]interface{})) > 0 && len(items.([]interface{})) > 0 {
+				// Iterate over the items in the namespacesMap
+				for _, v := range namespacesMap["items"].([]interface{}) {
+					if v.(map[string]interface{})["metadata"].(map[string]interface{})["name"] != nil {
+						ns := v.(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
+						DebugMsg("Iterating over namespaceMap:", ns)
 
-					// add namespace to namespacelist if the namespace name matches the regex pattern
-					if len(ns) > 0 && regexValidNamespace.MatchString(ns) {
-						DebugMsg("Add Namespace to list:", ns)
-						namespaceList = append(namespaceList, T_nsName(ns))
+						// add namespace to namespacelist if the namespace name matches the regex pattern
+						if len(ns) > 0 && regexValidNamespace.MatchString(ns) {
+							DebugMsg("Add Namespace to list:", ns)
+							namespaceList = append(namespaceList, T_nsName(ns))
+						}
 					}
 				}
 			}
