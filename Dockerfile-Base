@@ -1,5 +1,5 @@
 # Multistage Stage 0 as base
-FROM golang:alpine as builder
+FROM golang:1.23.7-alpine as builder
 ENV CGO_ENABLED=1
 ENV https_proxy=http://webproxy.sf-bk.de:8181/
 ENV HTTPS_PROXY=$https_proxy
