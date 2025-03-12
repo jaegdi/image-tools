@@ -1,4 +1,4 @@
-FROM registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:latest-base
+FROM registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:1.1.1-base
 LABEL maintainer="Dirk Jäger <dirk.jaeger@schufa.de>"
 
 ENV LANG=en_US.UTF-8

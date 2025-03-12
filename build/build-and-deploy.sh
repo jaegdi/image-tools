@@ -178,7 +178,7 @@ while getopts "$optspec" optchar; do
 done
 
 remember-current-cluster
-ocl cid-scp0 -d > /dev/null
+ocl cid-scp0 -d > /dev/null    # login in the build cluster, which is cid-scp0, where the scp-build namespace is located
 ocl > /dev/null
 echo "working on CLUSTER: $CLUSTER"
 
@@ -210,6 +210,7 @@ if [ "$preparebuild" == 'true' ]; then
     echo "### go build ready"
 
     rm -f build.log
+    echo "I'm in $(pwd)"
     if echo && echo "### start image build with git tag $preptagversion" && podman build -f Dockerfile-Base . | tee build.log; then
         imagesha="$(tail -n 1 < build.log)"
 

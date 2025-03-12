@@ -19,3 +19,5 @@ build/pipeline-secrets
 slim.report.json
 README-Intern.md
 nohup.out
+
+Dockerfile-Image-Temp
