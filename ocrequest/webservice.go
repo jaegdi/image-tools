@@ -67,7 +67,7 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 
 		cluster := strings.Join(clusters, ",")
 
-		if family != "" && cluster != "" && kind != "" {
+		if (family != "" && cluster != "" && kind != "") || (family != "" && kind == "used") {
 			queryURL := fmt.Sprintf("/query?family=%s&cluster=%s&kind=%s&tagname=%s&namespace=%s", family, cluster, kind, tagname, namespace)
 			http.Redirect(w, r, queryURL, http.StatusSeeOther)
 			return
@@ -114,6 +114,9 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 				border: 1px solid #ccc;
 				border-radius: 4px;
 			}
+			select[multiple] {
+				height: auto;
+			}
 			input[type="submit"] {
 				background-color: #007bff;
 				color: white;
@@ -124,6 +127,20 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 			input[type="submit"]:hover {
 				background-color: #0056b3;
 			}
+			.back-button {
+				<!-- position: absolute; -->
+				top: 20px;
+				left: 20px;
+				background-color: #007bff;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+				cursor: pointer;
+			}
+			.back-button:hover {
+				background-color:rgb(60, 168, 182);
+			}
 		</style>
 	</head>
 	<body>
@@ -132,7 +149,7 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 			<form action="/" method="post">
 				<div class="form-group">
 					<label for="family" title="The family parameter (required for 'is_tag_used')">Family:</label>
-					<select class="form-control" name="family" multiple>
+					<select class="form-control" name="family" multiple size="10">
 						<option value="aps">aps</option>
 						<option value="b2b">b2b</option>
 						<option value="b2c">b2c</option>
@@ -147,17 +164,18 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 				</div>
 				<div class="form-group">
 					<label for="cluster" title="The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0">Cluster:</label>
-					<select class="form-control" name="cluster" multiple>
+					<select class="form-control" name="cluster" multiple size="6">
 						<option value="dev-scp0">dev-scp0</option>
 						<option value="cid-scp0">cid-scp0</option>
 						<option value="ppr-scp0">ppr-scp0</option>
 						<option value="vpt-scp0">vpt-scp0</option>
 						<option value="pro-scp0">pro-scp0</option>
+						<option value="pro-scp1">pro-scp1</option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="kind" title="The kind of operation to perform. Valid values are 'used', 'is_tag_used', 'unused', 'istag', 'is', 'image', 'all'. Default is 'is_tag_used'">Kind:</label>
-					<select class="form-control" name="kind">
+					<select class="form-control" name="kind" size="7">
 						<option value="used">used</option>
 						<option value="is_tag_used">is_tag_used</option>
 						<option value="unused">unused</option>
@@ -271,9 +289,11 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 	filter_tagname := r.URL.Query().Get("tagname")
 
 	// Logge eine Informationsnachricht über die neue Anfrage
+	InfoMsg("/#/ Logge eine Informationsnachricht über die neue Anfrage")
 	InfoMsg("--------------  New request  --------------")
 
 	// Validierung der erforderlichen Parameter
+	InfoMsg("/#/ Validierung der erforderlichen Parameter")
 	if err := validateParams(family, kind, filter_tagname); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		ErrorMsg("Error:", err)
@@ -281,11 +301,13 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Setze den Standardwert für 'kind', falls nicht angegeben
+	InfoMsg("/#/ Setze den Standardwert für 'kind', falls nicht angegeben")
 	if kind == "" {
 		kind = "is_tag_used"
 	}
 
 	// Initialisiere die Kommando-Parameter basierend auf den Abfrageparametern
+	InfoMsg("/#/ Initialisiere die Kommando-Parameter basierend auf den Abfrageparametern")
 	_, html, err := initializeCmdParams(family, kind, cluster, filter_tagname, filter_namespace)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -294,6 +316,7 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 	}
 	InfoMsg("Parameters:", GetJsonFromMap(CmdParams))
 	// Initialisiere den Servermodus mit den Kommando-Parametern
+	InfoMsg("/#/ Initialisiere den Servermodus mit den Kommando-Parametern")
 	InitServerMode(CmdParams)
 
 	// Logge die Details der Anfrage
@@ -301,10 +324,12 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 	VerifyMsg("\nCmdParams Options:", GetJsonFromMap(CmdParams.Options), "Output:", GetJsonFromMap(CmdParams.Output))
 
 	// Führe den Befehl aus und erhalte das Ergebnis
+	InfoMsg("/#/ Führe den Befehl aus und erhalte das Ergebnis")
 	result := CmdlineMode()
 	VerifyMsg("\nCmdParams Result:", GetJsonFromMap(result))
 
 	// Verarbeite die Ergebnisse und schreibe die Antwort
+	InfoMsg("/#/ Verarbeite die Ergebnisse und schreibe die Antwort")
 	processResults(w, result, family, html, kind, filter_tagname)
 }
 
@@ -395,6 +420,7 @@ func (t T_flags) IsZero() bool {
 // initializeCmdParams initializes the command parameters based on the query parameters.
 func initializeCmdParams(family, kind, cluster, tagname, namespace string) (T_flags, bool, error) {
 	// cmdParams := T_flags{}
+	VerifyMsg("initializeCmdParams: Initial CmdParams:", GetJsonFromMap(CmdParams))
 	if initialCmdParams.IsZero() {
 		initialCmdParams = CmdParams
 	} else {
@@ -451,10 +477,13 @@ func processResults(w http.ResponseWriter, result T_completeResults, family stri
 		htmldata := GetTextTableFromMap(result, T_familyName(family))
 		// Define query parameters string
 		queryParams := fmt.Sprintf(`
-			<div style="display: inline-block; margin-right: 20px;">
 				<strong>Query Parameters:</strong> Family: <strong>%s</strong> Kind: <strong>%s</strong> Tagname: <strong>%s</strong>
-			</div>
 		`, family, kind, tagname)
+		// queryParams := fmt.Sprintf(`
+		// 	<div style="display: inline-block; margin-right: 20px;">
+		// 		<strong>Query Parameters:</strong> Family: <strong>%s</strong> Kind: <strong>%s</strong> Tagname: <strong>%s</strong>
+		// 	</div>
+		// `, family, kind, tagname)
 		htmldata = strings.Replace(htmldata, "<!-- QueryParams -->", queryParams, 1)
 		// InfoMsg("HTML Data:", htmldata)
 		if html {

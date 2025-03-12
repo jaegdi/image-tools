@@ -23,6 +23,7 @@ import (
 func GetAppNamespacesForFamily(cluster T_clName, family T_familyName) []T_nsName {
 	// Make an OpenShift API call to get the list of namespaces
 	namespacesJson := ocGetCall(cluster, "", "namespaces", "")
+	VerifyMsg("cluster:", cluster, "namespacesJson:", namespacesJson)
 	namespacesMap := map[string]interface{}{}
 	namespaceList := []T_nsName{}
 

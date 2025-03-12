@@ -112,11 +112,11 @@ func EvalFlags() {
 	flags := T_flags{}
 	flags.Cluster = T_clName(*clusterPtr).list()
 	flags.Token = string(*tokenPtr)
-	// if *familyPtr != "" {
-	flags.Family = T_familyName(*appgroupPtr)
-	flags.Family = T_familyName(*familyPtr)
-	// } else {
-	// }
+	if *familyPtr != "" {
+		flags.Family = T_familyName(*familyPtr)
+	} else {
+		flags.Family = T_familyName(*appgroupPtr)
+	}
 	flags.App = T_appName(*appPtr)
 	flags.Json = bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr))
 	flags.Yaml = bool(*yamlPtr) && !bool(*jsonPtr)

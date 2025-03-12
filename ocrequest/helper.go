@@ -720,34 +720,6 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 		})
 	}
 
-	// // If TabGroup parameter is set, configure column merging
-	// if CmdParams.TabGroup {
-	// 	t.SetColumnConfigs([]table.ColumnConfig{
-	// 		{Number: 1, AutoMerge: true},
-	// 		{Number: 2, AutoMerge: true},
-	// 		{Number: 3, AutoMerge: true},
-	// 		{Number: 4, AutoMerge: true},
-	// 		{Number: 5, AutoMerge: true},
-	// 		{Number: 6, AutoMerge: true},
-	// 		{Number: 7, AutoMerge: true},
-	// 		{Number: 8, AutoMerge: true},
-	// 	})
-	// }
-
-	// // If TabGroup parameter is set, configure column merging
-	// if CmdParams.TabGroup {
-	// 	t.SetColumnConfigs([]table.ColumnConfig{
-	// 		{Number: 1, AutoMerge: true},
-	// 		{Number: 2, AutoMerge: true},
-	// 		{Number: 3, AutoMerge: true},
-	// 		{Number: 4, AutoMerge: true},
-	// 		{Number: 5, AutoMerge: true},
-	// 		{Number: 6, AutoMerge: true},
-	// 		{Number: 7, AutoMerge: true},
-	// 		{Number: 8, AutoMerge: true},
-	// 	})
-	// }
-
 	// If Html parameter is set, render the table as HTML
 	if CmdParams.Html {
 		t.Style().HTML = table.HTMLOptions{
@@ -760,18 +732,8 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 		downloadButton := `
 			<button class="btn btn-primary" onclick="downloadTableAsExcel()">Download as Excel</button>
 		`
-		downloadButton2 := `
-			<script>
-				function downloadTableAsExcel() {
-					var table = document.querySelector('.dataTables_scrollBody > table');
-					var html = table.outerHTML;
-					var url = 'data:application/vnd.ms-excel,' + escape(html);
-					var link = document.createElement('a');
-					link.href = url;
-					link.setAttribute('download', 'table.xls');
-					link.click();
-				}
-			</script>
+		backButton := `
+			<button class="back-button" onclick="window.location.href='/'">Back to Querymask</button>
 		`
 		dataTableScript := `
 			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -782,6 +744,22 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 			<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 			<script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
 			<script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+			<script>
+				function downloadTableAsExcel() {
+					var table = document.querySelector('.dataTables_scrollBody > table');
+					var html = table.outerHTML;
+					var url = 'data:application/vnd.ms-excel,' + escape(html);
+					var link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'table.xls');
+					link.click();
+				}
+
+				function highlightText(text, search) {
+					var pattern = new RegExp('(' + search + ')', 'gi');
+					return text.replace(pattern, '<span class="highlight">$1</span>');
+				}
+			</script>
 			<style>
 				html, body {
 					height: 100%;
@@ -810,7 +788,19 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 					padding-right: 10px; /* Abstand zum rechten Rand in der ersten Spalte */
 				}
 				th, .DTFC_LeftHeadWrapper th, .DTFC_LeftBodyWrapper td {
-					background-color: #e2e2e2; /* Grauer Hintergrund für die Kopfzeile und fixierte Spalten */
+					background-color:rgb(189, 188, 188); /* Grauer Hintergrund für die Kopfzeile und fixierte Spalten */
+				}
+				.back-button {
+					display: inline-block;
+					background-color:rgb(68, 136, 143);
+					color: white;
+					border: none;
+					padding: 10px 20px;
+					border-radius: 4px;
+					cursor: pointer;
+				}
+				.back-button:hover {
+					background-color:rgb(73, 153, 154);
 				}
 				.dataTables_scrollBody {
 					flex: 1 1 auto;
@@ -819,11 +809,14 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 				.dataTables_scrollHead {
 					flex: 0 0 auto;
 				}
+				.highlight {
+					background-color: yellow !important;
+				}
 			</style>
 			<script>
 				$(document).ready(function() {
 					var table = $('table').DataTable({
-						"scrollY": "calc(100vh - 150px)",
+						"scrollY": "calc(100vh - 200px)",
 						"scrollCollapse": true,
 						"paging": false,
 						"scrollX": true,
@@ -842,11 +835,25 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 								},
 								"className": "dt-right"
 							}
-						]
+						],
+						"search": {
+							"smart": true
+						}
 					});
-					$('.dataTables_filter').append(` + "`" + downloadButton + "`" + `);
+					$('.dataTables_filter input').on('keyup', function() {
+						var searchTerm = $(this).val();
+						table.rows().nodes().each(function(row) {
+							$(row).find('td').each(function() {
+								var cellText = $(this).text();
+								var highlightedText = highlightText(cellText, searchTerm);
+								$(this).html(highlightedText);
+							});
+						});
+					});
+					$('.dataTables_filter').append(` + "`" + backButton + downloadButton + "`" + `);
 				});
 			</script>
+			<!-- QueryParams -->
 		`
 		return `
 			<!DOCTYPE html>
@@ -858,13 +865,12 @@ func renderTable(out []table.Row, pager io.WriteCloser, height int, pagername st
 			<body>
 			<div class="container-fluid">
 				<div class="row">
-					<!-- QueryParams -->
 					<div class="col-12">
+
 						` + htmlTable + `
 					</div>
 				</div>
 			</div>
-			` + downloadButton2 + `
 			</body>
 			</html>
 		`

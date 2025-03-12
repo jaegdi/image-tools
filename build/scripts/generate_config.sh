@@ -56,6 +56,7 @@ switch-back-to-current-cluster
 
 echo
 echo "#########################################################################################"
-echo "To use this generated copnfig, you must execute build/build-and-deploy-image.sh pro-scp1"
+echo "To use this generated config, you must execute build/build-and-deploy-image.sh pro-scp1"
+echo "eg. build/build-and-deploy.sh -b -i -d --tag=latest"
 echo "#########################################################################################"
 

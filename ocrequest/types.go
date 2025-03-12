@@ -655,11 +655,13 @@ func (c T_csvDoc) csvDoc(typ string) {
 	// Initialize an empty slice to hold the CSV rows
 	out := [][]string{}
 	// Iterate through each line in the T_csvDoc
-	for _, l := range c {
+	for _, line := range c {
+		// Convert each T_csvLine to a slice of strings
+		l := []string(line)
 		// Append each line to the output slice
 		out = append(out, l)
 	}
-
+	VerifyMsg("CSV: try to create document for", typ)
 	// Check if the CsvFile parameter is defined
 	if CmdParams.CsvFile == "" {
 		// If CsvFile is not defined, write the CSV to stdout

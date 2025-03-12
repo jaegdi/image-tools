@@ -15,7 +15,7 @@ go build -v
 echo "Build windows binary of image-tool"
 GOOS=windows GOARCH=amd64 go build -v
 
-if ./image-tool -family=ebs -used > /dev/null; then
+if ./image-tool -family=ebs -used > /dev/null && ./image-tool -family scp -cluster pro-scp0 -istag -isname image-tool; then
     echo "Push to artifactory"
 
     artifactory-upload.sh -lf=image-tool       -tr=scptools-bin-dev-local   -tf=/tools/image-tools/image-tools-linux/

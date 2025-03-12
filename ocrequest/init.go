@@ -141,10 +141,19 @@ func InitServerMode(cp T_flags) {
 	// CmdParams.Output = cp.Output
 
 	// Compile a regular expression for validating namespaces
-	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
-	CmdParams.FilterReg.Namespace = regexValidNamespace
+	if CmdParams.Family == "scp" {
+		regexValidNamespace = regexp.MustCompile(`^(?:` + string(CmdParams.Family) + `|ocp)(?:-.*)?$`)
+	} else {
+		regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
+	}
 
 	// Compile regular expressions for filtering tag names, image stream names, and image stream tag names
+	if CmdParams.Filter.Namespace != "" {
+		CmdParams.FilterReg.Namespace = regexp.MustCompile(CmdParams.Filter.Namespace.str())
+	} else {
+		CmdParams.FilterReg.Namespace = regexValidNamespace
+	}
+
 	if CmdParams.Filter.Tagname != "" {
 		CmdParams.FilterReg.Tagname = regexp.MustCompile(CmdParams.Filter.Tagname.str())
 	}

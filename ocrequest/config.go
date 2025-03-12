@@ -141,6 +141,7 @@ var FamilyNamespacesStat = T_famNsList{
 			"ppr-scp0": {"scp-images", "scp-baseimages"},
 			"vpt-scp0": {"scp-images", "scp-baseimages"},
 			"pro-scp0": {"scp-images", "scp-baseimages"},
+			"pro-scp1": {"scp-images", "scp-baseimages"},
 		},
 		Stages:      []T_clName{"dev-scp0", "cid-scp0", "ppr-scp0", "vpt-scp0", "pro-scp0", "pro-scp1"},
 		Buildstages: []T_clName{"cid-scp0"},
