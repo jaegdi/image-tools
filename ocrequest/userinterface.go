@@ -112,11 +112,11 @@ func EvalFlags() {
 	flags := T_flags{}
 	flags.Cluster = T_clName(*clusterPtr).list()
 	flags.Token = string(*tokenPtr)
-	if *familyPtr != "" {
-		flags.Family = T_familyName(*familyPtr)
-	} else {
-		flags.Family = T_familyName(*appgroupPtr)
-	}
+	// if *familyPtr != "" {
+	flags.Family = T_familyName(*appgroupPtr)
+	flags.Family = T_familyName(*familyPtr)
+	// } else {
+	// }
 	flags.App = T_appName(*appPtr)
 	flags.Json = bool(*jsonPtr) || !(bool(*yamlPtr) || bool(*csvPtr) || bool(*deletePtr) || string(*csvFilePtr) != "" || bool(*tablePtr) || bool(*tabgroupPtr))
 	flags.Yaml = bool(*yamlPtr) && !bool(*jsonPtr)
@@ -175,31 +175,12 @@ func EvalFlags() {
 	// VerifyMsg("-- Test --")
 	// VerifyMsg(GetJsonFromMap(flags))
 
-	// If CmdParams.Cluster is empty, set it to all clusters
-	if !CmdParams.Delete &&
-		(len(CmdParams.Cluster[0]) == 0 ||
-			CmdParams.Cluster[0] == "all") {
-		CmdParams.Cluster = Clusters.getClusterList()
-	}
-
-	if CmdParams.Delete &&
-		(len(CmdParams.Cluster[0]) == 0 ||
-			CmdParams.Cluster[0] == "all") {
-		envCluster := os.Getenv("CLUSTER")
-		if envCluster != "" {
-			CmdParams.Cluster = T_clName(envCluster).list()
-		} else {
-			ExitWithError("\nA name for cluster must given like: '-cluster=cid-scp0'. Is now: ", CmdParams.Cluster[0])
-		}
-	}
-
 	if CmdParams.Family == "" && !CmdParams.Options.ServerMode {
 		ExitWithError("\nA name for family must given like: '-family=pkp'")
 	}
-
-	// if !CmdParams.Options.ServerMode && !CmdParams.Output.Used && len(CmdParams.Cluster[0]) == 0 {
-	// 	ExitWithError("\nA shortname for cluster must given like: '-cluster=cid-scp0' or -cluster=cid-scp0,ppr-scp0. Is now: ", flags.Cluster[0])
-	// }
+	if !CmdParams.Options.ServerMode && !CmdParams.Output.Used && len(CmdParams.Cluster[0]) == 0 {
+		ExitWithError("\nA shortname for cluster must given like: '-cluster=cid-scp0' or -cluster=cid-scp0,ppr-scp0. Is now: ", flags.Cluster[0])
+	}
 	if !CmdParams.Options.ServerMode {
 		for _, cluster := range CmdParams.Cluster {
 			_, clusterDefined := Clusters.Config[cluster]
@@ -208,7 +189,8 @@ func EvalFlags() {
 				for clname := range Clusters.Config {
 					clusterlist = append(clusterlist, string(clname))
 				}
-				// ExitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", strings.Join(clusterlist, ","))
+				clusters := strings.Join(clusterlist, ",")
+				ExitWithError("The clustername given as -cluster= is not defined: Given: ", cluster, " valid names: ", clusters)
 			}
 		}
 	}

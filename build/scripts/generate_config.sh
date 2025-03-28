@@ -28,11 +28,11 @@ for cluster in $(cluster_list all); do
 	timeout 5 ocl "$cluster" cluster-tasks &>/dev/null || { echo >&2;echo '------------------'  >&2; continue; }
 	echo -n ", get namespace: " >&2
 	ocw 1>&2 || continue
-	sa_name='image-pruner'
-	# echo -n "get secret $secretname" >&2
-	# secret="$(oc -n cluster-tasks get secret|rg "$secretname"|rg token|head -n 1|pc 1)" || { echo ", no secret of $secretname found !" >&2;echo '------------------'  >&2; continue; }
-	# echo -n ", get token" >&2
-	token="$(oc -n cluster-tasks create token "$sa_name" --duration=1576800m)" || continue
+	secretname='image-pruner'
+	echo -n "get secret $secretname" >&2
+	secret="$(oc -n cluster-tasks get secret|rg "$secretname"|rg token|head -n 1|pc 1)" || { echo ", no secret of $secretname found !" >&2;echo '------------------'  >&2; continue; }
+	echo -n ", get token" >&2
+	token="$(oc -n cluster-tasks get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)" || continue
 	echo -n ", write config" >&2
 	cat <<-EOT
 	        "$cluster": {
@@ -51,12 +51,6 @@ cat <<EOT
 EOT
 } > "$dir/../../ocrequest/config-clusters.go"
 
-ls -l "$dir/../../ocrequest/config-clusters.go"
 switch-back-to-current-cluster
 
-echo
-echo "#########################################################################################"
-echo "To use this generated config, you must execute build/build-and-deploy-image.sh pro-scp1"
-echo "eg. build/build-and-deploy.sh -b -i -d --tag=latest"
-echo "#########################################################################################"
-
+# lless "$dir/../../ocrequest/config-clusters.go"

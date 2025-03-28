@@ -19,8 +19,8 @@ import (
 // Returns:
 // - A boolean indicating whether the item matches the filter parameters.
 func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, namespace T_nsName, age int) bool {
-	// VerifyMsg("filtering:", is, tag, istag, namespace)
-	ismatch := ((CmdParams.Filter.Isname == "" ||
+	VerifyMsg("filtering:", is, tag, istag, namespace)
+	return ((CmdParams.Filter.Isname == "" ||
 		(CmdParams.Filter.Isname != "" && is == CmdParams.Filter.Isname) ||
 		(CmdParams.Filter.Isname != "" && CmdParams.FilterReg.Isname.MatchString(string(is)))) &&
 		(CmdParams.Filter.Tagname == "" ||
@@ -36,12 +36,6 @@ func matchIsIstagToFilterParams(is T_isName, tag T_tagName, istag T_istagName, n
 			(CmdParams.Filter.Minage > -1 && age >= CmdParams.Filter.Minage)) &&
 		(CmdParams.Filter.Maxage == -1 ||
 			(CmdParams.Filter.Maxage > -1 && age <= CmdParams.Filter.Maxage)))
-	if ismatch {
-		VerifyMsg("filtering:", is, tag, istag, namespace, "matched")
-	} else {
-		VerifyMsg("filtering:", is, tag, istag, namespace, "not matched")
-	}
-	return ismatch
 }
 
 // logUsedIstags logs the details of usedIstags to the logfile
@@ -237,18 +231,9 @@ func FilterAllIstags(result *T_completeResults) {
 				result.AllIstags[cluster] = x
 			}
 		}
-		// remove all elements from result map, that not belong to the app given family
-		for _, cluster := range CmdParams.Cluster {
-			family := string(CmdParams.Family)
-			for istag := range result.AllIstags[cluster].Istag {
-				for istagname := range (*result).AllIstags[cluster].Istag[istag] {
-					// Delete the istag from result map if the Namespoace is not prefixed with family string
-					ns := string(result.AllIstags[cluster].Istag[istag][istagname].Namespace)
-					if !(strings.HasPrefix(ns, family) || (family == "scp" && strings.HasPrefix(ns, "ocp"))) {
-						delete(result.AllIstags[cluster].Istag, istag)
-					}
-				}
-			}
+		// Remove used image stream tags if not specified for output
+		if !outputflags.Used && !CmdParams.Delete {
+			result.UsedIstags = T_usedIstagsResult{}
 		}
 	}
 }

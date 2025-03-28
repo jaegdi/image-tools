@@ -371,6 +371,8 @@ func (c T_clName) str() string {
 	return string(c)
 }
 
+type T_clNames []T_clName
+
 func (c T_clName) list() T_clNames {
 	clusters := []string{}
 	clusters = strings.Split(string(c), ",")
@@ -384,8 +386,6 @@ func (c T_clName) list() T_clNames {
 	}
 	return clusterlist
 }
-
-type T_clNames []T_clName
 
 func (clusters T_clNames) contains(c T_clName) bool {
 	for _, v := range clusters {
@@ -616,31 +616,6 @@ type T_ClusterConfig struct {
 	Config map[T_clName]T_Cluster `json:"config,omitempty"`
 }
 
-func (c T_ClusterConfig) getClusterList() T_clNames {
-	clusters := T_clNames{}
-	for cluster := range c.Config {
-		clusters = append(clusters, cluster)
-	}
-	return clusters
-}
-
-// clusterNames returns a comma-separated string of cluster names.
-// It iterates through the Config map and collects the cluster names.
-//
-// Returns:
-// - A string containing the cluster names separated by commas.
-func (c T_ClusterConfig) clusterNames() T_clNames {
-	// Initialize an empty slice to hold the cluster names
-	clusters := T_clNames{}
-	// Iterate through the map keys (cluster names)
-	for cluster := range c.Config {
-		// Append the string representation of each cluster name to the slice
-		clusters = append(clusters, cluster)
-	}
-	// Join the cluster names into a single string, separated by commas
-	return clusters
-}
-
 //------------------------------------------
 
 type T_csvLine []string
@@ -655,13 +630,11 @@ func (c T_csvDoc) csvDoc(typ string) {
 	// Initialize an empty slice to hold the CSV rows
 	out := [][]string{}
 	// Iterate through each line in the T_csvDoc
-	for _, line := range c {
-		// Convert each T_csvLine to a slice of strings
-		l := []string(line)
+	for _, l := range c {
 		// Append each line to the output slice
 		out = append(out, l)
 	}
-	VerifyMsg("CSV: try to create document for", typ)
+
 	// Check if the CsvFile parameter is defined
 	if CmdParams.CsvFile == "" {
 		// If CsvFile is not defined, write the CSV to stdout
