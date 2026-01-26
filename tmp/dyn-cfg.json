@@ -1,321 +1,321 @@
 {
     "aps": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "aps-jenkins"
 
            ],
-           "int-scp0": [
+           "int-crp0": [
               "images-aps"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-aps"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-aps"
            ],
-           "vpt-scp0": [
+           "vpt-crp0": [
               "images-aps"
            ]
         },
         "Stages": [
-           "cid-scp0",
-           "int-scp0",
-           "ppr-scp0",
-           "vpt-scp0",
-           "pro-scp0"
+           "cid-crp0",
+           "int-crp0",
+           "ppr-crp0",
+           "vpt-crp0",
+           "pro-crp0"
         ],
         "Buildstages": [
-           "cid-scp0"
+           "cid-crp0"
         ],
         "Teststages": [
-           "int-scp0",
-           "ppr-scp0",
-           "vpt-scp0"
+           "int-crp0",
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
      "dca": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "images-dca"
            ],
-           "cid-scp0": [
+           "cid-crp0": [
               "dca-images",
               "images-dca"
            ],
-           "dev-scp0": [
+           "dev-crp0": [
               "dca-images"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-dca"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-dca"
            ]
         },
         "Stages": [
-           "pro-scp0",
-           "cid-scp0",
-           "dev-scp0",
-           "cid-scp0",
-           "ppr-scp0"
+           "pro-crp0",
+           "cid-crp0",
+           "dev-crp0",
+           "cid-crp0",
+           "ppr-crp0"
         ],
         "Buildstages": [],
         "Teststages": [
-           "dev-scp0",
-           "ppr-scp0"
+           "dev-crp0",
+           "ppr-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
      "fraud": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "images-fraud"
            ],
-           "cid-scp0": [
+           "cid-crp0": [
               "images-fraud"
            ],
-           "int-scp0": [
+           "int-crp0": [
               "images-fraud"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-fraud"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-fraud"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-fraud"
            ]
         },
         "Stages": [
-           "int-scp0",
-           "cid-scp0",
-           "ppr-scp0",
-           "pro-scp0",
-           "ppr-scp0",
-           "cid-scp0"
+           "int-crp0",
+           "cid-crp0",
+           "ppr-crp0",
+           "pro-crp0",
+           "ppr-crp0",
+           "cid-crp0"
         ],
         "Buildstages": [],
         "Teststages": [
-           "int-scp0",
-           "ppr-scp0",
-           "ppr-scp0"
+           "int-crp0",
+           "ppr-crp0",
+           "ppr-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
      "hub": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "images-hub"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-hub"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-hub"
            ],
-           "vpt-scp0": [
+           "vpt-crp0": [
               "images-hub"
            ]
         },
         "Stages": [
-           "cid-scp0",
-           "ppr-scp0",
-           "vpt-scp0",
-           "pro-scp0"
+           "cid-crp0",
+           "ppr-crp0",
+           "vpt-crp0",
+           "pro-crp0"
         ],
         "Buildstages": [],
         "Teststages": [
-           "ppr-scp0",
-           "vpt-scp0"
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
      "pkp": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "ms-jenkins"
            ],
-           "int-scp0": [
+           "int-crp0": [
               "images-pkp"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-pkp"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-pkp"
            ],
-           "vpt-scp0": [
+           "vpt-crp0": [
               "images-pkp"
            ]
         },
         "Stages": [
-           "cid-scp0",
-           "ppr-scp0",
-           "vpt-scp0",
-           "pro-scp0",
-           "int-scp0"
+           "cid-crp0",
+           "ppr-crp0",
+           "vpt-crp0",
+           "pro-crp0",
+           "int-crp0"
         ],
         "Buildstages": [
-           "cid-scp0"
+           "cid-crp0"
         ],
         "Teststages": [
-           "int-scp0",
-           "ppr-scp0",
-           "vpt-scp0"
+           "int-crp0",
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
-     "scp": {
+     "crp": {
         "ImageNamespaces": {
-           "cid-scp0": [
-              "images-scp",
-              "scptools-jenkins",
-              "scpas-jenkins"
+           "cid-crp0": [
+              "images-crp",
+              "crptools-jenkins",
+              "crpas-jenkins"
            ],
-           "cid-scp0": [
-              "scp-images",
-              "scp-baseimages"
+           "cid-crp0": [
+              "crp-images",
+              "crp-baseimages"
            ],
-           "dev-scp0": [
-              "images-scp"
+           "dev-crp0": [
+              "images-crp"
            ],
-           "int-scp0": [
-              "images-scp"
+           "int-crp0": [
+              "images-crp"
            ],
-           "ppr-scp0": [
-              "images-scp"
+           "ppr-crp0": [
+              "images-crp"
            ],
-           "ppr-scp0": [
-              "scp-images"
+           "ppr-crp0": [
+              "crp-images"
            ],
-           "pro-scp0": [
-              "images-scp"
+           "pro-crp0": [
+              "images-crp"
            ],
-           "pro-scp0": [
-              "scp-images"
+           "pro-crp0": [
+              "crp-images"
            ],
-           "vpt-scp0": [
-              "scp-images"
+           "vpt-crp0": [
+              "crp-images"
            ]
         },
         "Stages": [
-           "dev-scp0",
-           "cid-scp0",
-           "ppr-scp0",
-           "pro-scp0",
-           "cid-scp0",
-           "int-scp0",
-           "ppr-scp0",
-           "vpt-scp0",
-           "pro-scp0"
+           "dev-crp0",
+           "cid-crp0",
+           "ppr-crp0",
+           "pro-crp0",
+           "cid-crp0",
+           "int-crp0",
+           "ppr-crp0",
+           "vpt-crp0",
+           "pro-crp0"
         ],
         "Buildstages": [
-           "cid-scp0",
-           "cid-scp0"
+           "cid-crp0",
+           "cid-crp0"
         ],
         "Teststages": [
-           "dev-scp0",
-           "int-scp0",
-           "ppr-scp0",
-           "ppr-scp0",
-           "vpt-scp0"
+           "dev-crp0",
+           "int-crp0",
+           "ppr-crp0",
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0",
-           "pro-scp0"
+           "pro-crp0",
+           "pro-crp0"
         ]
      },
      "ssp": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "ssp-jenkins"
            ],
-           "int-scp0": [
+           "int-crp0": [
               "images-ssp"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-ssp"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-ssp"
            ],
-           "vpt-scp0": [
+           "vpt-crp0": [
               "images-ssp"
            ]
         },
         "Stages": [
-           "ppr-scp0",
-           "vpt-scp0",
-           "pro-scp0",
-           "cid-scp0",
-           "int-scp0"
+           "ppr-crp0",
+           "vpt-crp0",
+           "pro-crp0",
+           "cid-crp0",
+           "int-crp0"
         ],
         "Buildstages": [
-           "cid-scp0"
+           "cid-crp0"
         ],
         "Teststages": [
-           "int-scp0",
-           "ppr-scp0",
-           "vpt-scp0"
+           "int-crp0",
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
      },
      "vps": {
         "ImageNamespaces": {
-           "cid-scp0": [
+           "cid-crp0": [
               "images-vps",
               "zpe-jenkins",
               "images-dfn"
            ],
-           "cid-scp0": [
+           "cid-crp0": [
               "images-dfn"
            ],
-           "int-scp0": [
+           "int-crp0": [
               "images-vps"
            ],
-           "ppr-scp0": [
+           "ppr-crp0": [
               "images-vps"
            ],
-           "pro-scp0": [
+           "pro-crp0": [
               "images-vps"
            ],
-           "vpt-scp0": [
+           "vpt-crp0": [
               "images-vps"
            ]
         },
         "Stages": [
-           "int-scp0",
-           "cid-scp0",
-           "cid-scp0",
-           "ppr-scp0",
-           "pro-scp0",
-           "vpt-scp0"
+           "int-crp0",
+           "cid-crp0",
+           "cid-crp0",
+           "ppr-crp0",
+           "pro-crp0",
+           "vpt-crp0"
         ],
         "Buildstages": [
-           "cid-scp0",
-           "cid-scp0"
+           "cid-crp0",
+           "cid-crp0"
         ],
         "Teststages": [
-           "ppr-scp0",
-           "vpt-scp0"
+           "ppr-crp0",
+           "vpt-crp0"
         ],
         "Prodstages": [
-           "pro-scp0"
+           "pro-crp0"
         ]
     }
 }

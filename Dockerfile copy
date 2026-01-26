@@ -11,9 +11,9 @@ RUN apk add --no-cache --update git build-base
 RUN go mod tidy \
 	&& go build
 
-# FROM default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-baseimages/fedora:40
+# FROM default-route-openshift-image-registry.apps.cid-crp0.corporate.de/crp-baseimages/fedora:40
 FROM alpine:latest as runner
-LABEL maintainer="Dirk Jäger <dirk.jaeger@schufa.de>"
+LABEL maintainer="Dirk Jäger <dirk_jager@email.de>"
 
 ENV LANG=en_US.UTF-8
 ENV TZ=Europe/Berlin
@@ -39,21 +39,21 @@ RUN # chmod a+rx /usr/local/bin/fix-permissions.sh /usr/local/bin/create-netrc.s
     # && rm my-password-file
 
 
-# COPY scptools-bitbucket/password /password
-# COPY scptools-bitbucket/username /username
+# COPY crptools-bitbucket/password /password
+# COPY crptools-bitbucket/username /username
 
 # RUN /usr/local/bin/create-netrc.sh 'art-password-file' ${ART_HOSTNAME} \
 #     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/kustomize/kustomize \
+#         https://artifactory-pro.corporate.de:8443/artifactory/crptools-bin-develop/tools/kustomize/kustomize \
 #         -o /usr/local/bin/kustomize       \
 #     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/yq/yq \
+#         https://artifactory-pro.corporate.de:8443/artifactory/crptools-bin-develop/tools/yq/yq \
 #         -o /usr/local/bin/yq              \
 #     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/pc/pc \
+#         https://artifactory-pro.corporate.de:8443/artifactory/crptools-bin-develop/tools/pc/pc \
 #         -o /usr/local/bin/pc              \
 #     && curl -k --netrc-file art-password-file \
-#         https://artifactory-pro.sf-rz.de:8443/artifactory/scptools-bin-develop/tools/cosign/cosign-linux-amd64 \
+#         https://artifactory-pro.corporate.de:8443/artifactory/crptools-bin-develop/tools/cosign/cosign-linux-amd64 \
 #         -o /usr/local/bin/cosign          \
 #     && chmod a+x /usr/local/bin/kustomize  \
 #     && chmod a+x /usr/local/bin/yq         \

@@ -1,7 +1,7 @@
 # Multistage Stage 0 as base
 FROM golang:alpine as builder
 ENV CGO_ENABLED=1
-ENV https_proxy=http://webproxy.sf-bk.de:8181/
+ENV https_proxy=http://webproxy.corporate.de:8181/
 ENV HTTPS_PROXY=$https_proxy
 WORKDIR /usr/local/go/src/image-tool
 COPY build ./build/
@@ -23,11 +23,11 @@ RUN pwd \
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 FROM alpine:latest as runner
-LABEL maintainer="Dirk Jäger <dirk.jaeger@schufa.de>"
+LABEL maintainer="Dirk Jäger <dirk_jager@email.de>"
 
 ENV LANG=en_US.UTF-8
 ENV TZ=Europe/Berlin
-ENV https_proxy=http://webproxy.sf-bk.de:8181/
+ENV https_proxy=http://webproxy.corporate.de:8181/
 ENV HTTPS_PROXY=$https_proxy
 
 RUN apk update -U \

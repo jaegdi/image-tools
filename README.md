@@ -4,8 +4,8 @@
 
 Download it from
 
-- [image-tools  for linux](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/))
-- [image-tools .exe for windows](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/))
+- [image-tools  for linux](https://artifactory-pro.corporate.de:8443/ui/native/crpas-bin-dev-local/istag_and_image_management/image-tools-linux/))
+- [image-tools .exe for windows](https://artifactory-pro.corporate.de:8443/ui/native/crpas-bin-dev-local/istag_and_image_management/image-tools-windows/))
 
 and store it somewhere in your PATH. It is a statically linked go program and no installation is neccessary.
 

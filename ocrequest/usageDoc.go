@@ -96,11 +96,11 @@ MAN PAGE
 
         The cluster must be defined by the -cluster parameter.
 
-            -cluster=cid-scp0
+            -cluster=cid-crp0
 
         To run the query across multiple clusters, multiple clusters can be specified, separated by commas.
 
-            -cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0
+            -cluster=cid-crp0,ppr-crp0,vpt-crp0,pro-crp0
 
         The family must be defined by the mandatory parameter
 
@@ -165,14 +165,14 @@ INSTALLATION
     image-tool is a statically linked go programm and has no runtime dependencies.
     No installation is neccessary. Copy the binary into a directory, which is in the search path.
     Copy the binary from local artifactory (as long as it exists)
-        - linux:  https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istag_and_image_management/image-tool-linux/image-tool
-        - windows:  https://artifactory-pro.sf-rz.de:8443/artifactory/scpas-bin-develop/istag_and_image_management/image-tool-windows/image-tool.exe
+        - linux:  https://artifactory-pro.corporate.de:8443/artifactory/crpas-bin-develop/istag_and_image_management/image-tool-linux/image-tool
+        - windows:  https://artifactory-pro.corporate.de:8443/artifactory/crpas-bin-develop/istag_and_image_management/image-tool-windows/image-tool.exe
     or copy it from the new artifactory SaaS
-        - linux:   https://atfschufa.jfrog.io/artifactory/scptools-bin-develop/tools/image-tool/image-tool-linux/image-tool
-        - windows: https://atfschufa.jfrog.io/artifactory/scptools-bin-develop/tools/image-tool/image-tool-windows/image-tool.exe
+        - linux:   https://atfcorporate.jfrog.io/artifactory/crptools-bin-develop/tools/image-tool/image-tool-linux/image-tool
+        - windows: https://atfcorporate.jfrog.io/artifactory/crptools-bin-develop/tools/image-tool/image-tool-windows/image-tool.exe
     you can also use the jf tool
-        - linux:   jf rt dl scptools-bin-develop/tools/image-tool/image-tool-linux/image-tool
-        - windows: jf rt dl scptools-bin-develop/tools/image-tool/image-tool-windows/image-tool.exe
+        - linux:   jf rt dl crptools-bin-develop/tools/image-tool/image-tool-linux/image-tool
+        - windows: jf rt dl crptools-bin-develop/tools/image-tool/image-tool-windows/image-tool.exe
 
 
 EXAMPLES
@@ -199,13 +199,13 @@ SERVERMODE ---------------------------------------------------------------------
   |        Report all information for family pkp in cluster cid as json
   |        (which is the default output format)
   |
-  |            image-tool -cluster=cid-scp0 -family=pkp -all
+  |            image-tool -cluster=cid-crp0 -family=pkp -all
   |
   |            or as table
-  |            image-tool -cluster=cid-scp0 -family=pkp -all -table
+  |            image-tool -cluster=cid-crp0 -family=pkp -all -table
   |
   |            or csv in different files for each type of information
-  |            image-tool -cluster=cid-scp0 -family=pkp -all -csvfile=prefix
+  |            image-tool -cluster=cid-crp0 -family=pkp -all -csvfile=prefix
   |            writes the output to different files 'prefix-type' in current directory
   |
   |        Report only __used__ istags for family pkp as pretty printed table
@@ -213,29 +213,29 @@ SERVERMODE ---------------------------------------------------------------------
   |            the pager define in the environment variable $PAGER/%PAGER%.
   |            If $PAGER is not set, it try to use 'more')
   |
-  |            image-tool -cluster=cid-scp0 -family=pkp -used -table
+  |            image-tool -cluster=cid-crp0 -family=pkp -used -table
   |            or json
-  |            image-tool -cluster=cid-scp0 -family=pkp -used
+  |            image-tool -cluster=cid-crp0 -family=pkp -used
   |            or yaml
-  |            image-tool -cluster=cid-scp0 -family=pkp -used -yaml
+  |            image-tool -cluster=cid-crp0 -family=pkp -used -yaml
   |            or csv
-  |            image-tool -cluster=cid-scp0 -family=pkp -used -csv
+  |            image-tool -cluster=cid-crp0 -family=pkp -used -csv
   |
   |        Report istags for family aps in cluster int as yaml report
   |
-  |            image-tool -cluster=int-scp0 -family=aps -istag -yaml
+  |            image-tool -cluster=int-crp0 -family=aps -istag -yaml
   |
   |        Report ImageStreams for family aps in cluster int as yaml report
   |
-  |            image-tool -cluster=int-scp0 -family=aps -is -yaml
+  |            image-tool -cluster=int-crp0 -family=aps -is -yaml
   |
   |        Report Images for family aps in cluster int as yaml report
   |
-  |            image-tool -cluster=int-scp0 -family=aps -image -yaml
+  |            image-tool -cluster=int-crp0 -family=aps -image -yaml
   |
   |        Report combined with pc(print columns) tool
   |
-  |            image-tool -socks5=localhost:65022 -family=pkp -cluster=cid-scp0,ppr-scp0,pro-scp0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
+  |            image-tool -socks5=localhost:65022 -family=pkp -cluster=cid-crp0,ppr-crp0,pro-crp0 -istag -csv | pc -sep=, -sortcol=4  1 5 8 6 7
   |
   -----------------------------------------------------------------------------------------------------------------------------
 
@@ -246,25 +246,25 @@ SERVERMODE ---------------------------------------------------------------------
   |        and all old snapshot istags and nonbuild istags and all istags of header-service, footer-service
   |        and zahlungsstoerung-service
   |
-  |            image-tool -family=pkp -cluster=cid-scp0 -delete -snapshot \
+  |            image-tool -family=pkp -cluster=cid-crp0 -delete -snapshot \
   |                        -nonbuild -delpattern='(header|footer|zahlungsstoerung)-service'
   |
   |        To use the script output to really delete the istags, you can use the following line:
   |
-  |            image-tool -family=pkp -cluster=cid-scp0 -delete -snapshot -nonbuild \
+  |            image-tool -family=pkp -cluster=cid-crp0 -delete -snapshot -nonbuild \
   |                        -delpattern='(header|footer|zahlungsstoerung)-service'      | xargs -n 1 -I{} bash -c "{}"
   |
   |        To only generate a script to delete old snapshot istags:
   |
-  |            image-tool -family=pkp -cluster=cid-scp0 -delete -snapshot
+  |            image-tool -family=pkp -cluster=cid-crp0 -delete -snapshot
   |
   |        To delete all not used images of family 'aps' in cluster cid
   |
-  |            image-tool -family=aps -cluster=cid-scp0 -delete  -delminage=0 -delpattern='.'
+  |            image-tool -family=aps -cluster=cid-crp0 -delete  -delminage=0 -delpattern='.'
   |
   |        To delete all hybris istags of family pkp older than 45 days
   |
-  |            image-tool -family=pkp -cluster=cid-scp0 -delete -isname=hybris -delminage=45
+  |            image-tool -family=pkp -cluster=cid-crp0 -delete -isname=hybris -delminage=45
   |
   |   !!!  To check, which images are not deleted, because they are in use somewhare in the clusters,
   |        you can check the logfile, which is created in the current directory.

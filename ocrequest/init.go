@@ -28,8 +28,8 @@ func Init() {
 			InfoMsg("Set cluster to env var CLUSTER", cl)
 			currCluster = T_clName(cl)
 		} else {
-			InfoMsg("Set cluster to default value -cluster=cid-scp0")
-			currCluster = "cid-scp0"
+			InfoMsg("Set cluster to default value -cluster=cid-crp0")
+			currCluster = "cid-crp0"
 		}
 	}
 

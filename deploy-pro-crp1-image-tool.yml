@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/component: image-tool
     app.kubernetes.io/instance: image-tool
   name: image-tool
-  namespace: scp-operations-pro
+  namespace: crp-ops-central
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: image-tool
-        image: registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:latest
+        image: registry-quay-quay.apps.pro-crp1.corporate.de/crp/image-tool:latest
         imagePullPolicy: Always
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -39,7 +39,7 @@ spec:
             memory: 1024Mi
           requests:
             cpu: 1
-            memory: 512Mi
+            memory: 256Mi
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -53,7 +53,7 @@ metadata:
     app.kubernetes.io/component: image-tool
     app.kubernetes.io/instance: image-tool
   name: image-tool
-  namespace: scp-operations-pro
+  namespace: crp-ops-central
 spec:
   ports:
   - name: 8080-tcp
@@ -70,9 +70,9 @@ metadata:
     app.kubernetes.io/instance: image-tool
     router: srv
   name: image-tool
-  namespace: scp-operations-pro
+  namespace: crp-ops-central
 spec:
-  host: image-tool-scp-operations.scp0-srv.pro.sf-rz.de
+  host: image-tool.apps.pro-crp1.corporate.de
   port:
     targetPort: 8080-tcp
   tls:

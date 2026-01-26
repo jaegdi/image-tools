@@ -4,8 +4,8 @@
 
 Download it from
 
-- [image-tools  for linux](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-linux/))
-- [image-tools .exe for windows](https://artifactory-pro.sf-rz.de:8443/ui/native/scpas-bin-dev-local/istag_and_image_management/image-tools-windows/))
+- [image-tools  for linux](https://artifactory-pro.corporate.de:8443/ui/native/crpas-bin-dev-local/istag_and_image_management/image-tools-linux/))
+- [image-tools .exe for windows](https://artifactory-pro.corporate.de:8443/ui/native/crpas-bin-dev-local/istag_and_image_management/image-tools-windows/))
 
 and store it somewhere in your PATH. It is a statically linked go program and no installation is neccessary.
 
@@ -75,8 +75,8 @@ the parameters can be specified in any order
     -family=string    family name, eg. app-group, aps, ssp or fpc
 
     -cluster=string   shortname of cluster, eg.
-      cluster,  ppr-scp0 or pro-scp0
-      cluster, ppr-scp0, vpt-scp0, pro-scp0
+      cluster,  ppr-crp0 or pro-crp0
+      cluster, ppr-crp0, vpt-crp0, pro-crp0
 
 ##### Type of objects to collect and report. One of them is mandatory
 

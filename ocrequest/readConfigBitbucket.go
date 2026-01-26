@@ -9,7 +9,7 @@ import (
 )
 
 func getBitbucketUrl(urlpath string) string {
-	return "https://bitbucket.sf-bk.de/projects/SCPDEPLOY/repos/scp-infra-config/raw/" + urlpath + "?at=refs%2Fheads%2Fmaster"
+	return "https://bitbucket.corporate.de/projects/CRPDEPLOY/repos/crp-infra-config/raw/" + urlpath + "?at=refs%2Fheads%2Fmaster"
 }
 
 // getBitbucketData ruft die Konfigurationsdaten von Bitbucket ab und gibt sie als JSON-Byte-Array zurück.
@@ -47,8 +47,8 @@ func getBitbucketData(filename string) []byte {
 	VerifyMsg(filename, "jsonstr: ", GetJsonFromMap(yamlmap))
 
 	// Logge die URL und die JSON-Daten
-	DebugMsg("Config from scp-infra-config url:", url)
-	DebugMsg("Config from scp-infra-config json:", string(jsonstr))
+	DebugMsg("Config from crp-infra-config url:", url)
+	DebugMsg("Config from crp-infra-config json:", string(jsonstr))
 
 	// Gib das JSON-Byte-Array zurück
 	return jsonstr
@@ -138,12 +138,12 @@ func genClusterConfig(clusters T_cft_clusters) T_ClusterConfig {
 		cl := T_Cluster{}
 		cl.Name = string(cluster.Name)
 		// Setze die URL und ConfigToolUrl basierend auf dem Cluster-Namen
-		if strings.Contains(cl.Name, "scp0") {
-			cl.Url = "https://api." + cl.Name + ".sf-rz.de:6443"
-			cl.ConfigToolUrl = "https://scpconfig-service-master.apps." + cl.Name + ".sf-rz.de"
+		if strings.Contains(cl.Name, "crp0") {
+			cl.Url = "https://api." + cl.Name + ".corporate.de:6443"
+			cl.ConfigToolUrl = "https://crpconfig-service-master.apps." + cl.Name + ".corporate.de"
 		} else {
-			cl.Url = "https://console." + cl.Name + ".sf-rz.de:8443"
-			cl.ConfigToolUrl = "https://scpconfig-service-master.default." + cl.Name + ".sf-rz.de"
+			cl.Url = "https://console." + cl.Name + ".corporate.de:8443"
+			cl.ConfigToolUrl = "https://crpconfig-service-master.default." + cl.Name + ".corporate.de"
 		}
 		cl.Token = "x"
 		cfg.Config[cluster.Name] = cl

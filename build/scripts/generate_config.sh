@@ -39,7 +39,7 @@ for cluster in $(cluster_list all); do
 	            Name:          "$cluster",
 	            Url:           "https://api.$cluster.$domain:6443",
 	            Token:         "$token",
-	            ConfigToolUrl: "https://scpconfig-service-master.apps.$cluster.$domain"},
+	            ConfigToolUrl: "https://crpconfig-service-master.apps.$cluster.$domain"},
 	EOT
 	echo ", config written." >&2
 	echo '-----------------' >&2

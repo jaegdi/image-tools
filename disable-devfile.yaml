@@ -12,7 +12,7 @@ components:
         - name: GOCACHE
           value: /tmp/.cache
         - name: GOPROXY
-          value: https://jaegdi:cmVmdGtuOjAxOjE3NDEyNjk0MTE6aUczZ1ZxbzFiMExVb0RYWFF1R0VFcHhmdzV2@artifactory-pro.sf-bk.de:8443/artifactory/api/go/go
+          value: https://jaegdi:cmVmdGtuOjAxOjE3NDEyNjk0MTE6aUczZ1ZxbzFiMExVb0RYWFF1R0VFcHhmdzV2@artifactory-pro.corporate.de:8443/artifactory/api/go/go
       endpoints:
         - name: 8080-https
           targetPort: 8080
@@ -40,6 +40,6 @@ projects:
   - name: imagetool
     git:
       remotes:
-        origin: "https://bitbucket.sf-bk.de/scm/scptools/image-tools.git"
+        origin: "https://bitbucket.corporate.de/scm/crptools/image-tools.git"
       checkoutFrom:
         revision: master

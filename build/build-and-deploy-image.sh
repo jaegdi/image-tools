@@ -9,7 +9,7 @@ dir=$(dirname "$scriptdir")
 echo "Dir: $dir"
 cd "$dir"
 CLUSTER="${1:-$CLUSTER}"
-ocl cid-scp0 -d > /dev/null
+ocl cid-crp0 -d > /dev/null
 ocl > /dev/null
 echo "CLUSTER: $CLUSTER"
 tagversion=$(get-git-tag.sh)
@@ -25,27 +25,27 @@ rm -f build.log
 if echo && echo "### start image build with git tag $tagversion" && podman build . | tee build.log; then
     imagesha="$(tail -n 1 < build.log)"
 
-    echo "tag $imagesha to  default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion"
-    podman tag "$imagesha" default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion
-    podman push default-route-openshift-image-registry.apps.cid-scp0.sf-rz.de/scp-images/image-tool:$tagversion
+    echo "tag $imagesha to  default-route-openshift-image-registry.apps.cid-crp0.corporate.de/crp-images/image-tool:$tagversion"
+    podman tag "$imagesha" default-route-openshift-image-registry.apps.cid-crp0.corporate.de/crp-images/image-tool:$tagversion
+    podman push default-route-openshift-image-registry.apps.cid-crp0.corporate.de/crp-images/image-tool:$tagversion
 
-    for dst in pro-scp1;do  #  cid-scp0 pro-scp0
+    for dst in pro-crp1;do  #  cid-crp0 pro-crp0
         echo '----------------------------------------------------------------------------------------------------------'
-        copy-image.sh -v -sc=cid-scp0 -dc=$dst -sn=scp-images -dn=scp-images -i=image-tool:$tagversion;
+        copy-image.sh -v -sc=cid-crp0 -dc=$dst -sn=crp-images -dn=crp-images -i=image-tool:$tagversion;
         echo '----------------------------------------------------------------------------------------------------------'
 
         . ocl $dst
 
-        if [[ $dst =~ pro-scp1 ]]; then
+        if [[ $dst =~ pro-crp1 ]]; then
             echo '----------------------------------------------------------------------------------------------------------'
-            echo "Deplopy image to registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion"
-            podman login -u "$USER" -p "$($LDAPPASSWORDPROVIDER)" registry-quay-quay.apps.pro-scp1.sf-rz.de
-            podman tag "$imagesha"  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
-            podman push  registry-quay-quay.apps.pro-scp1.sf-rz.de/scp/image-tool:$tagversion
+            echo "Deplopy image to registry-quay-quay.apps.pro-crp1.corporate.de/crp/image-tool:$tagversion"
+            podman login -u "$USER" -p "$($LDAPPASSWORDPROVIDER)" registry-quay-quay.apps.pro-crp1.corporate.de
+            podman tag "$imagesha"  registry-quay-quay.apps.pro-crp1.corporate.de/crp/image-tool:$tagversion
+            podman push  registry-quay-quay.apps.pro-crp1.corporate.de/crp/image-tool:$tagversion
             echo '----------------------------------------------------------------------------------------------------------'
-            oc project scp-ops-central
+            oc project crp-ops-central
         else
-            oc project scp-operations-"${dst/-scp[01]/}"
+            oc project crp-operations-"${dst/-crp[01]/}"
         fi
     done
 
@@ -53,7 +53,7 @@ if echo && echo "### start image build with git tag $tagversion" && podman build
     oc delete -f deploy-"$CLUSTER"-image-tool.yml
     echo '----------------------------------------------------------------------------------------------------------'
     cat deploy-"$CLUSTER"-image-tool.yml | \
-        sed -e "s/image: registry-quay-quay.apps.pro-scp1.sf-rz.de\/scp\/image-tool.*/image: registry-quay-quay.apps.pro-scp1.sf-rz.de\/scp\/image-tool:$tagversion/" | \
+        sed -e "s/image: registry-quay-quay.apps.pro-crp1.corporate.de\/crp\/image-tool.*/image: registry-quay-quay.apps.pro-crp1.corporate.de\/crp\/image-tool:$tagversion/" | \
             oc apply -f-
 else
     echo "Build failed"

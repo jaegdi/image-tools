@@ -20,7 +20,7 @@ func EvalFlags() {
 	familyPtr := flag.String("family", "", "Mandatory: family or appgroup name, eg.: "+FamilyNamespaces.familyListStr())
 	appgroupPtr := flag.String("appgroup", "", "Mandatory: appgroup or family name, eg.: "+FamilyNamespaces.familyListStr())
 	appPtr := flag.String("app", "", "Mandatory: app name, eg.: "+AppNamespaces.appListStr())
-	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-scp0,cid-scp0,ppr-acp0")
+	clusterPtr := flag.String("cluster", "", "Mandatory: name of one or more cluster, eg.: "+FamilyNamespaces[T_familyName("base")].clusterListStr()+" or more than one: cid-crp0,cid-crp0,ppr-acp0")
 	tokenPtr := flag.String("token", "", "Opt: token for cluster, its a alternative to login before exec")
 	namespacePtr := flag.String("namespace", "", "Opt: namespace to look for istags")
 
@@ -179,7 +179,7 @@ func EvalFlags() {
 		ExitWithError("\nA name for family must given like: '-family=pkp'")
 	}
 	if !CmdParams.Options.ServerMode && !CmdParams.Output.Used && len(CmdParams.Cluster[0]) == 0 {
-		ExitWithError("\nA shortname for cluster must given like: '-cluster=cid-scp0' or -cluster=cid-scp0,ppr-scp0. Is now: ", flags.Cluster[0])
+		ExitWithError("\nA shortname for cluster must given like: '-cluster=cid-crp0' or -cluster=cid-crp0,ppr-crp0. Is now: ", flags.Cluster[0])
 	}
 	if !CmdParams.Options.ServerMode {
 		for _, cluster := range CmdParams.Cluster {

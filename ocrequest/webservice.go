@@ -141,18 +141,18 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 						<option value="ebs">ebs</option>
 						<option value="ibs">ibs</option>
 						<option value="pkp">pkp</option>
-						<option value="scp">scp</option>
+						<option value="crp">crp</option>
 						<option value="vps">vps</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="cluster" title="The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0">Cluster:</label>
+					<label for="cluster" title="The cluster parameter. Eg. cluster=cid-crp0 or comma separated list cluster=cid-crp0,ppr-crp0">Cluster:</label>
 					<select class="form-control" name="cluster" multiple>
-						<option value="dev-scp0">dev-scp0</option>
-						<option value="cid-scp0">cid-scp0</option>
-						<option value="ppr-scp0">ppr-scp0</option>
-						<option value="vpt-scp0">vpt-scp0</option>
-						<option value="pro-scp0">pro-scp0</option>
+						<option value="dev-crp0">dev-crp0</option>
+						<option value="cid-crp0">cid-crp0</option>
+						<option value="ppr-crp0">ppr-crp0</option>
+						<option value="vpt-crp0">vpt-crp0</option>
+						<option value="pro-crp0">pro-crp0</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -226,7 +226,7 @@ func handleDocumentation(w http.ResponseWriter, r *http.Request) {
 // @Description
 // @Description Query Parameters:
 // @Description   - family:    The family parameter (required for "is_tag_used").
-// @Description   - cluster:   The cluster parameter. Eg. cluster=cid-scp0 or comma separated list cluster=cid-scp0,ppr-scp0 (Not used for kind=image or used)
+// @Description   - cluster:   The cluster parameter. Eg. cluster=cid-crp0 or comma separated list cluster=cid-crp0,ppr-crp0 (Not used for kind=image or used)
 // @Description   - kind:      The kind of operation to perform. Valid values are "used", "is_tag_used",
 // @Description                "unused", "istag", "is", "image", "all". Default is "is_tag_used".
 // @Description Optional Query Parameters:

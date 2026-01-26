@@ -24,7 +24,7 @@
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="false">
-          <stringProp name="HTTPSampler.domain">image-tool.apps.pro-scp1.sf-rz.de</stringProp>
+          <stringProp name="HTTPSampler.domain">image-tool.apps.pro-crp1.corporate.de</stringProp>
           <stringProp name="HTTPSampler.port">443</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/query</stringProp>
@@ -43,7 +43,7 @@
               </elementProp>
               <elementProp name="cluster" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">cid-scp0,ppr-scp0,vpt-scp0,pro-scp0</stringProp>
+                <stringProp name="Argument.value">cid-crp0,ppr-crp0,vpt-crp0,pro-crp0</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">cluster</stringProp>
@@ -91,12 +91,12 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="CLUSTER" elementType="Argument">
                 <stringProp name="Argument.name">CLUSTER</stringProp>
-                <stringProp name="Argument.value">pro-scp0</stringProp>
+                <stringProp name="Argument.value">pro-crp0</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="KUBECONFIG" elementType="Argument">
                 <stringProp name="Argument.name">KUBECONFIG</stringProp>
-                <stringProp name="Argument.value">/home/jaegdi/.kube-yakuake/config-pro-scp0-7-2055209</stringProp>
+                <stringProp name="Argument.value">/home/jaegdi/.kube-yakuake/config-pro-crp0-7-2055209</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>

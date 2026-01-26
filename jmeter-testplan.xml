@@ -31,10 +31,10 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">image-tool.apps.pro-scp1.sf-rz.de</stringProp>
+          <stringProp name="HTTPSampler.domain">image-tool.apps.pro-crp1.corporate.de</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
-          <stringProp name="HTTPSampler.path">/query?family=pkp&amp;cluster=cid-scp0,ppr-scp0,vpt-scp0,pro-scp0&amp;kind=istag</stringProp>
+          <stringProp name="HTTPSampler.path">/query?family=pkp&amp;cluster=cid-crp0,ppr-crp0,vpt-crp0,pro-crp0&amp;kind=istag</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
