@@ -9,6 +9,19 @@ Download it from
 
 and store it somewhere in your PATH. It is a statically linked go program and no installation is neccessary.
 
+## Cluster configuration
+
+At runtime, `clusterconfig.json` must be next to the executable, including in
+server mode. Generate it in the repository root with
+`make config DOMAIN=<cluster-domain>` using authenticated
+OpenShift tools and `jq`, then place it next to the binary if necessary. The
+file contains credentials; keep it private and do not commit it. An existing
+`clusterconfig.json` in the same format can also be used. Remove any older
+generated `ocrequest/config-clusters.go` before building.
+
+Dynamic family configuration requires the `BITBUCKET_TOKEN` environment
+variable. Use `-statcfg` to select the static family configuration instead.
+
 ## DESCRIPTION
 
 image-tools  reports image or istag details for a application appgroup (eg. appgroup)

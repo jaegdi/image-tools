@@ -2,25 +2,25 @@
 script="$0"
 dir=$(dirname "$script")
 set -Eeo pipefail
-# set -x
-# This script generates the config-clusters.go file in ocrequest dir.
-# It gets the token of sa image-pruner from every cluster to generate this config
+# This script gets image-pruner tokens and writes the runtime cluster configuration.
 domain="$1"
 if [ -z "$domain" ]; then
     echo "the domain for the cluster must be givan as parameter. eg. mydomain.de"
     exit 1
 fi
 
+command -v jq >/dev/null || { echo "jq is required" >&2; exit 1; }
 remember-current-cluster || exit 1
 
-{
-cat <<EOT
-package ocrequest
+umask 077
+entries=$(mktemp "$dir/../../.cluster-entries.XXXXXX")
+output=$(mktemp "$dir/../../.cluster-config.XXXXXX")
+cleanup() {
+    rm -f "$entries" "$output"
+    switch-back-to-current-cluster
+}
+trap cleanup EXIT
 
-// The token is from sa image-pruner of namespace cluster-tasks
-var Clusters = T_ClusterConfig{
-	Config: map[T_clName]T_Cluster{
-EOT
 for cluster in $(cluster_list all); do
 	echo >&2
 	echo -n "Login into '$cluster'" >&2
@@ -34,23 +34,19 @@ for cluster in $(cluster_list all); do
 	echo -n ", get token" >&2
 	token="$(oc -n cluster-tasks get secret "$secret" -o jsonpath='{.data.token}'|base64 -d)" || continue
 	echo -n ", write config" >&2
-	cat <<-EOT
-	        "$cluster": {
-	            Name:          "$cluster",
-	            Url:           "https://api.$cluster.$domain:6443",
-	            Token:         "$token",
-	            ConfigToolUrl: "https://crpconfig-service-master.apps.$cluster.$domain"},
-	EOT
+	jq -nc --arg name "$cluster" \
+	    --arg url "https://api.$cluster.$domain:6443" \
+	    --arg token "$token" \
+	    --arg configtoolurl "https://crpconfig-service-master.apps.$cluster.$domain" \
+	    '{name: $name, url: $url, token: $token, configtoolurl: $configtoolurl}' >> "$entries"
 	echo ", config written." >&2
 	echo '-----------------' >&2
 done
 
-cat <<EOT
-	},
-}
-EOT
-} > "$dir/../../ocrequest/config-clusters.go"
-
-switch-back-to-current-cluster
-
-# lless "$dir/../../ocrequest/config-clusters.go"
+if [ ! -s "$entries" ]; then
+    echo "No cluster configuration was generated" >&2
+    exit 1
+fi
+jq -s '{config: (map({key: .name, value: .}) | from_entries)}' "$entries" > "$output"
+mv "$output" "$dir/../../clusterconfig.json"
+echo "Wrote clusterconfig.json; keep this file private." >&2

@@ -106,28 +106,40 @@ func saveTokens(clusterconfig T_ClusterConfig, filename string) {
 	}
 }
 
-// readTokens reads the token from the config file
+func loadClusterConfig(path string) (T_ClusterConfig, error) {
+	var config T_ClusterConfig
+	file, err := os.ReadFile(path)
+	if err != nil {
+		return config, fmt.Errorf("read %s: %w", path, err)
+	}
+	if err := json.Unmarshal(file, &config); err != nil {
+		return config, fmt.Errorf("parse %s: %w", path, err)
+	}
+	if len(config.Config) == 0 {
+		return config, fmt.Errorf("%s: cluster config is empty", path)
+	}
+	for name, cluster := range config.Config {
+		if name == "" || cluster.Name == "" || cluster.Url == "" {
+			return config, fmt.Errorf("%s: cluster %q requires a name and URL", path, name)
+		}
+	}
+	return config, nil
+}
+
+// readTokens reads cluster configuration from a file next to the executable.
 func readTokens(filename string) error {
 	ex, err := os.Executable()
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("find executable: %w", err)
 	}
-	exPath := filepath.Dir(ex)
-	filePath := exPath + "/" + filename
-	file, err := os.ReadFile(filePath)
+	path := filepath.Join(filepath.Dir(ex), filename)
+	config, err := loadClusterConfig(path)
 	if err != nil {
-		ErrorMsg("failed to load configfile "+filePath, err)
-		return err
-	} else {
-		if err := json.Unmarshal([]byte(file), &Clusters); err != nil {
-			ErrorMsg("error unmarshal clusterconfig from", filePath, err)
-		} else {
-			VerifyMsg("Token read from", filePath)
-		}
-		js, err := json.MarshalIndent(Clusters.Config, "", "    ")
-		DebugMsg(string(js))
 		return err
 	}
+	Clusters = config
+	VerifyMsg("Cluster configuration read from", path)
+	return nil
 }
 
 // readTokens reads the token from the config file or a Kubernetes secret if running in ServerMode

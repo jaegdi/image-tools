@@ -91,27 +91,6 @@ func Init() {
 	// Compile a regular expression for validating namespaces
 	regexValidNamespace = regexp.MustCompile(`^` + string(CmdParams.Family) + `(?:-.*)?$`)
 
-	// If not in server mode, read cluster configurations
-	if !CmdParams.Options.ServerMode {
-		for _, cluster := range CmdParams.Cluster {
-			// Check if the token length is less than 10
-			if len(Clusters.Config[cluster].Token) < 10 {
-				InfoMsg("Try to read clusterconfig.json")
-				// Attempt to read tokens from clusterconfig.json
-				if err := readTokens("clusterconfig.json"); err != nil {
-					InfoMsg("Read Clusterconfig is failed, try to get the tokens from clusters with oc login")
-					// If reading tokens fails, get tokens from clusters using oc login
-					for _, cluster := range FamilyNamespaces[CmdParams.Family].Stages {
-						ocGetToken(cluster)
-					}
-					// Save the tokens to clusterconfig.json
-					saveTokens(Clusters, "clusterconfig.json")
-				} else {
-					InfoMsg("Clusterconfig and Tokens loaded from clusterconfig.json")
-				}
-			}
-		}
-	}
 	// Initialize image stream names for the family
 	InitIsNamesForFamily(CmdParams.Family)
 	// If server mode is enabled, initialize server mode

@@ -172,6 +172,9 @@ func EvalFlags() {
 	}
 
 	CmdParams = flags
+	if err := readTokens("clusterconfig.json"); err != nil {
+		ExitWithError("Unable to load cluster configuration: ", err)
+	}
 	// VerifyMsg("-- Test --")
 	// VerifyMsg(GetJsonFromMap(flags))
 

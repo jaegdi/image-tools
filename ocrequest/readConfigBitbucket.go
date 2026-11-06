@@ -2,6 +2,7 @@ package ocrequest
 
 import (
 	"encoding/json"
+	"os"
 	"strings"
 
 	jsoniter "github.com/json-iterator/go"
@@ -24,7 +25,11 @@ func getBitbucketData(filename string) []byte {
 	DebugMsg("url: ", url)
 
 	// Hole die YAML-Daten von der URL unter Verwendung des Bitbucket-Tokens
-	yamlstr := getHttpAnswer(url, bitbucket_token)
+	token := os.Getenv("BITBUCKET_TOKEN")
+	if token == "" {
+		ExitWithError("BITBUCKET_TOKEN is required for dynamic configuration; set it or use -statcfg")
+	}
+	yamlstr := getHttpAnswer(url, token)
 	DebugMsg(filename, "yaml: ", string(yamlstr))
 
 	// Unmarshal die YAML-Daten in eine Map
